@@ -206,6 +206,34 @@ export function IDE({
     [project.nodes],
   );
 
+  const isPracticeNode = useCallback((id: string) => {
+    return pathOf(project.nodes, id).startsWith(".practice/");
+  }, [project.nodes]);
+
+  const visibleTabs = project.openTabFiles.filter(t => {
+    const isPractice = isPracticeNode(t.id);
+    return activeActivity === "practice" ? isPractice : !isPractice;
+  });
+
+  const allVisibleTabs = [
+    ...visibleTabs,
+    ...(settingsTabOpen ? [{ id: "settings", name: "Settings", kind: "file", parentId: null, createdAt: 0, updatedAt: 0 } as any] : [])
+  ];
+
+  const effectiveActiveFile = activeTabOverride === "settings" 
+      ? null 
+      : (visibleTabs.find(t => t.id === project.activeId) || visibleTabs[visibleTabs.length - 1] || null);
+
+  const effectiveActiveId = activeTabOverride || effectiveActiveFile?.id || null;
+
+  const visibleSplitTabs = project.nodes.filter(n => splitOpenTabs.includes(n.id)).filter(t => {
+    const isPractice = isPracticeNode(t.id);
+    return activeActivity === "practice" ? isPractice : !isPractice;
+  });
+
+  const effectiveSplitActiveFile = visibleSplitTabs.find(t => t.id === splitActiveId) || visibleSplitTabs[visibleSplitTabs.length - 1] || null;
+  const effectiveSplitActiveId = effectiveSplitActiveFile?.id || null;
+
   const handleRun = useCallback(() => {
     const f = project.activeFile;
     if (!f) return;
@@ -228,6 +256,18 @@ export function IDE({
       setPanelTab("plots");
     }
   }, [runtime.plots]);
+
+  // Auto-open practice sandbox when entering practice mode with no open practice tabs
+  useEffect(() => {
+    if (activeActivity === "practice" && visibleTabs.length === 0) {
+      const practicePyId = project.nodes.find(n => pathOf(project.nodes, n.id) === ".practice/practice.py")?.id;
+      if (practicePyId) {
+        project.openFile(practicePyId);
+      } else {
+        project.createByPath(".practice/practice.py", "# Practice Sandbox\n# Write your experimental code here!\n\n");
+      }
+    }
+  }, [activeActivity, visibleTabs.length, project]);
 
   const handleSelectTab = useCallback((id: string) => {
     if (id === "settings") {
@@ -546,11 +586,8 @@ export function IDE({
               <div className={`min-w-0 relative flex flex-col ${isSplit ? "border-r border-[var(--vscode-border)]" : ""}`} style={{ flex: isSplit ? "none" : 1, width: isSplit ? `${splitRatio}%` : "100%" }}>
                 <div className="flex items-center bg-[var(--vscode-sidebar-bg)] shrink-0 pr-3">
                   <EditorTabs
-                    tabs={[
-                      ...project.openTabFiles,
-                      ...(settingsTabOpen ? [{ id: "settings", name: "Settings", kind: "file", parentId: null, createdAt: 0, updatedAt: 0 } as any] : [])
-                    ]}
-                    activeId={activeTabOverride || project.activeId}
+                    tabs={allVisibleTabs}
+                    activeId={effectiveActiveId}
                     dirty={project.dirty}
                     onSelect={handleSelectTab}
                     onClose={handleCloseTab}
@@ -604,7 +641,7 @@ export function IDE({
                           <button 
                             onClick={() => {
                               if (!practiceHasTests) return;
-                              if (practiceSubmitRef.current) practiceSubmitRef.current(project.activeFile?.content || "");
+                              if (practiceSubmitRef.current) practiceSubmitRef.current(effectiveActiveFile?.content || "");
                               if (!panelOpen) setPanelOpen(true);
                               setPanelTab("tests");
                             }} 
@@ -633,26 +670,26 @@ export function IDE({
                 <div className="flex-1 min-h-0 relative">
                   {activeTabOverride === "settings" ? (
                     <SettingsEditor settings={settings} onChange={updateSettings} />
-                  ) : project.activeFile ? (
-                    project.activeFile.name.endsWith(".ipynb") ? (
+                  ) : effectiveActiveFile ? (
+                    effectiveActiveFile.name.endsWith(".ipynb") ? (
                       <NotebookEditor
-                        content={project.activeFile.content ?? ""}
+                        content={effectiveActiveFile.content ?? ""}
                         theme={settings.theme}
-                        onChange={(content) => project.updateContent(project.activeFile!.id, content)}
+                        onChange={(content) => project.updateContent(effectiveActiveFile.id, content)}
                         onRunCell={async (code, index) => {
                           terminalStore.system(`▶ Running cell ${index + 1}...`);
                           return await runtime.runTest(code, "", 15000);
                         }}
                       />
-                    ) : project.activeFile.name.endsWith(".md") && mdPreview[project.activeId!] && !isSplit ? (
+                    ) : effectiveActiveFile.name.endsWith(".md") && mdPreview[effectiveActiveFile.id] && !isSplit ? (
                       <div className="h-full overflow-y-auto bg-[var(--vscode-bg)] p-8">
                         <div className="prose prose-invert prose-sm max-w-none text-[var(--vscode-text)]">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.activeFile.content ?? ""}</ReactMarkdown>
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{effectiveActiveFile.content ?? ""}</ReactMarkdown>
                         </div>
                       </div>
                     ) : (
                       <CodeEditor
-                        file={project.activeFile}
+                        file={effectiveActiveFile}
                         onChange={project.updateContent}
                         onRun={handleRun}
                         onSave={handleSave}
@@ -686,8 +723,8 @@ export function IDE({
                 <div className="flex-1 min-w-0 relative flex flex-col bg-[var(--vscode-bg)]">
                   <div className="flex items-center bg-[var(--vscode-sidebar-bg)] shrink-0 pr-3">
                     <EditorTabs
-                      tabs={project.nodes.filter(n => splitOpenTabs.includes(n.id))}
-                      activeId={splitActiveId}
+                      tabs={visibleSplitTabs}
+                      activeId={effectiveSplitActiveId}
                       dirty={project.dirty}
                       onSelect={(id) => setSplitActiveId(id)}
                       onClose={(id) => {
@@ -785,7 +822,7 @@ export function IDE({
                   
                   <div className="flex-1 min-h-0 relative">
                     {(() => {
-                      const sf = project.nodes.find(n => n.id === splitActiveId);
+                      const sf = effectiveSplitActiveFile;
                       if (!sf) return <div className="p-4 text-[var(--vscode-text-muted)] text-sm">Select a file to display.</div>;
                       if (sf.name.endsWith(".ipynb")) {
                         return (
