@@ -348,7 +348,7 @@ export function PracticeSidebar({
   return (
     <div className="flex h-full flex-col overflow-hidden text-sm text-[var(--vscode-text)]">
       {/* Custom Header */}
-      <div className="h-[35px] flex items-center justify-between px-5 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-medium shrink-0">
+      <div className="h-[35px] flex items-center justify-between px-5 text-[12px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0">
         <span>Practice Explorer</span>
         {activeCategory && (
           <div className="flex items-center gap-1.5">
@@ -405,7 +405,7 @@ export function PracticeSidebar({
 
             {/* Batches Section */}
             <div 
-              className="flex items-center gap-1 px-2 py-1 text-[11px] font-semibold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none"
+              className="flex items-center gap-1.5 px-2 py-1.5 text-[12px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none"
               onClick={() => setBatchesExpanded(!batchesExpanded)}
             >
               {batchesExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
@@ -426,12 +426,12 @@ export function PracticeSidebar({
                         isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
                       }`}
                     >
-                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2 truncate">
+                      <div className={`flex items-center justify-between text-[14px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
+                        <div className="flex items-center gap-2.5 truncate">
                           {bComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <Folder className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-emerald-400'}`} />}
                           <span className="truncate">{b.title}</span>
                         </div>
-                        <span className={`text-[10px] ${bComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
+                        <span className={`text-[11px] ${bComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
                           [{bSolved}/{bTotal}]
                         </span>
                       </div>
@@ -450,7 +450,7 @@ export function PracticeSidebar({
 
             {/* Topic Drills Section */}
             <div 
-              className="flex items-center gap-1 px-2 py-1 text-[11px] font-semibold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none mt-2"
+              className="flex items-center gap-1.5 px-2 py-1.5 text-[12px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none mt-2"
               onClick={() => setDrillsExpanded(!drillsExpanded)}
             >
               {drillsExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
@@ -471,12 +471,12 @@ export function PracticeSidebar({
                         isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
                       }`}
                     >
-                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2 truncate">
+                      <div className={`flex items-center justify-between text-[14px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
+                        <div className="flex items-center gap-2.5 truncate">
                           {dComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <BookOpen className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-sky-400/80'}`} />}
                           <span className="truncate">{d.title}</span>
                         </div>
-                        <span className={`text-[10px] ${dComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
+                        <span className={`text-[11px] ${dComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
                           [{dSolved}/{dTotal}]
                         </span>
                       </div>
@@ -499,8 +499,8 @@ export function PracticeSidebar({
             ) : activeChallenge ? (
               <div className="flex flex-col">
 
-                <div className="mb-3 flex items-start justify-between gap-4">
-                  <h3 className="text-sm font-semibold text-sky-400 flex items-start gap-2 flex-1">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                  <h3 className="text-[15.5px] font-bold text-sky-400 flex items-start gap-2 flex-1 tracking-wide">
                     <span title={activeChallenge.difficulty ? `Difficulty: ${activeChallenge.difficulty}` : undefined}>
                       <TerminalSquare 
                         className={`h-4 w-4 mt-0.5 shrink-0 ${
@@ -519,15 +519,15 @@ export function PracticeSidebar({
                       <div className="p-1.5 rounded hover:bg-[var(--vscode-hover)] cursor-help transition-colors border border-transparent hover:border-amber-900/30">
                         <Lightbulb className="h-4 w-4 text-amber-400" />
                       </div>
-                      <div className="absolute right-0 top-full mt-1 w-64 p-3 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
-                        <h4 className="text-[11px] text-amber-400 font-semibold mb-2 flex items-center gap-1.5"><Lightbulb className="h-3.5 w-3.5" /> Quick Hint</h4>
-                        <pre className="text-[11px] bg-black/40 border border-amber-900/30 p-2.5 rounded font-mono text-emerald-200/90 whitespace-pre-wrap">{activeChallenge.solution.split('\n').slice(0, 3).join('\n')}</pre>
+                      <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                        <h4 className="text-[12px] text-amber-400 font-bold mb-2 flex items-center gap-1.5"><Lightbulb className="h-4 w-4" /> Quick Hint</h4>
+                        <pre className="text-[12.5px] bg-black/40 border border-amber-900/30 p-3 rounded font-mono text-emerald-200/90 whitespace-pre-wrap">{activeChallenge.solution.split('\n').slice(0, 3).join('\n')}</pre>
                       </div>
                     </div>
                   )}
                 </div>
 
-                <div className="prose prose-invert prose-sm max-w-none text-[var(--vscode-text)] text-[13px] leading-relaxed mb-4">
+                <div className="prose prose-invert max-w-none text-[var(--vscode-text)] text-[14.5px] leading-relaxed mb-4 tracking-wide">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{activeChallenge.markdown}</ReactMarkdown>
                 </div>
 

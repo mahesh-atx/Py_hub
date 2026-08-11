@@ -40,7 +40,7 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
     // Initialize xterm
     const xterm = new XTerm({
       fontFamily: "Consolas, 'Courier New', monospace",
-      fontSize: 13,
+      fontSize: 15,
       theme: {
         background: "transparent",
         foreground: "#cccccc",
@@ -184,10 +184,20 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
 
   }, [snap.lines, snap.pending]);
 
+  // Auto-focus terminal when input is requested
+  useEffect(() => {
+    if (snap.awaitingInput && xtermRef.current) {
+      // Slight delay ensures the UI pane has fully rendered/switched before focusing
+      setTimeout(() => {
+        xtermRef.current?.focus();
+      }, 50);
+    }
+  }, [snap.awaitingInput]);
+
   return (
     <div
       ref={containerRef}
-      className="h-full w-full bg-[var(--vscode-bg)] p-2 overflow-hidden"
+      className="h-full w-full bg-[var(--vscode-bg)] pl-4 pr-2 py-3 overflow-hidden"
     />
   );
 }
