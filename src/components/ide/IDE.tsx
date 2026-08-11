@@ -378,6 +378,15 @@ export function IDE({
           <div className="w-12 shrink-0 bg-[var(--vscode-hover)] flex flex-col items-center py-2 z-10 border-r border-[var(--vscode-border)]">
             <div className="flex flex-col gap-1 w-full">
               <ActivityIcon 
+                icon={<Boxes className="h-6 w-6" strokeWidth={1.25} />} 
+                active={activeActivity === "workspaces" && sidebarOpen}
+                onClick={() => {
+                  if (activeActivity === "workspaces") setSidebarOpen(!sidebarOpen);
+                  else { setActiveActivity("workspaces"); setSidebarOpen(true); }
+                }}
+                title="Workspaces"
+              />
+              <ActivityIcon 
               icon={<Files className="h-6 w-6" strokeWidth={1.25} />} 
               active={activeActivity === "explorer" && sidebarOpen}
               onClick={() => {
@@ -394,15 +403,7 @@ export function IDE({
               }}
               title="Search (Ctrl+Shift+F)"
             />
-            <ActivityIcon 
-              icon={<Library className="h-6 w-6" strokeWidth={1.25} />} 
-              active={activeActivity === "workspaces" && sidebarOpen}
-              onClick={() => {
-                if (activeActivity === "workspaces") setSidebarOpen(!sidebarOpen);
-                else { setActiveActivity("workspaces"); setSidebarOpen(true); }
-              }}
-              title="Workspaces"
-            />
+
             <ActivityIcon 
               icon={<Package className="h-6 w-6" strokeWidth={1.25} />} 
               active={activeActivity === "extensions" && sidebarOpen}

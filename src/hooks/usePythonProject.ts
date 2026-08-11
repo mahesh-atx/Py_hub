@@ -23,6 +23,7 @@ import {
   setKV,
 } from "@/lib/storage/idb";
 import { exampleNodes } from "@/lib/examples";
+import { toast } from "@/components/ide/ToastContainer";
 
 interface RuntimeOptions {
   onNewFiles?: (files: FsFilePayload[]) => void;
@@ -78,7 +79,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
         // Auto-reinstall packages from previous session
         getKV<string[]>("installedPackages").then((savedPackages) => {
           if (savedPackages && savedPackages.length > 0) {
-            terminalStore.system(`Restoring ${savedPackages.length} packages from previous session...`);
+            toast.info(`Restoring ${savedPackages.length} packages from previous session...`);
             setInstallMsg("Restoring packages...");
             instance.install(savedPackages);
           }
@@ -123,7 +124,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
           setKV("installedPackages", next);
           return next;
         });
-        terminalStore.system(message);
+        toast.info(message);
       },
       onFatal: (err) => {
         setFatalError(err);
@@ -323,8 +324,10 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
     (id: string) => {
       const node = nodeMap.get(id);
       if (node && dirty.has(id)) {
-        if (window.confirm(`Save changes to ${node.name} before closing?`))
-          save(id);
+        toast.warn(`Save changes to ${node.name} before closing?`, {
+          label: "Save",
+          onClick: () => save(id)
+        });
       }
       const idx = openTabs.indexOf(id);
       const next = openTabs.filter((t) => t !== id);
@@ -582,21 +585,23 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
     [nodes, createByPath],
   );
 
-  const resetToExamples = useCallback(async () => {
-    if (
-      !window.confirm(
-        "Reset the project to the example files? Your current files will be removed.",
-      )
-    )
-      return;
-    const fresh = seedExamples();
-    await clearFiles();
-    await bulkPutFiles(fresh);
-    setNodes(fresh);
-    const first = fresh[0];
-    setOpenTabs(first ? [first.id] : []);
-    setActiveId(first?.id ?? null);
-    setDirty(new Set());
+  const resetToExamples = useCallback(() => {
+    toast.warn(
+      "Reset the project to the example files? Your current files will be removed.",
+      {
+        label: "Reset",
+        onClick: async () => {
+          const fresh = seedExamples();
+          await clearFiles();
+          await bulkPutFiles(fresh);
+          setNodes(fresh);
+          const first = fresh[0];
+          setOpenTabs(first ? [first.id] : []);
+          setActiveId(first?.id ?? null);
+          setDirty(new Set());
+        }
+      }
+    );
   }, []);
 
   return {

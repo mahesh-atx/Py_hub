@@ -17,6 +17,7 @@ import type { RuntimeStatus } from "@/types/python";
 import type { RuntimeInfo } from "@/lib/pyodide/worker-client";
 import type { IdeSettings } from "@/lib/settings";
 import { SelfTest } from "@/components/ide/SelfTest";
+import { toast } from "@/components/ide/ToastContainer";
 
 export function Modal({
   title,
@@ -167,12 +168,10 @@ export function RuntimeModal({
         <div className="mt-4 flex flex-wrap gap-2">
           <button
             onClick={() => {
-              if (
-                window.confirm(
-                  "Restart the Python runtime? This clears all Python variables.",
-                )
-              )
-                onRestart();
+              toast.warn("Restart the Python runtime? This clears all Python variables.", {
+                label: "Restart",
+                onClick: onRestart,
+              });
             }}
             className="flex items-center gap-1.5 rounded bg-rose-600/90 px-3 py-1.5 text-xs font-medium text-white hover:bg-rose-500"
           >

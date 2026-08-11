@@ -133,6 +133,7 @@ class TerminalStore {
   }
 
   requestInput(): void {
+    this.write("prompt", "> ");
     this.awaitingInput = true;
     this.commit();
   }
