@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Play, Loader2, CircleCheck, CircleX, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, Folder, FolderOpen, BookOpen, Code2, ArrowLeft, TerminalSquare, Sparkles, PlayCircle, Trophy, Lightbulb } from "lucide-react";
+import { Play, Loader2, CircleCheck, CircleX, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, Folder, FolderOpen, BookOpen, Code2, ArrowLeft, TerminalSquare, Sparkles, PlayCircle, Trophy, Lightbulb, Target } from "lucide-react";
 import { toast } from "@/components/ide/ToastContainer";
 import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
@@ -20,6 +20,7 @@ interface Challenge {
   solution: string | null;
   tests: TestCase[];
   difficulty?: string;
+  objective?: string;
 }
 
 interface Manifest {
@@ -248,7 +249,16 @@ export function PracticeSidebar({
             difficulty = diffMatch[1].trim();
         }
         
-        const markdown = rawMarkdown.replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "").trim();
+        let objective: string | undefined = undefined;
+        const objMatch = rawMarkdown.match(/\*\*Learning Objective:\*\*\s*(.+)/i);
+        if (objMatch) {
+            objective = objMatch[1].trim();
+        }
+        
+        const markdown = rawMarkdown
+                           .replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "")
+                           .replace(/\*\*Learning Objective:\*\*\s*(.+)\n?/i, "")
+                           .trim();
 
         const testObj = testsData.questions ? testsData.questions[idx] : null;
         const actualQId = testObj ? testObj.question_id : (idx + 1);
@@ -271,7 +281,8 @@ export function PracticeSidebar({
           markdown,
           solution,
           tests: testObj ? testObj.tests : [],
-          difficulty
+          difficulty,
+          objective
         };
       });
 
@@ -514,17 +525,31 @@ export function PracticeSidebar({
                     <span className="leading-tight">{activeChallenge.title}</span>
                   </h3>
 
-                  {activeChallenge.solution && (
-                    <div className="relative group shrink-0">
-                      <div className="p-1.5 rounded hover:bg-[var(--vscode-hover)] cursor-help transition-colors border border-transparent hover:border-amber-900/30">
-                        <Lightbulb className="h-4 w-4 text-amber-400" />
+                  <div className="flex items-center gap-1 shrink-0">
+                    {activeChallenge.objective && (
+                      <div className="relative group shrink-0">
+                        <div className="p-1.5 rounded hover:bg-[var(--vscode-hover)] cursor-help transition-colors border border-transparent hover:border-sky-900/30">
+                          <Target className="h-4 w-4 text-sky-400" />
+                        </div>
+                        <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                          <h4 className="text-[12px] text-sky-400 font-bold mb-2 flex items-center gap-1.5"><Target className="h-4 w-4" /> Learning Objective</h4>
+                          <p className="text-[12.5px] bg-black/40 border border-sky-900/30 p-3 rounded text-slate-300 leading-relaxed">{activeChallenge.objective}</p>
+                        </div>
                       </div>
-                      <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
-                        <h4 className="text-[12px] text-amber-400 font-bold mb-2 flex items-center gap-1.5"><Lightbulb className="h-4 w-4" /> Quick Hint</h4>
-                        <pre className="text-[12.5px] bg-black/40 border border-amber-900/30 p-3 rounded font-mono text-emerald-200/90 whitespace-pre-wrap">{activeChallenge.solution.split('\n').slice(0, 3).join('\n')}</pre>
+                    )}
+
+                    {activeChallenge.solution && (
+                      <div className="relative group shrink-0">
+                        <div className="p-1.5 rounded hover:bg-[var(--vscode-hover)] cursor-help transition-colors border border-transparent hover:border-amber-900/30">
+                          <Lightbulb className="h-4 w-4 text-amber-400" />
+                        </div>
+                        <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                          <h4 className="text-[12px] text-amber-400 font-bold mb-2 flex items-center gap-1.5"><Lightbulb className="h-4 w-4" /> Quick Hint</h4>
+                          <pre className="text-[12.5px] bg-black/40 border border-amber-900/30 p-3 rounded font-mono text-emerald-200/90 whitespace-pre-wrap">{activeChallenge.solution.split('\n').slice(0, 3).join('\n')}</pre>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
 
                 <div className="prose prose-invert max-w-none text-[var(--vscode-text)] text-[14.5px] leading-relaxed mb-4 tracking-wide">
