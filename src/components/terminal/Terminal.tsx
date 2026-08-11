@@ -15,11 +15,11 @@ interface TerminalProps {
 
 const ANSI_KIND: Record<SegmentKind, string> = {
   stdout: "\x1b[0m",
-  stderr: "\x1b[38;5;203m", // Red
-  input: "\x1b[38;5;114m", // Green
-  system: "\x1b[3;38;5;244m", // Italic Gray
-  prompt: "\x1b[38;5;179m", // Yellow
-  result: "\x1b[38;5;117m", // Light Blue
+  stderr: "\x1b[31m", // Red -> Rose 500
+  input: "\x1b[32m", // Green -> Emerald 500
+  system: "\x1b[3;90m", // Italic Bright Black -> Gray
+  prompt: "\x1b[33m", // Yellow -> Amber 500
+  result: "\x1b[36m", // Cyan -> Sky 500
 };
 
 export function Terminal({ onInput, onClear }: TerminalProps) {
@@ -39,22 +39,29 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
 
     // Initialize xterm
     const xterm = new XTerm({
-      fontFamily: "Consolas, 'Courier New', monospace",
-      fontSize: 15,
+      fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace",
+      fontSize: 14.5,
+      fontWeight: 500,
+      lineHeight: 1.5,
+      letterSpacing: 0.5,
       theme: {
         background: "transparent",
-        foreground: "#cccccc",
-        cursor: "#cccccc",
-        black: "#000000",
-        red: "#cd3131",
-        green: "#0dbc79",
-        yellow: "#e5e510",
-        blue: "#2472c8",
-        magenta: "#bc3fbc",
-        cyan: "#11a8cd",
-        white: "#e5e5e5",
+        foreground: "#e2e8f0", // slate-200
+        cursor: "#38bdf8",     // sky-400
+        cursorAccent: "#0f172a", // slate-900
+        selectionBackground: "rgba(56, 189, 248, 0.3)",
+        black: "#0f172a",
+        red: "#f43f5e",        // rose-500
+        green: "#10b981",      // emerald-500
+        yellow: "#f59e0b",     // amber-500
+        blue: "#3b82f6",       // blue-500
+        magenta: "#d946ef",    // fuchsia-500
+        cyan: "#0ea5e9",       // sky-500
+        white: "#f8fafc",      // slate-50
       },
       cursorBlink: true,
+      cursorStyle: "bar",
+      cursorWidth: 2,
       convertEol: true,
       allowTransparency: true,
     });

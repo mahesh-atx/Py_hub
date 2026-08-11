@@ -7,6 +7,7 @@ import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { terminalStore } from "@/lib/terminal/store";
 
 interface TestCase {
   input: string;
@@ -203,7 +204,7 @@ export function PracticeSidebar({
     }
   }, [activeChallenge, onPracticeStateChange, challenges]);
 
-  const loadContent = async (type: "batch" | "drill", id: string, initialChallengeId?: string) => {
+  const loadContent = async (type: "batch" | "drill", id: string) => {
     setLoading(true);
     setActiveCategory({ type, id });
     setChallenges([]);
@@ -288,12 +289,11 @@ export function PracticeSidebar({
 
       setChallenges(parsedChallenges);
       if (parsedChallenges.length > 0) {
-        if (initialChallengeId) {
-          const found = parsedChallenges.find(c => c.id === initialChallengeId);
-          selectChallenge(found || parsedChallenges[0]);
-        } else {
-          selectChallenge(parsedChallenges[0]);
-        }
+        getKV("practiceState").then((state: any) => {
+          const sSet = new Set(state?.solved || []);
+          const firstUnsolved = parsedChallenges.find(c => !sSet.has(`${id}__${c.id}`));
+          selectChallenge(firstUnsolved || parsedChallenges[0]);
+        });
       }
     } catch (e) {
       console.error("Failed to load content", e);
@@ -315,6 +315,7 @@ export function PracticeSidebar({
     setResults(null);
     setShowHint(false);
     setShowSolution(false);
+    terminalStore.clear();
     if (onTestResults) onTestResults(null);
     if (c) {
       const filename = `practice.py`;
@@ -405,7 +406,7 @@ export function PracticeSidebar({
             {lastActive && (
               <div className="px-3 mb-4 mt-2">
                 <button 
-                  onClick={() => loadContent(lastActive.type, lastActive.id, lastActive.challengeId)}
+                  onClick={() => loadContent(lastActive.type, lastActive.id)}
                   className="w-full flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold py-2 rounded shadow-lg shadow-sky-900/20 transition-all"
                 >
                   <PlayCircle className="h-4 w-4" />
