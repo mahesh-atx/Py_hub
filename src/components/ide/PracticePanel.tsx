@@ -359,7 +359,7 @@ export function PracticeSidebar({
   return (
     <div className="flex h-full flex-col overflow-hidden text-sm text-[var(--vscode-text)]">
       {/* Custom Header */}
-      <div className="h-[35px] flex items-center justify-between px-5 text-[12px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0">
+      <div className="h-[35px] flex items-center justify-between px-5 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0">
         <span>Practice Explorer</span>
         {activeCategory && (
           <div className="flex items-center gap-1.5">
@@ -416,7 +416,7 @@ export function PracticeSidebar({
 
             {/* Batches Section */}
             <div 
-              className="flex items-center gap-1.5 px-2 py-1.5 text-[12px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none"
+              className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none"
               onClick={() => setBatchesExpanded(!batchesExpanded)}
             >
               {batchesExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
@@ -437,12 +437,12 @@ export function PracticeSidebar({
                         isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
                       }`}
                     >
-                      <div className={`flex items-center justify-between text-[14px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2.5 truncate">
+                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
+                        <div className="flex items-center gap-2 truncate">
                           {bComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <Folder className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-emerald-400'}`} />}
                           <span className="truncate">{b.title}</span>
                         </div>
-                        <span className={`text-[11px] ${bComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
+                        <span className={`text-[10px] ${bComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
                           [{bSolved}/{bTotal}]
                         </span>
                       </div>
@@ -461,7 +461,7 @@ export function PracticeSidebar({
 
             {/* Topic Drills Section */}
             <div 
-              className="flex items-center gap-1.5 px-2 py-1.5 text-[12px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none mt-2"
+              className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none mt-2"
               onClick={() => setDrillsExpanded(!drillsExpanded)}
             >
               {drillsExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
@@ -482,12 +482,12 @@ export function PracticeSidebar({
                         isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
                       }`}
                     >
-                      <div className={`flex items-center justify-between text-[14px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2.5 truncate">
+                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
+                        <div className="flex items-center gap-2 truncate">
                           {dComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <BookOpen className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-sky-400/80'}`} />}
                           <span className="truncate">{d.title}</span>
                         </div>
-                        <span className={`text-[11px] ${dComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
+                        <span className={`text-[10px] ${dComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
                           [{dSolved}/{dTotal}]
                         </span>
                       </div>
