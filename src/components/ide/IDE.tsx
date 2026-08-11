@@ -845,7 +845,7 @@ export function IDE({
           {/* Terminal / Panel */}
           {panelOpen && (
             <div
-              className="flex min-h-0 flex-col bg-[var(--vscode-bg)]"
+              className="flex min-h-0 flex-col bg-[#050505]"
               style={{ height: termHeight }}
             >
               {/* Panel Tabs */}
@@ -878,7 +878,7 @@ export function IDE({
                 {panelTab === "terminal" ? (
                   <Terminal onInput={runtime.sendInput} onClear={handleClear} />
                 ) : panelTab === "plots" ? (
-                  <div className="flex h-full items-center gap-4 overflow-x-auto p-4 bg-[var(--vscode-bg)]">
+                  <div className="flex h-full items-center gap-4 overflow-x-auto p-4 bg-[#050505]">
                     {runtime.plots.length > 0 ? (
                       runtime.plots.map((src, i) => (
                         <img

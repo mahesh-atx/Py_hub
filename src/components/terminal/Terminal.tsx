@@ -202,7 +202,7 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
   }, [snap.awaitingInput]);
 
   return (
-    <div className="h-full w-full bg-[var(--vscode-bg)] pl-4 pr-2 py-3 overflow-hidden">
+    <div className="h-full w-full bg-transparent pl-4 pr-2 py-3 overflow-hidden">
       <div
         ref={containerRef}
         className="h-full w-full"
