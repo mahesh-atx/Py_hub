@@ -1,0 +1,1813 @@
+{
+  "batch": 4,
+  "topics": [
+    "Variables",
+    "Data Types",
+    "Operators",
+    "Input and Output",
+    "Conditions",
+    "Loops",
+    "Strings",
+    "Lists",
+    "Tuples",
+    "Sets"
+  ],
+  "questions": [
+    {
+      "question_id": 301,
+      "tests": [
+        {
+          "input": "5\n9\n",
+          "expected_output": "(5, 9)"
+        },
+        {
+          "input": "0\n0\n",
+          "expected_output": "(0, 0)"
+        },
+        {
+          "input": "-3\n7\n",
+          "expected_output": "(-3, 7)"
+        },
+        {
+          "input": "1000000\n-1000000\n",
+          "expected_output": "(1000000, -1000000)"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "(1, 2)"
+        }
+      ]
+    },
+    {
+      "question_id": 302,
+      "tests": [
+        {
+          "input": "1 2 3 4\n",
+          "expected_output": "4"
+        },
+        {
+          "input": "7\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 2 3 4 5 6 7 8\n",
+          "expected_output": "8"
+        }
+      ]
+    },
+    {
+      "question_id": 303,
+      "tests": [
+        {
+          "input": "3 7 2 9\n",
+          "expected_output": "First: 3\nLast: 9"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "First: 1\nLast: 2"
+        },
+        {
+          "input": "-5 -3 7\n",
+          "expected_output": "First: -5\nLast: 7"
+        }
+      ]
+    },
+    {
+      "question_id": 304,
+      "tests": [
+        {
+          "input": "1 2 3 4\n",
+          "expected_output": "10"
+        },
+        {
+          "input": "7\n",
+          "expected_output": "7"
+        },
+        {
+          "input": "-5 5 -5 5\n",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "question_id": 305,
+      "tests": [
+        {
+          "input": "1 2 2 3\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "{1}"
+        },
+        {
+          "input": "4 4 4 4\n",
+          "expected_output": "{4}"
+        },
+        {
+          "input": "3 1 3 2 1\n",
+          "expected_output": "{1, 2, 3}"
+        }
+      ]
+    },
+    {
+      "question_id": 306,
+      "tests": [
+        {
+          "input": "1 2 2 3 3 3 4\n",
+          "expected_output": "4"
+        },
+        {
+          "input": "1 1 1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "3"
+        }
+      ]
+    },
+    {
+      "question_id": 307,
+      "tests": [
+        {
+          "input": "1 2 3\n5\n",
+          "expected_output": "{1, 2, 3, 5}"
+        },
+        {
+          "input": "1 2\n1\n",
+          "expected_output": "{1, 2}"
+        },
+        {
+          "input": "4 4\n9\n",
+          "expected_output": "{9, 4}"
+        }
+      ]
+    },
+    {
+      "question_id": 308,
+      "tests": [
+        {
+          "input": "1 2 3 4\n3\n",
+          "expected_output": "{1, 2, 4}"
+        },
+        {
+          "input": "1 2\n2\n",
+          "expected_output": "{1}"
+        },
+        {
+          "input": "5 6 7\n5\n",
+          "expected_output": "{6, 7}"
+        }
+      ]
+    },
+    {
+      "question_id": 309,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "{1, 2, 3, 4, 5}"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "{1}"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "{1, 2, 3, 4}"
+        }
+      ]
+    },
+    {
+      "question_id": 310,
+      "tests": [
+        {
+          "input": "1 2 3 4\n3 4 5 6\n",
+          "expected_output": "{3, 4}"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "{1, 2}"
+        }
+      ]
+    },
+    {
+      "question_id": 311,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4\n",
+          "expected_output": "{1, 3, 5}"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "5 6\n1\n",
+          "expected_output": "{5, 6}"
+        }
+      ]
+    },
+    {
+      "question_id": 312,
+      "tests": [
+        {
+          "input": "the cat and the dog\n",
+          "expected_output": "{'cat', 'and', 'the', 'dog'}"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "{'hi'}"
+        },
+        {
+          "input": "a a b c c\n",
+          "expected_output": "{'a', 'b', 'c'}"
+        }
+      ]
+    },
+    {
+      "question_id": 313,
+      "tests": [
+        {
+          "input": "1 5 9 3\n9\n",
+          "expected_output": "Present"
+        },
+        {
+          "input": "1 2 3\n9\n",
+          "expected_output": "Absent"
+        },
+        {
+          "input": "1 2\n2\n",
+          "expected_output": "Present"
+        }
+      ]
+    },
+    {
+      "question_id": 314,
+      "tests": [
+        {
+          "input": "12\n8\n",
+          "expected_output": "20"
+        },
+        {
+          "input": "0\n0\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "-3\n10\n",
+          "expected_output": "7"
+        },
+        {
+          "input": "1000000\n1000000\n",
+          "expected_output": "2000000"
+        }
+      ]
+    },
+    {
+      "question_id": 315,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "<class 'tuple'>\n<class 'set'>"
+        }
+      ]
+    },
+    {
+      "question_id": 316,
+      "tests": [
+        {
+          "input": "banana\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "abc\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "aaaa\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "4"
+        }
+      ]
+    },
+    {
+      "question_id": 317,
+      "tests": [
+        {
+          "input": "4567\n",
+          "expected_output": "(4, 5, 6, 7)"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "(1,)"
+        },
+        {
+          "input": "12345\n",
+          "expected_output": "(1, 2, 3, 4, 5)"
+        },
+        {
+          "input": "1000000000\n",
+          "expected_output": "(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)"
+        },
+        {
+          "input": "100\n",
+          "expected_output": "(1, 0, 0)"
+        }
+      ]
+    },
+    {
+      "question_id": 318,
+      "tests": [
+        {
+          "input": "5\n1\n2\n1\n3\n2\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "1\n7\n",
+          "expected_output": "{7}"
+        },
+        {
+          "input": "3\n1\n1\n1\n",
+          "expected_output": "{1}"
+        }
+      ]
+    },
+    {
+      "question_id": 319,
+      "tests": [
+        {
+          "input": "3 1 3 2 1 4\n",
+          "expected_output": "[1, 2, 3, 4]"
+        },
+        {
+          "input": "1 1 1\n",
+          "expected_output": "[1]"
+        },
+        {
+          "input": "5 5 6\n",
+          "expected_output": "[5, 6]"
+        }
+      ]
+    },
+    {
+      "question_id": 320,
+      "tests": [
+        {
+          "input": "4 9 2 9 7\n",
+          "expected_output": "9"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "-5 -3 -1\n",
+          "expected_output": "-1"
+        }
+      ]
+    },
+    {
+      "question_id": 321,
+      "tests": [
+        {
+          "input": "1 2 3 4\n3 4 5\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "2"
+        }
+      ]
+    },
+    {
+      "question_id": 322,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "{1, 2, 4, 5}"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "{1, 2}"
+        }
+      ]
+    },
+    {
+      "question_id": 323,
+      "tests": [
+        {
+          "input": "1 2 3\n1 2 3 4 5\n",
+          "expected_output": "Subset"
+        },
+        {
+          "input": "1 2\n2 3\n",
+          "expected_output": "Not subset"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "Subset"
+        },
+        {
+          "input": "1 2 3\n1 2\n",
+          "expected_output": "Not subset"
+        }
+      ]
+    },
+    {
+      "question_id": 324,
+      "tests": [
+        {
+          "input": "2 3 2 4 3 5\n",
+          "expected_output": "14"
+        },
+        {
+          "input": "1 1 1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "6"
+        }
+      ]
+    },
+    {
+      "question_id": 325,
+      "tests": [
+        {
+          "input": "5 6 7\n",
+          "expected_output": "(5, 6, 7)"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "(1,)"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "(1, 2, 3)"
+        }
+      ]
+    },
+    {
+      "question_id": 326,
+      "tests": [
+        {
+          "input": "4\n6\n8\n",
+          "expected_output": "6.0"
+        },
+        {
+          "input": "0\n0\n0\n",
+          "expected_output": "0.0"
+        },
+        {
+          "input": "1000000\n1000000\n1000000\n",
+          "expected_output": "1000000.0"
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "2.0"
+        }
+      ]
+    },
+    {
+      "question_id": 327,
+      "tests": [
+        {
+          "input": "Hello World\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "AEIOU\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "question_id": 328,
+      "tests": [
+        {
+          "input": "1 2 3 4\n3 4 5 6\n",
+          "expected_output": "[3, 4]"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "[1, 2]"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "[]"
+        }
+      ]
+    },
+    {
+      "question_id": 329,
+      "tests": [
+        {
+          "input": "beautiful\n",
+          "expected_output": "4"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "aeiouAEIOU\n",
+          "expected_output": "5"
+        }
+      ]
+    },
+    {
+      "question_id": 330,
+      "tests": [
+        {
+          "input": "3\n7\n",
+          "expected_output": "7\n3"
+        },
+        {
+          "input": "0\n0\n",
+          "expected_output": "0\n0"
+        },
+        {
+          "input": "-5\n2\n",
+          "expected_output": "2\n-5"
+        },
+        {
+          "input": "1000000\n-1000000\n",
+          "expected_output": "-1000000\n1000000"
+        }
+      ]
+    },
+    {
+      "question_id": 331,
+      "tests": [
+        {
+          "input": "10 20 30 40\n",
+          "expected_output": "20\n30"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "2\n3"
+        },
+        {
+          "input": "5 6 7 8 9\n",
+          "expected_output": "6\n7"
+        }
+      ]
+    },
+    {
+      "question_id": 332,
+      "tests": [
+        {
+          "input": "4 1 4 2 1 3\n",
+          "expected_output": "[4, 1, 2, 3]"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "[1]"
+        },
+        {
+          "input": "1 1 1 2\n",
+          "expected_output": "[1, 2]"
+        }
+      ]
+    },
+    {
+      "question_id": 333,
+      "tests": [
+        {
+          "input": "banana\n",
+          "expected_output": "ban"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "helo"
+        },
+        {
+          "input": "aabbcc\n",
+          "expected_output": "abc"
+        }
+      ]
+    },
+    {
+      "question_id": 334,
+      "tests": [
+        {
+          "input": "1 2 3 4\n2 3 4 5\n3 4 5 6\n",
+          "expected_output": "{3, 4}"
+        },
+        {
+          "input": "1 2\n1 2\n1 2\n",
+          "expected_output": "{1, 2}"
+        },
+        {
+          "input": "1 2\n3 4\n5 6\n",
+          "expected_output": "set()"
+        }
+      ]
+    },
+    {
+      "question_id": 335,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4 6\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "5 6\n1\n",
+          "expected_output": "2"
+        }
+      ]
+    },
+    {
+      "question_id": 336,
+      "tests": [
+        {
+          "input": "1 2 3\n4 5 6\n",
+          "expected_output": "Disjoint"
+        },
+        {
+          "input": "1 2\n2 3\n",
+          "expected_output": "Not disjoint"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "Not disjoint"
+        }
+      ]
+    },
+    {
+      "question_id": 337,
+      "tests": [
+        {
+          "input": "hi there\n",
+          "expected_output": "[('h', 'i'), ('t', 'h', 'e', 'r', 'e')]"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "[('h', 'e', 'l', 'l', 'o')]"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "[('a',), ('b',), ('c',)]"
+        }
+      ]
+    },
+    {
+      "question_id": 338,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "4"
+        }
+      ]
+    },
+    {
+      "question_id": 339,
+      "tests": [
+        {
+          "input": "3\n1 9\n2 8\n3 7\n",
+          "expected_output": "9\n8\n7"
+        },
+        {
+          "input": "1\n5 5\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "4\n1 1\n2 2\n3 3\n4 4\n",
+          "expected_output": "1\n2\n3\n4"
+        }
+      ]
+    },
+    {
+      "question_id": 340,
+      "tests": [
+        {
+          "input": "python\n",
+          "expected_output": "Unique"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "Duplicate"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "Unique"
+        },
+        {
+          "input": "aabb\n",
+          "expected_output": "Duplicate"
+        }
+      ]
+    },
+    {
+      "question_id": 341,
+      "tests": [
+        {
+          "input": "1 2 3 4\n3 4 5\n",
+          "expected_output": "7"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "3"
+        }
+      ]
+    },
+    {
+      "question_id": 342,
+      "tests": [
+        {
+          "input": "5 1 3 2 4\n2 4\n",
+          "expected_output": "[1, 3, 5]"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "[]"
+        },
+        {
+          "input": "5 6\n1\n",
+          "expected_output": "[5, 6]"
+        }
+      ]
+    },
+    {
+      "question_id": 343,
+      "tests": [
+        {
+          "input": "1 2 3\n1 2 3\n",
+          "expected_output": "Equal"
+        },
+        {
+          "input": "1 2\n2 1\n",
+          "expected_output": "Not equal"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "Equal"
+        },
+        {
+          "input": "1 2\n1 2 3\n",
+          "expected_output": "Not equal"
+        }
+      ]
+    },
+    {
+      "question_id": 344,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "[1, 2, 4, 5]"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "[]"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "[1, 2]"
+        }
+      ]
+    },
+    {
+      "question_id": 345,
+      "tests": [
+        {
+          "input": "4 9 2 9 7\n",
+          "expected_output": "Max: 9\nMin: 2"
+        },
+        {
+          "input": "5\n",
+          "expected_output": "Max: 5\nMin: 5"
+        },
+        {
+          "input": "-3 0 7\n",
+          "expected_output": "Max: 7\nMin: -3"
+        }
+      ]
+    },
+    {
+      "question_id": 346,
+      "tests": [
+        {
+          "input": "112233\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "12345\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "1000000000000\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "11111\n",
+          "expected_output": "1"
+        }
+      ]
+    },
+    {
+      "question_id": 347,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "[1, 2, 3, 4, 5]"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "[1]"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "[1, 2, 3, 4]"
+        }
+      ]
+    },
+    {
+      "question_id": 348,
+      "tests": [
+        {
+          "input": "2 3 4\n",
+          "expected_output": "(4, 9, 16)"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "(1,)"
+        },
+        {
+          "input": "-3 0 5\n",
+          "expected_output": "(9, 0, 25)"
+        }
+      ]
+    },
+    {
+      "question_id": 349,
+      "tests": [
+        {
+          "input": "1 2 3\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "\n",
+          "expected_output": "Empty"
+        },
+        {
+          "input": "5\n",
+          "expected_output": "{5}"
+        },
+        {
+          "input": "1 1\n",
+          "expected_output": "{1}"
+        }
+      ]
+    },
+    {
+      "question_id": 350,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4 6\n",
+          "expected_output": "[1, 3, 5]"
+        },
+        {
+          "input": "1 2\n3\n",
+          "expected_output": "[1, 2]"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "[]"
+        }
+      ]
+    },
+    {
+      "question_id": 351,
+      "tests": [
+        {
+          "input": "1 2 3 4 5 6\n",
+          "expected_output": "3 3"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "0 1"
+        },
+        {
+          "input": "2 4 6\n",
+          "expected_output": "3 0"
+        }
+      ]
+    },
+    {
+      "question_id": 352,
+      "tests": [
+        {
+          "input": "hello\nworld\n",
+          "expected_output": "['l', 'o']"
+        },
+        {
+          "input": "abc\nabd\n",
+          "expected_output": "['a', 'b']"
+        },
+        {
+          "input": "a\nb\n",
+          "expected_output": "[]"
+        }
+      ]
+    },
+    {
+      "question_id": 353,
+      "tests": [
+        {
+          "input": "1 2 2 3 4 4 6\n",
+          "expected_output": "12"
+        },
+        {
+          "input": "1 3 5\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "2 2 2\n",
+          "expected_output": "2"
+        }
+      ]
+    },
+    {
+      "question_id": 354,
+      "tests": [
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "3\n1\n2"
+        },
+        {
+          "input": "0\n0\n0\n",
+          "expected_output": "0\n0\n0"
+        },
+        {
+          "input": "-1\n-2\n-3\n",
+          "expected_output": "-3\n-1\n-2"
+        },
+        {
+          "input": "1000000\n999999\n999998\n",
+          "expected_output": "999998\n1000000\n999999"
+        }
+      ]
+    },
+    {
+      "question_id": 355,
+      "tests": [
+        {
+          "input": "1 2 3\n7 8\n",
+          "expected_output": "6"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 1 2\n5 5 6\n",
+          "expected_output": "4"
+        }
+      ]
+    },
+    {
+      "question_id": 356,
+      "tests": [
+        {
+          "input": "1 2 2 3 3 3 4\n",
+          "expected_output": "{2, 3}"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "5 5 6 6\n",
+          "expected_output": "{5, 6}"
+        }
+      ]
+    },
+    {
+      "question_id": 357,
+      "tests": [
+        {
+          "input": "3825\n",
+          "expected_output": "('3', '5')"
+        },
+        {
+          "input": "12\n",
+          "expected_output": "('1', '2')"
+        },
+        {
+          "input": "1000000000000\n",
+          "expected_output": "('1', '0')"
+        },
+        {
+          "input": "100\n",
+          "expected_output": "('1', '0')"
+        },
+        {
+          "input": "987654\n",
+          "expected_output": "('9', '4')"
+        }
+      ]
+    },
+    {
+      "question_id": 358,
+      "tests": [
+        {
+          "input": "a1b2c3a1\n",
+          "expected_output": "{'3', '1', '2'}"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "12345\n",
+          "expected_output": "{'1', '4', '2', '3', '5'}"
+        },
+        {
+          "input": "a1a2a3\n",
+          "expected_output": "{'3', '1', '2'}"
+        }
+      ]
+    },
+    {
+      "question_id": 359,
+      "tests": [
+        {
+          "input": "1 2 3 2\n",
+          "expected_output": "Duplicate"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "Unique"
+        },
+        {
+          "input": "5 5\n",
+          "expected_output": "Duplicate"
+        }
+      ]
+    },
+    {
+      "question_id": 360,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "15"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "1 1 2\n2 3\n",
+          "expected_output": "6"
+        }
+      ]
+    },
+    {
+      "question_id": 361,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n3 4 5 6 7\n5 6 7 8\n",
+          "expected_output": "{3, 4}"
+        },
+        {
+          "input": "1 2\n1 2\n1\n",
+          "expected_output": "{2}"
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "set()"
+        }
+      ]
+    },
+    {
+      "question_id": 362,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n",
+          "expected_output": "4"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "2"
+        }
+      ]
+    },
+    {
+      "question_id": 363,
+      "tests": [
+        {
+          "input": "banana\na\n",
+          "expected_output": "(1, 3, 5)"
+        },
+        {
+          "input": "hello\nl\n",
+          "expected_output": "(2, 3)"
+        },
+        {
+          "input": "abc\nx\n",
+          "expected_output": "()"
+        }
+      ]
+    },
+    {
+      "question_id": 364,
+      "tests": [
+        {
+          "input": "1 2 3 4\n2 3 4 5\n3 4 5 6\n",
+          "expected_output": "{3, 4}"
+        },
+        {
+          "input": "1 2\n1 2\n1 2\n",
+          "expected_output": "{1, 2}"
+        },
+        {
+          "input": "1 2\n3 4\n5 6\n",
+          "expected_output": "set()"
+        }
+      ]
+    },
+    {
+      "question_id": 365,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4\n",
+          "expected_output": "Superset"
+        },
+        {
+          "input": "1 2\n3\n",
+          "expected_output": "Not superset"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "Superset"
+        }
+      ]
+    },
+    {
+      "question_id": 366,
+      "tests": [
+        {
+          "input": "I love Python\n",
+          "expected_output": "(1, 4, 6)"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "(2,)"
+        },
+        {
+          "input": "a bb ccc\n",
+          "expected_output": "(1, 2, 3)"
+        }
+      ]
+    },
+    {
+      "question_id": 367,
+      "tests": [
+        {
+          "input": "apple banana cherry apple\n",
+          "expected_output": "{'a', 'b', 'c'}"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "{'a', 'b', 'c'}"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "{'h'}"
+        }
+      ]
+    },
+    {
+      "question_id": 368,
+      "tests": [
+        {
+          "input": "1 2 3\n10 20 30\n",
+          "expected_output": "(11, 22, 33)"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "(3,)"
+        },
+        {
+          "input": "5 6\n7 8\n",
+          "expected_output": "(12, 14)"
+        }
+      ]
+    },
+    {
+      "question_id": 369,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4 6\n",
+          "expected_output": "{1, 3, 5}"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "set()"
+        },
+        {
+          "input": "5\n1\n",
+          "expected_output": "{5}"
+        }
+      ]
+    },
+    {
+      "question_id": 370,
+      "tests": [
+        {
+          "input": "hello world\n",
+          "expected_output": "(2, 1)"
+        },
+        {
+          "input": "aeiou\n",
+          "expected_output": "(5,)"
+        },
+        {
+          "input": "xyz hi\n",
+          "expected_output": "(0, 1)"
+        }
+      ]
+    },
+    {
+      "question_id": 371,
+      "tests": [
+        {
+          "input": "3 9 1 9 7 7\n",
+          "expected_output": "Largest: 9\nSecond: 7"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "Largest: 2\nSecond: 1"
+        },
+        {
+          "input": "5 4 3 2 1\n",
+          "expected_output": "Largest: 5\nSecond: 4"
+        }
+      ]
+    },
+    {
+      "question_id": 372,
+      "tests": [
+        {
+          "input": "1 2 3\n3 1 2\n",
+          "expected_output": "Equal"
+        },
+        {
+          "input": "1 2\n2 3\n",
+          "expected_output": "Not equal"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "Equal"
+        }
+      ]
+    },
+    {
+      "question_id": 373,
+      "tests": [
+        {
+          "input": "4 1 3 2\n5 3 4 6\n",
+          "expected_output": "[3, 4]"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "[]"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "[1, 2]"
+        }
+      ]
+    },
+    {
+      "question_id": 374,
+      "tests": [
+        {
+          "input": "Hello beautiful world\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "aeiou\n",
+          "expected_output": "5"
+        }
+      ]
+    },
+    {
+      "question_id": 375,
+      "tests": [
+        {
+          "input": "1 2 3\n3 4 5\n4 5 6\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "1 2\n3\n4\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "1\n2\n1\n",
+          "expected_output": "{2}"
+        }
+      ]
+    },
+    {
+      "question_id": 376,
+      "tests": [
+        {
+          "input": "3 5 7 2\n",
+          "expected_output": "(3, 2)"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "(1, 2)"
+        },
+        {
+          "input": "-5 -3 -1\n",
+          "expected_output": "(-5, -1)"
+        }
+      ]
+    },
+    {
+      "question_id": 377,
+      "tests": [
+        {
+          "input": "hello\nworld\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "abc\nabd\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "a\nb\n",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "question_id": 378,
+      "tests": [
+        {
+          "input": "12245\n",
+          "expected_output": "{'5', '1', '2', '4'}"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "{'1'}"
+        },
+        {
+          "input": "1000000000000\n",
+          "expected_output": "{'1', '0'}"
+        },
+        {
+          "input": "999\n",
+          "expected_output": "{'9'}"
+        }
+      ]
+    },
+    {
+      "question_id": 379,
+      "tests": [
+        {
+          "input": "1 2 2 3 3 3 4\n",
+          "expected_output": "10"
+        },
+        {
+          "input": "1 1\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "6"
+        }
+      ]
+    },
+    {
+      "question_id": 380,
+      "tests": [
+        {
+          "input": "5\n4\n",
+          "expected_output": "(5, 10, 15, 20)"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "(1,)"
+        },
+        {
+          "input": "7\n3\n",
+          "expected_output": "(7, 14, 21)"
+        },
+        {
+          "input": "20\n20\n",
+          "expected_output": "(20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400)"
+        }
+      ]
+    },
+    {
+      "question_id": 381,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "question_id": 382,
+      "tests": [
+        {
+          "input": "7 3 9 1 9 3\n",
+          "expected_output": "7"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "1"
+        },
+        {
+          "input": "5 5 4 3\n",
+          "expected_output": "4"
+        }
+      ]
+    },
+    {
+      "question_id": 383,
+      "tests": [
+        {
+          "input": "1 2 3 4 5\n2 4 6\n",
+          "expected_output": "[1, 3, 5]"
+        },
+        {
+          "input": "1 2 3\n3\n",
+          "expected_output": "[1, 2]"
+        },
+        {
+          "input": "5 6 7\n1 2\n",
+          "expected_output": "[5, 6, 7]"
+        }
+      ]
+    },
+    {
+      "question_id": 384,
+      "tests": [
+        {
+          "input": "abc\ncba\n",
+          "expected_output": "Permutation"
+        },
+        {
+          "input": "ab\nab\n",
+          "expected_output": "Permutation"
+        },
+        {
+          "input": "abc\nabd\n",
+          "expected_output": "Not permutation"
+        }
+      ]
+    },
+    {
+      "question_id": 385,
+      "tests": [
+        {
+          "input": "1 2\n2 3\n3 4\n",
+          "expected_output": "{1, 2, 3, 4}"
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "{1, 2, 3}"
+        },
+        {
+          "input": "1 1\n2 2\n3 3\n",
+          "expected_output": "{1, 2, 3}"
+        }
+      ]
+    },
+    {
+      "question_id": 386,
+      "tests": [
+        {
+          "input": "1 2 3 4\n1 5 3 4\n",
+          "expected_output": "(0, 2, 3)"
+        },
+        {
+          "input": "1\n2\n",
+          "expected_output": "()"
+        },
+        {
+          "input": "1 2\n1 2\n",
+          "expected_output": "(0, 1)"
+        }
+      ]
+    },
+    {
+      "question_id": 387,
+      "tests": [
+        {
+          "input": "cat cut cot\n",
+          "expected_output": "{'c', 't'}"
+        },
+        {
+          "input": "abc abc abc\n",
+          "expected_output": "{'a', 'b', 'c'}"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "set()"
+        }
+      ]
+    },
+    {
+      "question_id": 388,
+      "tests": [
+        {
+          "input": "2 4 6 8\n",
+          "expected_output": "All even"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "Not all even"
+        },
+        {
+          "input": "2 2 2\n",
+          "expected_output": "All even"
+        },
+        {
+          "input": "0 2\n",
+          "expected_output": "All even"
+        }
+      ]
+    },
+    {
+      "question_id": 389,
+      "tests": [
+        {
+          "input": "beautiful\n",
+          "expected_output": "('e', 'u')"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "('e', 'o')"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "None"
+        },
+        {
+          "input": "aeiou\n",
+          "expected_output": "('a', 'u')"
+        }
+      ]
+    },
+    {
+      "question_id": 390,
+      "tests": [
+        {
+          "input": "5 1 3 2\n2 4 3 5\n3 2 5 7\n",
+          "expected_output": "[2, 3, 5]"
+        },
+        {
+          "input": "1 2\n1 2\n1 2\n",
+          "expected_output": "[1, 2]"
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "[]"
+        }
+      ]
+    },
+    {
+      "question_id": 391,
+      "tests": [
+        {
+          "input": "aabbccd\n",
+          "expected_output": "['d']"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "['e', 'h', 'o']"
+        },
+        {
+          "input": "abc\n",
+          "expected_output": "['a', 'b', 'c']"
+        },
+        {
+          "input": "aabb\n",
+          "expected_output": "[]"
+        }
+      ]
+    },
+    {
+      "question_id": 392,
+      "tests": [
+        {
+          "input": "4 1 4 2 1 3\n",
+          "expected_output": "(4, 1, 2, 3)"
+        },
+        {
+          "input": "1\n",
+          "expected_output": "(1,)"
+        },
+        {
+          "input": "1 1 2\n",
+          "expected_output": "(1, 2)"
+        }
+      ]
+    },
+    {
+      "question_id": 393,
+      "tests": [
+        {
+          "input": "1 2 3\n1 2 3 4 5\n",
+          "expected_output": "Subset"
+        },
+        {
+          "input": "1 2\n2 3\n",
+          "expected_output": "Not subset"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "Subset"
+        }
+      ]
+    },
+    {
+      "question_id": 394,
+      "tests": [
+        {
+          "input": "3 5 7 2\n",
+          "expected_output": "5"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "3"
+        },
+        {
+          "input": "-3 5 -7 10\n",
+          "expected_output": "7"
+        }
+      ]
+    },
+    {
+      "question_id": 395,
+      "tests": [
+        {
+          "input": "1 1 2 3\n2 2 3 4\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "1 2\n3 4\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "1\n1\n",
+          "expected_output": "1"
+        }
+      ]
+    },
+    {
+      "question_id": 396,
+      "tests": [
+        {
+          "input": "5 2 8 2 1\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "1 2\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "5 3 4 2\n",
+          "expected_output": "3"
+        }
+      ]
+    },
+    {
+      "question_id": 397,
+      "tests": [
+        {
+          "input": "a1b2c3\n",
+          "expected_output": "(1, 3, 5)"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "()"
+        },
+        {
+          "input": "12ab3\n",
+          "expected_output": "(0, 1, 4)"
+        }
+      ]
+    },
+    {
+      "question_id": 398,
+      "tests": [
+        {
+          "input": "1 2 3\n2 3 4\n3 4 5\n",
+          "expected_output": "{1, 3, 5}"
+        },
+        {
+          "input": "1\n1\n1\n",
+          "expected_output": "{1}"
+        },
+        {
+          "input": "1 2\n2 3\n3 4\n",
+          "expected_output": "{1, 4}"
+        }
+      ]
+    },
+    {
+      "question_id": 399,
+      "tests": [
+        {
+          "input": "1 2 3\n2 3 4\n3 4 5\n",
+          "expected_output": "2"
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected_output": "0"
+        },
+        {
+          "input": "1 2\n1\n1\n",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "question_id": 400,
+      "tests": [
+        {
+          "input": "1 2 2 3 4 4 5\n",
+          "expected_output": "(1, 3, 5)"
+        },
+        {
+          "input": "1 2 3\n",
+          "expected_output": "(1, 2, 3)"
+        },
+        {
+          "input": "1 1 2 2\n",
+          "expected_output": "()"
+        }
+      ]
+    }
+  ]
+}

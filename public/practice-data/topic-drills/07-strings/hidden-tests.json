@@ -1,0 +1,522 @@
+{
+  "topic": 7,
+  "topics": [
+    "Strings"
+  ],
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "5\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "1\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "6\n"
+        }
+      ]
+    },
+    {
+      "question_id": 2,
+      "tests": [
+        {
+          "input": "Python\n",
+          "expected_output": "P\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "a\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "h\n"
+        }
+      ]
+    },
+    {
+      "question_id": 3,
+      "tests": [
+        {
+          "input": "Python\n",
+          "expected_output": "n\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "a\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "o\n"
+        }
+      ]
+    },
+    {
+      "question_id": 4,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "HELLO\n"
+        },
+        {
+          "input": "AbC\n",
+          "expected_output": "ABC\n"
+        },
+        {
+          "input": "WORLD\n",
+          "expected_output": "WORLD\n"
+        }
+      ]
+    },
+    {
+      "question_id": 5,
+      "tests": [
+        {
+          "input": "WORLD\n",
+          "expected_output": "world\n"
+        },
+        {
+          "input": "AbC\n",
+          "expected_output": "abc\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "hello\n"
+        }
+      ]
+    },
+    {
+      "question_id": 6,
+      "tests": [
+        {
+          "input": "  hi  \n",
+          "expected_output": "hi\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "hello\n"
+        },
+        {
+          "input": "  a\n",
+          "expected_output": "a\n"
+        }
+      ]
+    },
+    {
+      "question_id": 7,
+      "tests": [
+        {
+          "input": "a b c\n-\n",
+          "expected_output": "a-b-c\n"
+        },
+        {
+          "input": "hello world\n_\n",
+          "expected_output": "hello_world\n"
+        },
+        {
+          "input": "no spaces\nx\n",
+          "expected_output": "noxspaces\n"
+        }
+      ]
+    },
+    {
+      "question_id": 8,
+      "tests": [
+        {
+          "input": "hello world\n",
+          "expected_output": "['hello', 'world']\n"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "['hi']\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "['a', 'b', 'c']\n"
+        }
+      ]
+    },
+    {
+      "question_id": 9,
+      "tests": [
+        {
+          "input": "a b c\n",
+          "expected_output": "a - b - c\n"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "hi\n"
+        },
+        {
+          "input": "x y\n",
+          "expected_output": "x - y\n"
+        }
+      ]
+    },
+    {
+      "question_id": 10,
+      "tests": [
+        {
+          "input": "Python\n",
+          "expected_output": "Pyt\n"
+        },
+        {
+          "input": "abcdef\n",
+          "expected_output": "abc\n"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "xyz\n"
+        }
+      ]
+    },
+    {
+      "question_id": 11,
+      "tests": [
+        {
+          "input": "Python\n",
+          "expected_output": "hon\n"
+        },
+        {
+          "input": "abcdef\n",
+          "expected_output": "def\n"
+        },
+        {
+          "input": "xyz\n",
+          "expected_output": "xyz\n"
+        }
+      ]
+    },
+    {
+      "question_id": 12,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "olleh\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "a\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "nohtyp\n"
+        }
+      ]
+    },
+    {
+      "question_id": 13,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "ell\n"
+        },
+        {
+          "input": "abcd\n",
+          "expected_output": "bc\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "ytho\n"
+        }
+      ]
+    },
+    {
+      "question_id": 14,
+      "tests": [
+        {
+          "input": "madam\n",
+          "expected_output": "Palindrome\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "Not palindrome\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "Palindrome\n"
+        },
+        {
+          "input": "racecar\n",
+          "expected_output": "Palindrome\n"
+        }
+      ]
+    },
+    {
+      "question_id": 15,
+      "tests": [
+        {
+          "input": "banana\na\n",
+          "expected_output": "3\n"
+        },
+        {
+          "input": "hello\nl\n",
+          "expected_output": "2\n"
+        },
+        {
+          "input": "python\nz\n",
+          "expected_output": "0\n"
+        }
+      ]
+    },
+    {
+      "question_id": 16,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "l\n"
+        },
+        {
+          "input": "abcd\n",
+          "expected_output": "bc\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "a\n"
+        }
+      ]
+    },
+    {
+      "question_id": 17,
+      "tests": [
+        {
+          "input": "abcdef\n",
+          "expected_output": "ace\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "hlo\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "a\n"
+        }
+      ]
+    },
+    {
+      "question_id": 18,
+      "tests": [
+        {
+          "input": "I like apples\napples\nmangoes\n",
+          "expected_output": "I like mangoes\n"
+        },
+        {
+          "input": "hello hello\nhello\nbye\n",
+          "expected_output": "bye bye\n"
+        },
+        {
+          "input": "a b\na\nx\n",
+          "expected_output": "x b\n"
+        }
+      ]
+    },
+    {
+      "question_id": 19,
+      "tests": [
+        {
+          "input": "Hello world of Python\n",
+          "expected_output": "4\n"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "1\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "3\n"
+        }
+      ]
+    },
+    {
+      "question_id": 20,
+      "tests": [
+        {
+          "input": "the quick brown fox\n",
+          "expected_output": "The Quick Brown Fox\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "Hello\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "A B C\n"
+        }
+      ]
+    },
+    {
+      "question_id": 21,
+      "tests": [
+        {
+          "input": "hello world\n",
+          "expected_output": "olleh dlrow\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "nohtyp\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "a b c\n"
+        }
+      ]
+    },
+    {
+      "question_id": 22,
+      "tests": [
+        {
+          "input": "Hello World Of Python\n",
+          "expected_output": "HWOP\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "abc\n"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "h\n"
+        }
+      ]
+    },
+    {
+      "question_id": 23,
+      "tests": [
+        {
+          "input": "madam\n",
+          "expected_output": "Yes\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "No\n"
+        },
+        {
+          "input": "a\n",
+          "expected_output": "Yes\n"
+        }
+      ]
+    },
+    {
+      "question_id": 24,
+      "tests": [
+        {
+          "input": "Hello\n",
+          "expected_output": "2\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "1\n"
+        },
+        {
+          "input": "AEIOU\n",
+          "expected_output": "5\n"
+        }
+      ]
+    },
+    {
+      "question_id": 25,
+      "tests": [
+        {
+          "input": "apple,banana\n",
+          "expected_output": "['apple', 'banana']\n"
+        },
+        {
+          "input": "a,b,c\n",
+          "expected_output": "['a', 'b', 'c']\n"
+        },
+        {
+          "input": "one\n",
+          "expected_output": "['one']\n"
+        }
+      ]
+    },
+    {
+      "question_id": 26,
+      "tests": [
+        {
+          "input": "  hi  \n",
+          "expected_output": "HI\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "HELLO\n"
+        },
+        {
+          "input": " a \n",
+          "expected_output": "A\n"
+        }
+      ]
+    },
+    {
+      "question_id": 27,
+      "tests": [
+        {
+          "input": "a1b2c3\n",
+          "expected_output": "123\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "\n"
+        },
+        {
+          "input": "12345\n",
+          "expected_output": "12345\n"
+        }
+      ]
+    },
+    {
+      "question_id": 28,
+      "tests": [
+        {
+          "input": "hello\n",
+          "expected_output": "hll\n"
+        },
+        {
+          "input": "python\n",
+          "expected_output": "pythn\n"
+        },
+        {
+          "input": "AEIOU\n",
+          "expected_output": "\n"
+        }
+      ]
+    },
+    {
+      "question_id": 29,
+      "tests": [
+        {
+          "input": "hi there\n",
+          "expected_output": "hi: 2\nthere: 5\n"
+        },
+        {
+          "input": "hello\n",
+          "expected_output": "hello: 5\n"
+        },
+        {
+          "input": "a bb ccc\n",
+          "expected_output": "a: 1\nbb: 2\nccc: 3\n"
+        }
+      ]
+    },
+    {
+      "question_id": 30,
+      "tests": [
+        {
+          "input": "I love Python\n",
+          "expected_output": "Python love I\n"
+        },
+        {
+          "input": "hi\n",
+          "expected_output": "hi\n"
+        },
+        {
+          "input": "a b c\n",
+          "expected_output": "c b a\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "batches": [
+    {
+      "id": "batch-01",
+      "title": "Batch 1",
+      "path": "/practice-data/batch-01",
+      "total": 100
+    },
+    {
+      "id": "batch-02",
+      "title": "Batch 2",
+      "path": "/practice-data/batch-02",
+      "total": 100
+    },
+    {
+      "id": "batch-03",
+      "title": "Batch 3",
+      "path": "/practice-data/batch-03",
+      "total": 100
+    },
+    {
+      "id": "batch-04",
+      "title": "Batch 4",
+      "path": "/practice-data/batch-04",
+      "total": 100
+    },
+    {
+      "id": "batch-05",
+      "title": "Batch 5",
+      "path": "/practice-data/batch-05",
+      "total": 100
+    }
+  ],
+  "topicDrills": [
+    {
+      "id": "01-variables",
+      "title": "Variables",
+      "path": "/practice-data/topic-drills/01-variables.md",
+      "total": 30
+    },
+    {
+      "id": "02-data-types",
+      "title": "Data Types",
+      "path": "/practice-data/topic-drills/02-data-types.md",
+      "total": 30
+    },
+    {
+      "id": "03-operators",
+      "title": "Operators",
+      "path": "/practice-data/topic-drills/03-operators.md",
+      "total": 30
+    },
+    {
+      "id": "04-input-output",
+      "title": "Input Output",
+      "path": "/practice-data/topic-drills/04-input-output.md",
+      "total": 30
+    },
+    {
+      "id": "05-conditions",
+      "title": "Conditions",
+      "path": "/practice-data/topic-drills/05-conditions.md",
+      "total": 30
+    },
+    {
+      "id": "06-loops",
+      "title": "Loops",
+      "path": "/practice-data/topic-drills/06-loops.md",
+      "total": 30
+    },
+    {
+      "id": "07-strings",
+      "title": "Strings",
+      "path": "/practice-data/topic-drills/07-strings.md",
+      "total": 30
+    },
+    {
+      "id": "08-lists",
+      "title": "Lists",
+      "path": "/practice-data/topic-drills/08-lists.md",
+      "total": 30
+    },
+    {
+      "id": "09-tuples",
+      "title": "Tuples",
+      "path": "/practice-data/topic-drills/09-tuples.md",
+      "total": 30
+    },
+    {
+      "id": "10-sets",
+      "title": "Sets",
+      "path": "/practice-data/topic-drills/10-sets.md",
+      "total": 30
+    },
+    {
+      "id": "11-dictionaries",
+      "title": "Dictionaries",
+      "path": "/practice-data/topic-drills/11-dictionaries.md",
+      "total": 30
+    },
+    {
+      "id": "12-functions",
+      "title": "Functions",
+      "path": "/practice-data/topic-drills/12-functions.md",
+      "total": 30
+    }
+  ]
+}
