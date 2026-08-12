@@ -34,7 +34,9 @@ interface RuntimeOptions {
 
 export function usePythonRuntime(opts: RuntimeOptions = {}) {
   const optsRef = useRef(opts);
-  optsRef.current = opts;
+  useEffect(() => {
+    optsRef.current = opts;
+  });
   const filenameRef = useRef("main.py");
   const clientRef = useRef<PyodideClient | null>(null);
   const interactiveStdoutRef = useRef("");
@@ -218,7 +220,9 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
 /** Manage the virtual project: files, folders, tabs, and persistence. */
 export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
   const onNewFilesRef = useRef(onNewFiles);
-  onNewFilesRef.current = onNewFiles;
+  useEffect(() => {
+    onNewFilesRef.current = onNewFiles;
+  });
 
   const [nodes, setNodes] = useState<PyNode[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);

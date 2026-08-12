@@ -20,7 +20,6 @@ const BASE = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full`;
 const HOME = "/home/pyodide";
 
 // Lazily typed Pyodide instance.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let pyodide: any = null;
 let ready = false;
 
@@ -144,7 +143,6 @@ def __ide_collect_plots():
 `;
 
 async function loadPyodideLoader(): Promise<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (opts?: { indexURL?: string }) => Promise<any>
 > {
   // Use a runtime dynamic import so the bundler never tries to resolve the
@@ -153,7 +151,6 @@ async function loadPyodideLoader(): Promise<
     "u",
     "return import(u);",
   ) as (u: string) => Promise<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     loadPyodide: (opts?: { indexURL?: string }) => Promise<any>;
   }>;
   const mod = await importer(`${BASE}/pyodide.mjs`);

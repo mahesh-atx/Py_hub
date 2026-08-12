@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, type DragEvent } from "react";
+import { useState, useCallback, type DragEvent } from "react";
 import {
   ChevronRight,
   ChevronDown,
@@ -84,12 +84,14 @@ export function FileExplorer(props: FileExplorerProps) {
   );
   const [lastSelectedId, setLastSelectedId] = useState<string | null>(props.activeId);
 
-  useEffect(() => {
-    if (props.activeId) {
-      setSelectedIds(new Set([props.activeId]));
-      setLastSelectedId(props.activeId);
-    }
-  }, [props.activeId]);
+  // Keep the explorer selection in sync with the active file (React docs:
+  // "adjusting state during render" pattern — guarded so it runs once per change).
+  if (props.activeId && !selectedIds.has(props.activeId)) {
+    setSelectedIds(new Set([props.activeId]));
+  }
+  if (props.activeId && lastSelectedId !== props.activeId) {
+    setLastSelectedId(props.activeId);
+  }
 
   const getActiveFolder = (): string | null => {
     if (selectedIds.size === 0) return null;

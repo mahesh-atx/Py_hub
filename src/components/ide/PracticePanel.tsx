@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Play, Loader2, CircleCheck, CircleX, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, Folder, FolderOpen, BookOpen, Code2, ArrowLeft, TerminalSquare, Sparkles, PlayCircle, Trophy, Lightbulb, Target } from "lucide-react";
+import { Loader2, CircleCheck, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, Folder, FolderOpen, BookOpen, TerminalSquare, PlayCircle, Trophy, Lightbulb, Target } from "lucide-react";
 import { toast } from "@/components/ide/ToastContainer";
 import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
-import ReactMarkdown from "react-markdown";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import remarkGfm from "remark-gfm";
 import { terminalStore } from "@/lib/terminal/store";
 
 interface TestCase {
@@ -28,7 +26,6 @@ interface Challenge {
 interface ManifestFile { id: string; title: string; type: 'markdown' | 'practice'; total?: number; }
 interface Manifest {
   batches: { id: string; title: string; path: string; files: ManifestFile[] }[];
-  topicDrills: { id: string; title: string; path: string; total?: number }[];
 }
 
 function normalize(s: string): string {
@@ -67,18 +64,20 @@ type RunCapture = (code: string, stdin?: string, timeoutMs?: number) => Promise<
 export function PracticeSidebar({ 
   runTest, 
   onCreateFile, 
+  onOpenOrCreateFile,
   activeFileContent,
   onPracticeStateChange,
   onTestResults
 }: { 
   runTest: RunCapture; 
   onCreateFile: (name: string, content: string, append?: boolean) => void;
+  onOpenOrCreateFile: (name: string, content: string) => void;
   activeFileContent: string;
   onPracticeStateChange?: (state: { isActive: boolean; hasTests: boolean; submitFn: ((code: string) => Promise<void>) | null; judgeStdoutFn: ((stdout: string) => void) | null; skipFn: (() => void) | null; canSkip: boolean }) => void;
   onTestResults?: (results: { passed: boolean; actual: string; expected: string }[] | null) => void;
 }) {
   const [manifest, setManifest] = useState<Manifest | null>(null);
-  const [activeCategory, setActiveCategory] = useState<{ type: "batch" | "drill", id: string } | null>(null);
+  const [activeCategory, setActiveCategory] = useState<{ type: "batch", id: string, fileId: string } | null>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null);
   const [loading, setLoading] = useState(false);
@@ -88,13 +87,12 @@ export function PracticeSidebar({
   const [batchesExpanded, setBatchesExpanded] = useState(true);
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({});
 
-  const [drillsExpanded, setDrillsExpanded] = useState(true);
-  const [questionsExpanded, setQuestionsExpanded] = useState(false);
   const [keepCodeEnabled, setKeepCodeEnabled] = useState(true);
+  const [questionKind, setQuestionKind] = useState<"Q" | "P">("Q");
 
   // Persistence State
   const [solvedChallenges, setSolvedChallenges] = useState<Set<string>>(new Set());
-  const [lastActive, setLastActive] = useState<{ type: "batch" | "drill", id: string, challengeId: string } | null>(null);
+  const [lastActive, setLastActive] = useState<{ type: "batch", id: string, fileId: string, challengeId: string } | null>(null);
 
   useEffect(() => {
     getKV("practiceState").then((state: any) => {
@@ -107,7 +105,7 @@ export function PracticeSidebar({
 
   useEffect(() => {
     if (activeCategory && activeChallenge) {
-      const newLastActive = { type: activeCategory.type, id: activeCategory.id, challengeId: activeChallenge.id };
+      const newLastActive = { type: activeCategory.type, id: activeCategory.id, fileId: activeCategory.fileId, challengeId: activeChallenge.id };
       setLastActive(newLastActive);
       getKV("practiceState").then((state: any) => {
         setKV("practiceState", { ...(state || {}), lastActive: newLastActive });
@@ -134,7 +132,7 @@ export function PracticeSidebar({
       });
 
       // Check for batch completion
-      const solvedInCat = Array.from(next).filter(x => x.startsWith(categoryId + "__")).length;
+      const solvedInCat = Array.from(next).filter(x => x.startsWith(categoryId + "__" + questionKind)).length;
       if (solvedInCat === categoryTotal) {
         setTimeout(() => {
            // Massive fireworks!
@@ -157,7 +155,7 @@ export function PracticeSidebar({
              });
              if (Date.now() < end) requestAnimationFrame(frame);
            }());
-           toast.info(`🏆 Incredible! You completed all ${categoryTotal} questions in this module!`);
+           toast.info(`🏆 Incredible! You completed all ${categoryTotal} ${questionKind === "P" ? "projects" : "questions"} in this module!`);
         }, 1000);
       }
 
@@ -167,8 +165,6 @@ export function PracticeSidebar({
 
   const [results, setResults] = useState<{ passed: boolean; actual: string; expected: string }[] | null>(null);
   const [running, setRunning] = useState(false);
-  const [showHint, setShowHint] = useState<boolean>(false);
-  const [showSolution, setShowSolution] = useState<boolean>(false);
 
   useEffect(() => {
     fetch("/practice-data/manifest.json")
@@ -220,42 +216,46 @@ export function PracticeSidebar({
     } catch(e) {}
   };
 
-  const loadContent = async (type: "batch" | "drill", id: string) => {
+  const loadContent = async (type: "batch", id: string, fileId = "questions.md") => {
     setLoading(true);
-    setActiveCategory({ type, id });
+    setActiveCategory({ type, id, fileId });
     setChallenges([]);
     setActiveChallenge(null);
     setResults(null);
+    const isProjects = fileId === "projects.md";
+    const prefix: "Q" | "P" = isProjects ? "P" : "Q";
+    setQuestionKind(prefix);
     try {
-      let mdUrl = type === "batch" ? `/practice-data/${id}/questions.md` : `/practice-data/topic-drills/${id}/questions.md`;
-      const mdRes = await fetch(mdUrl);
+      const mdRes = await fetch(`/practice-data/${id}/${fileId}`);
       const mdText = await mdRes.text();
 
       let testsData: any = { questions: [] };
       let solutionsParts: string[] = [];
-      try {
-        const testsUrl = type === "batch" ? `/practice-data/${id}/hidden-tests.json` : `/practice-data/topic-drills/${id}/hidden-tests.json`;
-        const solUrl = type === "batch" ? `/practice-data/${id}/solutions.md` : `/practice-data/topic-drills/${id}/solutions.md`;
-        
-        const [testsRes, solRes] = await Promise.all([fetch(testsUrl), fetch(solUrl)]);
-        
-        if (testsRes.ok) testsData = await testsRes.json();
-        if (solRes.ok) {
-          const solText = await solRes.text();
-          solutionsParts = solText.split(/^## Q\d+\.\s*/m);
-          solutionsParts.shift(); // remove intro
+      if (!isProjects) {
+        try {
+          const [testsRes, solRes] = await Promise.all([
+            fetch(`/practice-data/${id}/hidden-tests.json`),
+            fetch(`/practice-data/${id}/solutions.md`),
+          ]);
+          
+          if (testsRes.ok) testsData = await testsRes.json();
+          if (solRes.ok) {
+            const solText = await solRes.text();
+            solutionsParts = solText.split(/^## Q\d+\.\s*/m);
+            solutionsParts.shift(); // remove intro
+          }
+        } catch {
+          // ignore
         }
-      } catch {
-        // ignore
       }
 
-      const parts = mdText.split(/^## Q\d+\.\s*/m);
+      const parts = mdText.split(new RegExp(`^## ${prefix}\\d+\\.\\s*`, "m"));
       parts.shift(); // remove intro text
 
       const parsedChallenges = parts.map((part, idx) => {
         const lines = part.split('\n');
         const title = lines[0].trim();
-        // Fix formatting: Topic drills lack blank lines between **Property:** lines.
+        // Fix formatting: sections can lack blank lines between **BoldText:** lines.
         // This regex ensures a blank line exists before any **BoldText:** line.
         const rawMarkdown = part.replace(lines[0], "").trim()
                              .replace(/\n(\*\*[A-Za-z]+:\*\*)/g, '\n\n$1');
@@ -293,8 +293,8 @@ export function PracticeSidebar({
         }
 
         return {
-          id: String(actualQId),
-          title: `Q${actualQId}. ${title}`,
+          id: `${prefix}${actualQId}`,
+          title: `${prefix}${actualQId}. ${title}`,
           markdown,
           solution,
           tests: testObj ? testObj.tests : [],
@@ -317,25 +317,26 @@ export function PracticeSidebar({
     setLoading(false);
   };
 
-  const openDescription = (c: Challenge) => {
-    const filename = `practice.md`;
-    let content = c.markdown;
-    if (c.solution) {
-      content += `\n\n---\n\n<details><summary><b>View Reference Solution</b></summary>\n\n${c.solution}\n\n</details>`;
-    }
-    onCreateFile(filename, content);
+  const projectFileName = (c: Challenge) => {
+    const base = c.title
+      .replace(/^P\d+\.\s*/, "")
+      .trim()
+      .replace(/[\\/:*?"<>|]+/g, "")
+      .replace(/\s+/g, "-");
+    return `${c.id}-${base}.py`;
   };
 
   const selectChallenge = (c: Challenge | null, keepCode = false) => {
     setActiveChallenge(c);
     setResults(null);
-    setShowHint(false);
-    setShowSolution(false);
     terminalStore.clear();
     if (onTestResults) onTestResults(null);
     if (c) {
-      const filename = `practice.py`;
-      onCreateFile(filename, `# ${c.title}\n# Write your solution below:\n\n`, keepCode);
+      if (questionKind === "P") {
+        onOpenOrCreateFile(projectFileName(c), `# ${c.title}\n# Write your solution below:\n\n`);
+      } else {
+        onCreateFile(`practice.py`, `# ${c.title}\n# Write your solution below:\n\n`, keepCode);
+      }
     }
   };
 
@@ -370,6 +371,16 @@ export function PracticeSidebar({
 
   const allPassed = results && results.length > 0 && results.every(r => r.passed);
   const activeIndex = activeChallenge ? challenges.findIndex(c => c.id === activeChallenge.id) : -1;
+  const isProjectSolved = !!activeCategory && !!activeChallenge && solvedChallenges.has(activeCategory.id + "__" + activeChallenge.id);
+
+  const markProjectComplete = () => {
+    if (!activeChallenge || !activeCategory) return;
+    markSolved(activeChallenge.id, activeCategory.id, challenges.length);
+    const idx = challenges.findIndex(c => c.id === activeChallenge.id);
+    if (idx < challenges.length - 1) {
+      setTimeout(() => selectChallenge(challenges[idx + 1], true), 1200);
+    }
+  };
 
   if (!manifest) return <div className="p-4 text-xs text-[var(--vscode-text-muted)]">Loading...</div>;
 
@@ -382,16 +393,18 @@ export function PracticeSidebar({
         </div>
         {activeCategory && (
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setKeepCodeEnabled(!keepCodeEnabled)}
-              className={`flex items-center gap-1.5 transition-colors ${
-                keepCodeEnabled ? "text-emerald-400" : "text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]"
-              }`}
-              title="Keep previously typed code when advancing to the next question"
-            >
-              <div className={`h-1.5 w-1.5 rounded-full ${keepCodeEnabled ? "bg-emerald-400 shadow-[0_0_4px_#34d399]" : "bg-transparent border border-current"}`} />
-              <span className="normal-case tracking-normal text-[10px]">Keep Code</span>
-            </button>
+            {questionKind === "Q" && (
+              <button
+                onClick={() => setKeepCodeEnabled(!keepCodeEnabled)}
+                className={`flex items-center gap-1.5 transition-colors ${
+                  keepCodeEnabled ? "text-emerald-400" : "text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]"
+                }`}
+                title="Keep previously typed code when advancing to the next question"
+              >
+                <div className={`h-1.5 w-1.5 rounded-full ${keepCodeEnabled ? "bg-emerald-400 shadow-[0_0_4px_#34d399]" : "bg-transparent border border-current"}`} />
+                <span className="normal-case tracking-normal text-[10px]">Keep Code</span>
+              </button>
+            )}
             
             <div className="flex items-center gap-0.5">
               <button 
@@ -424,7 +437,7 @@ export function PracticeSidebar({
          <div className="h-[2px] w-full bg-black/20 shrink-0">
             <div 
               className="h-full bg-sky-500 transition-all duration-500" 
-              style={{ width: `${(Array.from(solvedChallenges).filter(x => x.startsWith(activeCategory.id + "__")).length / challenges.length) * 100}%` }}
+              style={{ width: `${(Array.from(solvedChallenges).filter(x => x.startsWith(activeCategory.id + "__" + questionKind)).length / challenges.length) * 100}%` }}
             ></div>
          </div>
       )}
@@ -439,15 +452,11 @@ export function PracticeSidebar({
               onClick={() => setBatchesExpanded(!batchesExpanded)}
             >
               {batchesExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-              Course Batches
+              Python Programming
             </div>
             {batchesExpanded && (
               <div className="flex flex-col pb-2">
                 {manifest.batches.map(b => {
-                  const practiceFile = b.files?.find(f => f.type === 'practice');
-                  const bTotal = practiceFile?.total || 60;
-                  const bSolved = Array.from(solvedChallenges).filter(x => x.startsWith(b.id + "__")).length;
-                  const bComplete = bSolved === bTotal && bTotal > 0;
                   const isActive = lastActive?.id === b.id;
                   const isExpanded = expandedFolders[b.id] || false;
                   
@@ -467,6 +476,11 @@ export function PracticeSidebar({
                         <div className="flex flex-col pb-1">
                           {b.files.map(f => {
                             const isPractice = f.type === 'practice';
+                            const fileSolved = isPractice
+                              ? Array.from(solvedChallenges).filter(x => x.startsWith(`${b.id}__${f.id === "projects.md" ? "P" : "Q"}`)).length
+                              : 0;
+                            const fileTotal = isPractice ? (f.total || 0) : 0;
+                            const fileComplete = isPractice && fileTotal > 0 && fileSolved === fileTotal;
                             return (
                               <div
                                 key={f.id}
@@ -476,7 +490,7 @@ export function PracticeSidebar({
                                 }}
                                 onClick={() => {
                                   if (isPractice) {
-                                    loadContent("batch", b.id);
+                                    loadContent("batch", b.id, f.id);
                                   } else {
                                     loadMarkdown(b.id, f.id);
                                   }
@@ -488,8 +502,8 @@ export function PracticeSidebar({
                                   <span className="truncate">{f.title}</span>
                                 </div>
                                 {isPractice && (
-                                  <span className={`text-[10px] ${bComplete ? 'text-amber-400/80 font-bold' : 'text-[var(--vscode-text-muted)]'}`}>
-                                    [{bSolved}/{bTotal}]
+                                  <span className={`text-[10px] ${fileComplete ? 'text-amber-400/80 font-bold' : 'text-[var(--vscode-text-muted)]'}`}>
+                                    [{fileSolved}/{fileTotal}]
                                   </span>
                                 )}
                               </div>
@@ -566,6 +580,28 @@ export function PracticeSidebar({
                     Next Question <ArrowRight className="h-3 w-3" />
                   </button>
                 )}
+
+                {questionKind === "P" && activeChallenge && (
+                  <button
+                    onClick={markProjectComplete}
+                    disabled={isProjectSolved}
+                    className={`mt-2 flex w-full items-center justify-center gap-1.5 rounded px-3 py-2 text-[11px] font-semibold text-white transition-colors shadow-lg ${
+                      isProjectSolved
+                        ? "cursor-default bg-emerald-700/60 shadow-emerald-900/20"
+                        : "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/20 animate-in fade-in zoom-in duration-300"
+                    }`}
+                  >
+                    {isProjectSolved ? (
+                      <>
+                        <CircleCheck className="h-3 w-3" /> Project Completed
+                      </>
+                    ) : (
+                      <>
+                        <Trophy className="h-3 w-3" /> Mark as Complete
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             ) : (
               <div className="text-xs text-[var(--vscode-text-muted)]">No challenges found.</div>
@@ -577,7 +613,7 @@ export function PracticeSidebar({
       {/* Floating Resume Button */}
       {!activeCategory && lastActive && (
         <button
-          onClick={() => loadContent(lastActive.type, lastActive.id)}
+          onClick={() => loadContent(lastActive.type, lastActive.id, lastActive.fileId || "questions.md")}
           className="absolute bottom-6 right-6 h-12 w-12 rounded-full bg-[var(--vscode-accent)] text-[#ffffff] flex items-center justify-center transition-transform hover:scale-110 z-50 group border border-[var(--vscode-border)]"
           title="Resume Practice"
         >

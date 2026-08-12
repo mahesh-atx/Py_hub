@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Play, Code, Type, Trash2 } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import ReactMarkdown from "react-markdown";
@@ -25,26 +25,23 @@ interface Notebook {
 }
 
 export function NotebookEditor({ content, theme, onChange, onRunCell }: NotebookEditorProps) {
-  const [notebook, setNotebook] = useState<Notebook | null>(null);
   const [cellOutputs, setCellOutputs] = useState<Record<number, { stdout: string; stderr: string; plots?: string[] }>>({});
   const [runningCell, setRunningCell] = useState<number | null>(null);
   const [editingMarkdown, setEditingMarkdown] = useState<number | null>(null);
 
-  useEffect(() => {
+  const notebook = useMemo<Notebook>(() => {
     try {
       const parsed = JSON.parse(content);
       if (parsed && Array.isArray(parsed.cells)) {
-        setNotebook(parsed);
-      } else {
-        setNotebook({ cells: [] });
+        return parsed as Notebook;
       }
-    } catch (e) {
-      setNotebook({ cells: [{ cell_type: "markdown", source: ["# Invalid Notebook Format\n", "The file content could not be parsed as a valid Jupyter Notebook."] }] });
+      return { cells: [] };
+    } catch {
+      return { cells: [{ cell_type: "markdown", source: ["# Invalid Notebook Format\n", "The file content could not be parsed as a valid Jupyter Notebook."] }] };
     }
   }, [content]);
 
   const updateNotebook = useCallback((newNb: Notebook) => {
-    setNotebook(newNb);
     onChange(JSON.stringify(newNb, null, 2));
   }, [onChange]);
 

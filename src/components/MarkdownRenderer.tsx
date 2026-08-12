@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -100,7 +100,6 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
       
       <SyntaxHighlighter
         PreTag="div"
-        children={code}
         language={language}
         style={dracula as any}
         customStyle={{ 
@@ -110,7 +109,9 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
           backgroundColor: '#252627',
           fontSize: '0.9em'
         }}
-      />
+      >
+        {code}
+      </SyntaxHighlighter>
       
 
     </motion.div>
@@ -132,24 +133,55 @@ function ScrollReveal({ children, as: Component = 'div', ...props }: { children:
   );
 }
 
+function MarkdownInput({ type, checked, ...props }: any) {
+  const context = React.useContext(MarkdownContext);
+  if (type === 'checkbox') {
+    const currentIndex = String(context.getCheckboxIndex());
+    const isChecked = context.checkboxState[currentIndex] ?? checked ?? false;
+
+    return (
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={(e) => context.toggleCheckbox(currentIndex, e.target.checked)}
+        {...props}
+      />
+    );
+  }
+  return <input type={type} checked={checked} {...props} />;
+}
+
+function MarkdownImage({ src, alt }: any) {
+  const context = React.useContext(MarkdownContext);
+  if (!src) return null;
+  const srcString = String(src);
+  const actualSrc = srcString.startsWith('http')
+    ? srcString
+    : `/api/image?path=${encodeURIComponent(srcString)}&dir=${encodeURIComponent(context.dirPath)}`;
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+      transition={{ duration: 0.5 }}
+      style={{ display: 'inline-block', width: '100%', margin: '1em 0' }}
+    >
+      <Image
+        src={actualSrc}
+        alt={alt || 'Markdown Image'}
+        width={800}
+        height={500}
+        unoptimized
+        style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', cursor: 'zoom-in', border: '1px solid var(--border-color)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
+        onClick={() => context.setSelectedImage(actualSrc)}
+      />
+    </motion.span>
+  );
+}
+
 const markdownComponents: any = {
-  input: ({ node, type, checked, ...props }: any) => {
-    const context = React.useContext(MarkdownContext);
-    if (type === 'checkbox') {
-      const currentIndex = String(context.getCheckboxIndex());
-      const isChecked = context.checkboxState[currentIndex] ?? checked ?? false;
-      
-      return (
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={(e) => context.toggleCheckbox(currentIndex, e.target.checked)}
-          {...props}
-        />
-      );
-    }
-    return <input type={type} checked={checked} {...props} />;
-  },
+  input: MarkdownInput,
   code: (props: any) => {
     const { children, className, node, ref, ...rest } = props;
     const match = /language-(\w+)/.exec(className || '');
@@ -165,34 +197,7 @@ const markdownComponents: any = {
       </code>
     );
   },
-  img: ({ src, alt }: any) => {
-    const context = React.useContext(MarkdownContext);
-    if (!src) return null;
-    const srcString = String(src);
-    const actualSrc = srcString.startsWith('http') 
-      ? srcString 
-      : `/api/image?path=${encodeURIComponent(srcString)}&dir=${encodeURIComponent(context.dirPath)}`;
-      
-    return (
-      <motion.span 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-        transition={{ duration: 0.5 }}
-        style={{ display: 'inline-block', width: '100%', margin: '1em 0' }}
-      >
-        <Image 
-          src={actualSrc} 
-          alt={alt || 'Markdown Image'}
-          width={800}
-          height={500}
-          unoptimized
-          style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', cursor: 'zoom-in', border: '1px solid var(--border-color)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} 
-          onClick={() => context.setSelectedImage(actualSrc)}
-        />
-      </motion.span>
-    );
-  },
+  img: MarkdownImage,
   table: ({ children }: any) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -291,23 +296,27 @@ const markdownComponents: any = {
 };
 
 const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId, dirPath = '', isCompact = false }: { content: string, fileId: string, dirPath?: string, isCompact?: boolean }) {
-  const [checkboxState, setCheckboxState] = useState<Record<string, boolean>>({});
+  const [checkboxState, setCheckboxState] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const saved = localStorage.getItem(`checkboxes-${fileId}`);
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  useEffect(() => {
-    const saved = localStorage.getItem(`checkboxes-${fileId}`);
-    if (saved) {
-      try { setCheckboxState(JSON.parse(saved)); } catch (e) {}
-    }
+  const toggleCheckbox = useCallback((index: string, checked: boolean) => {
+    setCheckboxState((prev) => {
+      const newState = { ...prev, [index]: checked };
+      localStorage.setItem(`checkboxes-${fileId}`, JSON.stringify(newState));
+      return newState;
+    });
   }, [fileId]);
 
-  const toggleCheckbox = (index: string, checked: boolean) => {
-    const newState = { ...checkboxState, [index]: checked };
-    setCheckboxState(newState);
-    localStorage.setItem(`checkboxes-${fileId}`, JSON.stringify(newState));
-  };
-
   let checkboxIndexRef = React.useRef(0);
+  // eslint-disable-next-line react-hooks/refs -- render-phase counter that must reset before each checkbox pass
   checkboxIndexRef.current = 0; // reset on every render
 
   const contextValue = React.useMemo(() => ({
@@ -317,7 +326,7 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
     dirPath,
     setSelectedImage,
     isCompact
-  }), [checkboxState, dirPath, isCompact]);
+  }), [checkboxState, toggleCheckbox, dirPath, isCompact]);
 
   return (
     <MarkdownContext.Provider value={contextValue}>

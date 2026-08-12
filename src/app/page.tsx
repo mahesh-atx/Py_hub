@@ -1,7 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import { setWorkspaceId } from "@/lib/storage/idb";
 
 const IDE = dynamic(
   () => import("@/components/ide/IDE").then((m) => m.IDE),
@@ -16,28 +18,38 @@ const IDE = dynamic(
   },
 );
 
-import { useState, useEffect } from "react";
-import { setWorkspaceId } from "@/lib/storage/idb";
+interface Workspace {
+  id: string;
+  name: string;
+}
+
+function readWorkspaces(): Workspace[] {
+  if (typeof window === "undefined") return [];
+  const w = localStorage.getItem("python-ide-workspaces");
+  if (w) {
+    try {
+      return JSON.parse(w);
+    } catch {
+      return [];
+    }
+  }
+  const defaultW: Workspace[] = [{ id: "default", name: "Default Workspace" }];
+  localStorage.setItem("python-ide-workspaces", JSON.stringify(defaultW));
+  return defaultW;
+}
+
+function readActiveWorkspace(): string {
+  if (typeof window === "undefined") return "default";
+  return localStorage.getItem("python-ide-active-workspace") || "default";
+}
 
 function WorkspaceWrapper() {
-  const [workspaces, setWorkspaces] = useState<{id: string, name: string}[]>([]);
-  const [currentId, setCurrentId] = useState<string>("default");
-  const [loaded, setLoaded] = useState(false);
+  const [workspaces, setWorkspaces] = useState<Workspace[]>(readWorkspaces);
+  const [currentId, setCurrentId] = useState<string>(readActiveWorkspace);
 
   useEffect(() => {
-    const w = localStorage.getItem("python-ide-workspaces");
-    const active = localStorage.getItem("python-ide-active-workspace") || "default";
-    if (w) {
-      try { setWorkspaces(JSON.parse(w)); } catch (e) {}
-    } else {
-      const defaultW = [{ id: "default", name: "Default Workspace" }];
-      setWorkspaces(defaultW);
-      localStorage.setItem("python-ide-workspaces", JSON.stringify(defaultW));
-    }
-    setCurrentId(active);
-    setWorkspaceId(active);
-    setLoaded(true);
-  }, []);
+    setWorkspaceId(currentId);
+  }, [currentId]);
 
   const switchWorkspace = (id: string) => {
     localStorage.setItem("python-ide-active-workspace", id);
@@ -53,11 +65,9 @@ function WorkspaceWrapper() {
     switchWorkspace(newId);
   };
 
-  if (!loaded) return null;
-
   return (
-    <IDE 
-      key={currentId} 
+    <IDE
+      key={currentId}
       workspaces={workspaces}
       currentWorkspaceId={currentId}
       onSwitchWorkspace={switchWorkspace}

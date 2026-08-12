@@ -5,12 +5,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "PyLab — Interactive Python IDE & Learning Platform",
   description:
-    "Master Python programming directly in your browser. PyLab features a full WebAssembly IDE, interactive topic drills, automated judging, and comprehensive practice batches.",
+    "Master Python programming directly in your browser. PyLab features a full WebAssembly IDE, automated judging, practice questions, and comprehensive practice projects per phase.",
   keywords: ["Python", "IDE", "Learn to Code", "Programming", "Browser IDE", "WebAssembly", "Pyodide"],
   authors: [{ name: "PyLab" }],
   openGraph: {
     title: "PyLab — Interactive Python IDE",
-    description: "Master Python programming directly in your browser with interactive drills and automated judging.",
+    description: "Master Python programming directly in your browser with practice questions, projects, and automated judging.",
     type: "website",
     siteName: "PyLab",
   },

@@ -254,13 +254,14 @@ export function IDE({
     runtime.run(f.content ?? "", pathOf(project.nodes, f.id), buildFiles());
   }, [project, runtime, buildFiles]);
 
-  // Auto-switch to plots tab if new plots arrive
-  useEffect(() => {
-    if (runtime.plots.length > 0) {
-      setPanelOpen(true);
-      setPanelTab("plots");
-    }
-  }, [runtime.plots]);
+  // Auto-switch to plots tab if new plots arrive (guarded render adjustment,
+  // same pattern as FileExplorer — avoids the setState-in-effect lint error).
+  if (runtime.plots.length > 0 && !panelOpen) {
+    setPanelOpen(true);
+  }
+  if (runtime.plots.length > 0 && panelTab !== "plots") {
+    setPanelTab("plots");
+  }
 
   // Auto-open practice sandbox when entering practice mode with no open practice tabs
   useEffect(() => {
@@ -556,6 +557,15 @@ export function IDE({
                   onTestResults={(results) => {
                     setPracticeResults(results);
                   }}
+                  onOpenOrCreateFile={(name, content) => {
+                    const path = `.practice/${name}`;
+                    const existingNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
+                    if (existingNode && existingNode.kind === 'file') {
+                      project.openFile(existingNode.id);
+                    } else {
+                      project.createByPath(path, content);
+                    }
+                  }}
                   onCreateFile={(name, content, append = false) => {
                     const path = `.practice/${name}`;
                     let finalContent = content;
@@ -607,7 +617,7 @@ export function IDE({
                     onReorder={project.reorderTab}
                     onDropFile={(id) => project.openFile(id)}
                     onDropPracticeFile={async (batchId, fileId, isPractice) => {
-                        const url = isPractice ? `/practice-data/${batchId}/questions.md` : `/practice-data/${batchId}/${fileId}`;
+                        const url = `/practice-data/${batchId}/${fileId}`;
                         try {
                           const res = await fetch(url);
                           if (res.ok) {
@@ -770,7 +780,7 @@ export function IDE({
                         setSplitActiveId(id);
                       }}
                       onDropPracticeFile={async (batchId, fileId, isPractice) => {
-                        const url = isPractice ? `/practice-data/${batchId}/questions.md` : `/practice-data/${batchId}/${fileId}`;
+                        const url = `/practice-data/${batchId}/${fileId}`;
                         try {
                           const res = await fetch(url);
                           if (res.ok) {
@@ -986,7 +996,7 @@ export function IDE({
                         </div>
                       ))
                     ) : (
-                      <div className="p-4 text-xs text-[var(--vscode-text-muted)] text-center mt-10">Run 'Submit' in the editor to see test results here.</div>
+                      <div className="p-4 text-xs text-[var(--vscode-text-muted)] text-center mt-10">Run &apos;Submit&apos; in the editor to see test results here.</div>
                     )}
                   </div>
                 ) : (

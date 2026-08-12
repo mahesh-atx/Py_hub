@@ -2,7 +2,7 @@
   "batches": [
     {
       "id": "phase-1-foundation",
-      "title": "Phase 1: Foundation",
+      "title": "Foundation",
       "path": "/practice-data/phase-1-foundation",
       "files": [
         {
@@ -45,12 +45,18 @@
           "title": "Practice Questions",
           "type": "practice",
           "total": 60
+        },
+        {
+          "id": "projects.md",
+          "title": "Practice Projects",
+          "type": "practice",
+          "total": 7
         }
       ]
     },
     {
       "id": "phase-2-core-python",
-      "title": "Phase 2: Core Python",
+      "title": "Core Python",
       "path": "/practice-data/phase-2-core-python",
       "files": [
         {
@@ -93,12 +99,18 @@
           "title": "Practice Questions",
           "type": "practice",
           "total": 60
+        },
+        {
+          "id": "projects.md",
+          "title": "Practice Projects",
+          "type": "practice",
+          "total": 8
         }
       ]
     },
     {
       "id": "phase-3-advanced-python",
-      "title": "Phase 3: Advanced Python",
+      "title": "Advanced Python",
       "path": "/practice-data/phase-3-advanced-python",
       "files": [
         {
@@ -141,12 +153,18 @@
           "title": "Practice Questions",
           "type": "practice",
           "total": 60
+        },
+        {
+          "id": "projects.md",
+          "title": "Practice Projects",
+          "type": "practice",
+          "total": 10
         }
       ]
     },
     {
       "id": "phase-4-oop",
-      "title": "Phase 4: OOP",
+      "title": "OOP",
       "path": "/practice-data/phase-4-oop",
       "files": [
         {
@@ -204,9 +222,14 @@
           "title": "Practice Questions",
           "type": "practice",
           "total": 60
+        },
+        {
+          "id": "projects.md",
+          "title": "Practice Projects",
+          "type": "practice",
+          "total": 10
         }
       ]
     }
-  ],
-  "topicDrills": []
+  ]
 }

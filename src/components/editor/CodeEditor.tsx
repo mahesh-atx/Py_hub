@@ -29,7 +29,10 @@ interface CodeEditorProps {
 export function CodeEditor(props: CodeEditorProps) {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const handlers = useRef(props);
-  handlers.current = props;
+
+  useEffect(() => {
+    handlers.current = props;
+  });
 
   useEffect(() => {
     if (editorRef.current) {
