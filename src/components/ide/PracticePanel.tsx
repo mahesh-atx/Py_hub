@@ -85,6 +85,7 @@ export function PracticeSidebar({
   const [batchesExpanded, setBatchesExpanded] = useState(true);
   const [drillsExpanded, setDrillsExpanded] = useState(true);
   const [questionsExpanded, setQuestionsExpanded] = useState(false);
+  const [keepCodeEnabled, setKeepCodeEnabled] = useState(true);
 
   // Persistence State
   const [solvedChallenges, setSolvedChallenges] = useState<Set<string>>(new Set());
@@ -178,7 +179,7 @@ export function PracticeSidebar({
       if (activeChallenge) {
         const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
         const canSkip = activeIndex >= 0 && activeIndex < challenges.length - 1;
-        const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], true) : null;
+        const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled) : null;
 
         onPracticeStateChange({
           isActive: true,
@@ -191,7 +192,7 @@ export function PracticeSidebar({
                 toast.info("Correct output! Auto-advancing to next question...");
                 markSolved(activeChallenge.id, activeCategory!.id, challenges.length);
                 if (activeIndex >= 0 && activeIndex < challenges.length - 1) {
-                  setTimeout(() => selectChallenge(challenges[activeIndex + 1], true), 1000);
+                  setTimeout(() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled), 1000);
                 }
              }
           },
@@ -202,7 +203,7 @@ export function PracticeSidebar({
         onPracticeStateChange({ isActive: false, hasTests: false, submitFn: null, judgeStdoutFn: null, skipFn: null, canSkip: false });
       }
     }
-  }, [activeChallenge, onPracticeStateChange, challenges]);
+  }, [activeChallenge, onPracticeStateChange, challenges, keepCodeEnabled]);
 
   const loadContent = async (type: "batch" | "drill", id: string) => {
     setLoading(true);
@@ -347,7 +348,7 @@ export function PracticeSidebar({
       markSolved(activeChallenge.id, activeCategory!.id, challenges.length);
       const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
       if (activeIndex < challenges.length - 1) {
-        setTimeout(() => selectChallenge(challenges[activeIndex + 1], true), 800);
+        setTimeout(() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled), 800);
       }
     }
   };
@@ -361,12 +362,24 @@ export function PracticeSidebar({
     <div className="flex h-full flex-col overflow-hidden text-sm text-[var(--vscode-text)]">
       {/* Custom Header */}
       <div className="h-[35px] flex items-center justify-between px-5 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0">
-        <span>Practice Explorer</span>
+        <div className="flex items-center gap-3">
+          <span>Practice Explorer</span>
+          <label className="flex items-center gap-1.5 cursor-pointer normal-case text-[10px] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors font-medium">
+            <input 
+              type="checkbox" 
+              checked={keepCodeEnabled} 
+              onChange={(e) => setKeepCodeEnabled(e.target.checked)} 
+              className="cursor-pointer"
+              title="Keep previously typed code when advancing to the next question"
+            />
+            Keep Code
+          </label>
+        </div>
         {activeCategory && (
           <div className="flex items-center gap-1.5">
             <button 
               onClick={() => {
-                if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], true);
+                if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], keepCodeEnabled);
                 else { setActiveCategory(null); setChallenges([]); setActiveChallenge(null); setResults(null); }
               }}
               className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors"
@@ -376,7 +389,7 @@ export function PracticeSidebar({
             </button>
             <button 
               onClick={() => {
-                if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], true);
+                if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], keepCodeEnabled);
               }}
               disabled={activeIndex >= challenges.length - 1}
               className={`p-1 rounded transition-colors ${activeIndex < challenges.length - 1 ? 'hover:bg-[var(--vscode-hover)] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]' : 'opacity-30 cursor-not-allowed text-[var(--vscode-text-muted)]'}`}
@@ -559,7 +572,7 @@ export function PracticeSidebar({
 
                 {allPassed && activeIndex < challenges.length - 1 && (
                   <button
-                    onClick={() => selectChallenge(challenges[activeIndex + 1], true)}
+                    onClick={() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled)}
                     className="flex items-center justify-center gap-1.5 rounded bg-sky-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-sky-500 transition-colors mt-2 shadow-lg shadow-sky-500/20 animate-in fade-in zoom-in duration-300 w-full"
                   >
                     Next Question <ArrowRight className="h-3 w-3" />
