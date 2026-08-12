@@ -1,0 +1,539 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Hello, World!\nPriya Sharma\nLearning Python"
+        }
+      ]
+    },
+    {
+      "question_id": 2,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Before: a = 10, b = 25\nAfter: a = 25, b = 10"
+        }
+      ]
+    },
+    {
+      "question_id": 3,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "42 <class 'int'>\n3.14 <class 'float'>\nPython <class 'str'>\nTrue <class 'bool'>\nNone <class 'NoneType'>"
+        }
+      ]
+    },
+    {
+      "question_id": 4,
+      "tests": [
+        {
+          "input": "12\n5",
+          "expected_output": "Enter length: 12\nEnter width: 5\nArea: 60\nPerimeter: 34"
+        }
+      ]
+    },
+    {
+      "question_id": 5,
+      "tests": [
+        {
+          "input": "7385",
+          "expected_output": "Enter seconds: 7385\n7385 seconds = 2 hours, 3 minutes, 5 seconds"
+        }
+      ]
+    },
+    {
+      "question_id": 6,
+      "tests": [
+        {
+          "input": "37",
+          "expected_output": "Enter Celsius: 37\n37.0\u00b0C = 98.6\u00b0F"
+        }
+      ]
+    },
+    {
+      "question_id": 7,
+      "tests": [
+        {
+          "input": "50000\n7.5\n3",
+          "expected_output": "Principal: 50000\nRate: 7.5\nTime (years): 3\nInterest: 11250.00\nTotal amount: 61250.00"
+        }
+      ]
+    },
+    {
+      "question_id": 8,
+      "tests": [
+        {
+          "input": "1455300",
+          "expected_output": "Enter amount: 1455300\nTotal: \u20b91,455,300"
+        }
+      ]
+    },
+    {
+      "question_id": 9,
+      "tests": [
+        {
+          "input": "7",
+          "expected_output": "Enter radius: 7\nCircumference: 43.98\nArea: 153.94"
+        }
+      ]
+    },
+    {
+      "question_id": 10,
+      "tests": [
+        {
+          "input": "17\n5",
+          "expected_output": "First number: 17\nSecond number: 5\n17 / 5 = 3.4\n17 // 5 = 3\n17 % 5 = 2\n17 ** 5 = 1419857"
+        }
+      ]
+    },
+    {
+      "question_id": 11,
+      "tests": [
+        {
+          "input": "25",
+          "expected_output": "Enter age: 25\nDays: 9125\nHours: 219000\nMinutes: 13140000"
+        }
+      ]
+    },
+    {
+      "question_id": 12,
+      "tests": [
+        {
+          "input": "3",
+          "expected_output": "Bill amount: 2500\nNumber of people: 3\nEach pays: 833.33\nRounding difference: 0.01"
+        }
+      ]
+    },
+    {
+      "question_id": 13,
+      "tests": [
+        {
+          "input": "47",
+          "expected_output": "Enter a number: 47\nIs 47 even? False"
+        }
+      ]
+    },
+    {
+      "question_id": 14,
+      "tests": [
+        {
+          "input": "48293",
+          "expected_output": "Enter a number: 48293\nLast digit: 3"
+        }
+      ]
+    },
+    {
+      "question_id": 15,
+      "tests": [
+        {
+          "input": "472",
+          "expected_output": "Enter a 3-digit number: 472\nDigits: 4 7 2\nSum: 13"
+        }
+      ]
+    },
+    {
+      "question_id": 16,
+      "tests": [
+        {
+          "input": "472",
+          "expected_output": "Enter a 3-digit number: 472\nReversed: 274"
+        }
+      ]
+    },
+    {
+      "question_id": 17,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "a: 15\nb: 9\nc: 12\nIs a the largest? True"
+        }
+      ]
+    },
+    {
+      "question_id": 18,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "A     B     A and B   A or B    not A\nTrue  True  True      True      False\nTrue  False False     True      False\nFalse True  False     True      True\nFalse False False     False     True"
+        }
+      ]
+    },
+    {
+      "question_id": 19,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "a: 12\nb: 10\na & b = 8\na | b = 14\na ^ b = 6\na << 1 = 24\na >> 1 = 6"
+        }
+      ]
+    },
+    {
+      "question_id": 20,
+      "tests": [
+        {
+          "input": "64",
+          "expected_output": "Enter a number: 64\nIs power of two? True"
+        }
+      ]
+    },
+    {
+      "question_id": 21,
+      "tests": [
+        {
+          "input": "e",
+          "expected_output": "Enter a character: e\nIs vowel? True"
+        }
+      ]
+    },
+    {
+      "question_id": 22,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "1000 == 1000 -> True\n1000 is 1000 -> ?\n100 == 100 -> True\n100 is 100 -> ?"
+        }
+      ]
+    },
+    {
+      "question_id": 23,
+      "tests": []
+    },
+    {
+      "question_id": 24,
+      "tests": [
+        {
+          "input": "100000\n8",
+          "expected_output": "Principal: 100000\nRate: 8\nYears: 5\nAmount: 146932.81\nInterest earned: 46932.81"
+        }
+      ]
+    },
+    {
+      "question_id": 25,
+      "tests": [
+        {
+          "input": "-14",
+          "expected_output": "Enter a number: -14\nNegative"
+        }
+      ]
+    },
+    {
+      "question_id": 26,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "a: 34\nb: 71\nc: 28\nLargest: 71"
+        }
+      ]
+    },
+    {
+      "question_id": 27,
+      "tests": [
+        {
+          "input": "84",
+          "expected_output": "Enter marks: 84\nGrade: A"
+        }
+      ]
+    },
+    {
+      "question_id": 28,
+      "tests": [
+        {
+          "input": "1900",
+          "expected_output": "Enter year: 1900\n1900 is not a leap year"
+        }
+      ]
+    },
+    {
+      "question_id": 29,
+      "tests": [
+        {
+          "input": "5\n5\n8",
+          "expected_output": "Side 1: 5\nSide 2: 5\nSide 3: 8\nValid triangle: Isosceles"
+        }
+      ]
+    },
+    {
+      "question_id": 30,
+      "tests": [
+        {
+          "input": "250",
+          "expected_output": "Enter units: 250\nBill: \u20b91200"
+        }
+      ]
+    },
+    {
+      "question_id": 31,
+      "tests": [
+        {
+          "input": "1200000",
+          "expected_output": "Enter annual income: 1200000\nTax payable: \u20b9172500.00"
+        }
+      ]
+    },
+    {
+      "question_id": 32,
+      "tests": [
+        {
+          "input": "7",
+          "expected_output": "Enter a character: 7\nDigit"
+        }
+      ]
+    },
+    {
+      "question_id": 33,
+      "tests": [
+        {
+          "input": "10\n/\n0",
+          "expected_output": "First number: 10\nOperator: /\nSecond number: 0\nError: cannot divide by zero"
+        }
+      ]
+    },
+    {
+      "question_id": 34,
+      "tests": [
+        {
+          "input": "68\n1.75",
+          "expected_output": "Weight (kg): 68\nHeight (m): 1.75\nBMI: 22.2\nCategory: Normal"
+        }
+      ]
+    },
+    {
+      "question_id": 35,
+      "tests": [
+        {
+          "input": "65\nno\nyes",
+          "expected_output": "Age: 65\nStudent? (yes/no): no\nTuesday? (yes/no): yes\nFinal price: \u20b9100.00"
+        }
+      ]
+    },
+    {
+      "question_id": 36,
+      "tests": [
+        {
+          "input": "30",
+          "expected_output": "Age: 30\nMonthly income: 22000\nCredit score: 750\nRejected: income below 25000"
+        }
+      ]
+    },
+    {
+      "question_id": 37,
+      "tests": [
+        {
+          "input": "10",
+          "expected_output": "Enter n: 10\n1 2 3 4 5 6 7 8 9 10"
+        }
+      ]
+    },
+    {
+      "question_id": 38,
+      "tests": [
+        {
+          "input": "10\n25\n8\n17",
+          "expected_output": "How many numbers? 4\nNumber 1: 10\nNumber 2: 25\nNumber 3: 8\nNumber 4: 17\nSum: 60\nAverage: 15.00"
+        }
+      ]
+    },
+    {
+      "question_id": 39,
+      "tests": [
+        {
+          "input": "7",
+          "expected_output": "Enter a number: 7\n7 x  1 =  7\n7 x  2 = 14\n...\n7 x 10 = 70"
+        }
+      ]
+    },
+    {
+      "question_id": 40,
+      "tests": [
+        {
+          "input": "6",
+          "expected_output": "Enter a number: 6\n6! = 720"
+        }
+      ]
+    },
+    {
+      "question_id": 41,
+      "tests": [
+        {
+          "input": "10",
+          "expected_output": "Enter n: 10\n0 1 1 2 3 5 8 13 21 34"
+        }
+      ]
+    },
+    {
+      "question_id": 42,
+      "tests": [
+        {
+          "input": "97",
+          "expected_output": "Enter a number: 97\n97 is prime"
+        }
+      ]
+    },
+    {
+      "question_id": 43,
+      "tests": [
+        {
+          "input": "10\n50",
+          "expected_output": "Start: 10\nEnd: 50\n11 13 17 19 23 29 31 37 41 43 47\nCount: 11"
+        }
+      ]
+    },
+    {
+      "question_id": 44,
+      "tests": [
+        {
+          "input": "94721",
+          "expected_output": "Enter a number: 94721\nDigits: 5\nSum: 23\nReversed: 12749"
+        }
+      ]
+    },
+    {
+      "question_id": 45,
+      "tests": [
+        {
+          "input": "9474",
+          "expected_output": "Enter a number: 9474\n9474 is an Armstrong number"
+        }
+      ]
+    },
+    {
+      "question_id": 46,
+      "tests": [
+        {
+          "input": "48\n60",
+          "expected_output": "First: 48\nSecond: 60\nGCD: 12\nLCM: 240"
+        }
+      ]
+    },
+    {
+      "question_id": 47,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Guess: 50\nToo high\nGuess: 25\nToo low\nGuess: 42\nCorrect! You took 3 attempts."
+        }
+      ]
+    },
+    {
+      "question_id": 48,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nChoice:"
+        }
+      ]
+    },
+    {
+      "question_id": 49,
+      "tests": [
+        {
+          "input": "6",
+          "expected_output": "Enter n: 6\n6 3 10 5 16 8 4 2 1\nSteps: 8"
+        }
+      ]
+    },
+    {
+      "question_id": 50,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "6 28 496 8128"
+        }
+      ]
+    },
+    {
+      "question_id": 51,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 5\n*\n**\n***\n****\n*****"
+        }
+      ]
+    },
+    {
+      "question_id": 52,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 5\n*****\n****\n***\n**\n*"
+        }
+      ]
+    },
+    {
+      "question_id": 53,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 5\n    *\n   ***\n  *****\n *******\n*********"
+        }
+      ]
+    },
+    {
+      "question_id": 54,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 5\n1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5"
+        }
+      ]
+    },
+    {
+      "question_id": 55,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 4\n1\n2 3\n4 5 6\n7 8 9 10"
+        }
+      ]
+    },
+    {
+      "question_id": 56,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "n = 5\n    1\n   1 1\n  1 2 1\n 1 3 3 1\n1 4 6 4 1"
+        }
+      ]
+    },
+    {
+      "question_id": 57,
+      "tests": [
+        {
+          "input": "1234",
+          "expected_output": "Enter PIN: 1234\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nChoice: 3\nAmount: 2500\nWithdrawn \u20b92500. Balance: \u20b97500"
+        }
+      ]
+    },
+    {
+      "question_id": 58,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Student name: Rohan\nSubject 1 marks: 78\nSubject 2 marks: 105\nInvalid. Enter marks between 0 and 100.\nSubject 2 marks: 85\n...\nTotal: 401 / 500\nPercentage: 80.20\nGrade: A\nResult: PASS\nHighest: 92  Lowest: 71"
+        }
+      ]
+    },
+    {
+      "question_id": 59,
+      "tests": [
+        {
+          "input": "17\n-4\n0\n23\n8\n-11",
+          "expected_output": "How many numbers? 6\nNumber 1: 17\nNumber 2: -4\nNumber 3: 0\nNumber 4: 23\nNumber 5: 8\nNumber 6: -11\nPositives: 3  Negatives: 2  Zeros: 1\nEven: 3  Odd: 3\nSum: 33  Average: 5.50\nMax: 23  Min: -11\nLargest prime: 23"
+        }
+      ]
+    },
+    {
+      "question_id": 60,
+      "tests": [
+        {
+          "input": "5",
+          "expected_output": "Enter n: 5\n\n     |    1    2    3    4    5\n-----+-------------------------\n   1 |    1    2    3    4    5\n   2 |    2    4    6    8   10\n   3 |    3    6    9   12   15\n   4 |    4    8   12   16   20\n   5 |    5   10   15   20   25"
+        }
+      ]
+    }
+  ]
+}

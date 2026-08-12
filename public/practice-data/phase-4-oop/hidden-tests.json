@@ -1,0 +1,259 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "'Atomic Habits' by James Clear, 320 pages"
+        }
+      ]
+    },
+    {
+      "question_id": 2,
+      "tests": []
+    },
+    {
+      "question_id": 3,
+      "tests": []
+    },
+    {
+      "question_id": 4,
+      "tests": []
+    },
+    {
+      "question_id": 5,
+      "tests": []
+    },
+    {
+      "question_id": 6,
+      "tests": []
+    },
+    {
+      "question_id": 7,
+      "tests": []
+    },
+    {
+      "question_id": 8,
+      "tests": []
+    },
+    {
+      "question_id": 9,
+      "tests": []
+    },
+    {
+      "question_id": 10,
+      "tests": []
+    },
+    {
+      "question_id": 11,
+      "tests": []
+    },
+    {
+      "question_id": 12,
+      "tests": []
+    },
+    {
+      "question_id": 13,
+      "tests": []
+    },
+    {
+      "question_id": 14,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "BEFORE FIX:\nbuddy.tricks: ['roll over']\nmax.tricks:   ['roll over']    <- the bug\nAFTER FIX:\nbuddy.tricks: ['roll over']\nmax.tricks:   []"
+        }
+      ]
+    },
+    {
+      "question_id": 15,
+      "tests": []
+    },
+    {
+      "question_id": 16,
+      "tests": []
+    },
+    {
+      "question_id": 17,
+      "tests": []
+    },
+    {
+      "question_id": 18,
+      "tests": []
+    },
+    {
+      "question_id": 19,
+      "tests": []
+    },
+    {
+      "question_id": 20,
+      "tests": []
+    },
+    {
+      "question_id": 21,
+      "tests": []
+    },
+    {
+      "question_id": 22,
+      "tests": []
+    },
+    {
+      "question_id": 23,
+      "tests": []
+    },
+    {
+      "question_id": 24,
+      "tests": []
+    },
+    {
+      "question_id": 25,
+      "tests": []
+    },
+    {
+      "question_id": 26,
+      "tests": []
+    },
+    {
+      "question_id": 27,
+      "tests": []
+    },
+    {
+      "question_id": 28,
+      "tests": []
+    },
+    {
+      "question_id": 29,
+      "tests": []
+    },
+    {
+      "question_id": 30,
+      "tests": []
+    },
+    {
+      "question_id": 31,
+      "tests": []
+    },
+    {
+      "question_id": 32,
+      "tests": []
+    },
+    {
+      "question_id": 33,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "TypeError: Can't instantiate abstract class Shape without an implementation\nfor abstract methods 'area', 'perimeter'"
+        }
+      ]
+    },
+    {
+      "question_id": 34,
+      "tests": []
+    },
+    {
+      "question_id": 35,
+      "tests": []
+    },
+    {
+      "question_id": 36,
+      "tests": []
+    },
+    {
+      "question_id": 37,
+      "tests": []
+    },
+    {
+      "question_id": 38,
+      "tests": []
+    },
+    {
+      "question_id": 39,
+      "tests": []
+    },
+    {
+      "question_id": 40,
+      "tests": []
+    },
+    {
+      "question_id": 41,
+      "tests": []
+    },
+    {
+      "question_id": 42,
+      "tests": []
+    },
+    {
+      "question_id": 43,
+      "tests": []
+    },
+    {
+      "question_id": 44,
+      "tests": []
+    },
+    {
+      "question_id": 45,
+      "tests": []
+    },
+    {
+      "question_id": 46,
+      "tests": []
+    },
+    {
+      "question_id": 47,
+      "tests": []
+    },
+    {
+      "question_id": 48,
+      "tests": []
+    },
+    {
+      "question_id": 49,
+      "tests": []
+    },
+    {
+      "question_id": 50,
+      "tests": []
+    },
+    {
+      "question_id": 51,
+      "tests": []
+    },
+    {
+      "question_id": 52,
+      "tests": []
+    },
+    {
+      "question_id": 53,
+      "tests": []
+    },
+    {
+      "question_id": 54,
+      "tests": []
+    },
+    {
+      "question_id": 55,
+      "tests": []
+    },
+    {
+      "question_id": 56,
+      "tests": []
+    },
+    {
+      "question_id": 57,
+      "tests": []
+    },
+    {
+      "question_id": 58,
+      "tests": []
+    },
+    {
+      "question_id": 59,
+      "tests": []
+    },
+    {
+      "question_id": 60,
+      "tests": []
+    }
+  ]
+}

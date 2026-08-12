@@ -1,0 +1,534 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter text:   Hello World\nLength: 13\nUpper: HELLO WORLD\nLower: hello world\nStripped: 'Hello World'"
+        }
+      ]
+    },
+    {
+      "question_id": 2,
+      "tests": [
+        {
+          "input": "Python\nP",
+          "expected_output": "Enter a word: Python\nFirst: P\nLast: n\nMiddle: th"
+        }
+      ]
+    },
+    {
+      "question_id": 3,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Python\nProgramming\nPtoPormig\ngnimmargorPnohtyP"
+        }
+      ]
+    },
+    {
+      "question_id": 4,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter a sentence: Python 3 is great\nVowels: 4\nConsonants: 9\nDigits: 1\nSpaces: 3"
+        }
+      ]
+    },
+    {
+      "question_id": 5,
+      "tests": [
+        {
+          "input": "Racecar",
+          "expected_output": "Enter a word: Racecar\nPalindrome: True"
+        }
+      ]
+    },
+    {
+      "question_id": 6,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter a sentence: A man, a plan, a canal: Panama\nPalindrome: True"
+        }
+      ]
+    },
+    {
+      "question_id": 7,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter a sentence: Python makes programming enjoyable\nWords: 4\nLongest: programming\nShortest: Python"
+        }
+      ]
+    },
+    {
+      "question_id": 8,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter a sentence: the quick brown fox\nTitle case: The Quick Brown Fox"
+        }
+      ]
+    },
+    {
+      "question_id": 9,
+      "tests": [
+        {
+          "input": "programming",
+          "expected_output": "Enter a word: programming\np: 1\nr: 2\no: 1\ng: 2\na: 1\nm: 2\ni: 1\nn: 1"
+        }
+      ]
+    },
+    {
+      "question_id": 10,
+      "tests": [
+        {
+          "input": "programming",
+          "expected_output": "Enter text: programming\nResult: progamin"
+        }
+      ]
+    },
+    {
+      "question_id": 11,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Enter a sentence: Python is really powerful\nResult: powerful really is Python"
+        }
+      ]
+    },
+    {
+      "question_id": 12,
+      "tests": [
+        {
+          "input": "Python123",
+          "expected_output": "Enter password: Python123\nLength 8+: True\nUppercase: True\nLowercase: True\nDigit: True\nSpecial char: False\nStrength: Medium (4/5)"
+        }
+      ]
+    },
+    {
+      "question_id": 13,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "How many numbers? 5\nNumbers: 12 45 7 89 23\nSum: 176\nAverage: 35.20\nMax: 89\nMin: 7"
+        }
+      ]
+    },
+    {
+      "question_id": 14,
+      "tests": [
+        {
+          "input": "45",
+          "expected_output": "List: [12, 45, 7, 89, 23]\nSecond largest: 45"
+        }
+      ]
+    },
+    {
+      "question_id": 15,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Before: [1, 2, 3, 4, 5]\nAfter: [5, 4, 3, 2, 1]"
+        }
+      ]
+    },
+    {
+      "question_id": 16,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Input: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\nOutput: [3, 1, 4, 5, 9, 2, 6]"
+        }
+      ]
+    },
+    {
+      "question_id": 17,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nEven: [2, 4, 6, 8, 10]\nOdd: [1, 3, 5, 7, 9]"
+        }
+      ]
+    },
+    {
+      "question_id": 18,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Squares of evens: [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]\nCubes of odds: [1, 27, 125, 343, 729, 1331, 2197, 3375, 4913, 6859]"
+        }
+      ]
+    },
+    {
+      "question_id": 19,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "List: [1, 2, 3, 4, 5, 6, 7]\nRotate by: 3\nResult: [5, 6, 7, 1, 2, 3, 4]"
+        }
+      ]
+    },
+    {
+      "question_id": 20,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "List A: [1, 4, 7, 10]\nList B: [2, 3, 8, 11, 15]\nMerged: [1, 2, 3, 4, 7, 8, 10, 11, 15]"
+        }
+      ]
+    },
+    {
+      "question_id": 21,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Initial: [5, 2, 9, 1, 7]\nPass 1: [2, 5, 1, 7, 9]\nPass 2: [2, 1, 5, 7, 9]\nPass 3: [1, 2, 5, 7, 9]\nPass 4: [1, 2, 5, 7, 9]\nSorted: [1, 2, 5, 7, 9]"
+        }
+      ]
+    },
+    {
+      "question_id": 22,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "List: [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]\nTarget: 72\nLinear search: found at index 8 in 9 comparisons\nBinary search: found at index 8 in 2 comparisons"
+        }
+      ]
+    },
+    {
+      "question_id": 23,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Matrix:\n1 2 3\n4 5 6\n7 8 9\nTranspose:\n1 4 7\n2 5 8\n3 6 9\nDiagonal sum: 15"
+        }
+      ]
+    },
+    {
+      "question_id": 24,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "A = [[1, 2], [3, 4]]\nB = [[5, 6], [7, 8]]\nA x B = [[19, 22], [43, 50]]"
+        }
+      ]
+    },
+    {
+      "question_id": 25,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Tuple: (12, 45, 7, 45, 89, 23)\nLength: 6\nMax: 89  Min: 7\nCount of 45: 2\nIndex of 89: 4\nTypeError: 'tuple' object does not support item assignment"
+        }
+      ]
+    },
+    {
+      "question_id": 26,
+      "tests": [
+        {
+          "input": "Rohan",
+          "expected_output": "Name: Rohan, Age: 18, Score: 85.5, City: Mumbai\nFirst: Rohan\nRest: [18, 85.5, 'Mumbai']"
+        }
+      ]
+    },
+    {
+      "question_id": 27,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Before: a=1 b=2 c=3\nAfter:  a=3 b=1 c=2"
+        }
+      ]
+    },
+    {
+      "question_id": 28,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Set A: {1, 2, 3, 4, 5}\nSet B: {4, 5, 6, 7}\nUnion: {1, 2, 3, 4, 5, 6, 7}\nIntersection: {4, 5}\nA - B: {1, 2, 3}\nB - A: {6, 7}\nSymmetric difference: {1, 2, 3, 6, 7}"
+        }
+      ]
+    },
+    {
+      "question_id": 29,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Word 1: listen\nWord 2: silent\nCommon: {'e', 'i', 'l', 'n', 's', 't'}\nUnique to word 1: set()\nUnique to word 2: set()\nSame letters: True"
+        }
+      ]
+    },
+    {
+      "question_id": 30,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Words: ['listen', 'silent', 'enlist', 'google', 'banana']\nlisten & silent are anagrams\nlisten & enlist are anagrams\nsilent & enlist are anagrams"
+        }
+      ]
+    },
+    {
+      "question_id": 31,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Input: [3, 1, 4, 1, 5, 9, 2, 6, 5]\nVia set:  [1, 2, 3, 4, 5, 6, 9]   (order lost)\nVia loop: [3, 1, 4, 5, 9, 2, 6]   (order kept)\nVia dict: [3, 1, 4, 5, 9, 2, 6]   (order kept)"
+        }
+      ]
+    },
+    {
+      "question_id": 32,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "A = {1, 2}\nB = {1, 2, 3, 4}\nC = {5, 6}\nA is subset of B: True\nB is superset of A: True\nA and C disjoint: True"
+        }
+      ]
+    },
+    {
+      "question_id": 33,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Sentence: The cat sat on the mat the cat left\nTotal words: 9\nUnique words: 6\nUnique set: {'cat', 'left', 'mat', 'on', 'sat', 'the'}"
+        }
+      ]
+    },
+    {
+      "question_id": 34,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "{frozenset({'rice', 'dal'}): 'Khichdi', frozenset({'flour', 'water'}): 'Roti'}\nLookup {'dal', 'rice'} -> Khichdi\nTypeError: unhashable type: 'set'"
+        }
+      ]
+    },
+    {
+      "question_id": 35,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Keys: dict_keys(['India', 'Japan', ...])\nIndia -> New Delhi\nAtlantis -> Not found"
+        }
+      ]
+    },
+    {
+      "question_id": 36,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Sentence: the cat sat on the mat the cat left\nthe: 3\ncat: 2\nsat: 1\non: 1\nmat: 1\nleft: 1"
+        }
+      ]
+    },
+    {
+      "question_id": 37,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Word: programming\nRepeated: r(2) g(2) m(2)"
+        }
+      ]
+    },
+    {
+      "question_id": 38,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Input: {'a': 1, 'b': 2, 'c': 1}\nSimple invert: {1: 'c', 2: 'b'}     (data lost!)\nSafe invert: {1: ['a', 'c'], 2: ['b']}"
+        }
+      ]
+    },
+    {
+      "question_id": 39,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "A = {'x': 1, 'y': 2}\nB = {'y': 99, 'z': 3}\nMerged: {'x': 1, 'y': 99, 'z': 3}\nNote: B's value for 'y' wins in all three methods."
+        }
+      ]
+    },
+    {
+      "question_id": 40,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "{'Rohan': 78, 'Priya': 92, 'Amit': 35, 'Sneha': 61}\nTopper: Priya (92)\nAverage: 66.50\nAbove average: ['Rohan', 'Priya']\nFailed: ['Amit']"
+        }
+      ]
+    },
+    {
+      "question_id": 41,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "students = {\n  'Rohan': {'Math': 78, 'Science': 85, 'English': 72},\n  'Priya': {'Math': 92, 'Science': 88, 'English': 95}\n}\nRohan: total 235, percentage 78.33\nPriya: total 275, percentage 91.67"
+        }
+      ]
+    },
+    {
+      "question_id": 42,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "{1: 1, 2: 4, 3: 9, ...}\n{2: 4, 4: 16, 6: 36, 8: 64, 10: 100}\n{'Python': 6, 'is': 2, 'great': 5}"
+        }
+      ]
+    },
+    {
+      "question_id": 43,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Words: ['apple', 'avocado', 'banana', 'blueberry', 'cherry']\n{'a': ['apple', 'avocado'], 'b': ['banana', 'blueberry'], 'c': ['cherry']}"
+        }
+      ]
+    },
+    {
+      "question_id": 44,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Laptop Stand   x2  @  799 =  1598\nUSB Cable      x3  @  199 =   597\nSubtotal: 2195\nDiscount (10%): 219.50\nTotal: 1975.50"
+        }
+      ]
+    },
+    {
+      "question_id": 45,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Numbers: [2, 7, 11, 15, 3, 6]\nTarget: 9\nFound: 2 + 7 = 9 (indices 0 and 1)"
+        }
+      ]
+    },
+    {
+      "question_id": 46,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nChoice: 2\nItem: Pens\nQuantity: 500\nError: only 45 in stock"
+        }
+      ]
+    },
+    {
+      "question_id": 47,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Highest paid: Sneha (\u20b995,000)\nAverage by department:\n  Engineering: \u20b982,500.00\n  Sales: \u20b958,000.00"
+        }
+      ]
+    },
+    {
+      "question_id": 48,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "enrollment = {\n  'Rohan': ['Math', 'Physics'],\n  'Priya': ['Math', 'Physics', 'Chemistry'],\n  'Amit':  ['Chemistry']\n}\nTaking Math: ['Rohan', 'Priya']\nMost popular: Math (2 students)"
+        }
+      ]
+    },
+    {
+      "question_id": 49,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Original: {'Rohan': 78, 'Priya': 92, 'Amit': 35}\nBy key:   ['Amit', 'Priya', 'Rohan']\nBy value asc:  [('Amit', 35), ('Rohan', 78), ('Priya', 92)]\nBy value desc: [('Priya', 92), ('Rohan', 78), ('Amit', 35)]"
+        }
+      ]
+    },
+    {
+      "question_id": 50,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Row sums: [10, 26, 42]\nColumn sums: [15, 18, 21, 24]\nMax: 12 at row 2, column 3\nFlattened: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+        }
+      ]
+    },
+    {
+      "question_id": 51,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Words: ['flower', 'flow', 'flight']\nLongest common prefix: 'fl'\n\nWords: ['dog', 'racecar', 'car']\nLongest common prefix: ''"
+        }
+      ]
+    },
+    {
+      "question_id": 52,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Input: aaabbbccccd\nEncoded: a3b3c4d1\nDecoded: aaabbbccccd\nMatch: True"
+        }
+      ]
+    },
+    {
+      "question_id": 53,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Text: Hello, World!\nShift: 3\nEncrypted: Khoor, Zruog!\nDecrypted: Hello, World!"
+        }
+      ]
+    },
+    {
+      "question_id": 54,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "\"{[()]}\"     -> Balanced\n\"{[(])}\"     -> Not balanced\n\"(((\"        -> Not balanced"
+        }
+      ]
+    },
+    {
+      "question_id": 55,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Sales by region:\n  North: \u20b91,083,000\n  South: \u20b9372,300\nBest-selling product: Laptop (\u20b9708,000)\nHighest average: North (\u20b9361,000.00)"
+        }
+      ]
+    },
+    {
+      "question_id": 56,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Characters: 187\nWords: 32\nSentences: 3\nAverage word length: 4.8\nTop 5 words: python(4) code(3) data(2) learn(2) write(2)\nLongest word: programming"
+        }
+      ]
+    },
+    {
+      "question_id": 57,
+      "tests": []
+    },
+    {
+      "question_id": 58,
+      "tests": []
+    },
+    {
+      "question_id": 59,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "python     ######################################## 8\ndata       #####################                    4\nlearn      ##########                               2\n...\nWords appearing once: 23\nAverage frequency: 1.7"
+        }
+      ]
+    },
+    {
+      "question_id": 60,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Matrix A is 2x3, Matrix B is 2x3\nCannot multiply: A has 3 columns but B has 2 rows."
+        }
+      ]
+    }
+  ]
+}

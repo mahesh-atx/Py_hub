@@ -1,0 +1,339 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": []
+    },
+    {
+      "question_id": 2,
+      "tests": []
+    },
+    {
+      "question_id": 3,
+      "tests": []
+    },
+    {
+      "question_id": 4,
+      "tests": []
+    },
+    {
+      "question_id": 5,
+      "tests": []
+    },
+    {
+      "question_id": 6,
+      "tests": []
+    },
+    {
+      "question_id": 7,
+      "tests": []
+    },
+    {
+      "question_id": 8,
+      "tests": []
+    },
+    {
+      "question_id": 9,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "counter before: 0\nwithout global -> counter after: 0     (the function made a local copy)\nwith global    -> counter after: 1"
+        }
+      ]
+    },
+    {
+      "question_id": 10,
+      "tests": []
+    },
+    {
+      "question_id": 11,
+      "tests": []
+    },
+    {
+      "question_id": 12,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Squares: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\nDivisible by 3: [3, 6, 9]\nProduct: 3628800"
+        }
+      ]
+    },
+    {
+      "question_id": 13,
+      "tests": []
+    },
+    {
+      "question_id": 14,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "fib(30) recursive: 832040 in 0.11 s\nfib(30) iterative: 832040 in 0.00 s"
+        }
+      ]
+    },
+    {
+      "question_id": 15,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "plain recursion  fib(35) = 9227465   ~3.5 s\ndict memo        fib(35) = 9227465   ~0.00002 s\nlru_cache        fib(35) = 9227465   ~0.00002 s"
+        }
+      ]
+    },
+    {
+      "question_id": 16,
+      "tests": []
+    },
+    {
+      "question_id": 17,
+      "tests": []
+    },
+    {
+      "question_id": 18,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "hanoi(3, 'A', 'C', 'B')\nMove disk 1 from A to C\nMove disk 2 from A to B\n...\nTotal moves: 7"
+        }
+      ]
+    },
+    {
+      "question_id": 19,
+      "tests": []
+    },
+    {
+      "question_id": 20,
+      "tests": []
+    },
+    {
+      "question_id": 21,
+      "tests": []
+    },
+    {
+      "question_id": 22,
+      "tests": []
+    },
+    {
+      "question_id": 23,
+      "tests": []
+    },
+    {
+      "question_id": 24,
+      "tests": []
+    },
+    {
+      "question_id": 25,
+      "tests": []
+    },
+    {
+      "question_id": 26,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "$ python mymath.py\nrunning self-tests...\nall passed\n\n$ python -c \"import mymath\"\n(no output \u2014 the guard blocked the tests)"
+        }
+      ]
+    },
+    {
+      "question_id": 27,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "sqrt(144) = 12.0\nceil(7.3) = 8, floor(7.3) = 7\n8! = 40320\ngcd(48, 60) = 12\npi = 3.1416\nlog10(1000) = 3.0"
+        }
+      ]
+    },
+    {
+      "question_id": 28,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "total   count   percent   theoretical\n   2      ~280     ~2.8%       2.78%\n   7     ~1670    ~16.7%      16.67%\n  12      ~275     ~2.8%       2.78%"
+        }
+      ]
+    },
+    {
+      "question_id": 29,
+      "tests": []
+    },
+    {
+      "question_id": 30,
+      "tests": []
+    },
+    {
+      "question_id": 31,
+      "tests": []
+    },
+    {
+      "question_id": 32,
+      "tests": []
+    },
+    {
+      "question_id": 33,
+      "tests": []
+    },
+    {
+      "question_id": 34,
+      "tests": []
+    },
+    {
+      "question_id": 35,
+      "tests": []
+    },
+    {
+      "question_id": 36,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "1: First line\n2: Second line"
+        }
+      ]
+    },
+    {
+      "question_id": 37,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "after two \"w\" writes:  ['second write']       <- first was destroyed\nafter two \"a\" writes:  ['first', 'second']    <- both kept"
+        }
+      ]
+    },
+    {
+      "question_id": 38,
+      "tests": []
+    },
+    {
+      "question_id": 39,
+      "tests": []
+    },
+    {
+      "question_id": 40,
+      "tests": []
+    },
+    {
+      "question_id": 41,
+      "tests": []
+    },
+    {
+      "question_id": 42,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "name,math,science,english\nRohan,78,85,72\nPriya,92,88,95\nClass average: 85.00"
+        }
+      ]
+    },
+    {
+      "question_id": 43,
+      "tests": []
+    },
+    {
+      "question_id": 44,
+      "tests": []
+    },
+    {
+      "question_id": 45,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "before: {'app': {'name': 'demo', 'debug': False}, 'retries': 3}\nafter:  {'app': {'name': 'demo', 'debug': True}, 'version': '1.0'}"
+        }
+      ]
+    },
+    {
+      "question_id": 46,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Total entries: 50\nINFO: 32  WARNING: 12  ERROR: 6\nBusiest hour: 10:00 (14 entries)"
+        }
+      ]
+    },
+    {
+      "question_id": 47,
+      "tests": []
+    },
+    {
+      "question_id": 48,
+      "tests": [
+        {
+          "input": "abc\n12",
+          "expected_output": "Enter a number: abc\nInvalid. Please enter a whole number.\nEnter a number: 12\nGot: 12"
+        }
+      ]
+    },
+    {
+      "question_id": 49,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "missing.txt   -> FileNotFoundError: no such file: missing.txt\n/root/secret  -> PermissionError: cannot read /root/secret\nletters.txt   -> ValueError: first line is not an integer"
+        }
+      ]
+    },
+    {
+      "question_id": 50,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "Success case: try -> else -> finally\nFailure case: try -> except -> finally"
+        }
+      ]
+    },
+    {
+      "question_id": 51,
+      "tests": []
+    },
+    {
+      "question_id": 52,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "InsufficientFundsError: requested \u20b95000 but only \u20b93200 available (short by \u20b91800)"
+        }
+      ]
+    },
+    {
+      "question_id": 53,
+      "tests": []
+    },
+    {
+      "question_id": 54,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "attempt 1 failed: ConnectionError\nattempt 2 failed: ConnectionError\nattempt 3 succeeded"
+        }
+      ]
+    },
+    {
+      "question_id": 55,
+      "tests": [
+        {
+          "input": "",
+          "expected_output": "ValueError: invalid literal for int() with base 10: 'abc'\n\nThe above exception was the direct cause of the following exception:\n\nConfigurationError: could not parse the port setting"
+        }
+      ]
+    },
+    {
+      "question_id": 56,
+      "tests": []
+    },
+    {
+      "question_id": 57,
+      "tests": []
+    },
+    {
+      "question_id": 58,
+      "tests": []
+    },
+    {
+      "question_id": 59,
+      "tests": []
+    },
+    {
+      "question_id": 60,
+      "tests": []
+    }
+  ]
+}
