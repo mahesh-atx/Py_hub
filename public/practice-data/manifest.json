@@ -33,7 +33,8 @@
         {
           "id": "assignments.md",
           "title": "Assignments",
-          "type": "markdown"
+          "type": "practice",
+          "total": 5
         },
         {
           "id": "projects-and-takeaways.md",
@@ -87,7 +88,8 @@
         {
           "id": "assignments.md",
           "title": "Assignments",
-          "type": "markdown"
+          "type": "practice",
+          "total": 5
         },
         {
           "id": "projects-and-takeaways.md",
@@ -141,7 +143,8 @@
         {
           "id": "assignments.md",
           "title": "Assignments",
-          "type": "markdown"
+          "type": "practice",
+          "total": 5
         },
         {
           "id": "projects-and-takeaways.md",
@@ -210,7 +213,8 @@
         {
           "id": "assignments.md",
           "title": "Assignments",
-          "type": "markdown"
+          "type": "practice",
+          "total": 6
         },
         {
           "id": "projects-and-takeaways.md",

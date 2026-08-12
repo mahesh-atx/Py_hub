@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "tests": [
+        {
+          "input": "100000\n45000\n500000\n1000000\n8",
+          "expected_output": "Verify: tax = ₹172,500.00 on ₹12L, 10-year balance on ₹5L @ 8% = ₹1,079,462.x, verdict = Excellent",
+          "contains": ["172,500", "1,079,462", "Excellent"]
+        },
+        {
+          "input": "50000\n70000\n500000\n1000000\n8",
+          "expected_output": "Verify: expenses exceed income, so a deficit warning is printed",
+          "contains": ["deficit"]
+        }
+      ]
+    },
+    {
+      "question_id": 5,
+      "tests": [
+        {
+          "input": "1\nRohan\n78\n85\n92\n71\n75",
+          "expected_output": "Verify: total = 401, percentage = 80.20, result = PASS",
+          "contains": ["401", "80.20", "PASS"]
+        },
+        {
+          "input": "2\nAni\n50\n60\n70\n80\n90\nRohit\n78\n85\n92\n71\n75",
+          "expected_output": "Verify: Rohit total = 401, percentage = 80.20, result = PASS in a two-student class",
+          "contains": ["401", "80.20", "PASS"]
+        }
+      ]
+    }
+  ]
+}

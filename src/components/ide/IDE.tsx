@@ -40,6 +40,7 @@ import {
   RuntimeModal,
 } from "@/components/ide/Overlays";
 import { PracticeSidebar } from "@/components/ide/PracticePanel";
+import DiffView from "@/components/ide/DiffView";
 import { WorkspaceManager } from "@/components/ide/WorkspaceManager";
 import { SettingsEditor } from "@/components/ide/SettingsEditor";
 import { ToastContainer, toast } from "@/components/ide/ToastContainer";
@@ -982,15 +983,8 @@ export function IDE({
                             <span className="font-medium text-[var(--vscode-text)] text-sm">Test Case {i + 1} {r.passed ? "(Passed)" : "(Failed)"}</span>
                           </div>
                           {!r.passed && (
-                            <div className="flex flex-col md:flex-row gap-4 mt-2">
-                              <div className="flex-1">
-                                <div className="text-[10px] font-semibold text-[var(--vscode-text-muted)] uppercase tracking-wider mb-1">Expected Output:</div>
-                                <pre className="p-2 rounded bg-black/30 border border-emerald-900/30 text-emerald-200/90 whitespace-pre-wrap font-mono text-[11px]">{r.expected}</pre>
-                              </div>
-                              <div className="flex-1">
-                                <div className="text-[10px] font-semibold text-[var(--vscode-text-muted)] uppercase tracking-wider mb-1">Your Output:</div>
-                                <pre className="p-2 rounded bg-black/30 border border-rose-900/30 text-rose-200/90 whitespace-pre-wrap font-mono text-[11px]">{r.actual || "(no output)"}</pre>
-                              </div>
+                            <div className="flex flex-col gap-2 mt-2">
+                              <DiffView expected={r.expected} actual={r.actual || "(no output)"} />
                             </div>
                           )}
                         </div>

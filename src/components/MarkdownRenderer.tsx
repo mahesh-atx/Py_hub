@@ -133,7 +133,7 @@ function ScrollReveal({ children, as: Component = 'div', ...props }: { children:
   );
 }
 
-function MarkdownInput({ type, checked, ...props }: any) {
+function MarkdownInput({ type, checked, disabled, ...rest }: any) {
   const context = React.useContext(MarkdownContext);
   if (type === 'checkbox') {
     const currentIndex = String(context.getCheckboxIndex());
@@ -144,11 +144,13 @@ function MarkdownInput({ type, checked, ...props }: any) {
         type="checkbox"
         checked={isChecked}
         onChange={(e) => context.toggleCheckbox(currentIndex, e.target.checked)}
-        {...props}
+        disabled={false}
+        style={{ accentColor: '#4ade80', cursor: 'pointer', marginRight: '0.45em', transform: 'translateY(1px)' }}
+        {...rest}
       />
     );
   }
-  return <input type={type} checked={checked} {...props} />;
+  return <input type={type} checked={checked} disabled={disabled} {...rest} />;
 }
 
 function MarkdownImage({ src, alt }: any) {
