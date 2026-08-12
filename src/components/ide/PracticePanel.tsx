@@ -70,7 +70,7 @@ export function PracticeSidebar({
   onTestResults
 }: { 
   runTest: RunCapture; 
-  onCreateFile: (name: string, content: string) => void;
+  onCreateFile: (name: string, content: string, append?: boolean) => void;
   activeFileContent: string;
   onPracticeStateChange?: (state: { isActive: boolean; hasTests: boolean; submitFn: ((code: string) => Promise<void>) | null; judgeStdoutFn: ((stdout: string) => void) | null; skipFn: (() => void) | null; canSkip: boolean }) => void;
   onTestResults?: (results: { passed: boolean; actual: string; expected: string }[] | null) => void;
@@ -178,7 +178,7 @@ export function PracticeSidebar({
       if (activeChallenge) {
         const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
         const canSkip = activeIndex >= 0 && activeIndex < challenges.length - 1;
-        const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1]) : null;
+        const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], true) : null;
 
         onPracticeStateChange({
           isActive: true,
@@ -191,7 +191,7 @@ export function PracticeSidebar({
                 toast.info("Correct output! Auto-advancing to next question...");
                 markSolved(activeChallenge.id, activeCategory!.id, challenges.length);
                 if (activeIndex >= 0 && activeIndex < challenges.length - 1) {
-                  setTimeout(() => selectChallenge(challenges[activeIndex + 1]), 1000);
+                  setTimeout(() => selectChallenge(challenges[activeIndex + 1], true), 1000);
                 }
              }
           },
@@ -310,7 +310,7 @@ export function PracticeSidebar({
     onCreateFile(filename, content);
   };
 
-  const selectChallenge = (c: Challenge | null) => {
+  const selectChallenge = (c: Challenge | null, keepCode = false) => {
     setActiveChallenge(c);
     setResults(null);
     setShowHint(false);
@@ -319,7 +319,7 @@ export function PracticeSidebar({
     if (onTestResults) onTestResults(null);
     if (c) {
       const filename = `practice.py`;
-      onCreateFile(filename, `# ${c.title}\n# Write your solution below:\n\n`);
+      onCreateFile(filename, `# ${c.title}\n# Write your solution below:\n\n`, keepCode);
     }
   };
 
@@ -347,7 +347,7 @@ export function PracticeSidebar({
       markSolved(activeChallenge.id, activeCategory!.id, challenges.length);
       const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
       if (activeIndex < challenges.length - 1) {
-        setTimeout(() => selectChallenge(challenges[activeIndex + 1]), 800);
+        setTimeout(() => selectChallenge(challenges[activeIndex + 1], true), 800);
       }
     }
   };
@@ -366,7 +366,7 @@ export function PracticeSidebar({
           <div className="flex items-center gap-1.5">
             <button 
               onClick={() => {
-                if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1]);
+                if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], true);
                 else { setActiveCategory(null); setChallenges([]); setActiveChallenge(null); setResults(null); }
               }}
               className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors"
@@ -376,7 +376,7 @@ export function PracticeSidebar({
             </button>
             <button 
               onClick={() => {
-                if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1]);
+                if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], true);
               }}
               disabled={activeIndex >= challenges.length - 1}
               className={`p-1 rounded transition-colors ${activeIndex < challenges.length - 1 ? 'hover:bg-[var(--vscode-hover)] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]' : 'opacity-30 cursor-not-allowed text-[var(--vscode-text-muted)]'}`}
@@ -559,7 +559,7 @@ export function PracticeSidebar({
 
                 {allPassed && activeIndex < challenges.length - 1 && (
                   <button
-                    onClick={() => selectChallenge(challenges[activeIndex + 1])}
+                    onClick={() => selectChallenge(challenges[activeIndex + 1], true)}
                     className="flex items-center justify-center gap-1.5 rounded bg-sky-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-sky-500 transition-colors mt-2 shadow-lg shadow-sky-500/20 animate-in fade-in zoom-in duration-300 w-full"
                   >
                     Next Question <ArrowRight className="h-3 w-3" />

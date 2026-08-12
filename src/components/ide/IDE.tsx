@@ -551,9 +551,17 @@ export function IDE({
                   onTestResults={(results) => {
                     setPracticeResults(results);
                   }}
-                  onCreateFile={(name, content) => {
+                  onCreateFile={(name, content, append = false) => {
                     const path = `.practice/${name}`;
-                    project.createByPath(path, content);
+                    let finalContent = content;
+                    if (append) {
+                      const existingNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
+                      if (existingNode && existingNode.kind === 'file') {
+                        const current = existingNode.content || "";
+                        finalContent = current.endsWith("\n") ? current + "\n" + content : current + "\n\n" + content;
+                      }
+                    }
+                    project.createByPath(path, finalContent);
                     
                     // We need to wait for project state to update, or manually open it if we can
                     // Since createByPath generates the node, we can just let the user see it in Explorer
