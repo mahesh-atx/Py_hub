@@ -29,6 +29,30 @@
       "title": "Batch 5",
       "path": "/practice-data/batch-05",
       "total": 100
+    },
+    {
+      "id": "phase-1-foundation",
+      "title": "Phase 1: Foundation",
+      "path": "/practice-data/phase-1-foundation",
+      "total": 60
+    },
+    {
+      "id": "phase-2-core-python",
+      "title": "Phase 2: Core Python",
+      "path": "/practice-data/phase-2-core-python",
+      "total": 60
+    },
+    {
+      "id": "phase-3-advanced-python",
+      "title": "Phase 3: Advanced Python",
+      "path": "/practice-data/phase-3-advanced-python",
+      "total": 60
+    },
+    {
+      "id": "phase-4-oop",
+      "title": "Phase 4: OOP",
+      "path": "/practice-data/phase-4-oop",
+      "total": 60
     }
   ],
   "topicDrills": [
