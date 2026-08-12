@@ -9,13 +9,31 @@ const KV_STORE = "kv";
 let dbPromise: Promise<IDBPDatabase> | null = null;
 let currentWorkspaceId = "default";
 
+export function getWorkspaceId() {
+  return currentWorkspaceId;
+}
+
 export function setWorkspaceId(id: string) {
   if (currentWorkspaceId !== id) {
     if (dbPromise) {
-      dbPromise.then(db => db.close());
+      const p = dbPromise;
+      // Delay closing slightly to allow any pending transactions to complete
+      setTimeout(() => {
+        p.then(db => db.close()).catch(() => {});
+      }, 500);
     }
     currentWorkspaceId = id;
     dbPromise = null;
+  }
+}
+
+export async function deleteWorkspaceDB(id: string): Promise<void> {
+  if (typeof indexedDB !== "undefined") {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.deleteDatabase(`python-ide-${id}`);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    });
   }
 }
 

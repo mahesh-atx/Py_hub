@@ -230,20 +230,34 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
   const [dirty, setDirty] = useState<Set<string>>(new Set());
   const [loaded, setLoaded] = useState(false);
 
+  // Mirror of `nodes` kept synchronous for callbacks that create several
+  // paths in one batch (e.g. seeding practice data). React state is async,
+  // so existence checks inside a synchronous loop must read this ref.
+  const nodesRef = useRef<PyNode[]>([]);
+  useEffect(() => {
+    nodesRef.current = nodes;
+  }, [nodes]);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
       const stored = await loadFiles();
       let list = stored;
       if (!stored.length) {
-        list = seedExamples();
-        await bulkPutFiles(list);
+        const { getWorkspaceId } = await import("@/lib/storage/idb");
+        if (getWorkspaceId() === "default") {
+          list = seedExamples();
+          await bulkPutFiles(list);
+        }
       }
       if (cancelled) return;
       if (list.length > 0 && !list.some((n) => n.name.endsWith(".ipynb"))) {
-        const notebookExamples = seedExamples().filter(n => n.name.endsWith(".ipynb"));
-        list = [...list, ...notebookExamples];
-        await bulkPutFiles(notebookExamples);
+        const { getWorkspaceId } = await import("@/lib/storage/idb");
+        if (getWorkspaceId() === "default") {
+          const notebookExamples = seedExamples().filter(n => n.name.endsWith(".ipynb"));
+          list = [...list, ...notebookExamples];
+          await bulkPutFiles(notebookExamples);
+        }
       }
       setNodes(list);
       const active = (await getKV<string>("activeFileId")) ?? null;
@@ -530,7 +544,7 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
 
   /** Create a file/folder from a slash path, building folders as needed. */
   const createByPath = useCallback(
-    (path: string, content: string) => {
+    (path: string, content: string, open = true) => {
       const parts = path.split("/").filter(Boolean);
       if (!parts.length) return;
       const created: PyNode[] = [];
@@ -539,13 +553,16 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
       for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         const isLast = i === parts.length - 1;
-        const existing = nodes.find(
+        const existing = nodesRef.current.find(
           (n) => n.parentId === parentId && n.name === part,
         );
         if (existing) {
           if (isLast && existing.kind === "file") {
             targetId = existing.id;
             const upd = { ...existing, content, updatedAt: Date.now() };
+            nodesRef.current = nodesRef.current.map((n) =>
+              n.id === existing.id ? upd : n,
+            );
             persistFile(upd);
             setNodes((prev) => prev.map((n) => (n.id === existing.id ? upd : n)));
           } else if (!isLast) {
@@ -567,13 +584,16 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
         if (isLast) targetId = node.id;
         else parentId = node.id;
       }
-      if (created.length) setNodes((prev) => [...prev, ...created]);
-      if (targetId) {
+      if (created.length) {
+        nodesRef.current = [...nodesRef.current, ...created];
+        setNodes((prev) => [...prev, ...created]);
+      }
+      if (targetId && open) {
         setOpenTabs((prev) => (prev.includes(targetId!) ? prev : [...prev, targetId!]));
         setActiveId(targetId);
       }
     },
-    [nodes],
+    [],
   );
 
   const ingestRuntimeFiles = useCallback(

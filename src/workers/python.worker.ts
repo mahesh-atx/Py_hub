@@ -208,21 +208,37 @@ async function initPyodide(): Promise<void> {
     });
 
     // Background: preload phase 6 datasets into Pyodide virtual filesystem
+    // so the offline practice/course data always works — including isolated
+    // TEST_RUN executions, which receive no file payload from the UI.
     setTimeout(async () => {
       try {
         const FS = pyodide.FS;
-        try { FS.mkdir("data"); } catch (e) {}
-        const files = ["sales_raw.csv", "customers_raw.csv", "merged_clean.csv", "sales_clean.csv", "customers_clean.csv"];
-        for (const f of files) {
-          try {
-            if (!FS.analyzePath(`data/${f}`).exists) {
-              const res = await fetch(`/practice-data/phase-6-data-science/starter-project/data/${f}`);
-              if (res.ok) {
-                const buffer = await res.arrayBuffer();
-                FS.writeFile(`data/${f}`, new Uint8Array(buffer));
+        const csvs = [
+          "sales_raw.csv",
+          "customers_raw.csv",
+          "merged_clean.csv",
+          "sales_clean.csv",
+          "customers_clean.csv",
+          "titanic.csv",
+          "iris.csv",
+          "weather_sample.csv",
+          "stock_sample.csv",
+        ];
+        // Mirror into both "data/" (cwd-relative, legacy questions) and
+        // "starter-project/data/" (as the guides write it).
+        for (const root of ["data", "starter-project/data"]) {
+          FS.mkdirTree(root);
+          for (const f of csvs) {
+            try {
+              if (!FS.analyzePath(`${root}/${f}`).exists) {
+                const res = await fetch(`/practice-data/phase-6-data-science/starter-project/data/${f}`);
+                if (res.ok) {
+                  const buffer = await res.arrayBuffer();
+                  FS.writeFile(`${root}/${f}`, new Uint8Array(buffer));
+                }
               }
-            }
-          } catch (e) {}
+            } catch (e) {}
+          }
         }
       } catch (e) {}
     }, 50);

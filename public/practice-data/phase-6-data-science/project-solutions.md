@@ -85,10 +85,11 @@ print("Findings: Mumbai has highest volume, but median order value reveals diffe
 ## P4. Titanic Survival EDA
 
 ```python
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-titanic = sns.load_dataset("titanic")
+titanic = pd.read_csv("starter-project/data/titanic.csv")
 print(f"Overall survival rate: {titanic['survived'].mean():.2%}")
 
 plt.figure(figsize=(8,5))
@@ -155,20 +156,26 @@ print(matrix_report(A))
 import pandas as pd
 import numpy as np
 
-# Mock implementation
-# df = pd.read_csv("aqi.csv", parse_dates=["timestamp"], index_col="timestamp")
-# daily = df.resample("D").mean()
-# daily['rolling_7d'] = daily['aqi'].rolling(7).mean()
+df = pd.read_csv("starter-project/data/weather_sample.csv", parse_dates=["date"])
+df = df[df["city"] == "Delhi"].set_index("date")
+daily = df["aqi"].resample("D").mean()
+seasonal = daily.groupby(daily.index.month).mean()
+print("Worst months (by median AQI):")
+print(daily.groupby(daily.index.month).median().sort_values(ascending=False).head(3))
+print("Sensor errors (AQI > 900):", int((df["aqi"] > 900).sum()))
 ```
 
 ## P9. Stock Price Analyser
 
 ```python
-import yfinance as yf
+import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-df = yf.download("RELIANCE.NS", start="2023-01-01", end="2024-01-01")
+df = pd.read_csv("starter-project/data/stock_sample.csv")
+df = df[df["symbol"] == "RELIANCE"].copy()
+df["date"] = pd.to_datetime(df["date"])
+df = df.set_index("date")
 df['returns'] = df['Close'].pct_change()
 df['volatility'] = df['returns'].rolling(20).std() * np.sqrt(252)
 

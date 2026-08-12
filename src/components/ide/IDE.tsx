@@ -67,13 +67,17 @@ interface IDEProps {
   currentWorkspaceId?: string;
   onSwitchWorkspace?: (id: string) => void;
   onCreateWorkspace?: (name: string) => void;
+  onDeleteWorkspace?: (id: string) => void;
+  onRenameWorkspace?: (id: string, name: string) => void;
 }
 
 export function IDE({
   workspaces = [],
   currentWorkspaceId = "default",
   onSwitchWorkspace = () => {},
-  onCreateWorkspace = () => {}
+  onCreateWorkspace = () => {},
+  onDeleteWorkspace = () => {},
+  onRenameWorkspace = () => {}
 }: IDEProps) {
   const isDesktop = useIsDesktop();
   const [settings, setSettings] = useState<IdeSettings>(DEFAULT_SETTINGS);
@@ -270,8 +274,6 @@ export function IDE({
       const practicePyId = project.nodes.find(n => pathOf(project.nodes, n.id) === ".practice/practice.py")?.id;
       if (practicePyId) {
         project.openFile(practicePyId);
-      } else {
-        project.createByPath(".practice/practice.py", "# Practice Sandbox\n# Write your experimental code here!\n\n");
       }
     }
   }, [activeActivity, visibleTabs.length, project]);
@@ -541,6 +543,8 @@ export function IDE({
                   currentWorkspaceId={currentWorkspaceId}
                   onSwitchWorkspace={onSwitchWorkspace}
                   onCreateWorkspace={onCreateWorkspace}
+                  onDeleteWorkspace={onDeleteWorkspace}
+                  onRenameWorkspace={onRenameWorkspace}
                 />
               )}
               {activeActivity === "practice" && (
@@ -558,8 +562,7 @@ export function IDE({
                   onTestResults={(results) => {
                     setPracticeResults(results);
                   }}
-                  onOpenOrCreateFile={(name, content) => {
-                    const path = `.practice/${name}`;
+                  onOpenOrCreateFile={(path, content) => {
                     const existingNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
                     if (existingNode && existingNode.kind === 'file') {
                       project.openFile(existingNode.id);
@@ -567,8 +570,7 @@ export function IDE({
                       project.createByPath(path, content);
                     }
                   }}
-                  onCreateFile={(name, content, append = false) => {
-                    const path = `.practice/${name}`;
+                  onCreateFile={(path, content, append = false) => {
                     let finalContent = content;
                     if (append) {
                       const existingNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
@@ -583,10 +585,25 @@ export function IDE({
                     // Since createByPath generates the node, we can just let the user see it in Explorer
                     // But opening it right away is better.
                     setTimeout(() => {
-                      // Small hack to open the newly created file
-                      const newNode = project.tree.find(c => c.name === ".practice")?.children?.find(c => c.name === name);
+                      const newNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
                       if (newNode) project.openFile(newNode.id);
                     }, 50);
+                  }}
+                  onSeedFiles={async (relativePaths: string[], batchId: string, batchTitle: string) => {
+                    const existingPaths = new Set(project.nodes.map(n => pathOf(project.nodes, n.id)));
+                    const created: string[] = [];
+                    for (const rel of relativePaths) {
+                      const target = `.practice/${batchTitle}/${rel}`;
+                      if (existingPaths.has(target)) continue;
+                      try {
+                        const res = await fetch(`/practice-data/${batchId}/${rel}`);
+                        if (!res.ok) continue;
+                        const text = await res.text();
+                        project.createByPath(target, text, false);
+                        created.push(rel);
+                      } catch {}
+                    }
+                    return created;
                   }}
                 />
               )}
@@ -623,7 +640,7 @@ export function IDE({
                           const res = await fetch(url);
                           if (res.ok) {
                             const text = await res.text();
-                            project.createByPath(`.practice/${fileId}`, text);
+                            project.createByPath(`.course/${batchId.replace('phase-', '')}/${fileId}`, text);
                           }
                         } catch {}
                     }}
@@ -728,6 +745,7 @@ export function IDE({
                         minimap={settings.minimap}
                         wordWrap={settings.wordWrap}
                         paneId="left"
+                        readOnly={pathOf(project.nodes, effectiveActiveFile.id).startsWith('.course/')}
                       />
                     )
                   ) : null}
@@ -792,7 +810,7 @@ export function IDE({
                             // Actually just project.createByPath works, and then we might need to find its ID.
                             // The easiest way is to just let it open in the main pane if they drag it to the split pane,
                             // or create it and then set it.
-                            project.createByPath(`.practice/${fileId}`, text);
+                            project.createByPath(`.course/${batchId.replace('phase-', '')}/${fileId}`, text);
                           }
                         } catch {}
                       }}
@@ -903,6 +921,7 @@ export function IDE({
                           minimap={settings.minimap}
                           wordWrap={settings.wordWrap}
                           paneId="right"
+                          readOnly={pathOf(project.nodes, sf.id).startsWith('.course/')}
                         />
                       );
                     })()}

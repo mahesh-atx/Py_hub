@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, type DragEvent } from "react";
+import { useState, useCallback, useEffect, type DragEvent } from "react";
 import {
   ChevronRight,
   ChevronDown,
@@ -21,6 +21,7 @@ import {
   FileImage,
   FileSpreadsheet,
   Book,
+  ListCollapse,
 } from "lucide-react";
 import type { PyNode, TreeNode } from "@/types/filesystem";
 import { getExtension, pathOf } from "@/lib/filesystem/tree";
@@ -83,6 +84,9 @@ export function FileExplorer(props: FileExplorerProps) {
     new Set(props.activeId ? [props.activeId] : [])
   );
   const [lastSelectedId, setLastSelectedId] = useState<string | null>(props.activeId);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [deleteConfirmIds, setDeleteConfirmIds] = useState<string[] | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ visible: boolean, x: number, y: number, nodeId: string | null }>({ visible: false, x: 0, y: 0, nodeId: null });
 
   // Keep the explorer selection in sync with the active file (React docs:
   // "adjusting state during render" pattern — guarded so it runs once per change).
@@ -109,8 +113,11 @@ export function FileExplorer(props: FileExplorerProps) {
       return next;
     });
 
+  const collapseAll = () => setExpanded(new Set());
+
   const handleDropRoot = (e: DragEvent) => {
     e.preventDefault();
+    setDragOverId(null);
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0 && e.dataTransfer.items[0].kind === 'file' && props.onDropItems) {
       props.onDropItems(e.dataTransfer.items);
     } else if (e.dataTransfer.files?.length) {
@@ -184,12 +191,33 @@ export function FileExplorer(props: FileExplorerProps) {
     }
   }, [lastSelectedId, getVisibleNodes]);
 
+  const handleContextMenu = useCallback((e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!selectedIds.has(id)) {
+      setSelectedIds(new Set([id]));
+      setLastSelectedId(id);
+    }
+    setContextMenu({ visible: true, x: e.clientX, y: e.clientY, nodeId: id });
+  }, [selectedIds]);
+
+  const closeContextMenu = useCallback(() => {
+    if (contextMenu.visible) setContextMenu({ ...contextMenu, visible: false });
+  }, [contextMenu]);
+
+  useEffect(() => {
+    const handleGlobalClick = () => closeContextMenu();
+    window.addEventListener("click", handleGlobalClick);
+    return () => window.removeEventListener("click", handleGlobalClick);
+  }, [closeContextMenu]);
+
   return (
     <div
-      className="flex h-full flex-col bg-[var(--vscode-sidebar-bg)] select-none group/explorer"
-      onDragOver={(e) => e.preventDefault()}
+      className="flex h-full flex-col bg-[var(--vscode-sidebar-bg)] select-none group/explorer relative"
+      onDragOver={(e) => { e.preventDefault(); setDragOverId(null); }}
       onDrop={handleDropRoot}
-      onClick={() => setSelectedIds(new Set())}
+      onClick={() => { setSelectedIds(new Set()); closeContextMenu(); }}
+      onContextMenu={(e) => { e.preventDefault(); closeContextMenu(); }}
     >
       <div className="flex items-center justify-between px-4 py-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--vscode-text)] flex-1">
@@ -204,6 +232,9 @@ export function FileExplorer(props: FileExplorerProps) {
           </IconBtn>
           <IconBtn title="Upload files" onClick={() => document.getElementById("ide-upload")?.click()}>
             <Upload className="h-4 w-4" />
+          </IconBtn>
+          <IconBtn title="Collapse All" onClick={collapseAll}>
+            <ListCollapse className="h-4 w-4" />
           </IconBtn>
           <IconBtn title="Reset to examples" onClick={props.onReset}>
             <RotateCcw className="h-4 w-4" />
@@ -229,12 +260,15 @@ export function FileExplorer(props: FileExplorerProps) {
             onStartRename={(id, name) =>
               setEdit({ mode: "rename", id, parentId: null, initial: name })
             }
-            onDelete={props.onDelete}
+            onDelete={(ids) => setDeleteConfirmIds(ids)}
             onDuplicate={props.onDuplicate}
             onDownload={props.onDownload}
             onMove={props.onMove}
             onCommitEdit={commitEdit}
             onCancelEdit={() => setEdit(null)}
+            dragOverId={dragOverId}
+            onSetDragOverId={setDragOverId}
+            onContextMenu={handleContextMenu}
           />
         ))}
         {props.tree.length === 0 && (
@@ -261,8 +295,110 @@ export function FileExplorer(props: FileExplorerProps) {
           e.target.value = "";
         }}
       />
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmIds && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-[var(--vscode-bg)] border border-[var(--vscode-border)] rounded shadow-xl w-full max-w-sm flex flex-col p-4 gap-4" onClick={(e) => e.stopPropagation()}>
+            <div className="text-[13px] text-[var(--vscode-text)]">
+              <span className="font-semibold block mb-2">Are you sure you want to delete {deleteConfirmIds.length > 1 ? `these ${deleteConfirmIds.length} items` : 'this item'}?</span>
+              <span className="text-[var(--vscode-text-muted)] text-xs">This action cannot be undone.</span>
+            </div>
+            <div className="flex justify-end gap-2 mt-2">
+              <button
+                onClick={(e) => { e.stopPropagation(); setDeleteConfirmIds(null); }}
+                className="px-3 py-1.5 rounded text-xs text-[var(--vscode-text)] bg-[var(--vscode-hover)] hover:bg-[var(--vscode-border)] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  props.onDelete(deleteConfirmIds);
+                  setDeleteConfirmIds(null);
+                  setSelectedIds(new Set());
+                }}
+                className="px-3 py-1.5 rounded text-xs text-white bg-rose-600 hover:bg-rose-500 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Context Menu */}
+      {contextMenu.visible && contextMenu.nodeId && (
+        <div 
+          className="fixed z-50 py-1 bg-[var(--vscode-bg)] border border-[var(--vscode-border)] shadow-xl rounded-md text-[13px] text-[var(--vscode-text)] min-w-[160px]"
+          style={{ top: contextMenu.y, left: contextMenu.x }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {(() => {
+            const node = props.nodes.find(n => n.id === contextMenu.nodeId);
+            const isFolder = node?.kind === 'folder';
+            return (
+              <>
+                {isFolder && (
+                  <>
+                    <ContextMenuItem onClick={() => { startCreate("file", node.id); closeContextMenu(); }} icon={<FilePlus2 className="h-4 w-4" />}>New File</ContextMenuItem>
+                    <ContextMenuItem onClick={() => { startCreate("folder", node.id); closeContextMenu(); }} icon={<FolderPlus className="h-4 w-4" />}>New Folder</ContextMenuItem>
+                    <ContextMenuDivider />
+                  </>
+                )}
+                <ContextMenuItem onClick={() => { 
+                  if (node) {
+                    setEdit({ mode: "rename", id: node.id, parentId: null, initial: node.name });
+                  }
+                  closeContextMenu(); 
+                }} icon={<Pencil className="h-4 w-4" />}>Rename</ContextMenuItem>
+                <ContextMenuItem onClick={() => { 
+                  props.onDuplicate(Array.from(selectedIds)); 
+                  closeContextMenu(); 
+                }} icon={<Copy className="h-4 w-4" />}>Duplicate</ContextMenuItem>
+                {!isFolder && (
+                  <ContextMenuItem onClick={() => { 
+                    if (node) props.onDownload(node); 
+                    closeContextMenu(); 
+                  }} icon={<Download className="h-4 w-4" />}>Download</ContextMenuItem>
+                )}
+                <ContextMenuItem onClick={() => { 
+                  if (node) {
+                    navigator.clipboard.writeText(pathOf(props.nodes, node.id));
+                  }
+                  closeContextMenu();
+                }} icon={<Copy className="h-4 w-4" />}>Copy Path</ContextMenuItem>
+                <ContextMenuDivider />
+                <ContextMenuItem 
+                  onClick={() => { setDeleteConfirmIds(Array.from(selectedIds)); closeContextMenu(); }} 
+                  icon={<Trash2 className="h-4 w-4 text-rose-400" />}
+                  className="text-rose-400 hover:text-rose-300"
+                >
+                  Delete
+                </ContextMenuItem>
+              </>
+            );
+          })()}
+        </div>
+      )}
     </div>
   );
+}
+
+function ContextMenuItem({ onClick, icon, children, className = "" }: { onClick: () => void, icon?: React.ReactNode, children: React.ReactNode, className?: string }) {
+  return (
+    <button 
+      className={`w-full text-left px-3 py-1.5 hover:bg-[var(--vscode-accent)] hover:text-white flex items-center gap-2 ${className}`}
+      onClick={onClick}
+    >
+      {icon && <span className="opacity-80">{icon}</span>}
+      {children}
+    </button>
+  );
+}
+
+function ContextMenuDivider() {
+  return <div className="h-[1px] bg-[var(--vscode-border)] my-1 mx-2" />;
 }
 
 interface TreeItemProps {
@@ -284,6 +420,9 @@ interface TreeItemProps {
   onMove?: (ids: string[], newParentId: string | null) => { error?: string } | void;
   onCommitEdit: (name: string) => void;
   onCancelEdit: () => void;
+  dragOverId: string | null;
+  onSetDragOverId: (id: string | null) => void;
+  onContextMenu: (e: React.MouseEvent, id: string) => void;
 }
 
 function TreeItem(props: TreeItemProps) {
@@ -305,10 +444,20 @@ function TreeItem(props: TreeItemProps) {
               : [node.id];
             e.dataTransfer.setData("application/vnd.ide.nodes", JSON.stringify(idsToMove));
           }}
-          onDragOver={(e) => e.preventDefault()}
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            props.onSetDragOverId(node.id);
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            props.onSetDragOverId(null);
+          }}
           onDrop={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            props.onSetDragOverId(null);
             const data = e.dataTransfer.getData("application/vnd.ide.nodes");
             if (data && props.onMove) {
               try {
@@ -317,7 +466,11 @@ function TreeItem(props: TreeItemProps) {
               } catch (err) {}
             }
           }}
-          className={`group flex items-center h-[22px] cursor-pointer text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)] ${isActive ? 'bg-[var(--vscode-hover)]' : ''}`}
+          className={`group flex items-center h-[22px] cursor-pointer ${
+            props.dragOverId === node.id 
+              ? 'bg-[var(--vscode-hover)] ring-1 ring-[var(--vscode-accent)] text-[var(--vscode-text)]' 
+              : isActive ? 'bg-[var(--vscode-hover)] text-[var(--vscode-text)]' : 'text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)]'
+          }`}
           onClick={(e) => {
             e.stopPropagation();
             props.onSelect(node.id, e.ctrlKey || e.metaKey, e.shiftKey);
@@ -325,6 +478,7 @@ function TreeItem(props: TreeItemProps) {
               props.onToggle(node.id);
             }
           }}
+          onContextMenu={(e) => props.onContextMenu(e, node.id)}
         >
           <div className="flex items-center w-full h-full pr-2" style={{ paddingLeft: `${paddingLeft}px` }}>
             <span className="mr-1 text-[var(--vscode-text)]">
@@ -349,37 +503,6 @@ function TreeItem(props: TreeItemProps) {
               />
             ) : (
               <span className="flex-1 truncate">{node.name}</span>
-            )}
-            {!isEditing && (
-              <RowActions>
-                <IconBtn
-                  title="New file"
-                  onClick={(e) => { e.stopPropagation(); props.onStartCreate("file", node.id); }}
-                >
-                  <FilePlus2 className="h-3.5 w-3.5" />
-                </IconBtn>
-                <IconBtn
-                  title="New folder"
-                  onClick={(e) => { e.stopPropagation(); props.onStartCreate("folder", node.id); }}
-                >
-                  <FolderPlus className="h-3.5 w-3.5" />
-                </IconBtn>
-                <IconBtn
-                  title="Rename"
-                  onClick={(e) => { e.stopPropagation(); props.onStartRename(node.id, node.name); }}
-                >
-                  <Pencil className="h-3.5 w-3.5" />
-                </IconBtn>
-                <IconBtn 
-                  title="Delete" 
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
-                    props.onDelete(props.selectedIds.has(node.id) ? Array.from(props.selectedIds) : [node.id]); 
-                  }}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </IconBtn>
-              </RowActions>
             )}
           </div>
         </div>
@@ -417,10 +540,17 @@ function TreeItem(props: TreeItemProps) {
           : [node.id];
         e.dataTransfer.setData("application/vnd.ide.nodes", JSON.stringify(idsToMove));
       }}
-      onDragOver={(e) => e.preventDefault()}
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (node.parentId !== props.dragOverId) {
+          props.onSetDragOverId(node.parentId); // visual hint goes to parent folder
+        }
+      }}
       onDrop={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        props.onSetDragOverId(null);
         const data = e.dataTransfer.getData("application/vnd.ide.nodes");
         if (data && props.onMove) {
           try {
@@ -439,6 +569,7 @@ function TreeItem(props: TreeItemProps) {
           props.onOpen(node.id);
         }
       }}
+      onContextMenu={(e) => props.onContextMenu(e, node.id)}
     >
       <div className="flex items-center w-full h-full pr-2" style={{ paddingLeft: `${paddingLeft}px` }}>
         {/* Invisible spacer for file alignment with folder chevrons */}
@@ -457,28 +588,6 @@ function TreeItem(props: TreeItemProps) {
           >
             {node.name}
           </span>
-        )}
-        {!isEditing && (
-          <RowActions>
-            <IconBtn title="Rename" onClick={(e) => { e.stopPropagation(); props.onStartRename(node.id, node.name); }}>
-              <Pencil className="h-3.5 w-3.5" />
-            </IconBtn>
-            <IconBtn title="Duplicate" onClick={(e) => { 
-              e.stopPropagation(); 
-              props.onDuplicate(props.selectedIds.has(node.id) ? Array.from(props.selectedIds) : [node.id]); 
-            }}>
-              <Copy className="h-3.5 w-3.5" />
-            </IconBtn>
-            <IconBtn title="Download" onClick={(e) => { e.stopPropagation(); props.onDownload(node); }}>
-              <Download className="h-3.5 w-3.5" />
-            </IconBtn>
-            <IconBtn title="Delete" onClick={(e) => { 
-              e.stopPropagation(); 
-              props.onDelete(props.selectedIds.has(node.id) ? Array.from(props.selectedIds) : [node.id]); 
-            }}>
-              <Trash2 className="h-3.5 w-3.5" />
-            </IconBtn>
-          </RowActions>
         )}
       </div>
     </div>
@@ -545,14 +654,6 @@ function InlineInput({
   );
 }
 
-function RowActions({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 bg-inherit pl-1">
-      {children}
-    </div>
-  );
-}
-
 function IconBtn({
   title,
   onClick,
@@ -567,7 +668,7 @@ function IconBtn({
       title={title}
       aria-label={title}
       onClick={onClick}
-      className="rounded p-0.5 text-[var(--vscode-text)] hover:bg-[var(--vscode-border)444] transition-colors flex items-center justify-center"
+      className="rounded p-0.5 text-[var(--vscode-text)] hover:bg-[var(--vscode-toolbar-hoverBackground)] transition-colors flex items-center justify-center cursor-pointer"
     >
       {children}
     </button>

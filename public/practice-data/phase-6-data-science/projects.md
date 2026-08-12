@@ -27,8 +27,8 @@ Projects 1–3 use the [starter project](starter-project/README.md) — delibera
 | 5   | Iris Analysis                  | ●○○        | 1–2 h   | sklearn built-in |
 | 6   | NumPy Image Manipulation       | ●○○        | 2–3 h   | any photo        |
 | 7   | Matrix Calculator              | ●●○        | 2–3 h   | none             |
-| 8   | Weather / Air Quality Analysis | ●●○        | 4–5 h   | data.gov.in      |
-| 9   | Stock Price Analyser           | ●●○        | 3–4 h   | yfinance         |
+| 8   | Weather / Air Quality Analysis | ●●○        | 4–5 h   | bundled CSV     |
+| 9   | Stock Price Analyser           | ●●○        | 3–4 h   | bundled CSV     |
 | 10  | Capstone EDA                   | ●●●        | 10–15 h | your choice      |
 
 ---
@@ -186,11 +186,11 @@ Someone who has never seen the data can read your report and correctly state wha
 
 **Goal:** The classic starter EDA, done properly with hypothesis-first discipline.
 
-**You need:** `sns.load_dataset("titanic")`. Modules 27–28.
+**You need:** `starter-project/data/titanic.csv` — bundled offline, same dataset as `sns.load_dataset("titanic")`. Modules 27–28.
 
 ### Build it
 
-1. **Load and profile.** `df.info()`, `df.describe()`, `df.isnull().sum()`. Note `age` is 20% missing and `deck` is 77% missing.
+1. **Load and profile.** `pd.read_csv("starter-project/data/titanic.csv")`, then `df.info()`, `df.describe()`, `df.isnull().sum()`. Note `age` is 20% missing and `deck` is 77% missing.
 
 2. **Decide what to do about `deck` before you analyse anything.** 77% missing means you either drop the column or treat "missing" as its own category. Both are defensible; silently letting it into a `groupby` is not.
 
@@ -222,7 +222,7 @@ You can state the survival rate for any sex × class combination and explain the
 
 **Goal:** A fast, complete EDA on the cleanest dataset that exists — as a control.
 
-**You need:** `sklearn.datasets.load_iris`.
+**You need:** `starter-project/data/iris.csv` — bundled offline, identical to `sklearn.datasets.load_iris()` (or load it directly with `load_iris` if you prefer). 
 
 ### Build it
 
@@ -316,11 +316,11 @@ Your CLI reports all four properties, and you can state why `solve` beats `inv`.
 
 **Goal:** Time-based analysis on real Indian public data, with genuine gaps.
 
-**You need:** A dataset from [data.gov.in](https://data.gov.in) — search "air quality" or "rainfall". CPCB AQI data works well. Modules 25–28.
+**You need:** `starter-project/data/weather_sample.csv` — a bundled 3-year daily series for Delhi and Mumbai (identical to what you would fetch from data.gov.in) with real sensor gaps: a 72-hour Delhi outage, scattered missing days, one impossible 9999 AQI sensor error, and a genuine Diwali spike. If you have internet access you may substitute live CPCB AQI data from [data.gov.in](https://data.gov.in) — the bundled file is the no-network fallback. Modules 25–28.
 
 ### Build it
 
-1. **Download real data.** Do not substitute a Kaggle-cleaned version. The point is the mess.
+1. **Load the bundled file.** `pd.read_csv("starter-project/data/weather_sample.csv")`, then profile it exactly as in Project 1. Expect missing timestamps and a senseless sensor value.
 2. **Profile it** exactly as in Project 1. Expect encoding problems, merged header rows, and footnotes in the data.
 3. **Parse the timestamp column** and set it as a DatetimeIndex.
 4. **Check for gaps:** `df.index.to_series().diff().value_counts()`. Real sensor data has missing hours, not a clean hourly series.
@@ -349,15 +349,16 @@ You have a seasonal chart, a documented gap-handling decision, and a defensible 
 
 **Goal:** Returns, volatility and moving averages on real market data.
 
-**You need:** `pip install yfinance`. Modules 25, 27.
+**You need:** `starter-project/data/stock_sample.csv` — a bundled daily OHLCV series for two Indian stocks (`RELIANCE`, `TCS`) and `NIFTY50`, generated to behave like a real 2023–24 calendar (weekends and ~2% holidays missing). `yfinance` cannot run inside this browser sandbox, so the bundled file is the offline equivalent. Modules 25, 27.
 
 ### Build it
 
-1. **Fetch two years** of an Indian stock:
+1. **Load the bundled file:**
    ```python
-   import yfinance as yf
-   df = yf.download("RELIANCE.NS", start="2023-01-01", end="2025-01-01")
+   df = pd.read_csv("starter-project/data/stock_sample.csv")
+   df = df[df["symbol"] == "RELIANCE"].copy()
    ```
+   Or, on a machine with internet, `yf.download("RELIANCE.NS", start="2023-01-01", end="2025-01-01")` — the exercises are identical.
 2. **Note the gaps** — weekends and holidays. The index is _not_ continuous. Never `resample("D")` without deciding what a non-trading day means.
 3. **Daily returns:** `df["Close"].pct_change()`.
 4. **Cumulative return:** `(1 + returns).cumprod()`.

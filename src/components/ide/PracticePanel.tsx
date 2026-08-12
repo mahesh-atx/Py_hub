@@ -42,6 +42,30 @@ interface Manifest {
   batches: { id: string; title: string; path: string; files: ManifestFile[] }[];
 }
 
+// starter-project files that the Data Science tab needs inside the browser
+// workspace so learners can open the data, run the generator scripts, and
+// compare against the reference pipeline without leaving the sandbox.
+const PHASE_6_STARTER_FILES = [
+  "starter-project/README.md",
+  "starter-project/profile_raw.py",
+  "starter-project/data/make_messy_data.py",
+  "starter-project/data/make_weather_data.py",
+  "starter-project/data/make_stock_data.py",
+  "starter-project/data/sales_raw.csv",
+  "starter-project/data/customers_raw.csv",
+  "starter-project/data/sales_clean.csv",
+  "starter-project/data/customers_clean.csv",
+  "starter-project/data/merged_clean.csv",
+  "starter-project/data/titanic.csv",
+  "starter-project/data/iris.csv",
+  "starter-project/data/weather_sample.csv",
+  "starter-project/data/stock_sample.csv",
+  "starter-project/src/__init__.py",
+  "starter-project/src/clean.py",
+  "starter-project/src/eda.py",
+  "starter-project/src/charts.py",
+];
+
 function normalize(s: string): string {
   return s
     .replace(/\r\n/g, "\n")
@@ -144,6 +168,7 @@ export function PracticeSidebar({
   runTest, 
   onCreateFile, 
   onOpenOrCreateFile,
+  onSeedFiles,
   activeFileContent,
   onPracticeStateChange,
   onTestResults
@@ -151,6 +176,7 @@ export function PracticeSidebar({
   runTest: RunCapture; 
   onCreateFile: (name: string, content: string, append?: boolean) => void;
   onOpenOrCreateFile: (name: string, content: string) => void;
+  onSeedFiles?: (relativePaths: string[], batchId: string, batchTitle: string) => Promise<string[]>;
   activeFileContent: string;
   onPracticeStateChange?: (state: { isActive: boolean; hasTests: boolean; submitFn: ((code: string) => Promise<void>) | null; judgeStdoutFn: ((stdout: string) => void) | null; skipFn: (() => void) | null; canSkip: boolean }) => void;
   onTestResults?: (results: { passed: boolean; actual: string; expected: string }[] | null) => void;
@@ -166,7 +192,6 @@ export function PracticeSidebar({
   const [batchesExpanded, setBatchesExpanded] = useState(true);
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({});
 
-  const [keepCodeEnabled, setKeepCodeEnabled] = useState(true);
   const [questionKind, setQuestionKind] = useState<"Q" | "P" | "A">("Q");
 
   // Hint reveal state (3 levels: hint -> more code -> full solution)
@@ -292,7 +317,7 @@ export function PracticeSidebar({
     if (activeChallenge) {
       const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
       const canSkip = activeIndex >= 0 && activeIndex < challenges.length - 1;
-      const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled) : null;
+      const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1]) : null;
 
       onPracticeStateChange({
         isActive: true,
@@ -305,16 +330,40 @@ export function PracticeSidebar({
     } else {
       onPracticeStateChange({ isActive: false, hasTests: false, submitFn: null, judgeStdoutFn: null, skipFn: null, canSkip: false });
     }
-  }, [activeChallenge, onPracticeStateChange, challenges, keepCodeEnabled]);
+  }, [activeChallenge, onPracticeStateChange, challenges]);
+
+  const getBatchTitle = (id: string) => {
+    return manifest?.batches.find(b => b.id === id)?.title || id.replace("phase-", "");
+  };
 
   const loadMarkdown = async (batchId: string, fileId: string) => {
     try {
       const res = await fetch(`/practice-data/${batchId}/${fileId}`);
       if (res.ok) {
         const text = await res.text();
-        onCreateFile(fileId, text, false);
+        const batchTitle = getBatchTitle(batchId);
+        onOpenOrCreateFile(`.course/${batchTitle}/${fileId}`, text);
       }
     } catch(e) {}
+    seedPhase6IfNeeded(batchId);
+  };
+
+  const seedPhase6Ref = useRef(false);
+
+  const seedPhase6IfNeeded = (batchId: string) => {
+    if (batchId !== "phase-6-data-science" || !onSeedFiles) return;
+    if (seedPhase6Ref.current) return;
+    seedPhase6Ref.current = true;
+    getKV("phase6StarterSeeded").then((alreadySeeded: any) => {
+      if (alreadySeeded) return;
+      const batchTitle = getBatchTitle(batchId);
+      onSeedFiles(PHASE_6_STARTER_FILES, batchId, batchTitle).then((created) => {
+        if (created.length > 0) {
+          toast.info(`📦 Seeded the starter-project data & scripts (${created.length} files) into your workspace.`);
+        }
+        setKV("phase6StarterSeeded", true);
+      });
+    });
   };
 
   const loadContent = async (type: "batch", id: string, fileId = "questions.md") => {
@@ -323,6 +372,7 @@ export function PracticeSidebar({
     setChallenges([]);
     setActiveChallenge(null);
     setResults(null);
+    seedPhase6IfNeeded(id);
     const isProjects = fileId === "projects.md";
     const isAssignments = fileId === "assignments.md";
     const prefix: "Q" | "P" | "A" = isProjects ? "P" : isAssignments ? "A" : "Q";
@@ -496,7 +546,7 @@ export function PracticeSidebar({
     return `${c.id}-${base}.py`;
   };
 
-  const selectChallenge = (c: Challenge | null, keepCode = false) => {
+  const selectChallenge = (c: Challenge | null) => {
     setActiveChallenge(c);
     setResults(null);
     terminalStore.clear();
@@ -504,6 +554,8 @@ export function PracticeSidebar({
     setHintOpen(false);
     if (c) {
       const uniqueId = activeCategory ? `${activeCategory.id}__${c.id}` : c.id;
+      const batchTitle = activeCategory ? getBatchTitle(activeCategory.id) : "General";
+      
       getKV("practiceState").then((state: any) => {
         const s = state || {};
         setHintLevel(Math.min(3, s.hints?.[uniqueId] || (s.solved?.includes(uniqueId) ? 3 : 0)));
@@ -512,8 +564,9 @@ export function PracticeSidebar({
       });
       if (questionKind === "P" || questionKind === "A") {
         const fileList = deliverables[activeCategory?.id || ""]?.[c.id];
+        const categoryName = questionKind === "P" ? "Projects" : "Assignments";
         if (fileList && fileList.length > 0) {
-          const folder = projectFileName(c).replace(/\.py$/, "");
+          const folder = `.practice/${batchTitle}/${categoryName}/${projectFileName(c).replace(/\.py$/, "")}`;
           const headerFor = (f: string) => {
             if (f.endsWith(".md")) return `# ${c.title}\n# ${f}\n\nDesign notes, reflections, and written answers live here.\n`;
             if (f.endsWith(".json")) return `{}\n`;
@@ -522,10 +575,11 @@ export function PracticeSidebar({
           // create in reverse so the first manifest file ends up active in the editor
           [...fileList].reverse().forEach(f => onOpenOrCreateFile(`${folder}/${f}`, headerFor(f)));
         } else {
-          onOpenOrCreateFile(projectFileName(c), `# ${c.title}\n# Write your solution below:\n\n`);
+          onOpenOrCreateFile(`.practice/${batchTitle}/${categoryName}/${projectFileName(c)}`, `# ${c.title}\n# Write your solution below:\n\n`);
         }
       } else {
-        onCreateFile(`practice.py`, `# ${c.title}\n# Write your solution below:\n\n`, keepCode);
+        const fileName = `${c.id}-${c.title.replace(/^[APQ]\d+\.\s*/, "").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-")}.py`;
+        onOpenOrCreateFile(`.practice/${batchTitle}/Practice Questions/${fileName}`, `# ${c.title}\n# Write your solution below:\n\n`);
       }
     }
   };
@@ -576,7 +630,7 @@ export function PracticeSidebar({
       const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
       if (activeIndex < challenges.length - 1) {
         toast.info("Correct! Well done.");
-        setTimeout(() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled), 800);
+        setTimeout(() => selectChallenge(challenges[activeIndex + 1]), 800);
       } else {
         toast.info("Module Complete! 🎉");
       }
@@ -602,7 +656,7 @@ export function PracticeSidebar({
     markSolved(activeChallenge.id, activeCategory.id, challenges.length);
     const idx = challenges.findIndex(c => c.id === activeChallenge.id);
     if (idx < challenges.length - 1) {
-      setTimeout(() => selectChallenge(challenges[idx + 1], true), 1200);
+      setTimeout(() => selectChallenge(challenges[idx + 1]), 1200);
     }
   };
 
@@ -703,23 +757,10 @@ export function PracticeSidebar({
         )}
         {activeCategory && (
           <div className="flex items-center gap-4">
-            {questionKind === "Q" && (
-              <button
-                onClick={() => setKeepCodeEnabled(!keepCodeEnabled)}
-                className={`flex items-center gap-1.5 transition-colors ${
-                  keepCodeEnabled ? "text-emerald-400" : "text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]"
-                }`}
-                title="Keep previously typed code when advancing to the next question"
-              >
-                <div className={`h-1.5 w-1.5 rounded-full ${keepCodeEnabled ? "bg-emerald-400 shadow-[0_0_4px_#34d399]" : "bg-transparent border border-current"}`} />
-                <span className="normal-case tracking-normal text-[10px]">Keep Code</span>
-              </button>
-            )}
-            
             <div className="flex items-center gap-0.5">
               <button 
                 onClick={() => {
-                  if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], keepCodeEnabled);
+                  if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1]);
                   else { setActiveCategory(null); setChallenges([]); setActiveChallenge(null); setResults(null); }
                 }}
                 className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors"
@@ -729,7 +770,7 @@ export function PracticeSidebar({
               </button>
               <button 
                 onClick={() => {
-                  if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], keepCodeEnabled);
+                  if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1]);
                 }}
                 disabled={activeIndex >= challenges.length - 1}
                 className={`p-1 rounded transition-colors ${activeIndex < challenges.length - 1 ? 'hover:bg-[var(--vscode-hover)] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]' : 'opacity-30 cursor-not-allowed text-[var(--vscode-text-muted)]'}`}
@@ -1027,7 +1068,7 @@ export function PracticeSidebar({
 
                 {allPassed && activeIndex < challenges.length - 1 && (
                   <button
-                    onClick={() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled)}
+                    onClick={() => selectChallenge(challenges[activeIndex + 1])}
                     className="flex items-center justify-center gap-1.5 rounded bg-sky-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-sky-500 transition-colors mt-2 shadow-lg shadow-sky-500/20 animate-in fade-in zoom-in duration-300 w-full"
                   >
                     Next Question <ArrowRight className="h-3 w-3" />

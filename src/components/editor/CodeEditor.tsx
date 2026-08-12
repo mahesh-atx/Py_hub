@@ -24,6 +24,7 @@ interface CodeEditorProps {
   minimap: boolean;
   wordWrap: boolean;
   paneId?: string;
+  readOnly?: boolean;
 }
 
 export function CodeEditor(props: CodeEditorProps) {
@@ -108,6 +109,7 @@ export function CodeEditor(props: CodeEditorProps) {
         tabSize: props.tabSize,
         minimap: { enabled: props.minimap },
         wordWrap: props.wordWrap ? "on" : "off",
+        readOnly: props.readOnly,
         automaticLayout: true,
         scrollBeyondLastLine: false,
         smoothScrolling: true,

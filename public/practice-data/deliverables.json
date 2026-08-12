@@ -6,5 +6,10 @@
   "phase-4-oop": {
     "A19": ["library/library.py", "library/book.py", "library/member.py", "library/loan.py", "library/__init__.py", "library.json"],
     "ACap": ["design.md", "system.py", "reflection.md"]
+  },
+  "phase-6-data-science": {
+    "P2": ["pipeline.py", "cleaning_log.py", "audit.md"],
+    "P3": ["eda.py", "charts.py", "report.md"],
+    "P10": ["design.md", "system.py", "reflection.md"]
   }
 }
