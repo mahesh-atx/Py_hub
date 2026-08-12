@@ -206,6 +206,27 @@ async function initPyodide(): Promise<void> {
       pythonVersion,
       pyodideVersion: PYODIDE_VERSION,
     });
+
+    // Background: preload phase 6 datasets into Pyodide virtual filesystem
+    setTimeout(async () => {
+      try {
+        const FS = pyodide.FS;
+        try { FS.mkdir("data"); } catch (e) {}
+        const files = ["sales_raw.csv", "customers_raw.csv", "merged_clean.csv", "sales_clean.csv", "customers_clean.csv"];
+        for (const f of files) {
+          try {
+            if (!FS.analyzePath(`data/${f}`).exists) {
+              const res = await fetch(`/practice-data/phase-6-data-science/starter-project/data/${f}`);
+              if (res.ok) {
+                const buffer = await res.arrayBuffer();
+                FS.writeFile(`data/${f}`, new Uint8Array(buffer));
+              }
+            }
+          } catch (e) {}
+        }
+      } catch (e) {}
+    }, 50);
+
   } catch (err) {
     post({
       type: "FATAL",

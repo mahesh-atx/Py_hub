@@ -288,33 +288,22 @@ export function PracticeSidebar({
   }, []);
 
   useEffect(() => {
-    if (onPracticeStateChange) {
-      if (activeChallenge) {
-        const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
-        const canSkip = activeIndex >= 0 && activeIndex < challenges.length - 1;
-        const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled) : null;
+    if (!onPracticeStateChange) return;
+    if (activeChallenge) {
+      const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
+      const canSkip = activeIndex >= 0 && activeIndex < challenges.length - 1;
+      const skipFn = canSkip ? () => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled) : null;
 
-        onPracticeStateChange({
-          isActive: true,
-          hasTests: activeChallenge.tests && activeChallenge.tests.length > 0,
-          submitFn: runTests,
-          judgeStdoutFn: (stdout: string) => {
-             if (!activeChallenge.tests || activeChallenge.tests.length === 0) return;
-             const passedAll = activeChallenge.tests.every(t => compareOutputs(stdout, t.expected_output, t));
-             if (passedAll) {
-                toast.info("Correct output! Auto-advancing to next question...");
-                markSolved(activeChallenge.id, activeCategory!.id, challenges.length);
-                if (activeIndex >= 0 && activeIndex < challenges.length - 1) {
-                  setTimeout(() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled), 1000);
-                }
-             }
-          },
-          skipFn,
-          canSkip
-        });
-      } else {
-        onPracticeStateChange({ isActive: false, hasTests: false, submitFn: null, judgeStdoutFn: null, skipFn: null, canSkip: false });
-      }
+      onPracticeStateChange({
+        isActive: true,
+        hasTests: true,
+        submitFn: runTests,
+        judgeStdoutFn: null,
+        skipFn,
+        canSkip
+      });
+    } else {
+      onPracticeStateChange({ isActive: false, hasTests: false, submitFn: null, judgeStdoutFn: null, skipFn: null, canSkip: false });
     }
   }, [activeChallenge, onPracticeStateChange, challenges, keepCodeEnabled]);
 
@@ -542,8 +531,7 @@ export function PracticeSidebar({
   };
 
   const runTests = async (codeToTest: string) => {
-    if (!activeChallenge || activeChallenge.tests.length === 0) return;
-    if (!activeCategory) return;
+    if (!activeChallenge || !activeCategory) return;
     setRunning(true);
     setResults(null);
 
@@ -559,14 +547,24 @@ export function PracticeSidebar({
 
     const out: { passed: boolean; actual: string; expected: string }[] = [];
     
-    for (const t of activeChallenge.tests) {
-      const res = await runTest(codeToTest, t.input);
-      const passed = res.status === 0 && compareOutputs(res.stdout, t.expected_output, t);
+    if (activeChallenge.tests.length === 0) {
+      const res = await runTest(codeToTest, "");
+      const passed = res.status === 0;
       out.push({
         passed,
-        actual: res.status === 0 ? res.stdout : res.stderr || res.traceback || "",
-        expected: t.expected_output,
+        actual: passed ? (res.stdout ? `Output:\n${res.stdout}` : "Execution successful (no output).") : res.stderr || res.traceback || "Runtime Error",
+        expected: "Code should execute without errors. Please visually verify your output.",
       });
+    } else {
+      for (const t of activeChallenge.tests) {
+        const res = await runTest(codeToTest, t.input);
+        const passed = res.status === 0 && compareOutputs(res.stdout, t.expected_output, t);
+        out.push({
+          passed,
+          actual: res.status === 0 ? res.stdout : res.stderr || res.traceback || "",
+          expected: t.expected_output,
+        });
+      }
     }
     setResults(out);
     if (onTestResults) onTestResults(out);
@@ -577,7 +575,10 @@ export function PracticeSidebar({
       markSolved(activeChallenge.id, activeCategory.id, challenges.length);
       const activeIndex = challenges.findIndex(c => c.id === activeChallenge.id);
       if (activeIndex < challenges.length - 1) {
+        toast.info("Correct! Well done.");
         setTimeout(() => selectChallenge(challenges[activeIndex + 1], keepCodeEnabled), 800);
+      } else {
+        toast.info("Module Complete! 🎉");
       }
     } else {
       const uniqueId = `${activeCategory.id}__${activeChallenge.id}`;
@@ -585,7 +586,9 @@ export function PracticeSidebar({
       setHintAttempts(attempts);
       updatePracticeState(s => ({ ...s, hintAttempts: { ...(s.hintAttempts || {}), [uniqueId]: attempts } }));
       if ((attempts === 1 || attempts === 3) && hintLevel < (attempts === 1 ? 2 : 3)) {
-        toast.info(`🔓 New hint level unlocked: ${HINT_LABELS[attempts === 1 ? 1 : 2]}`);
+        setHintLevel(attempts === 1 ? 2 : 3);
+        updatePracticeState(s => ({ ...s, hints: { ...(s.hints || {}), [uniqueId]: attempts === 1 ? 2 : 3 } }));
+        toast.info(attempts === 1 ? "💡 Hint Level 2 unlocked!" : "💡 Hint Level 3 unlocked!");
       }
     }
   };
@@ -1031,27 +1034,6 @@ export function PracticeSidebar({
                   </button>
                 )}
 
-                {activeChallenge && activeChallenge.tests.length === 0 && (
-                  <button
-                    onClick={markProjectComplete}
-                    disabled={isProjectSolved}
-                    className={`mt-2 flex w-full items-center justify-center gap-1.5 rounded px-3 py-2 text-[11px] font-semibold text-white transition-colors shadow-lg ${
-                      isProjectSolved
-                        ? "cursor-default bg-emerald-700/60 shadow-emerald-900/20"
-                        : "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/20 animate-in fade-in zoom-in duration-300"
-                    }`}
-                  >
-                    {isProjectSolved ? (
-                      <>
-                        <CircleCheck className="h-3 w-3" /> {questionKind === "P" ? "Project Completed" : questionKind === "A" ? "Assignment Completed" : "Question Completed"}
-                      </>
-                    ) : (
-                      <>
-                        <Trophy className="h-3 w-3" /> {questionKind === "A" ? "Mark Assignment as Complete" : questionKind === "P" ? "Mark as Complete" : "Mark Question as Complete"}
-                      </>
-                    )}
-                  </button>
-                )}
               </div>
             ) : (
               <div className="text-xs text-[var(--vscode-text-muted)]">No challenges found.</div>

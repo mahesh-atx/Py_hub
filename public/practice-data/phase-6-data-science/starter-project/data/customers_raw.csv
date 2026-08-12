@@ -1,0 +1,516 @@
+customer_id,customer_name,age,gender,city,state,signup_date,phone,is_premium
+C0001,aarav menon,32,Female,Pune,Maharashtra,2023-08-28,+91-7127978094,1
+C0002,Pooja Iyer,N/A,Female,New Delhi,Delhi,2022-06-09,+91 73039 59797,N
+C0003,Priya Menon,25,Male,CHENNAI,Tamil Nadu,2023-08-15,+91-7298737106,no
+C0004,Siddharth Singh,41,Female,Pune,Maharashtra,16/09/2023,+91 75354 70589,1
+C0005,rahul sharma,20,M,Dehli,Delhi,16-Jun-24,09761027762,yes
+C0006,Vikram Iyer,52,Male,chennai,Tamil Nadu,22/05/2022,7202363285,TRUE
+C0007,Siddharth Gupta,47,O,Pune,Maharashtra,11/30/2023,08260573448,yes
+C0008,Aarav Menon,34,Male,AHMEDABAD,Gujarat,11/05/2024,+91-9615507143,0
+C0009,ISHA SHARMA,41,male,hyderabad,Telangana,18/06/2024,7367878761,yes
+C0010,Ananya Singh,56,Male,ahmedabad,Gujarat,2024-01-01,09222971316,No
+C0011,  Divya Patel ,55,M,Delhi,Delhi,2022-08-23,+91 72321 77391,FALSE
+C0012,Vikram Menon,54,female,delhi,Delhi,2022-04-07,+91-8851350739,No
+C0013,  Siddharth Menon ,24,female,mumbai,Maharashtra,13/10/2022,+91-7323775634,1
+C0014,rohan iyer,49,M,Mumbai,Maharashtra,2023-02-04,09842715617,yes
+C0015,Meera Iyer,55,male,Dehli,Delhi,04/05/2023,7676168421,No
+C0016,DIVYA GUPTA,54,Male,Poona,Maharashtra,02/08/2023,+91 91945 51180,TRUE
+C0017,  Meera Joshi ,nan,Male,Bengaluru,Karnataka,2023-07-05,+91 81436 19016,Y
+C0018,Nikhil Kulkarni,57,?,Bangalore,Karnataka,2023-11-11,8135872495,Y
+C0019,  Karan Menon ,61,female,Chennai,Tamil Nadu,05/04/2022,+91 70116 53719,yes
+C0020,POOJA KULKARNI,22,F,AHMEDABAD,Gujarat,20/08/2023,+91-8845919895,N
+C0021,DIVYA RAO,67,Male,delhi,Delhi,2024-06-04,08426725702,no
+C0022,ANANYA MENON,20,O,CHENNAI,Tamil Nadu,"November 09, 2022",07829486135,N
+C0023,  Rohan Singh ,50,Male,Chennai,Tamil Nadu,"April 29, 2022",+91-8121910732,0
+C0024,Kavya Menon,45,female,kolkata,West Bengal,2022-09-18,7007263971,N
+C0025,Rohan Rao,57,Female,Calcutta,West Bengal,2023-11-14,9994487334,TRUE
+C0026,Ananya Desai,NA,F,Calcutta,West Bengal,2023-04-22,+91-9901796894,Y
+C0027,Rohan Iyer,32,M, Hyderabad,Telangana,"September 18, 2023",8955997540,TRUE
+C0028,SIDDHARTH IYER,0,F,Amdavad,Gujarat,21/02/2022,+91 74369 70901,FALSE
+C0029,Nikhil Reddy,48,O,KOLKATA,West Bengal,2023-10-04,+91 93381 47450,N
+C0030,rohan reddy,42,M,HYDERABAD,Telangana,10/07/2023,+91-7267429212,0
+C0031,Isha Sharma,37,O,kolkata,West Bengal,2023-05-15,08443665390,yes
+C0032,Vikram Desai,43,M,ahmedabad,Gujarat,06/06/2024,07909074012,N
+C0033,Siddharth Singh,44,M,Hyderabad,Telangana,2022-12-25,9799264931,Yes
+C0034,Divya Reddy,25,Female,Bangalore,Karnataka,21/06/2022,+91-7491914923,Y
+C0035,siddharth menon,55,M,Calcutta,West Bengal,20-May-24,08491228808,N
+C0036,Rahul Sharma,70,male, Pune,Maharashtra,2023-12-26,09645323395,FALSE
+C0037,Arjun Nair,23,O,KOLKATA,West Bengal,2022-12-11,+91 85976 37802,N
+C0038,ARJUN KULKARNI,30,female,chennai,Tamil Nadu,09/12/2023,+91 95982 12260,no
+C0039,Divya Singh,41,female,Calcutta,West Bengal,27-Dec-22,8316935719,N
+C0040,ananya iyer,48,O,PUNE,Maharashtra,"April 13, 2022",+91-8272368870,1
+C0041,Arjun Sharma,53,Female,BANGALORE,Karnataka,"April 16, 2022",+91 85381 72746,yes
+C0042,ARJUN JOSHI,22,Female,mumbai,Maharashtra,"June 02, 2022",09396905421,0
+C0043,Siddharth Joshi,37,male,Delhi,Delhi,2024-13-45,+91-7892442253,yes
+C0044,ANANYA KULKARNI,18,female,delhi,Delhi,23-Oct-22,7305714736,TRUE
+C0045,DIVYA RAO,35,F,Poona,Maharashtra,"February 06, 2024",+91 74074 71433,TRUE
+C0046,ISHA JOSHI,20,Male,Chennai,Tamil Nadu,2024-13-45,07752438459,1
+C0047,Arjun Reddy,45,M,Amdavad,Gujarat,2022-12-08,09979305739,Y
+C0048,PRIYA JOSHI,34,female,Kolkata,West Bengal,"November 05, 2023",+91 71776 34586,0
+C0049,nikhil sharma,53,Female,Ahmedabad,Gujarat,08/10/2023,07058731376,No
+C0050,Sneha Joshi,59,Female,New Delhi,Delhi,"March 02, 2023",07621232513,no
+C0051,Rohan Singh,44,male,Bangalore,Karnataka,2024-01-14,07638212450,1
+C0052,Kavya Nair,52,O,ahmedabad,Gujarat,2023-08-09,08637375316,yes
+C0053,Priya Reddy,55,O,Amdavad,Gujarat,16-Jan-22,+91 75058 19807,N
+C0054,Rohan Nair,52,Female,KOLKATA,West Bengal,12/06/2024,+91 77692 92727,no
+C0055,Pooja Patel,63,Female,Pune,Maharashtra,2022-02-17,8260005019,no
+C0056,ananya reddy,57,F,kolkata,West Bengal,26/08/2022,07040361651,Y
+C0057,Rohan Joshi,55,Female,Bangalore,Karnataka,,+91 82496 84963,Y
+C0058,SIDDHARTH SINGH,61,Male,MUMBAI,Maharashtra,"March 05, 2024",+91 77176 93442,yes
+C0059,Priya Singh,20,M,PUNE,Maharashtra,2024-02-05,+91 95772 80701,yes
+C0060,Isha Singh,39,M,chennai,Tamil Nadu,30-May-24,+91-9896552701,TRUE
+C0061,ARJUN KULKARNI,41,Male,MUMBAI,Maharashtra,21-Apr-22,7107480046,No
+C0062,Meera Rao,-,M,ahmedabad,Gujarat,02/02/2023,9991375951,TRUE
+C0063,Isha Desai,35,female,pune,Maharashtra,2024-05-25,+91-9944974316,TRUE
+C0064,Karan Patel,70,Female,Chennai,Tamil Nadu,"February 21, 2022",+91-8046120419,1
+C0065,  Karan Iyer ,27,male,delhi,Delhi,14/05/2022,+91-7749459431,N
+C0066,rahul sharma,21,M,NEW DELHI,Delhi,05-Apr-23,9549776132,0
+C0067,Meera Joshi,19,female,Mumbai,Maharashtra,18-May-23,7315640205,No
+C0068,Arjun Desai,53,Male,BANGALORE,Karnataka,02/06/2023,7491404673,TRUE
+C0069,  Divya Gupta ,47,male,AHMEDABAD,Gujarat,,07400420225,No
+C0070,VIKRAM KULKARNI,53,female, Hyderabad,Telangana,06/07/2024,+91-7220959215,0
+C0071,Vikram Rao,24,M,Dehli,Delhi,"August 20, 2022",+91-9409329326,0
+C0072,aarav reddy,66,M,chennai,Tamil Nadu,03-Aug-23,+91-7298867122,1
+C0073,Siddharth Gupta,28,O,Dehli,Delhi,03/28/2022,+91-7668210614,Y
+C0074,Pooja Joshi,44,M,Ahmedabad,Gujarat,18-Oct-22,+91-9547492192,no
+C0075,priya sharma,31,male,Kolkata,West Bengal,25-May-23,+91 82458 79806,No
+C0076,PRIYA GUPTA,22,Male,KOLKATA,West Bengal,2022-10-24,+91 75631 91018,No
+C0077,Sneha Iyer,43,male,kolkata,West Bengal,08-Dec-22,9192509020,N
+C0078,VIKRAM IYER,34,O,Hyderabad,Telangana,,+91 94899 85952,N
+C0079,Nikhil Patel,58,M,Bengaluru,Karnataka,14/11/2022,+91-7161521910,0
+C0080,Nikhil Desai,nan,Female,KOLKATA,West Bengal,2023-05-29,8934982045,Yes
+C0081,Nikhil Joshi,57,male,New Delhi,Delhi,27/11/2023,+91-9709637214,1
+C0082,Meera Singh,60,F,kolkata,West Bengal,2022-12-25,+91-9817733555,Y
+C0083,Rahul Reddy,65,M,KOLKATA,West Bengal,2023-06-05,08467729242,no
+C0084,VIKRAM REDDY,68,O,Dehli,Delhi,08-Feb-22,7562851356,yes
+C0085,Nikhil Sharma,61,Male,BANGALORE,Karnataka,28/08/2022,08579864877,FALSE
+C0086,Siddharth Kulkarni,28,F,Chennai,Tamil Nadu,19/10/2023,+91 73361 77621,No
+C0087,Arjun Joshi,27,F,Bangalore,Karnataka,2022-01-28,+91-8702756809,N
+C0088,Aarav Nair,63,-,delhi,Delhi,17-Feb-24,+91 70172 20384,no
+C0089,Pooja Patel,null,Female,BANGALORE,Karnataka,2022-03-06,9562974666,yes
+C0090,Pooja Sharma,33,Female,CHENNAI,Tamil Nadu,2024-13-45,+91 71426 93318,Y
+C0091,  Kavya Patel ,64,Male,MUMBAI,Maharashtra,2022-05-17,07752002052,FALSE
+C0092,Vikram Patel,47,O,Bengaluru,Karnataka,11/20/2022,+91 96719 81176,Yes
+C0093,Meera Nair,21,M,NEW DELHI,Delhi,14-Feb-23,09972411520,N
+C0094,Rohan Menon,45,Male,Chennai,Tamil Nadu,2022-03-23,8316389690,FALSE
+C0095,Nikhil Sharma,40,Female,Hyderabad,Telangana,18-Mar-22,+91-8744659652,yes
+C0096,PRIYA REDDY,67,N/A,Amdavad,Gujarat,2023-01-15,08576038028,N
+C0097,DIVYA PATEL,29,Male,CHENNAI,Tamil Nadu,2023-12-22,+91-9627992499,yes
+C0098,Nikhil Reddy,46,O,PUNE,Maharashtra,2023-12-28,8247096480,N
+C0099,Sneha Iyer,?,Male,Dehli,Delhi,13/05/2022,09055850987,TRUE
+C0100,Vikram Nair,46,F,Poona,Maharashtra,18/10/2023,8858081385,Y
+C0101,Ananya Nair,32,male,Bangalore,Karnataka,21/07/2022,+91-9365845882,1
+C0102,Vikram Reddy,64,Male,Bengaluru,Karnataka,2022-03-25,07905415100,0
+C0103,Isha Rao,59,O, Mumbai ,Maharashtra,01/11/2022,08785081806,FALSE
+C0104,RAHUL DESAI,63,male,delhi,Delhi,2024-02-18,+91-9412273600,Y
+C0105,DIVYA REDDY,36,female,ahmedabad,Gujarat,2024-04-13,09140034179,FALSE
+C0106,ISHA SHARMA,43,F,Chennai,Tamil Nadu,2022-02-21,+91-9566323583,No
+C0107,Vikram Singh,,Male,Calcutta,West Bengal,2023-07-21,+91-8659355558,yes
+C0108,Siddharth Nair,39,F,Poona,Maharashtra,16/02/2023,09034715642,yes
+C0109,  Rahul Desai ,43,male, Bengaluru ,Karnataka,28/04/2024,+91 79823 72245,N
+C0110,  Pooja Desai ,64,Male,Poona,Maharashtra,2023-08-15,09251560728,yes
+C0111,Priya Desai,25,female,delhi,Delhi,25/02/2023,9025530021,1
+C0112,  Isha Kulkarni ,29,Male,HYDERABAD,Telangana,17/09/2023,+91 88287 49124,Y
+C0113,Isha Nair,53,male,Dehli,Delhi,24/11/2023,+91-8694503971,Y
+C0114,Kavya Joshi,65,Male,Poona,Maharashtra,2023-12-14,9644312718,Yes
+C0115,DIVYA SHARMA,39,O,Dehli,Delhi,2022-06-11,+91 91316 36143,Y
+C0116,Rohan Rao,52,M,mumbai,Maharashtra,03/04/2023,7156078445,Y
+C0117,Aarav Singh,24,female,Bombay,Maharashtra,21/06/2023,+91-7576384364,N
+C0118,nikhil rao,-5,Male,bengaluru,Karnataka,29/06/2022,+91 97098 66059,No
+C0119,Sneha Reddy,48,male,KOLKATA,West Bengal,2024-02-11,+91 89086 85088,N
+C0120,PRIYA RAO,37,Female,Delhi,Delhi,10/17/2023,8578589030,FALSE
+C0121,Nikhil Menon,41,female,bengaluru,Karnataka,2024-02-20,+91 87219 68556,No
+C0122,Priya Kulkarni,30,male, Pune,Maharashtra,30-Apr-22,+91-9504600194,FALSE
+C0123,Pooja Joshi,53,NA,Bengaluru,Karnataka,2024-02-03,+91-7313659437,No
+C0124,Priya Singh,67,Female,Amdavad,Gujarat,,8621334484,N
+C0125,  Ananya Kulkarni ,26,M,PUNE,Maharashtra,20-Apr-23,8821616017,FALSE
+C0126,vikram singh,missing,female,Hyderabad,Telangana,2022-09-04,+91-7433348075,no
+C0127,siddharth joshi,31,F,MUMBAI,Maharashtra,"August 28, 2022",+91 88922 88370,no
+C0128,Vikram Rao,44,Male,chennai,Tamil Nadu,04-Oct-23,09763021449,1
+C0129,POOJA GUPTA,42,F,HYDERABAD,Telangana,28-May-24,7247492925,TRUE
+C0130,  Arjun Iyer ,23,M,delhi,Delhi,2022-02-22,9598323977,0
+C0131,Isha Iyer,39,F,Delhi,Delhi,,9987692130,1
+C0132,Meera Gupta,59,Male, Hyderabad,Telangana,"April 11, 2022",+91 99960 36624,TRUE
+C0133,DIVYA MENON,34,Female,mumbai,Maharashtra,2022-07-20,+91 97307 42208,Y
+C0134,isha joshi,68,Male,Ahmedabad,Gujarat,2023-06-21,9869963931,no
+C0135,vikram sharma,47,Female, Pune,Maharashtra,07/11/2023,+91-7028399849,1
+C0136,Meera Sharma,62,F,Chennai,Tamil Nadu,2023-06-21,+91 87250 43084,TRUE
+C0137,Kavya Gupta,33,Female,Pune,Maharashtra,2024-13-45,09373834610,Yes
+C0138,Ananya Patel,45,O,Bombay,Maharashtra,2022-02-13,+91-9973353078,Y
+C0139,ANANYA NAIR,31,Female,Mumbai,Maharashtra,2022-11-03,+91 97349 61007,TRUE
+C0140,Rohan Kulkarni,40,O, Bengaluru ,Karnataka,27/02/2024,+91 95347 52778,FALSE
+C0141,Divya Nair,42,Female,AHMEDABAD,Gujarat,2024-03-28,7352350576,TRUE
+C0142,KAVYA PATEL,37,M,hyderabad,Telangana,2023-03-18,+91-9382590159,N
+C0143,RAHUL GUPTA,44,Male,pune,Maharashtra,09/08/2023,+91 75554 28198,Y
+C0144,vikram patel,35,M,ahmedabad,Gujarat,09/01/2024,9648572296,Y
+C0145,Siddharth Nair,42,male,Bombay,Maharashtra,2022-05-20,9986257683,TRUE
+C0146,Meera Menon,49,male, Hyderabad,Telangana,2023-01-09,+91-9421719519,FALSE
+C0147,Nikhil Singh,22,female,delhi,Delhi,2023-10-11,+91-8085259583,FALSE
+C0148,Siddharth Kulkarni,NULL,Female,Ahmedabad,Gujarat,22-Apr-22,+91-9824377567,0
+C0149,RAHUL GUPTA,24,Male,kolkata,West Bengal,2023-04-02,+91 89286 75597,Yes
+C0150,Sneha Singh,23,F,AHMEDABAD,Gujarat,"April 12, 2023",07419287737,FALSE
+C0151,ROHAN SINGH,63,Female,hyderabad,Telangana,2024-01-29,09404532947,FALSE
+C0152,siddharth rao,58,Female,delhi,Delhi,06/04/2023,+91 93092 38153,No
+C0153,  Ananya Nair ,47,female,PUNE,Maharashtra,2023-09-04,08511763726,0
+C0154,Meera Desai,61,male,Bangalore,Karnataka,2023-12-12,09468773157,TRUE
+C0155,Isha Rao,59,F,bengaluru,Karnataka,2022-07-11,07041160563,yes
+C0156,Siddharth Kulkarni,49,Female,NEW DELHI,Delhi,2022-06-21,7947167036,1
+C0157,Ananya Joshi,67,M,CHENNAI,Tamil Nadu,04/03/2024,9328058564,TRUE
+C0158,Divya Singh,20,O,Pune,Maharashtra,"March 05, 2024",09621054475,yes
+C0159,Karan Iyer,54,Male,Bangalore,Karnataka,24/10/2022,07582349911,Yes
+C0160,Vikram Menon,33,F,Madras,Tamil Nadu,2023-05-17,08611352885,No
+C0161,Siddharth Kulkarni,62,female,Pune,Maharashtra,08-Jun-24,+91 90802 97050,No
+C0162,Karan Gupta,49,male,kolkata,West Bengal,"August 03, 2023",+91-8476350425,FALSE
+C0163,Sneha Reddy,18,Female,MUMBAI,Maharashtra,"June 12, 2022",+91-8176904638,N
+C0164,Priya Gupta,64,Female,Bengaluru,Karnataka,2022-01-02,09230996082,Yes
+C0165,Rahul Patel,45,F,Mumbai,Maharashtra,2022-04-16,7588965831,No
+C0166,  Ananya Joshi ,31,female, Mumbai ,Maharashtra,2024-05-30,09532200677,N
+C0167,rahul reddy,59,Male,Calcutta,West Bengal,03/08/2024,9827829512,TRUE
+C0168,Priya Iyer,25,M,Chennai,Tamil Nadu,01/05/2023,+91 98207 84498,1
+C0169,ISHA PATEL,,O,Bangalore,Karnataka,06-Oct-23,8819241774,Y
+C0170,Meera Patel,31,male,Pune,Maharashtra,14-Nov-22,+91-8024939794,FALSE
+C0171,Meera Rao,N/A,-,MUMBAI,Maharashtra,20/06/2023,+91-8113457241,Yes
+C0172,Pooja Singh,34,M,HYDERABAD,Telangana,26/02/2022,+91-9434757387,0
+C0173,Divya Menon,,female,pune,Maharashtra,07/03/2022,9374536171,N
+C0174,  Pooja Menon ,70,Male,Delhi,Delhi,2022-07-03,+91 83137 19034,Y
+C0175,Rohan Kulkarni,41,male,hyderabad,Telangana,2023-04-21,7839332926,Yes
+C0176,Aarav Iyer,58,missing,KOLKATA,West Bengal,19-May-24,08022922016,FALSE
+C0177,vikram menon,20,Male,MUMBAI,Maharashtra,2024-13-45,09736820502,No
+C0178,Pooja Rao,33,O,MUMBAI,Maharashtra,22/11/2022,+91-8003352579,yes
+C0179,Ananya Joshi,44,O,PUNE,Maharashtra,2023-04-20,+91-7515024824,no
+C0180,Vikram Patel,NA,male,hyderabad,Telangana,,+91-9387803202,yes
+C0181,Aarav Sharma,32,male,Pune,Maharashtra,20/08/2023,09774492599,yes
+C0182,RAHUL PATEL,47,female, Pune,Maharashtra,2023-05-24,8832508021,Y
+C0183,NIKHIL REDDY,57,female,Madras,Tamil Nadu,2022-03-04,7589424206,1
+C0184,  Siddharth Menon ,52,Male, Mumbai ,Maharashtra,2022-10-04,+91-8369568735,FALSE
+C0185,DIVYA REDDY,60,O,Hyderabad,Telangana,31/02/2024,8668262032,0
+C0186,KAVYA DESAI,62,F,hyderabad,Telangana,,+91-9328407443,Yes
+C0187,Divya Sharma,18,O,delhi,Delhi,"April 01, 2024",7255790920,No
+C0188,Rohan Nair,60,male,hyderabad,Telangana,01/20/2024,+91 91272 51586,no
+C0189,Siddharth Singh,36,Female,BANGALORE,Karnataka,2024-13-45,+91-7782035199,FALSE
+C0190,RAHUL MENON,40,M,Bangalore,Karnataka,2023-04-03,+91 92713 18885,No
+C0191,Priya Gupta,44,female,MUMBAI,Maharashtra,2023-07-14,07698604397,No
+C0192,  Meera Sharma ,24,female,Mumbai,Maharashtra,07/15/2023,+91-7399881571,TRUE
+C0193,POOJA REDDY,39,Female, Bengaluru ,Karnataka,29-Sep-22,08687502175,yes
+C0194,Kavya Sharma,36,female,Mumbai,Maharashtra,2022-07-31,08324367744,FALSE
+C0195,Arjun Patel,42,male,Ahmedabad,Gujarat,2022-09-27,+91-8131297865,yes
+C0196,  Rohan Rao ,52,F, Pune,Maharashtra,18/04/2024,9950934291,FALSE
+C0197,Rohan Gupta,63,Male,chennai,Tamil Nadu,05/04/2022,7742509523,Yes
+C0198,Rohan Rao,70,male,Kolkata,West Bengal,2022-03-31,09232043732,Yes
+C0199,SNEHA GUPTA,54,M,Kolkata,West Bengal,2024-03-15,08134458188,FALSE
+C0200,priya reddy,27,NULL,ahmedabad,Gujarat,20-Feb-22,+91 70662 54284,Y
+C0201,SNEHA IYER,65,male,Ahmedabad,Gujarat,2022-07-12,+91-8748783374,1
+C0202,Rohan Singh,43,n/a,bengaluru,Karnataka,2024-05-07,+91 71656 57235,N
+C0203,Siddharth Rao,61,Male,Amdavad,Gujarat,24/08/2023,+91-8478538226,Y
+C0204,siddharth sharma,54,F,mumbai,Maharashtra,03-Oct-22,07038216544,yes
+C0205,aarav iyer,69,Female,BANGALORE,Karnataka,"January 21, 2023",08297703275,0
+C0206,Aarav Kulkarni,41,male,Pune,Maharashtra,2023-05-09,+91 80654 46291,no
+C0207,Divya Sharma,69,male,Bengaluru,Karnataka,03/11/2023,08737739017,Yes
+C0208,Rahul Menon,61,Female,New Delhi,Delhi,2024-05-15,07419201975,yes
+C0209,Ananya Rao,59,Female,Madras,Tamil Nadu,03/18/2024,+91-8596363878,FALSE
+C0210,Rohan Joshi,50,Male,Mumbai,Maharashtra,"June 10, 2024",09445569788,yes
+C0211,Ananya Patel,58,NA,hyderabad,Telangana,19-Feb-24,07555794362,TRUE
+C0212,  Pooja Joshi ,20,M,kolkata,West Bengal,19-Jan-22,8068687175,No
+C0213,MEERA REDDY,20,Female,Calcutta,West Bengal,03/21/2023,8472026313,yes
+C0214,aarav iyer,?,F,Kolkata,West Bengal,"January 20, 2023",+91-8098606132,No
+C0215,PRIYA MENON,46,female,mumbai,Maharashtra,13-Dec-23,+91 83791 96725,0
+C0216,Pooja Patel,57,M, Bengaluru ,Karnataka,24-Jul-22,7866179751,Yes
+C0217,Karan Menon, ,M,Amdavad,Gujarat,06/02/2022,7322329612,FALSE
+C0218,ARJUN JOSHI,NA,male,CHENNAI,Tamil Nadu,13-Mar-23,7197092148,N
+C0219,nikhil desai,64,F, Hyderabad,Telangana,2023-04-13,9963108379,No
+C0220,PRIYA REDDY,55,female,BANGALORE,Karnataka,2024-03-08,09074811306,No
+C0221,NIKHIL SHARMA,59,Female,kolkata,West Bengal,"November 17, 2023",07409061875,no
+C0222,Kavya Rao,42,Male,ahmedabad,Gujarat,"June 02, 2023",7710404224,N
+C0223,priya kulkarni,59,M,Madras,Tamil Nadu,"April 01, 2022",+91-8920142971,No
+C0224,Pooja Sharma,18,Male,kolkata,West Bengal,02-Nov-23,07957425987,N
+C0225,Kavya Menon,24,male,AHMEDABAD,Gujarat,15/07/2023,7196615480,TRUE
+C0226,arjun desai,25,female,pune,Maharashtra,2024-01-04,+91-8780136605,FALSE
+C0227,VIKRAM JOSHI,65,O,ahmedabad,Gujarat,10/12/2023,+91 82694 96182,1
+C0228,Pooja Desai,66,male,KOLKATA,West Bengal,2024-04-04,+91 92938 77147,1
+C0229,Karan Iyer,36,F,delhi,Delhi,31/05/2023,08512849852,0
+C0230,Meera Gupta,51,M,kolkata,West Bengal,01-Oct-22,+91-7691212228,Y
+C0231,Priya Nair,24,Male,Dehli,Delhi,2023-02-03,07201777040,TRUE
+C0232,RAHUL KULKARNI,65,O,KOLKATA,West Bengal,2024-04-29,9781559918,no
+C0233,Nikhil Reddy,22,Male,Chennai,Tamil Nadu,2023-03-15,+91-8134900434,N
+C0234,vikram sharma,38,Female,AHMEDABAD,Gujarat,"May 18, 2023",8537965898,yes
+C0235,Ananya Gupta,43,F,PUNE,Maharashtra,2023-01-05,+91-9655494969,No
+C0236,Nikhil Iyer,57,M,HYDERABAD,Telangana,01/26/2023,+91-7486937758,1
+C0237,NIKHIL JOSHI,59,M,Hyderabad,Telangana,2023-10-04,09943792834,No
+C0238,Pooja Rao,22,female,Delhi,Delhi,2022-03-31,8081936639,Y
+C0239,Siddharth Joshi,45,M,Kolkata,West Bengal,14-Feb-24,+91 81721 75907,Y
+C0240,  Meera Joshi ,70,Male, Pune,Maharashtra,"March 26, 2024",+91 90776 28884,Yes
+C0241,SNEHA SHARMA,56,M,Bangalore,Karnataka,2022-08-05,9201397080,0
+C0242,karan patel,?,female,Chennai,Tamil Nadu,25-Oct-22,+91 76468 86099,N
+C0243,divya patel,22,female,Bangalore,Karnataka,12/12/2023,9434653305,Yes
+C0244,Divya Iyer,59,F,HYDERABAD,Telangana,17/06/2024,+91-8912797925,yes
+C0245,Arjun Reddy,30,M,Pune,Maharashtra,19/05/2024,9499200634,Yes
+C0246,Isha Rao,41,Male,CHENNAI,Tamil Nadu,18/05/2022,+91-9192202822,no
+C0247,vikram joshi,54,F,BANGALORE,Karnataka,2023-01-03,7995358283,Yes
+C0248,Kavya Gupta,missing,male,Dehli,Delhi,"October 11, 2023",07746679280,TRUE
+C0249,rohan kulkarni,32,O, Hyderabad,Telangana,2023-09-11,+91 75426 40145,no
+C0250,  Ananya Reddy ,63,female,Bengaluru,Karnataka,09-May-23,09779957226,Yes
+C0251,Priya Reddy,28,Male,delhi,Delhi,09/22/2022,+91-9218954863,Y
+C0252,Karan Joshi,48,O,pune,Maharashtra,24/03/2024,9676674027,N
+C0253,  Rohan Iyer ,26,O,Amdavad,Gujarat,2024-04-26,+91-7413599241,1
+C0254,Rohan Joshi,missing,Female, Pune,Maharashtra,"January 15, 2023",09070704425,N
+C0255,pooja reddy,67,male,Poona,Maharashtra,2023-02-23,+91-7023491105,TRUE
+C0256,  Rahul Gupta ,27,male,NEW DELHI,Delhi,2023-08-02,08774801423,yes
+C0257,Isha Singh,54,Female,Hyderabad,Telangana,2024-02-05,+91 77027 76629,1
+C0258,Ananya Gupta,18,female, Mumbai ,Maharashtra,2022-04-01,07162157936,TRUE
+C0259,Priya Reddy,-5,O,chennai,Tamil Nadu,2023-09-22,8545071541,No
+C0260,Siddharth Nair,43,Female,Chennai,Tamil Nadu,2023-07-17,9503675679,0
+C0261,Nikhil Gupta,34,Male,New Delhi,Delhi,12/15/2022,+91 98708 80504,FALSE
+C0262,Isha Iyer,67,Male,KOLKATA,West Bengal,2022-04-30,9721556673,N
+C0263,Kavya Kulkarni,62,M,Calcutta,West Bengal,19/03/2022,+91 80284 56338,yes
+C0264,isha menon,65,F,delhi,Delhi,06/05/2024,09902590965,0
+C0265,  Priya Joshi ,38,Male, Mumbai ,Maharashtra,not recorded,+91-8708879427,1
+C0266,ISHA KULKARNI,40,F,Kolkata,West Bengal,17/12/2023,9960136787,TRUE
+C0267,Rahul Nair,34,male,Poona,Maharashtra,2022-12-18,+91 76898 64931,TRUE
+C0268,Nikhil Reddy,54,Female,chennai,Tamil Nadu,2023-07-23,+91-8635881694,yes
+C0269,Isha Reddy,58,O,Calcutta,West Bengal,"July 30, 2023",8711123163,Y
+C0270,Sneha Joshi,34,O,Ahmedabad,Gujarat,2023-02-26,9600929253,Y
+C0271,Rahul Rao,67,female, Hyderabad,Telangana,31/02/2024,09629852007,No
+C0272,ananya nair,38,Male,PUNE,Maharashtra,"April 01, 2023",9520801229,yes
+C0273,vikram menon,34,M, Mumbai ,Maharashtra,2022-04-16,+91-9032317504,No
+C0274,Vikram Patel,42,male,chennai,Tamil Nadu,15/05/2022,+91 71151 96972,FALSE
+C0275,Arjun Kulkarni,62,female,Amdavad,Gujarat,21/06/2023,8329985271,No
+C0276,Meera Nair,N/A,male,Ahmedabad,Gujarat,12/06/2023,8286817379,Yes
+C0277,Karan Gupta,45,Female, Hyderabad,Telangana,2022-08-14,+91 77849 77713,Y
+C0278,Pooja Iyer,29,female,CHENNAI,Tamil Nadu,19/12/2023,+91-7806549529,yes
+C0279,MEERA SINGH,46,n/a,PUNE,Maharashtra,2023-03-07,+91-9140593461,yes
+C0280,ARJUN GUPTA,48,male,Mumbai,Maharashtra,31/02/2024,07855471045,No
+C0281,Isha Gupta,37,Female,Dehli,Delhi,2023-06-18,+91-9066865372,no
+C0282,Divya Rao,18,M,pune,Maharashtra,,9560712271,yes
+C0283,Rohan Rao,missing,F,Ahmedabad,Gujarat,09/05/2022,08491718314,no
+C0284,Siddharth Nair,34,female,Bombay,Maharashtra,15/12/2023,08390198781,Y
+C0285,rohan kulkarni,36,missing, Bengaluru ,Karnataka,24-Jan-23,9661739850,N
+C0286,Siddharth Iyer,49,male,PUNE,Maharashtra,2022-04-24,+91-9829915449,no
+C0287,ISHA IYER,54,female,Poona,Maharashtra,2022-09-20,9602550993,FALSE
+C0288,NIKHIL RAO,53,O,Pune,Maharashtra,23/04/2024,+91-9272127173,no
+C0289,sneha menon,42,F,pune,Maharashtra,26-Jul-23,+91 95109 93705,FALSE
+C0290,Sneha Reddy,53,F,KOLKATA,West Bengal,12/27/2022,08771000941,N
+C0291,Karan Gupta,65,female,Delhi,Delhi,2024-01-14,+91 70534 77844,Yes
+C0292,Divya Iyer,19,O,chennai,Tamil Nadu,2022-04-07,7670474924,no
+C0293,Meera Patel,54,Female,Madras,Tamil Nadu,27/06/2022,+91 96853 22499,Yes
+C0294,Rohan Sharma,39,female,Kolkata,West Bengal,09-Jun-24,09715250922,Yes
+C0295,Priya Nair,27,F,Madras,Tamil Nadu,02-Apr-23,+91 72951 39109,TRUE
+C0296,VIKRAM NAIR,54,male, Bengaluru ,Karnataka,21-Mar-23,07850869632,TRUE
+C0297,DIVYA IYER,67,Male,NEW DELHI,Delhi,2023-03-10,+91-7818147210,Y
+C0298,Kavya Desai,69,M,bengaluru,Karnataka,24-Jul-22,7368570209,Y
+C0299,Rahul Menon,n/a,Female,mumbai,Maharashtra,14/07/2023,+91-8110927658,TRUE
+C0300,ARJUN REDDY,30,M,Mumbai,Maharashtra,2022-03-10,+91-8165269194,Yes
+C0301,Siddharth Iyer,50,male,Chennai,Tamil Nadu,2022-07-10,9408134650,1
+C0302,  Rahul Joshi ,-5,male,CHENNAI,Tamil Nadu,2024-04-11,+91 99176 13862,no
+C0303,Rahul Gupta,23,Female,bengaluru,Karnataka,2023-03-04,08414267186,1
+C0304,KARAN RAO,52,F, Bengaluru ,Karnataka,2022-05-19,+91-7623424790,1
+C0305,Ananya Nair,27,female,PUNE,Maharashtra,30-Mar-23,8175945569,yes
+C0306,Arjun Desai,32,M, Mumbai ,Maharashtra,18/05/2022,9013323898,TRUE
+C0307,isha reddy,32,M,Amdavad,Gujarat,16-Aug-22,08886715571,N
+C0308,Divya Gupta,20,Female,Ahmedabad,Gujarat,2023-06-18,09227810934,Yes
+C0309,priya iyer,43,male,KOLKATA,West Bengal,29/10/2022,08991056435,No
+C0310,Ananya Desai,62,male,pune,Maharashtra,10/04/2023,8952849519,No
+C0311,Sneha Menon,41,Female,Poona,Maharashtra,09/19/2023,+91 82471 15754,0
+C0312,ananya reddy,63,Female,BANGALORE,Karnataka,23/10/2022,+91 76647 10463,Yes
+C0313,Isha Joshi,18,F,Amdavad,Gujarat,2023-04-10,+91 89664 10861,0
+C0314,PRIYA REDDY,59,M,Dehli,Delhi,2022-11-02,7210588114,Y
+C0315,Nikhil Menon,20,male,Bengaluru,Karnataka,2024-02-16,+91-9364255319,Y
+C0316,pooja kulkarni,31,Female,Hyderabad,Telangana,11-May-23,+91 83993 89802,1
+C0317,Vikram Desai,51,O,hyderabad,Telangana,2023-12-27,+91-7831314297,no
+C0318,  Pooja Sharma ,53,Female,Calcutta,West Bengal,"September 18, 2022",+91-8321873046,No
+C0319,Rahul Gupta,57,F,HYDERABAD,Telangana,20/11/2023,7152721525,FALSE
+C0320,Nikhil Gupta,21,Female,Hyderabad,Telangana,02/08/2022,+91-8424723488,N
+C0321,Ananya Desai,29,O,Calcutta,West Bengal,2023-12-28,08595939306,Y
+C0322,MEERA REDDY,68,M,Delhi,Delhi,29/03/2024,+91 76232 54579,N
+C0323,Sneha Kulkarni,null,Female,Bengaluru,Karnataka,2022-01-05,+91 97791 87894,FALSE
+C0324,Sneha Kulkarni,65,male,mumbai,Maharashtra,2022-11-25,+91-8230797512,Y
+C0325,ANANYA SINGH,57,Male,Bangalore,Karnataka,2022-10-05,+91 78022 32449,0
+C0326,NIKHIL SHARMA,null,M, Hyderabad,Telangana,03-Jul-22,+91 97399 68436,Y
+C0327,Karan Menon,69,O,hyderabad,Telangana,"April 06, 2022",09939810510,FALSE
+C0328,Divya Reddy,57,F,New Delhi,Delhi,"March 18, 2024",07280741389,No
+C0329,Isha Joshi,36,F, Hyderabad,Telangana,17-Apr-24,+91 88223 95124,1
+C0330,Siddharth Desai,57,female,AHMEDABAD,Gujarat,"August 02, 2022",+91 95700 67062,1
+C0331,Ananya Rao,65,female,Dehli,Delhi,2023-04-20,+91-7419420333,0
+C0332,Siddharth Nair,60,F,Pune,Maharashtra,2024-02-15,08674962768,no
+C0333,Rahul Singh,61,female,New Delhi,Delhi,02/04/2022,+91-9626332786,N
+C0334,Aarav Menon,40,M,Bombay,Maharashtra,08/02/2023,8743896971,yes
+C0335,Vikram Iyer,41,O,ahmedabad,Gujarat,2022-01-12,09825773649,yes
+C0336,Vikram Rao,47,female, Pune,Maharashtra,2023-06-06,07797966424,0
+C0337,isha menon,50,Male,Mumbai,Maharashtra,05/08/2023,+91-8583033048,yes
+C0338,NIKHIL KULKARNI,57,Female,Chennai,Tamil Nadu,02/12/2023,+91-9489485190,FALSE
+C0339,Isha Desai,44,male,Ahmedabad,Gujarat,12/13/2023,09702823150,0
+C0340,Priya Rao,-,M,Bengaluru,Karnataka,"May 21, 2024",+91 90178 46827,Yes
+C0341,Ananya Desai,60,male,pune,Maharashtra,2023-05-12,7142122736,FALSE
+C0342,Siddharth Iyer,64,Female,Kolkata,West Bengal,2023-10-20,08712595879,Y
+C0343,Divya Gupta,42,O,AHMEDABAD,Gujarat,2024-03-27,+91-9914107002,1
+C0344,Pooja Desai,35,M, Hyderabad,Telangana,18-Apr-23,+91 89291 35549,yes
+C0345,AARAV RAO,0,Female,hyderabad,Telangana,2024-01-13,+91-7829270292,0
+C0346,Sneha Menon,23,Female,Dehli,Delhi,2024-13-45,+91-9987809626,FALSE
+C0347,Pooja Menon,67,O,Chennai,Tamil Nadu,2023-01-27,07764201331,No
+C0348,  Karan Desai ,59,O,Ahmedabad,Gujarat,29-Mar-23,+91 72389 19229,FALSE
+C0349,Isha Reddy,18,male,MUMBAI,Maharashtra,05/02/2023,+91-9213553149,1
+C0350,Aarav Gupta,70,Male,New Delhi,Delhi,08-Dec-22,+91 90718 94813,1
+C0351,Rohan Joshi,36,M,hyderabad,Telangana,03-Nov-22,+91-7458565144,FALSE
+C0352,vikram sharma,64,female,Dehli,Delhi,2023-10-21,+91-9293255031,N
+C0353,siddharth patel,59,Female,Bombay,Maharashtra,02-Jun-22,+91-8000665786,FALSE
+C0354,Divya Menon,NA,O, Mumbai ,Maharashtra,2023-09-18,07490398001,0
+C0355,Rohan Iyer,69,female,Dehli,Delhi,2023-07-13,+91-7915823748,No
+C0356,vikram gupta,41,Male,Chennai,Tamil Nadu,"March 21, 2024",07067131712,No
+C0357,Aarav Reddy,63,female, Mumbai ,Maharashtra,2023-12-10,08934535440,no
+C0358,priya desai,49,O,Bangalore,Karnataka,2023-03-05,+91 73850 79494,1
+C0359,Nikhil Rao,35,F,NEW DELHI,Delhi,2023-05-25,+91 71770 94523,no
+C0360,Arjun Nair,66,M,kolkata,West Bengal,"June 11, 2022",08010605064,0
+C0361,Pooja Iyer,38,F, Hyderabad,Telangana,2024-06-09,+91-7947739357,TRUE
+C0362,Karan Desai,42,F,Bangalore,Karnataka,2022-07-27,9973021583,No
+C0363,nikhil gupta,39,F,ahmedabad,Gujarat,31/02/2024,8768221462,0
+C0364,NIKHIL SINGH,45,male,ahmedabad,Gujarat,08/29/2023,07172050713,1
+C0365,  Pooja Kulkarni ,69,female,Mumbai,Maharashtra,26-Jul-23,+91 77143 27394,no
+C0366,Aarav Joshi,28,Female, Pune,Maharashtra,20-Apr-23,09692132566,Yes
+C0367,  Siddharth Menon ,20,Female,Poona,Maharashtra,"August 13, 2023",+91 90331 54000,Yes
+C0368,Siddharth Nair,20,Male,Poona,Maharashtra,28-Dec-23,07487726511,0
+C0369,  Divya Nair ,35,M,New Delhi,Delhi,09/04/2023,+91 85406 79717,FALSE
+C0370,Rohan Iyer,47,F,Hyderabad,Telangana,2022-04-22,9993944892,1
+C0371,Meera Gupta,52,female,Mumbai,Maharashtra,2022-10-26,+91 97359 78107,TRUE
+C0372,Rahul Joshi,62,female,hyderabad,Telangana,2024-03-19,+91-8116723521,yes
+C0373,Meera Joshi,57,male,hyderabad,Telangana,09-May-24,+91-9861977083,N
+C0374,  Nikhil Singh ,NULL,male,BANGALORE,Karnataka,not recorded,07624419030,N
+C0375,Aarav Menon,50,female, Bengaluru ,Karnataka,2023-11-14,+91-9427650861,yes
+C0376,Meera Sharma,32,M,pune,Maharashtra,21/08/2023,09312463191,No
+C0377,  Karan Joshi ,missing,male,KOLKATA,West Bengal,2023-01-14,08323216479,1
+C0378,Karan Menon,65,male, Pune,Maharashtra,01/17/2024,9521919170,Y
+C0379,Rahul Patel,55,female,AHMEDABAD,Gujarat,2023-03-01,9439182043,TRUE
+C0380,Isha Sharma,37,Male,chennai,Tamil Nadu,"January 28, 2022",09734007947,No
+C0381,Pooja Reddy,NA,female,Chennai,Tamil Nadu,06-Sep-23,08107721600,No
+C0382,aarav singh,21,Female,hyderabad,Telangana,2022-02-24,+91 99887 56659,Y
+C0383,karan rao,24,male,PUNE,Maharashtra,05-Oct-22,+91 73140 80047,yes
+C0384,vikram kulkarni,67,F,mumbai,Maharashtra,2023-05-31,+91-7809243907,TRUE
+C0385,Rohan Patel,19,male,Amdavad,Gujarat,04/09/2023,+91-8469072661,no
+C0386,vikram menon,26,female,Bengaluru,Karnataka,2022-03-21,+91-9079858934,1
+C0387,Isha Patel,20,O,Mumbai,Maharashtra,2023-09-09,+91-7859098375,yes
+C0388,kavya nair,50,Male,Chennai,Tamil Nadu,19/04/2024,9271345114,1
+C0389,Sneha Iyer,63,F,Mumbai,Maharashtra,"July 05, 2022",07977337913,No
+C0390,SNEHA JOSHI,26,male,Hyderabad,Telangana,2022-03-26,+91 79293 69892,FALSE
+C0391,Pooja Singh,45,O,New Delhi,Delhi,2022-07-03,08702395148,1
+C0392,  Sneha Reddy ,62,F,pune,Maharashtra,2022-12-13,+91 77630 65666,0
+C0393,Siddharth Nair,56,Male,Madras,Tamil Nadu,2022-04-21,+91-9101705225,No
+C0394,Rohan Joshi,29,F,Bombay,Maharashtra,09-Apr-22,9233163576,Y
+C0395,isha kulkarni,39,M,Ahmedabad,Gujarat,03/17/2023,08616353231,FALSE
+C0396,Priya Reddy,67,female,MUMBAI,Maharashtra,2024-01-03,09835015940,FALSE
+C0397,priya gupta,55,male,Bangalore,Karnataka,2022-11-25,+91-9536021086,N
+C0398,  Sneha Gupta ,n/a,F,Calcutta,West Bengal,2023-08-30,+91 98473 49965,yes
+C0399,Rahul Sharma,45,-,Bombay,Maharashtra,,07419728551,No
+C0400,Rahul Joshi,66,male,NEW DELHI,Delhi,26/07/2022,+91-7323502003,Y
+C0401,Divya Desai,23,Male,Kolkata,West Bengal,"August 04, 2023",+91 76872 55523,1
+C0402,Pooja Rao,30,Male,chennai,Tamil Nadu,20/01/2022,07914625337,Y
+C0403,priya kulkarni,47,Female,KOLKATA,West Bengal,2023-02-25,+91 76670 64059,yes
+C0404,divya gupta,27,O,Madras,Tamil Nadu,,7158929824,Yes
+C0405,Arjun Rao,59,female,Chennai,Tamil Nadu,05/30/2024,+91 79764 18333,No
+C0406,VIKRAM IYER,65,Female,Calcutta,West Bengal,05/24/2023,08414272209,no
+C0407,KARAN REDDY,31,male,Kolkata,West Bengal,18/05/2023,8359313973,Y
+C0408,Kavya Joshi,70,missing,Bengaluru,Karnataka,12/09/2023,+91 78289 82447,N
+C0409,  Divya Joshi ,43,male,pune,Maharashtra,2022-11-01,09767803644,Yes
+C0410,Rohan Joshi,44,female,Chennai,Tamil Nadu,2024-04-24,+91 72174 56118,FALSE
+C0411,Priya Rao,58,M,MUMBAI,Maharashtra,18/11/2022,7677842235,0
+C0412,Rahul Joshi,65,Male,Calcutta,West Bengal,2022-07-23,7781208412,Yes
+C0413,Divya Patel,30,M, Mumbai ,Maharashtra,2023-09-07,+91-7382515219,1
+C0414,Nikhil Rao,32,O,Calcutta,West Bengal,22-Oct-22,7559201866,Y
+C0415,Pooja Reddy,27,F,delhi,Delhi,14/01/2023,8967799880,N
+C0416,  Karan Menon ,45,M,Kolkata,West Bengal,12/07/2022,+91-9022639341,Yes
+C0417,Siddharth Singh,60,Male,chennai,Tamil Nadu,2022-09-24,+91-9116730938,N
+C0418,VIKRAM SINGH,20,O,Calcutta,West Bengal,2023-03-17,+91 97183 44571,TRUE
+C0419,Rahul Menon,66,Female,BANGALORE,Karnataka,2022-02-24,+91 76001 14700,yes
+C0420,Pooja Patel,49,Female,Amdavad,Gujarat,2023-05-20,+91 81455 22265,yes
+C0421,Arjun Desai,55,M, Bengaluru ,Karnataka,2022-07-04,+91-7330005804,N
+C0422,Meera Rao,25,M,mumbai,Maharashtra,2022-01-30,+91-9832699830,N
+C0423,Nikhil Nair,64,F,Mumbai,Maharashtra,31/03/2024,09350018062,No
+C0424,arjun reddy,67,O,KOLKATA,West Bengal,2024-03-09,08282248157,TRUE
+C0425,Vikram Nair,41,female,Madras,Tamil Nadu,03-Apr-22,09708776837,No
+C0426,Rahul Joshi,59,female,Bombay,Maharashtra,2022-03-27,7340088958,yes
+C0427,Divya Kulkarni,54,M,Madras,Tamil Nadu,2023-02-27,+91 96634 43211,0
+C0428,Aarav Patel,47,female, Pune,Maharashtra,16-Jun-24,09878744215,0
+C0429,rahul reddy,23,O,Madras,Tamil Nadu,2023-07-02,09816643737,FALSE
+C0430,Isha Singh,57,Female,Calcutta,West Bengal,2022-03-31,7819488717,Yes
+C0431,ISHA RAO,33,O,Delhi,Delhi,05-Nov-22,9035767647,yes
+C0432,ISHA JOSHI,46,Male,Amdavad,Gujarat,2022-02-22,08785357355,0
+C0433,  Priya Joshi ,50,Female,Madras,Tamil Nadu,26-Aug-22,+91-9269069059,Y
+C0434,Isha Patel,59,M,kolkata,West Bengal,2023-04-26,+91 77199 87025,0
+C0435,Vikram Singh,42,Female,AHMEDABAD,Gujarat,26/03/2024,+91-7695895299,FALSE
+C0436,ananya iyer,49,female,bengaluru,Karnataka,2023-07-25,8540977351,yes
+C0437,Rohan Nair,57,female,MUMBAI,Maharashtra,2024-03-14,+91-7200473425,Yes
+C0438,Nikhil Patel,68,M,Ahmedabad,Gujarat,2023-06-04,7507061041,Y
+C0439,Isha Menon,27,F,ahmedabad,Gujarat,2024-13-45,9034368522,No
+C0440,Kavya Menon,41,O,Madras,Tamil Nadu,2024-03-17,+91 83412 70129,Yes
+C0441,Vikram Sharma,51,male,ahmedabad,Gujarat,2023-03-21,+91-7159316365,1
+C0442,Pooja Gupta,62,Female,CHENNAI,Tamil Nadu,"January 09, 2022",9621652583,1
+C0443,Kavya Rao,30,Male,ahmedabad,Gujarat,not recorded,+91 86766 82323,yes
+C0444,Aarav Kulkarni,33,female,Mumbai,Maharashtra,2024-01-20,+91-8601932032,Yes
+C0445,Nikhil Singh,18,O,Poona,Maharashtra,03-Aug-23,+91 87474 88059,Y
+C0446,  Vikram Menon ,65,Male,CHENNAI,Tamil Nadu,2023-04-11,07267119789,yes
+C0447,KARAN JOSHI,61,Male,AHMEDABAD,Gujarat,22/08/2023,8890129015,yes
+C0448,Isha Menon,63,Female,BANGALORE,Karnataka,03-Feb-22,+91-9401001356,No
+C0449,Meera Sharma,25,male,Hyderabad,Telangana,2024-03-21,8811432415,yes
+C0450,Aarav Patel,22,Male,Amdavad,Gujarat,"December 12, 2022",09167944263,FALSE
+C0451,  Vikram Menon ,69,female,Amdavad,Gujarat,14/12/2022,+91-9879534353,yes
+C0452,Meera Kulkarni,59,Male,Mumbai,Maharashtra,07/08/2023,9158817205,Yes
+C0453,Karan Iyer,55,Male,Chennai,Tamil Nadu,"May 19, 2023",+91-7099914907,1
+C0454,SIDDHARTH SINGH,24,F,Hyderabad,Telangana,2022-06-07,+91 75544 17721,yes
+C0455,  Priya Singh ,38,male,Mumbai,Maharashtra,2022-02-23,09184511737,No
+C0456,Priya Nair,missing,F,Chennai,Tamil Nadu,03/10/2022,9899521378,Y
+C0457,Nikhil Patel,50,male,kolkata,West Bengal,2024-03-11,07004299516,0
+C0458,ANANYA SHARMA,48,Female,CHENNAI,Tamil Nadu,12/05/2024,+91-9513239458,Y
+C0459,SIDDHARTH MENON,26,female,Poona,Maharashtra,2024-04-01,+91 90813 44257,no
+C0460,Rahul Iyer,56,F,Hyderabad,Telangana,16/09/2023,09387102656,TRUE
+C0461,ROHAN KULKARNI,70,male, Pune,Maharashtra,27/04/2024,07535856716,N
+C0462,nikhil sharma,19,Female,Delhi,Delhi,15/04/2024,+91-8302141873,Y
+C0463,karan sharma,70,male,Amdavad,Gujarat,24/06/2022,9429693268,No
+C0464,rohan reddy,54,Female,bengaluru,Karnataka,18-May-24,08086287723,Yes
+C0465,Priya Nair,44,female,Kolkata,West Bengal,2024-01-09,+91-8193713279,TRUE
+C0466,Rahul Patel,69,Female,Delhi,Delhi,2022-09-13,+91-8414009054,Yes
+C0467,Pooja Sharma,58,F,ahmedabad,Gujarat,"December 15, 2022",07313149647,No
+C0468,Sneha Patel,20,Female,ahmedabad,Gujarat,03/05/2022,09689444996,No
+C0469,PRIYA KULKARNI,42,female,Poona,Maharashtra,17-Mar-24,+91-7045554769,N
+C0470,  Nikhil Kulkarni , ,Male,mumbai,Maharashtra,2023-08-10,09067594256,yes
+C0471,VIKRAM SHARMA,37,Female,New Delhi,Delhi,08/21/2023,+91 85385 50458,Y
+C0472,Aarav Kulkarni,61,O,Hyderabad,Telangana,2023-03-09,+91 99769 36379,no
+C0473,Nikhil Desai,55,male,ahmedabad,Gujarat,18/04/2022,9130006033,no
+C0474,Karan Iyer,67,Female,Amdavad,Gujarat,"July 08, 2022",+91-7028885322,1
+C0475,Vikram Singh,58,M,pune,Maharashtra,2022-07-22,8125276504,yes
+C0476,Aarav Reddy,24,female,Delhi,Delhi,12/13/2022,8959379885,1
+C0477,ROHAN PATEL,26,female,Calcutta,West Bengal,2023-09-06,8050332690,1
+C0478,vikram nair,58,O,Madras,Tamil Nadu,03-Aug-22,07719121589,1
+C0479,Isha Kulkarni,38,female, Hyderabad,Telangana,2023-05-01,+91-8722050260,no
+C0480,Karan Joshi,43,female,New Delhi,Delhi,18/09/2022,+91 79668 68262,no
+C0481,Nikhil Kulkarni,45,male,MUMBAI,Maharashtra,2022-10-07,+91-7771228930,N
+C0482,Meera Kulkarni,59,F,Pune,Maharashtra,2023-01-04,+91 76443 98487,Y
+C0483,Karan Menon,26,Female,CHENNAI,Tamil Nadu,09-Jan-22,+91-8210516208,FALSE
+C0484,siddharth iyer,65,Male,BANGALORE,Karnataka,"January 10, 2024",08841651780,no
+C0485,NIKHIL KULKARNI,26,missing,AHMEDABAD,Gujarat,2022-12-14,+91 94662 62870,N
+C0486,priya reddy,39,Male, Mumbai ,Maharashtra,2023-01-26,07808908473,No
+C0487,Nikhil Rao,23,nan, Hyderabad,Telangana,2022-01-28,+91 79300 36986,1
+C0488,  Nikhil Sharma ,18,female,Pune,Maharashtra,13/05/2022,7295334806,Y
+C0489,Isha Reddy,37,Female,kolkata,West Bengal,,+91 89819 42353,0
+C0490,Nikhil Joshi,65,female,AHMEDABAD,Gujarat,05/02/2023,09653158137,FALSE
+C0491,Ananya Menon,N/A,male,Calcutta,West Bengal,11/14/2023,+91-9998076115,N
+C0492,Sneha Kulkarni,38,F, Pune,Maharashtra,2022-01-28,+91 94567 70542,TRUE
+C0493,SIDDHARTH SHARMA,25,Female,NEW DELHI,Delhi,2023-04-18,07602393888,Y
+C0494,Ananya Sharma,29,female,Bengaluru,Karnataka,2023-11-25,8537971916,FALSE
+C0495,Sneha Gupta,null,O,mumbai,Maharashtra,01/19/2023,+91-7858932011,N
+C0496,Rohan Iyer,24,F,Delhi,Delhi,02/03/2023,8385898208,1
+C0497,pooja patel,24,female,Kolkata,West Bengal,2023-02-03,+91 91560 46497,Yes
+C0498,  Karan Gupta ,56,Female,Poona,Maharashtra,2022-06-25,09990651739,yes
+C0499,Ananya Rao,62,female,Hyderabad,Telangana,09/16/2023,+91-8928060494,no
+C0500,sneha singh,45,M, Mumbai ,Maharashtra,2022-10-31,08022476958,N
+C0362,Karan Desai,42,F,Bangalore,Karnataka,2022-07-27,9973021583,No
+C0074,Pooja Joshi,44,M,Ahmedabad,Gujarat,18-Oct-22,+91-9547492192,no
+C0375,Aarav Menon,50,female, Bengaluru ,Karnataka,2023-11-14,+91-9427650861,yes
+C0156,Siddharth Kulkarni,49,Female,NEW DELHI,Delhi,2022-06-21,7947167036,1
+C0105,DIVYA REDDY,36,female,ahmedabad,Gujarat,2024-04-13,09140034179,FALSE
+C0395,isha kulkarni,39,M,Ahmedabad,Gujarat,03/17/2023,08616353231,FALSE
+C0378,Karan Menon,65,male, Pune,Maharashtra,01/17/2024,9521919170,Y
+C0125,  Ananya Kulkarni ,26,M,PUNE,Maharashtra,20-Apr-23,8821616017,FALSE
+C0069,  Divya Gupta ,47,male,AHMEDABAD,Gujarat,,07400420225,No
+C0451,  Vikram Menon ,69,female,Amdavad,Gujarat,14/12/2022,+91-9879534353,yes
+C0010,Ananya Singh,56,Male,ahmedabad,Gujarat,2024-01-01,09222971316,No
+C0195,Arjun Patel,42,male,Ahmedabad,Gujarat,2022-09-27,+91-8131297865,yes
+C0407,KARAN REDDY,31,male,Kolkata,West Bengal,18/05/2023,8359313973,Y
+C0085,Nikhil Sharma,61,Male,BANGALORE,Karnataka,28/08/2022,08579864877,FALSE
+C0372,Rahul Joshi,62,female,hyderabad,Telangana,2024-03-19,+91-8116723521,yes

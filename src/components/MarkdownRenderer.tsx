@@ -157,9 +157,14 @@ function MarkdownImage({ src, alt }: any) {
   const context = React.useContext(MarkdownContext);
   if (!src) return null;
   const srcString = String(src);
+  let resolvedDir = context.dirPath;
+  if (!resolvedDir && srcString.startsWith('images/')) {
+    resolvedDir = '/practice-data/phase-6-data-science';
+  }
+
   const actualSrc = srcString.startsWith('http')
     ? srcString
-    : `/api/image?path=${encodeURIComponent(srcString)}&dir=${encodeURIComponent(context.dirPath)}`;
+    : (resolvedDir ? `${resolvedDir}/${srcString}`.replace(/([^:]\/)\/+/g, "$1") : `/${srcString}`);
 
   return (
     <motion.span

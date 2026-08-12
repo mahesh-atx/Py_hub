@@ -53,7 +53,8 @@
           "type": "practice",
           "total": 7
         }
-      ]
+      ],
+      "topic": "Python Programming"
     },
     {
       "id": "phase-2-core-python",
@@ -108,7 +109,8 @@
           "type": "practice",
           "total": 8
         }
-      ]
+      ],
+      "topic": "Python Programming"
     },
     {
       "id": "phase-3-advanced-python",
@@ -163,7 +165,8 @@
           "type": "practice",
           "total": 10
         }
-      ]
+      ],
+      "topic": "Python Programming"
     },
     {
       "id": "phase-4-oop",
@@ -230,6 +233,78 @@
         {
           "id": "projects.md",
           "title": "Practice Projects",
+          "type": "practice",
+          "total": 10
+        }
+      ],
+      "topic": "Python Programming"
+    },
+    {
+      "id": "phase-6-data-science",
+      "title": "Data Science",
+      "path": "/practice-data/phase-6-data-science",
+      "topic": "Data Science",
+      "files": [
+        {
+          "id": "README.md",
+          "title": "Readme",
+          "type": "markdown"
+        },
+        {
+          "id": "module-24-numpy.md",
+          "title": "Module 24 NumPy",
+          "type": "markdown"
+        },
+        {
+          "id": "module-25-pandas.md",
+          "title": "Module 25 Pandas",
+          "type": "markdown"
+        },
+        {
+          "id": "module-26-data-cleaning-preprocessing.md",
+          "title": "Module 26 Data Cleaning",
+          "type": "markdown"
+        },
+        {
+          "id": "module-27-data-visualization.md",
+          "title": "Module 27 Data Visualization",
+          "type": "markdown"
+        },
+        {
+          "id": "module-28-data-analysis.md",
+          "title": "Module 28 Data Analysis",
+          "type": "markdown"
+        },
+        {
+          "id": "module-29-python-data-science-projects.md",
+          "title": "Module 29 Data Science Projects",
+          "type": "markdown"
+        },
+        {
+          "id": "starter-project/README.md",
+          "title": "Starter Project Guide",
+          "type": "markdown"
+        },
+        {
+          "id": "assignments.md",
+          "title": "30 Chart Practice",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "projects-and-takeaways.md",
+          "title": "Projects And Takeaways",
+          "type": "markdown"
+        },
+        {
+          "id": "questions.md",
+          "title": "60 Practice Questions",
+          "type": "practice",
+          "total": 60
+        },
+        {
+          "id": "projects.md",
+          "title": "10 Practice Projects",
           "type": "practice",
           "total": 10
         }

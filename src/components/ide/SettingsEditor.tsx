@@ -1,5 +1,5 @@
 import { IdeSettings } from "@/lib/settings";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 
 interface SettingsEditorProps {
@@ -7,8 +7,103 @@ interface SettingsEditorProps {
   onChange: (s: Partial<IdeSettings>) => void;
 }
 
+type SettingDef = {
+  id: keyof IdeSettings;
+  group: string;
+  label: string;
+  description: string;
+  categories: string[];
+  type: "select" | "number" | "boolean";
+  options?: { value: string | number; label: string }[];
+  transformOut?: (val: any) => any;
+  transformIn?: (val: any) => any;
+};
+
+const SETTINGS_DEF: SettingDef[] = [
+  {
+    id: "theme",
+    group: "Workbench",
+    label: "Color Theme",
+    description: "Specifies the color theme used in the workbench.",
+    categories: ["Commonly Used", "Workbench"],
+    type: "select",
+    options: [
+      { value: "vs-dark", label: "Dark (VS Code)" },
+      { value: "light", label: "Light (VS Code)" },
+      { value: "dracula", label: "Dracula" },
+      { value: "github-dark", label: "GitHub Dark" },
+      { value: "monokai", label: "Monokai" },
+      { value: "night-owl", label: "Night Owl" },
+      { value: "nord", label: "Nord" },
+      { value: "oceanic-next", label: "Oceanic Next (Premium)" },
+      { value: "cobalt2", label: "Cobalt2" },
+      { value: "solarized-dark", label: "Solarized Dark" },
+      { value: "tomorrow-night", label: "Tomorrow Night" },
+      { value: "tomorrow-night-eighties", label: "Tomorrow Night Eighties (Premium)" },
+      { value: "tomorrow-night-blue", label: "Tomorrow Night Blue (Premium)" },
+      { value: "sunburst", label: "Sunburst (Premium)" },
+      { value: "idle-fingers", label: "Idle Fingers (Premium)" },
+      { value: "vibrant-ink", label: "Vibrant Ink (Premium)" },
+      { value: "brilliance-black", label: "Brilliance Black (Premium)" },
+      { value: "twilight", label: "Twilight" },
+      { value: "kuroir", label: "Kuroir" },
+    ]
+  },
+  {
+    id: "fontSize",
+    group: "Editor",
+    label: "Font Size",
+    description: "Controls the font size in pixels.",
+    categories: ["Commonly Used", "Text Editor"],
+    type: "number"
+  },
+  {
+    id: "tabSize",
+    group: "Editor",
+    label: "Tab Size",
+    description: "The number of spaces a tab is equal to.",
+    categories: ["Commonly Used", "Text Editor"],
+    type: "number"
+  },
+  {
+    id: "wordWrap",
+    group: "Editor",
+    label: "Word Wrap",
+    description: "Controls how lines should wrap.",
+    categories: ["Commonly Used", "Text Editor"],
+    type: "boolean"
+  },
+  {
+    id: "minimap",
+    group: "Editor › Minimap",
+    label: "Enabled",
+    description: "Controls whether the minimap is shown.",
+    categories: ["Text Editor"],
+    type: "boolean"
+  },
+  {
+    id: "timeoutMs",
+    group: "Terminal",
+    label: "Timeout",
+    description: "The maximum time in seconds the Python runtime is allowed to run before being terminated.",
+    categories: ["Features", "Commonly Used"],
+    type: "number",
+    transformIn: (val: number) => val / 1000,
+    transformOut: (val: number) => Math.max(1, val) * 1000
+  },
+  {
+    id: "clearOnRun",
+    group: "Terminal",
+    label: "Clear On Run",
+    description: "Whether to clear the terminal output before each execution.",
+    categories: ["Features", "Commonly Used"],
+    type: "boolean"
+  }
+];
+
 export function SettingsEditor({ settings, onChange }: SettingsEditorProps) {
   const [activeCategory, setActiveCategory] = useState("Commonly Used");
+  const [searchQuery, setSearchQuery] = useState("");
   
   const categories = [
     "Commonly Used",
@@ -20,17 +115,31 @@ export function SettingsEditor({ settings, onChange }: SettingsEditorProps) {
     "Extensions"
   ];
 
+  const filteredSettings = useMemo(() => {
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      return SETTINGS_DEF.filter(s => 
+        s.label.toLowerCase().includes(q) || 
+        s.group.toLowerCase().includes(q) || 
+        s.description.toLowerCase().includes(q)
+      );
+    }
+    return SETTINGS_DEF.filter(s => s.categories.includes(activeCategory));
+  }, [activeCategory, searchQuery]);
+
   return (
     <div className="absolute inset-0 bg-[var(--vscode-bg)] text-[var(--vscode-text)] flex flex-col font-sans">
       {/* Header Search */}
       <div className="flex-shrink-0 px-4 py-3 border-b border-[var(--vscode-border)] bg-[var(--vscode-bg)]">
-        <div className="relative max-w-2xl">
-          <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-            <Search className="h-4 w-4 text-[var(--vscode-text-muted)]" />
+        <div className="relative max-w-2xl group">
+          <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+            <Search className="h-4 w-4 text-[var(--vscode-text-muted)] group-focus-within:text-[var(--vscode-accent)] transition-colors" />
           </div>
           <input
             type="text"
-            className="w-full bg-[var(--vscode-input)] border border-transparent focus:border-[var(--vscode-accent)] text-[var(--vscode-text)] text-[13px] rounded-sm py-1.5 pl-8 pr-2 outline-none transition-colors"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-[var(--vscode-input)] border border-[var(--vscode-border)] focus:border-[var(--vscode-accent)] text-[var(--vscode-text)] text-[13px] rounded py-1.5 pl-9 pr-2 outline-none transition-all shadow-sm focus:shadow-[0_0_0_1px_var(--vscode-accent)]"
             placeholder="Search settings"
           />
         </div>
@@ -38,183 +147,102 @@ export function SettingsEditor({ settings, onChange }: SettingsEditorProps) {
 
       <div className="flex flex-1 min-h-0">
         {/* Sidebar */}
-        <div className="w-[200px] flex-shrink-0 overflow-y-auto py-2">
-          {categories.map((cat) => (
-            <div
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1 text-[13px] cursor-pointer ${
-                activeCategory === cat
-                  ? "bg-[var(--vscode-hover)] text-[var(--vscode-text)]"
-                  : "text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)]"
-              }`}
-            >
-              {cat}
-            </div>
-          ))}
+        <div className="w-[220px] flex-shrink-0 overflow-y-auto py-3 pr-2 border-r border-[var(--vscode-border)]">
+          {categories.map((cat) => {
+            const isMatch = !searchQuery.trim() && activeCategory === cat;
+            return (
+              <div
+                key={cat}
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setSearchQuery("");
+                }}
+                className={`px-4 py-1.5 text-[13px] cursor-pointer border-l-2 transition-colors ${
+                  isMatch
+                    ? "bg-[var(--vscode-hover)] text-[var(--vscode-text)] border-[var(--vscode-accent)] font-medium"
+                    : "text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] border-transparent hover:bg-[var(--vscode-hover)]/50"
+                }`}
+              >
+                {cat}
+              </div>
+            );
+          })}
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto py-6 px-8">
+        <div className="flex-1 overflow-y-auto py-6 px-8 bg-[var(--vscode-bg)]">
           <div className="max-w-3xl">
-            <h2 className="text-xl text-[var(--vscode-text)] font-normal mb-8">{activeCategory}</h2>
+            <h2 className="text-[22px] text-[var(--vscode-text)] font-light mb-8 pb-4 border-b border-[var(--vscode-border)]">
+              {searchQuery.trim() ? "Search Results" : activeCategory}
+            </h2>
 
-            <div className="space-y-8">
-              {/* Theme */}
-              {(activeCategory === "Commonly Used" || activeCategory === "Workbench") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Workbench: <span className="text-[var(--vscode-text)] font-medium">Color Theme</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    Specifies the color theme used in the workbench.
-                  </div>
-                  <select
-                    value={settings.theme}
-                    onChange={(e) => onChange({ theme: e.target.value as IdeSettings["theme"] })}
-                    className="w-64 bg-[var(--vscode-input)] border border-[var(--vscode-input)] rounded-sm px-2 py-1 text-[13px] outline-none focus:border-[var(--vscode-accent)]"
-                  >
-                    <option value="vs-dark">Dark (VS Code)</option>
-                    <option value="light">Light (VS Code)</option>
-                    <option value="dracula">Dracula</option>
-                    <option value="github-dark">GitHub Dark</option>
-                    <option value="monokai">Monokai</option>
-                    <option value="night-owl">Night Owl</option>
-                    <option value="nord">Nord</option>
-                    <option value="oceanic-next">Oceanic Next (Premium)</option>
-                    <option value="cobalt2">Cobalt2</option>
-                    <option value="solarized-dark">Solarized Dark</option>
-                    <option value="tomorrow-night">Tomorrow Night</option>
-                    <option value="tomorrow-night-eighties">Tomorrow Night Eighties (Premium)</option>
-                    <option value="tomorrow-night-blue">Tomorrow Night Blue (Premium)</option>
-                    <option value="sunburst">Sunburst (Premium)</option>
-                    <option value="idle-fingers">Idle Fingers (Premium)</option>
-                    <option value="vibrant-ink">Vibrant Ink (Premium)</option>
-                    <option value="brilliance-black">Brilliance Black (Premium)</option>
-                    <option value="twilight">Twilight</option>
-                    <option value="kuroir">Kuroir</option>
-                  </select>
-                </div>
-              )}
+            <div className="space-y-10">
+              {filteredSettings.length === 0 ? (
+                <div className="text-[var(--vscode-text-muted)] text-[13px] py-4">No settings found.</div>
+              ) : (
+                filteredSettings.map(setting => {
+                  const val = setting.transformIn ? setting.transformIn(settings[setting.id]) : settings[setting.id];
+                  
+                  return (
+                    <div key={setting.id} className="group">
+                      <div className="text-[14px] text-[var(--vscode-text)] mb-1">
+                        <span className="text-[var(--vscode-text-muted)]">{setting.group}: </span>
+                        <span className="font-medium">{setting.label}</span>
+                      </div>
+                      <div className="text-[13px] text-[var(--vscode-text-muted)] mb-3 leading-relaxed max-w-2xl">
+                        {setting.description}
+                      </div>
+                      
+                      {setting.type === "select" && (
+                        <select
+                          value={val as string}
+                          onChange={(e) => {
+                            const out = setting.transformOut ? setting.transformOut(e.target.value) : e.target.value;
+                            onChange({ [setting.id]: out });
+                          }}
+                          className="w-[300px] bg-[var(--vscode-input)] border border-[var(--vscode-border)] rounded px-2.5 py-1.5 text-[13px] outline-none focus:border-[var(--vscode-accent)] shadow-sm hover:border-[var(--vscode-accent)]/50 transition-colors cursor-pointer"
+                        >
+                          {setting.options?.map(opt => (
+                            <option key={opt.value} value={opt.value}>{opt.label}</option>
+                          ))}
+                        </select>
+                      )}
 
-              {/* Font Size */}
-              {(activeCategory === "Commonly Used" || activeCategory === "Text Editor") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Editor: <span className="text-[var(--vscode-text)] font-medium">Font Size</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    Controls the font size in pixels.
-                  </div>
-                  <input
-                    type="number"
-                    value={settings.fontSize}
-                    onChange={(e) => onChange({ fontSize: Number(e.target.value) })}
-                    className="w-32 bg-[var(--vscode-input)] border border-transparent focus:border-[var(--vscode-accent)] px-2 py-1 outline-none text-[13px] rounded-sm"
-                  />
-                </div>
-              )}
+                      {setting.type === "number" && (
+                        <input
+                          type="number"
+                          value={val as number}
+                          onChange={(e) => {
+                            const out = setting.transformOut ? setting.transformOut(Number(e.target.value)) : Number(e.target.value);
+                            onChange({ [setting.id]: out });
+                          }}
+                          className="w-32 bg-[var(--vscode-input)] border border-[var(--vscode-border)] focus:border-[var(--vscode-accent)] px-2.5 py-1.5 outline-none text-[13px] rounded shadow-sm hover:border-[var(--vscode-accent)]/50 transition-colors"
+                        />
+                      )}
 
-              {/* Tab Size */}
-              {(activeCategory === "Commonly Used" || activeCategory === "Text Editor") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Editor: <span className="text-[var(--vscode-text)] font-medium">Tab Size</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    The number of spaces a tab is equal to.
-                  </div>
-                  <input
-                    type="number"
-                    value={settings.tabSize}
-                    onChange={(e) => onChange({ tabSize: Number(e.target.value) })}
-                    className="w-32 bg-[var(--vscode-input)] border border-transparent focus:border-[var(--vscode-accent)] px-2 py-1 outline-none text-[13px] rounded-sm"
-                  />
-                </div>
-              )}
-
-              {/* Word Wrap */}
-              {(activeCategory === "Commonly Used" || activeCategory === "Text Editor") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Editor: <span className="text-[var(--vscode-text)] font-medium">Word Wrap</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    Controls how lines should wrap.
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="wordWrap"
-                      checked={settings.wordWrap}
-                      onChange={(e) => onChange({ wordWrap: e.target.checked })}
-                      className="h-4 w-4 accent-[var(--vscode-accent)]"
-                    />
-                    <label htmlFor="wordWrap" className="text-[13px] cursor-pointer">
-                      on
-                    </label>
-                  </div>
-                </div>
-              )}
-
-              {/* Minimap */}
-              {(activeCategory === "Text Editor") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Editor › Minimap: <span className="text-[var(--vscode-text)] font-medium">Enabled</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    Controls whether the minimap is shown.
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="minimap"
-                      checked={settings.minimap}
-                      onChange={(e) => onChange({ minimap: e.target.checked })}
-                      className="h-4 w-4 accent-[var(--vscode-accent)]"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Terminal Timeout */}
-              {(activeCategory === "Features" || activeCategory === "Commonly Used") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Terminal: <span className="text-[var(--vscode-text)] font-medium">Timeout</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    The maximum time in seconds the Python runtime is allowed to run before being terminated.
-                  </div>
-                  <input
-                    type="number"
-                    value={settings.timeoutMs / 1000}
-                    onChange={(e) => onChange({ timeoutMs: Math.max(1, Number(e.target.value)) * 1000 })}
-                    className="w-32 bg-[var(--vscode-input)] border border-transparent focus:border-[var(--vscode-accent)] px-2 py-1 outline-none text-[13px] rounded-sm"
-                  />
-                </div>
-              )}
-
-              {/* Clear Terminal */}
-              {(activeCategory === "Features" || activeCategory === "Commonly Used") && (
-                <div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-1">
-                    Terminal: <span className="text-[var(--vscode-text)] font-medium">Clear On Run</span>
-                  </div>
-                  <div className="text-[13px] text-[var(--vscode-text)] mb-2 leading-relaxed">
-                    Whether to clear the terminal output before each execution.
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="clearOnRun"
-                      checked={settings.clearOnRun}
-                      onChange={(e) => onChange({ clearOnRun: e.target.checked })}
-                      className="h-4 w-4 accent-[var(--vscode-accent)]"
-                    />
-                  </div>
-                </div>
+                      {setting.type === "boolean" && (
+                        <label className="flex items-center gap-3 cursor-pointer group/toggle w-fit">
+                          <div className="relative">
+                            <input
+                              type="checkbox"
+                              checked={val as boolean}
+                              onChange={(e) => {
+                                const out = setting.transformOut ? setting.transformOut(e.target.checked) : e.target.checked;
+                                onChange({ [setting.id]: out });
+                              }}
+                              className="peer sr-only"
+                            />
+                            <div className="h-5 w-9 rounded-full bg-[var(--vscode-input)] border border-[var(--vscode-border)] transition-all peer-checked:bg-[var(--vscode-accent)] peer-checked:border-[var(--vscode-accent)]"></div>
+                            <div className="absolute left-[2px] top-[2px] h-4 w-4 rounded-full bg-[var(--vscode-text-muted)] transition-all peer-checked:translate-x-4 peer-checked:bg-[#ffffff] shadow-sm"></div>
+                          </div>
+                          <span className="text-[13px] text-[var(--vscode-text)] group-hover/toggle:text-[var(--vscode-accent)] transition-colors">
+                            {val ? "Enabled" : "Disabled"}
+                          </span>
+                        </label>
+                      )}
+                    </div>
+                  );
+                })
               )}
             </div>
           </div>
