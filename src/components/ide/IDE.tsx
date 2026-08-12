@@ -44,6 +44,7 @@ import { WorkspaceManager } from "@/components/ide/WorkspaceManager";
 import { SettingsEditor } from "@/components/ide/SettingsEditor";
 import { ToastContainer, toast } from "@/components/ide/ToastContainer";
 import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import remarkGfm from "remark-gfm";
 
 function useIsDesktop() {
@@ -91,7 +92,8 @@ export function IDE({
   const [termHeight, setTermHeight] = useState(260);
   const [sidebarWidth, setSidebarWidth] = useState(250);
   const [splitRatio, setSplitRatio] = useState(50);
-  const [mdPreview, setMdPreview] = useState<Record<string, boolean>>({});
+  const [mdPreviewLeft, setMdPreviewLeft] = useState<Record<string, boolean>>({});
+  const [mdPreviewRight, setMdPreviewRight] = useState<Record<string, boolean>>({});
   const [fatalDismissed, setFatalDismissed] = useState(false);
 
   // Settings tab overrides
@@ -155,13 +157,15 @@ export function IDE({
       getKV<boolean>("isSplit"),
       getKV<string>("splitActiveId"),
       getKV<string[]>("splitOpenTabs"),
-      getKV<Record<string, boolean>>("mdPreview")
-    ]).then(([ratio, split, activeId, tabs, md]) => {
-      if (ratio) setSplitRatio(ratio);
+      getKV<Record<string, boolean>>("mdPreviewLeft"),
+      getKV<Record<string, boolean>>("mdPreviewRight")
+    ]).then(([ratio, split, activeId, tabs, mdL, mdR]) => {
+      if (ratio !== undefined) setSplitRatio(ratio);
       if (split !== undefined) setIsSplit(split);
-      if (activeId) setSplitActiveId(activeId);
-      if (tabs) setSplitOpenTabs(tabs);
-      if (md) setMdPreview(md);
+      if (activeId !== undefined) setSplitActiveId(activeId);
+      if (tabs !== undefined) setSplitOpenTabs(tabs);
+      if (mdL) setMdPreviewLeft(mdL);
+      if (mdR) setMdPreviewRight(mdR);
       setSplitLoaded(true);
     });
   }, []);
@@ -184,8 +188,9 @@ export function IDE({
     setKV("isSplit", isSplit);
     setKV("splitActiveId", splitActiveId);
     setKV("splitOpenTabs", splitOpenTabs);
-    setKV("mdPreview", mdPreview);
-  }, [splitRatio, isSplit, splitActiveId, splitOpenTabs, mdPreview, splitLoaded]);
+    setKV("mdPreviewLeft", mdPreviewLeft);
+    setKV("mdPreviewRight", mdPreviewRight);
+  }, [splitRatio, isSplit, splitActiveId, splitOpenTabs, mdPreviewLeft, mdPreviewRight, splitLoaded]);
 
   useEffect(() => {
     if (sidebarWidthLoaded) setKV("sidebarWidth", sidebarWidth);
@@ -601,27 +606,30 @@ export function IDE({
                     onClose={handleCloseTab}
                     onReorder={project.reorderTab}
                     onDropFile={(id) => project.openFile(id)}
+                    onDropPracticeFile={async (batchId, fileId, isPractice) => {
+                        const url = isPractice ? `/practice-data/${batchId}/questions.md` : `/practice-data/${batchId}/${fileId}`;
+                        try {
+                          const res = await fetch(url);
+                          if (res.ok) {
+                            const text = await res.text();
+                            project.createByPath(`.practice/${fileId}`, text);
+                          }
+                        } catch {}
+                    }}
                   />
                   {!isSplit && (
                     <div className="ml-auto flex items-center gap-2">
                       {project.activeFile?.name.endsWith('.md') && (
-                        <button
-                          onClick={() => {
-                            setIsSplit(true);
-                            if (project.activeId && !splitOpenTabs.includes(project.activeId)) {
-                              setSplitOpenTabs(prev => [...prev, project.activeId!]);
-                            }
-                            setSplitActiveId(project.activeId);
-                            setMdPreview(prev => ({ ...prev, [project.activeId!]: true }));
-                          }}
-                          className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text)]"
-                          title="Open Preview to the Side"
-                        >
-                          <BookOpen className="h-4 w-4" />
-                        </button>
-                      )}
-                      {project.activeFile?.name.endsWith('.md') && (
-                        <div className="h-4 w-[1px] bg-[var(--vscode-border)] mx-1" />
+                        <>
+                          <button
+                            onClick={() => setMdPreviewLeft(prev => ({ ...prev, [project.activeId!]: prev[project.activeId!] === false ? true : false }))}
+                            className={`p-1 hover:bg-[var(--vscode-hover)] rounded ${mdPreviewLeft[project.activeId!] !== false ? 'text-[var(--vscode-accent)]' : 'text-[var(--vscode-text)]'}`}
+                            title="Toggle Preview"
+                          >
+                            <BookOpen className="h-4 w-4" />
+                          </button>
+                          <div className="h-4 w-[1px] bg-[var(--vscode-border)] mx-1" />
+                        </>
                       )}
                       <button
                         onClick={() => {
@@ -689,10 +697,10 @@ export function IDE({
                           return await runtime.runTest(code, "", 15000);
                         }}
                       />
-                    ) : effectiveActiveFile.name.endsWith(".md") && mdPreview[effectiveActiveFile.id] && !isSplit ? (
+                    ) : effectiveActiveFile.name.endsWith(".md") && mdPreviewLeft[effectiveActiveFile.id] !== false ? (
                       <div className="h-full overflow-y-auto bg-[var(--vscode-bg)] p-8">
-                        <div className="prose prose-invert prose-sm max-w-none text-[var(--vscode-text)]">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{effectiveActiveFile.content ?? ""}</ReactMarkdown>
+                        <div className="text-[var(--vscode-text)]">
+                          <MarkdownRenderer content={effectiveActiveFile.content ?? ""} fileId={effectiveActiveFile.id} />
                         </div>
                       </div>
                     ) : (
@@ -761,12 +769,28 @@ export function IDE({
                         if (!splitOpenTabs.includes(id)) setSplitOpenTabs([...splitOpenTabs, id]);
                         setSplitActiveId(id);
                       }}
+                      onDropPracticeFile={async (batchId, fileId, isPractice) => {
+                        const url = isPractice ? `/practice-data/${batchId}/questions.md` : `/practice-data/${batchId}/${fileId}`;
+                        try {
+                          const res = await fetch(url);
+                          if (res.ok) {
+                            const text = await res.text();
+                            // for split view, we need the node id to add it to tabs
+                            // createPath returns the created node ID if we await it?
+                            // Wait, createPath is async? Let's check. 
+                            // Actually just project.createByPath works, and then we might need to find its ID.
+                            // The easiest way is to just let it open in the main pane if they drag it to the split pane,
+                            // or create it and then set it.
+                            project.createByPath(`.practice/${fileId}`, text);
+                          }
+                        } catch {}
+                      }}
                     />
                     <div className="ml-auto flex items-center gap-2">
                       {splitActiveFile?.name.endsWith('.md') && (
                         <button
-                          onClick={() => setMdPreview(prev => ({ ...prev, [splitActiveFile.id]: !prev[splitActiveFile.id] }))}
-                          className={`p-1 hover:bg-[var(--vscode-hover)] rounded ${mdPreview[splitActiveFile.id] ? 'text-[var(--vscode-accent)]' : 'text-[var(--vscode-text)]'}`}
+                          onClick={() => setMdPreviewRight(prev => ({ ...prev, [splitActiveFile.id]: prev[splitActiveFile.id] === false ? true : false }))}
+                          className={`p-1 hover:bg-[var(--vscode-hover)] rounded ${mdPreviewRight[splitActiveFile.id] !== false ? 'text-[var(--vscode-accent)]' : 'text-[var(--vscode-text)]'}`}
                           title="Toggle Preview"
                         >
                           <BookOpen className="h-4 w-4" />
@@ -845,11 +869,11 @@ export function IDE({
                           />
                         );
                       }
-                      if (sf.name.endsWith(".md")) {
+                      if (sf.name.endsWith(".md") && mdPreviewRight[sf.id] !== false) {
                         return (
                           <div className="h-full overflow-y-auto bg-[var(--vscode-bg)] p-8">
-                            <div className="prose prose-invert prose-sm max-w-none text-[var(--vscode-text)]">
-                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{sf.content ?? ""}</ReactMarkdown>
+                            <div className="text-[var(--vscode-text)]">
+                              <MarkdownRenderer content={sf.content ?? ""} fileId={sf.id} />
                             </div>
                           </div>
                         );

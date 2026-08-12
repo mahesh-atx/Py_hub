@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Play, Code, Type, Trash2 } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import remarkGfm from "remark-gfm";
 import { registerMonacoThemes } from "@/lib/editor/themes";
 
@@ -169,7 +170,7 @@ export function NotebookEditor({ content, theme, onChange, onRunCell }: Notebook
                         />
                       ) : (
                         <div 
-                          className="prose prose-invert max-w-none p-3 cursor-pointer min-h-[40px] hover:bg-[#2a2d2e] rounded"
+                          className="p-3 cursor-pointer min-h-[40px] hover:bg-[#2a2d2e] rounded text-[var(--vscode-text)]"
                           onDoubleClick={() => setEditingMarkdown(index)}
                           title="Double-click to edit"
                         >

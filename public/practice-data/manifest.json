@@ -1,132 +1,212 @@
 {
   "batches": [
     {
-      "id": "batch-01",
-      "title": "Batch 1",
-      "path": "/practice-data/batch-01",
-      "total": 100
-    },
-    {
-      "id": "batch-02",
-      "title": "Batch 2",
-      "path": "/practice-data/batch-02",
-      "total": 100
-    },
-    {
-      "id": "batch-03",
-      "title": "Batch 3",
-      "path": "/practice-data/batch-03",
-      "total": 100
-    },
-    {
-      "id": "batch-04",
-      "title": "Batch 4",
-      "path": "/practice-data/batch-04",
-      "total": 100
-    },
-    {
-      "id": "batch-05",
-      "title": "Batch 5",
-      "path": "/practice-data/batch-05",
-      "total": 100
-    },
-    {
       "id": "phase-1-foundation",
       "title": "Phase 1: Foundation",
       "path": "/practice-data/phase-1-foundation",
-      "total": 60
+      "files": [
+        {
+          "id": "README.md",
+          "title": "Readme",
+          "type": "markdown"
+        },
+        {
+          "id": "module-01-getting-started-with-python.md",
+          "title": "Module 01 Getting Started With Python",
+          "type": "markdown"
+        },
+        {
+          "id": "module-02-variables-and-data-types.md",
+          "title": "Module 02 Variables And Data Types",
+          "type": "markdown"
+        },
+        {
+          "id": "module-03-operators.md",
+          "title": "Module 03 Operators",
+          "type": "markdown"
+        },
+        {
+          "id": "module-04-control-flow.md",
+          "title": "Module 04 Control Flow",
+          "type": "markdown"
+        },
+        {
+          "id": "assignments.md",
+          "title": "Assignments",
+          "type": "markdown"
+        },
+        {
+          "id": "projects-and-takeaways.md",
+          "title": "Projects And Takeaways",
+          "type": "markdown"
+        },
+        {
+          "id": "questions.md",
+          "title": "Practice Questions",
+          "type": "practice",
+          "total": 60
+        }
+      ]
     },
     {
       "id": "phase-2-core-python",
       "title": "Phase 2: Core Python",
       "path": "/practice-data/phase-2-core-python",
-      "total": 60
+      "files": [
+        {
+          "id": "README.md",
+          "title": "Readme",
+          "type": "markdown"
+        },
+        {
+          "id": "module-05-strings.md",
+          "title": "Module 05 Strings",
+          "type": "markdown"
+        },
+        {
+          "id": "module-06-lists.md",
+          "title": "Module 06 Lists",
+          "type": "markdown"
+        },
+        {
+          "id": "module-07-tuples-and-sets.md",
+          "title": "Module 07 Tuples And Sets",
+          "type": "markdown"
+        },
+        {
+          "id": "module-08-dictionaries.md",
+          "title": "Module 08 Dictionaries",
+          "type": "markdown"
+        },
+        {
+          "id": "assignments.md",
+          "title": "Assignments",
+          "type": "markdown"
+        },
+        {
+          "id": "projects-and-takeaways.md",
+          "title": "Projects And Takeaways",
+          "type": "markdown"
+        },
+        {
+          "id": "questions.md",
+          "title": "Practice Questions",
+          "type": "practice",
+          "total": 60
+        }
+      ]
     },
     {
       "id": "phase-3-advanced-python",
       "title": "Phase 3: Advanced Python",
       "path": "/practice-data/phase-3-advanced-python",
-      "total": 60
+      "files": [
+        {
+          "id": "README.md",
+          "title": "Readme",
+          "type": "markdown"
+        },
+        {
+          "id": "module-09-functions.md",
+          "title": "Module 09 Functions",
+          "type": "markdown"
+        },
+        {
+          "id": "module-10-modules-and-packages.md",
+          "title": "Module 10 Modules And Packages",
+          "type": "markdown"
+        },
+        {
+          "id": "module-11-file-handling.md",
+          "title": "Module 11 File Handling",
+          "type": "markdown"
+        },
+        {
+          "id": "module-12-exception-handling.md",
+          "title": "Module 12 Exception Handling",
+          "type": "markdown"
+        },
+        {
+          "id": "assignments.md",
+          "title": "Assignments",
+          "type": "markdown"
+        },
+        {
+          "id": "projects-and-takeaways.md",
+          "title": "Projects And Takeaways",
+          "type": "markdown"
+        },
+        {
+          "id": "questions.md",
+          "title": "Practice Questions",
+          "type": "practice",
+          "total": 60
+        }
+      ]
     },
     {
       "id": "phase-4-oop",
       "title": "Phase 4: OOP",
       "path": "/practice-data/phase-4-oop",
-      "total": 60
+      "files": [
+        {
+          "id": "README.md",
+          "title": "Readme",
+          "type": "markdown"
+        },
+        {
+          "id": "module-13-introduction-to-oop.md",
+          "title": "Module 13 Introduction To Oop",
+          "type": "markdown"
+        },
+        {
+          "id": "module-14-constructors-attributes-methods.md",
+          "title": "Module 14 Constructors Attributes Methods",
+          "type": "markdown"
+        },
+        {
+          "id": "module-15-encapsulation-and-abstraction.md",
+          "title": "Module 15 Encapsulation And Abstraction",
+          "type": "markdown"
+        },
+        {
+          "id": "module-16-inheritance.md",
+          "title": "Module 16 Inheritance",
+          "type": "markdown"
+        },
+        {
+          "id": "module-17-polymorphism.md",
+          "title": "Module 17 Polymorphism",
+          "type": "markdown"
+        },
+        {
+          "id": "module-18-magic-dunder-methods.md",
+          "title": "Module 18 Magic Dunder Methods",
+          "type": "markdown"
+        },
+        {
+          "id": "module-19-oop-projects-and-practice.md",
+          "title": "Module 19 Oop Projects And Practice",
+          "type": "markdown"
+        },
+        {
+          "id": "assignments.md",
+          "title": "Assignments",
+          "type": "markdown"
+        },
+        {
+          "id": "projects-and-takeaways.md",
+          "title": "Projects And Takeaways",
+          "type": "markdown"
+        },
+        {
+          "id": "questions.md",
+          "title": "Practice Questions",
+          "type": "practice",
+          "total": 60
+        }
+      ]
     }
   ],
-  "topicDrills": [
-    {
-      "id": "01-variables",
-      "title": "Variables",
-      "path": "/practice-data/topic-drills/01-variables.md",
-      "total": 30
-    },
-    {
-      "id": "02-data-types",
-      "title": "Data Types",
-      "path": "/practice-data/topic-drills/02-data-types.md",
-      "total": 30
-    },
-    {
-      "id": "03-operators",
-      "title": "Operators",
-      "path": "/practice-data/topic-drills/03-operators.md",
-      "total": 30
-    },
-    {
-      "id": "04-input-output",
-      "title": "Input Output",
-      "path": "/practice-data/topic-drills/04-input-output.md",
-      "total": 30
-    },
-    {
-      "id": "05-conditions",
-      "title": "Conditions",
-      "path": "/practice-data/topic-drills/05-conditions.md",
-      "total": 30
-    },
-    {
-      "id": "06-loops",
-      "title": "Loops",
-      "path": "/practice-data/topic-drills/06-loops.md",
-      "total": 30
-    },
-    {
-      "id": "07-strings",
-      "title": "Strings",
-      "path": "/practice-data/topic-drills/07-strings.md",
-      "total": 30
-    },
-    {
-      "id": "08-lists",
-      "title": "Lists",
-      "path": "/practice-data/topic-drills/08-lists.md",
-      "total": 30
-    },
-    {
-      "id": "09-tuples",
-      "title": "Tuples",
-      "path": "/practice-data/topic-drills/09-tuples.md",
-      "total": 30
-    },
-    {
-      "id": "10-sets",
-      "title": "Sets",
-      "path": "/practice-data/topic-drills/10-sets.md",
-      "total": 30
-    },
-    {
-      "id": "11-dictionaries",
-      "title": "Dictionaries",
-      "path": "/practice-data/topic-drills/11-dictionaries.md",
-      "total": 30
-    },
-    {
-      "id": "12-functions",
-      "title": "Functions",
-      "path": "/practice-data/topic-drills/12-functions.md",
-      "total": 30
-    }
-  ]
+  "topicDrills": []
 }

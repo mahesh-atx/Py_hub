@@ -6,6 +6,7 @@ import { toast } from "@/components/ide/ToastContainer";
 import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
 import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import remarkGfm from "remark-gfm";
 import { terminalStore } from "@/lib/terminal/store";
 
@@ -24,8 +25,9 @@ interface Challenge {
   objective?: string;
 }
 
+interface ManifestFile { id: string; title: string; type: 'markdown' | 'practice'; total?: number; }
 interface Manifest {
-  batches: { id: string; title: string; path: string; total?: number }[];
+  batches: { id: string; title: string; path: string; files: ManifestFile[] }[];
   topicDrills: { id: string; title: string; path: string; total?: number }[];
 }
 
@@ -81,8 +83,11 @@ export function PracticeSidebar({
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null);
   const [loading, setLoading] = useState(false);
   
+  
   // UI State
   const [batchesExpanded, setBatchesExpanded] = useState(true);
+  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({});
+
   const [drillsExpanded, setDrillsExpanded] = useState(true);
   const [questionsExpanded, setQuestionsExpanded] = useState(false);
   const [keepCodeEnabled, setKeepCodeEnabled] = useState(true);
@@ -204,6 +209,16 @@ export function PracticeSidebar({
       }
     }
   }, [activeChallenge, onPracticeStateChange, challenges, keepCodeEnabled]);
+
+  const loadMarkdown = async (batchId: string, fileId: string) => {
+    try {
+      const res = await fetch(`/practice-data/${batchId}/${fileId}`);
+      if (res.ok) {
+        const text = await res.text();
+        onCreateFile(fileId, text, false);
+      }
+    } catch(e) {}
+  };
 
   const loadContent = async (type: "batch" | "drill", id: string) => {
     setLoading(true);
@@ -359,44 +374,47 @@ export function PracticeSidebar({
   if (!manifest) return <div className="p-4 text-xs text-[var(--vscode-text-muted)]">Loading...</div>;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden text-sm text-[var(--vscode-text)]">
+    <div className="flex h-full flex-col overflow-hidden text-sm text-[var(--vscode-text)] relative">
       {/* Custom Header */}
-      <div className="h-[35px] flex items-center justify-between px-5 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0">
-        <div className="flex items-center gap-3">
-          <span>Practice Explorer</span>
-          <label className="flex items-center gap-1.5 cursor-pointer normal-case text-[10px] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors font-medium">
-            <input 
-              type="checkbox" 
-              checked={keepCodeEnabled} 
-              onChange={(e) => setKeepCodeEnabled(e.target.checked)} 
-              className="cursor-pointer"
-              title="Keep previously typed code when advancing to the next question"
-            />
-            Keep Code
-          </label>
+      <div className="h-[35px] flex items-center justify-between px-3 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-semibold shrink-0 overflow-hidden border-b border-transparent">
+        <div className="flex items-center gap-2 min-w-0 pr-2">
+          <span className="whitespace-nowrap truncate">Practice</span>
         </div>
         {activeCategory && (
-          <div className="flex items-center gap-1.5">
-            <button 
-              onClick={() => {
-                if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], keepCodeEnabled);
-                else { setActiveCategory(null); setChallenges([]); setActiveChallenge(null); setResults(null); }
-              }}
-              className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors"
-              title={activeIndex > 0 ? "Previous Question" : "Back to Categories"}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setKeepCodeEnabled(!keepCodeEnabled)}
+              className={`flex items-center gap-1.5 transition-colors ${
+                keepCodeEnabled ? "text-emerald-400" : "text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]"
+              }`}
+              title="Keep previously typed code when advancing to the next question"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <div className={`h-1.5 w-1.5 rounded-full ${keepCodeEnabled ? "bg-emerald-400 shadow-[0_0_4px_#34d399]" : "bg-transparent border border-current"}`} />
+              <span className="normal-case tracking-normal text-[10px]">Keep Code</span>
             </button>
-            <button 
-              onClick={() => {
-                if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], keepCodeEnabled);
-              }}
-              disabled={activeIndex >= challenges.length - 1}
-              className={`p-1 rounded transition-colors ${activeIndex < challenges.length - 1 ? 'hover:bg-[var(--vscode-hover)] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]' : 'opacity-30 cursor-not-allowed text-[var(--vscode-text-muted)]'}`}
-              title="Next Question"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            
+            <div className="flex items-center gap-0.5">
+              <button 
+                onClick={() => {
+                  if (activeIndex > 0) selectChallenge(challenges[activeIndex - 1], keepCodeEnabled);
+                  else { setActiveCategory(null); setChallenges([]); setActiveChallenge(null); setResults(null); }
+                }}
+                className="p-1 hover:bg-[var(--vscode-hover)] rounded text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)] transition-colors"
+                title={activeIndex > 0 ? "Previous Question" : "Back to Categories"}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button 
+                onClick={() => {
+                  if (activeIndex < challenges.length - 1) selectChallenge(challenges[activeIndex + 1], keepCodeEnabled);
+                }}
+                disabled={activeIndex >= challenges.length - 1}
+                className={`p-1 rounded transition-colors ${activeIndex < challenges.length - 1 ? 'hover:bg-[var(--vscode-hover)] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]' : 'opacity-30 cursor-not-allowed text-[var(--vscode-text-muted)]'}`}
+                title="Next Question"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -415,19 +433,6 @@ export function PracticeSidebar({
         {!activeCategory ? (
           <div className="flex flex-col py-2">
             
-            {/* Resume Button */}
-            {lastActive && (
-              <div className="px-3 mb-4 mt-2">
-                <button 
-                  onClick={() => loadContent(lastActive.type, lastActive.id)}
-                  className="w-full flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold py-2 rounded shadow-lg shadow-sky-900/20 transition-all"
-                >
-                  <PlayCircle className="h-4 w-4" />
-                  Resume Practice
-                </button>
-              </div>
-            )}
-
             {/* Batches Section */}
             <div 
               className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none"
@@ -439,32 +444,57 @@ export function PracticeSidebar({
             {batchesExpanded && (
               <div className="flex flex-col pb-2">
                 {manifest.batches.map(b => {
-                  const bTotal = b.total || 100;
+                  const practiceFile = b.files?.find(f => f.type === 'practice');
+                  const bTotal = practiceFile?.total || 60;
                   const bSolved = Array.from(solvedChallenges).filter(x => x.startsWith(b.id + "__")).length;
-                  const bComplete = bSolved === bTotal;
+                  const bComplete = bSolved === bTotal && bTotal > 0;
                   const isActive = lastActive?.id === b.id;
+                  const isExpanded = expandedFolders[b.id] || false;
+                  
                   return (
-                    <div
-                      key={b.id}
-                      onClick={() => loadContent("batch", b.id)}
-                      className={`flex flex-col pl-5 pr-6 py-1.5 cursor-pointer border-l-2 transition-all ${
-                        isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
-                      }`}
-                    >
-                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2 truncate">
-                          {bComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <Folder className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-emerald-400'}`} />}
-                          <span className="truncate">{b.title}</span>
+                    <div key={b.id} className="flex flex-col">
+                      <div
+                        onClick={() => setExpandedFolders(prev => ({ ...prev, [b.id]: !prev[b.id] }))}
+                        className={`flex items-center justify-between pl-5 pr-6 py-1.5 cursor-pointer border-l-2 border-transparent hover:bg-[var(--vscode-hover)]`}
+                      >
+                        <div className="flex items-center gap-2 truncate text-[13px] text-[var(--vscode-text)]">
+                          {isExpanded ? <FolderOpen className="h-4 w-4 text-emerald-400" /> : <Folder className="h-4 w-4 text-emerald-400" />}
+                          <span className="truncate font-medium">{b.title}</span>
                         </div>
-                        <span className={`text-[10px] ${bComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
-                          [{bSolved}/{bTotal}]
-                        </span>
                       </div>
                       
-                      {/* Mini Progress bar underneath */}
-                      {(isActive || (bSolved > 0 && !bComplete)) && (
-                        <div className="mt-1 h-[2px] w-full bg-black/20 rounded-full overflow-hidden">
-                          <div className={`h-full ${isActive ? 'bg-sky-500' : 'bg-emerald-500/50'}`} style={{ width: `${(bSolved / bTotal) * 100}%` }}></div>
+                      {isExpanded && b.files && (
+                        <div className="flex flex-col pb-1">
+                          {b.files.map(f => {
+                            const isPractice = f.type === 'practice';
+                            return (
+                              <div
+                                key={f.id}
+                                draggable
+                                onDragStart={(e) => {
+                                  e.dataTransfer.setData("application/x-practice-file", JSON.stringify({ batchId: b.id, fileId: f.id, isPractice }));
+                                }}
+                                onClick={() => {
+                                  if (isPractice) {
+                                    loadContent("batch", b.id);
+                                  } else {
+                                    loadMarkdown(b.id, f.id);
+                                  }
+                                }}
+                                className={`flex items-center justify-between pl-10 pr-6 py-1 cursor-pointer hover:bg-[var(--vscode-hover)] text-[12.5px] text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]`}
+                              >
+                                <div className="flex items-center gap-2 truncate">
+                                  {isPractice ? <TerminalSquare className="h-3.5 w-3.5 text-sky-400" /> : <BookOpen className="h-3.5 w-3.5 text-amber-400/80" />}
+                                  <span className="truncate">{f.title}</span>
+                                </div>
+                                {isPractice && (
+                                  <span className={`text-[10px] ${bComplete ? 'text-amber-400/80 font-bold' : 'text-[var(--vscode-text-muted)]'}`}>
+                                    [{bSolved}/{bTotal}]
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
@@ -473,49 +503,7 @@ export function PracticeSidebar({
               </div>
             )}
 
-            {/* Topic Drills Section */}
-            <div 
-              className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-bold text-[var(--vscode-text)] uppercase tracking-wide cursor-pointer hover:bg-[var(--vscode-hover)] select-none mt-2"
-              onClick={() => setDrillsExpanded(!drillsExpanded)}
-            >
-              {drillsExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-              Topic Drills
-            </div>
-            {drillsExpanded && (
-              <div className="flex flex-col pb-2">
-                {manifest.topicDrills.map(d => {
-                  const dTotal = d.total || 30;
-                  const dSolved = Array.from(solvedChallenges).filter(x => x.startsWith(d.id + "__")).length;
-                  const dComplete = dSolved === dTotal;
-                  const isActive = lastActive?.id === d.id;
-                  return (
-                    <div
-                      key={d.id}
-                      onClick={() => loadContent("drill", d.id)}
-                      className={`flex flex-col pl-5 pr-6 py-1.5 cursor-pointer border-l-2 transition-all ${
-                        isActive ? 'border-sky-500 bg-sky-900/15' : 'border-transparent hover:bg-[var(--vscode-hover)]'
-                      }`}
-                    >
-                      <div className={`flex items-center justify-between text-[13px] ${isActive ? 'text-[var(--vscode-text)] font-medium' : 'text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]'}`}>
-                        <div className="flex items-center gap-2 truncate">
-                          {dComplete ? <Trophy className="h-4 w-4 text-amber-400" /> : <BookOpen className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-sky-400/80'}`} />}
-                          <span className="truncate">{d.title}</span>
-                        </div>
-                        <span className={`text-[10px] ${dComplete ? 'text-amber-400/80 font-bold' : isActive ? 'text-sky-400/90 font-semibold' : 'text-[var(--vscode-text-muted)]'}`}>
-                          [{dSolved}/{dTotal}]
-                        </span>
-                      </div>
-                      {(isActive || (dSolved > 0 && !dComplete)) && (
-                        <div className="mt-1 h-[2px] w-full bg-black/20 rounded-full overflow-hidden">
-                          <div className={`h-full ${isActive ? 'bg-sky-500' : 'bg-sky-400/50'}`} style={{ width: `${(dSolved / dTotal) * 100}%` }}></div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            {/* ... rest of category list remains same ... */}
+
           </div>
         ) : (
           <div className="flex flex-col p-3">
@@ -566,8 +554,8 @@ export function PracticeSidebar({
                   </div>
                 </div>
 
-                <div className="prose prose-invert max-w-none text-[var(--vscode-text)] text-[14.5px] leading-relaxed mb-4 tracking-wide">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{activeChallenge.markdown}</ReactMarkdown>
+                <div className="text-[var(--vscode-text)] mb-4">
+                  <MarkdownRenderer content={activeChallenge.markdown} isCompact={true} fileId={activeChallenge.id} />
                 </div>
 
                 {allPassed && activeIndex < challenges.length - 1 && (
@@ -585,6 +573,17 @@ export function PracticeSidebar({
           </div>
         )}
       </div>
+
+      {/* Floating Resume Button */}
+      {!activeCategory && lastActive && (
+        <button
+          onClick={() => loadContent(lastActive.type, lastActive.id)}
+          className="absolute bottom-6 right-6 h-12 w-12 rounded-full bg-[var(--vscode-accent)] text-[#ffffff] flex items-center justify-center transition-transform hover:scale-110 z-50 group border border-[var(--vscode-border)]"
+          title="Resume Practice"
+        >
+          <PlayCircle className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+        </button>
+      )}
     </div>
   );
 }

@@ -12,6 +12,7 @@ interface EditorTabsProps {
   onClose: (id: string) => void;
   onReorder?: (id: string, insertBeforeId: string | null) => void;
   onDropFile?: (id: string) => void;
+  onDropPracticeFile?: (batchId: string, fileId: string, isPractice: boolean) => void;
 }
 
 function getFileIcon(ext: string, className: string) {
@@ -39,6 +40,7 @@ export function EditorTabs({
   onClose,
   onReorder,
   onDropFile,
+  onDropPracticeFile,
 }: EditorTabsProps) {
   if (!tabs.length) {
     return (
@@ -47,6 +49,14 @@ export function EditorTabs({
         onDragOver={(e) => { e.preventDefault(); }}
         onDrop={(e) => {
           e.preventDefault();
+          const practiceData = e.dataTransfer.getData("application/x-practice-file");
+          if (practiceData && onDropPracticeFile) {
+            try {
+              const { batchId, fileId, isPractice } = JSON.parse(practiceData);
+              onDropPracticeFile(batchId, fileId, isPractice);
+              return;
+            } catch {}
+          }
           const nodeIds = e.dataTransfer.getData("application/vnd.ide.nodes");
           if (nodeIds && onDropFile) {
             try {
@@ -101,7 +111,15 @@ export function EditorTabs({
                 onReorder(draggedTabId, tab.id);
                 return;
               }
-              const nodeIds = e.dataTransfer.getData("application/vnd.ide.nodes");
+              const practiceData = e.dataTransfer.getData("application/x-practice-file");
+          if (practiceData && onDropPracticeFile) {
+            try {
+              const { batchId, fileId, isPractice } = JSON.parse(practiceData);
+              onDropPracticeFile(batchId, fileId, isPractice);
+              return;
+            } catch {}
+          }
+          const nodeIds = e.dataTransfer.getData("application/vnd.ide.nodes");
               if (nodeIds && onDropFile) {
                 try {
                   const ids = JSON.parse(nodeIds);
