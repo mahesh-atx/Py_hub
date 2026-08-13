@@ -4,7 +4,7 @@
       "question_id": 1,
       "tests": [
         {
-          "input": "",
+          "input": "Hello World",
           "expected_output": "Enter text:   Hello World\nLength: 13\nUpper: HELLO WORLD\nLower: hello world\nStripped: 'Hello World'"
         }
       ]
@@ -31,7 +31,7 @@
       "question_id": 4,
       "tests": [
         {
-          "input": "",
+          "input": "Python 3 is great",
           "expected_output": "Enter a sentence: Python 3 is great\nVowels: 4\nConsonants: 9\nDigits: 1\nSpaces: 3"
         }
       ]
@@ -49,7 +49,7 @@
       "question_id": 6,
       "tests": [
         {
-          "input": "",
+          "input": "A man, a plan, a canal: Panama",
           "expected_output": "Enter a sentence: A man, a plan, a canal: Panama\nPalindrome: True"
         }
       ]
@@ -58,7 +58,7 @@
       "question_id": 7,
       "tests": [
         {
-          "input": "",
+          "input": "Python makes programming enjoyable",
           "expected_output": "Enter a sentence: Python makes programming enjoyable\nWords: 4\nLongest: programming\nShortest: Python"
         }
       ]
@@ -67,7 +67,7 @@
       "question_id": 8,
       "tests": [
         {
-          "input": "",
+          "input": "the quick brown fox",
           "expected_output": "Enter a sentence: the quick brown fox\nTitle case: The Quick Brown Fox"
         }
       ]
@@ -94,7 +94,7 @@
       "question_id": 11,
       "tests": [
         {
-          "input": "",
+          "input": "Python is really powerful",
           "expected_output": "Enter a sentence: Python is really powerful\nResult: powerful really is Python"
         }
       ]
@@ -112,7 +112,7 @@
       "question_id": 13,
       "tests": [
         {
-          "input": "",
+          "input": "5\n12 45 7 89 23",
           "expected_output": "How many numbers? 5\nNumbers: 12 45 7 89 23\nSum: 176\nAverage: 35.20\nMax: 89\nMin: 7"
         }
       ]
@@ -193,7 +193,7 @@
       "question_id": 22,
       "tests": [
         {
-          "input": "",
+          "input": "72",
           "expected_output": "List: [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]\nTarget: 72\nLinear search: found at index 8 in 9 comparisons\nBinary search: found at index 8 in 2 comparisons"
         }
       ]
@@ -292,7 +292,7 @@
       "question_id": 33,
       "tests": [
         {
-          "input": "",
+          "input": "The cat sat on the mat the cat left",
           "expected_output": "Sentence: The cat sat on the mat the cat left\nTotal words: 9\nUnique words: 6\nUnique set: {'cat', 'left', 'mat', 'on', 'sat', 'the'}"
         }
       ]
@@ -319,7 +319,7 @@
       "question_id": 36,
       "tests": [
         {
-          "input": "",
+          "input": "the cat sat on the mat the cat left",
           "expected_output": "Sentence: the cat sat on the mat the cat left\nthe: 3\ncat: 2\nsat: 1\non: 1\nmat: 1\nleft: 1"
         }
       ]
@@ -328,7 +328,7 @@
       "question_id": 37,
       "tests": [
         {
-          "input": "",
+          "input": "programming",
           "expected_output": "Word: programming\nRepeated: r(2) g(2) m(2)"
         }
       ]
@@ -400,7 +400,7 @@
       "question_id": 45,
       "tests": [
         {
-          "input": "",
+          "input": "[2, 7, 11, 15, 3, 6]\n9",
           "expected_output": "Numbers: [2, 7, 11, 15, 3, 6]\nTarget: 9\nFound: 2 + 7 = 9 (indices 0 and 1)"
         }
       ]
@@ -409,7 +409,7 @@
       "question_id": 46,
       "tests": [
         {
-          "input": "",
+          "input": "2\nPens\n500",
           "expected_output": "1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nChoice: 2\nItem: Pens\nQuantity: 500\nError: only 45 in stock"
         }
       ]
@@ -419,7 +419,7 @@
       "tests": [
         {
           "input": "",
-          "expected_output": "Highest paid: Sneha (\u20b995,000)\nAverage by department:\n  Engineering: \u20b982,500.00\n  Sales: \u20b958,000.00"
+          "expected_output": "Highest paid: Sneha (₹95,000)\nAverage by department:\n  Engineering: ₹82,500.00\n  Sales: ₹58,000.00"
         }
       ]
     },
@@ -491,7 +491,7 @@
       "tests": [
         {
           "input": "",
-          "expected_output": "Sales by region:\n  North: \u20b91,083,000\n  South: \u20b9372,300\nBest-selling product: Laptop (\u20b9708,000)\nHighest average: North (\u20b9361,000.00)"
+          "expected_output": "Sales by region:\n  North: ₹1,083,000\n  South: ₹372,300\nBest-selling product: Laptop (₹708,000)\nHighest average: North (₹361,000.00)"
         }
       ]
     },

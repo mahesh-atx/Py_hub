@@ -50,7 +50,7 @@
       "tests": [
         {
           "input": "37",
-          "expected_output": "Enter Celsius: 37\n37.0\u00b0C = 98.6\u00b0F"
+          "expected_output": "Enter Celsius: 37\n37.0°C = 98.6°F"
         }
       ]
     },
@@ -68,7 +68,7 @@
       "tests": [
         {
           "input": "1455300",
-          "expected_output": "Enter amount: 1455300\nTotal: \u20b91,455,300"
+          "expected_output": "Enter amount: 1455300\nTotal: ₹1,455,300"
         }
       ]
     },
@@ -261,7 +261,7 @@
       "tests": [
         {
           "input": "250",
-          "expected_output": "Enter units: 250\nBill: \u20b91200"
+          "expected_output": "Enter units: 250\nBill: ₹1200"
         }
       ]
     },
@@ -270,7 +270,7 @@
       "tests": [
         {
           "input": "1200000",
-          "expected_output": "Enter annual income: 1200000\nTax payable: \u20b9172500.00"
+          "expected_output": "Enter annual income: 1200000\nTax payable: ₹172500.00"
         }
       ]
     },
@@ -306,7 +306,7 @@
       "tests": [
         {
           "input": "65\nno\nyes",
-          "expected_output": "Age: 65\nStudent? (yes/no): no\nTuesday? (yes/no): yes\nFinal price: \u20b9100.00"
+          "expected_output": "Age: 65\nStudent? (yes/no): no\nTuesday? (yes/no): yes\nFinal price: ₹100.00"
         }
       ]
     },
@@ -503,8 +503,8 @@
       "question_id": 57,
       "tests": [
         {
-          "input": "1234",
-          "expected_output": "Enter PIN: 1234\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nChoice: 3\nAmount: 2500\nWithdrawn \u20b92500. Balance: \u20b97500"
+          "input": "1234\n3",
+          "expected_output": "Enter PIN: 1234\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nChoice: 3\nAmount: 2500\nWithdrawn ₹2500. Balance: ₹7500"
         }
       ]
     },
