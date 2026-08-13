@@ -231,11 +231,7 @@ export function IDE({
     return path.startsWith(".practice/") || path.startsWith(".course/");
   }, [project.nodes]);
 
-  const visibleTabs = project.openTabFiles.filter((tab) =>
-    activeActivity === "practice"
-      ? isLearningNode(tab.id)
-      : !isPracticeNode(tab.id),
-  );
+  const visibleTabs = project.openTabFiles;
 
   const allVisibleTabs = [
     ...visibleTabs,
@@ -249,12 +245,7 @@ export function IDE({
   const effectiveActiveId = activeTabOverride || effectiveActiveFile?.id || null;
 
   const visibleSplitTabs = project.nodes
-    .filter((node) => splitOpenTabs.includes(node.id))
-    .filter((tab) =>
-      activeActivity === "practice"
-        ? isLearningNode(tab.id)
-        : !isPracticeNode(tab.id),
-    );
+    .filter((node) => splitOpenTabs.includes(node.id));
 
   const effectiveSplitActiveFile = visibleSplitTabs.find(t => t.id === splitActiveId) || visibleSplitTabs[visibleSplitTabs.length - 1] || null;
   const effectiveSplitActiveId = effectiveSplitActiveFile?.id || null;
