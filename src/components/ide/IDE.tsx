@@ -544,7 +544,7 @@ export function IDE({
             />}
 
             {activeActivity !== "practice" && (
-              <div className="h-[35px] flex items-center px-5 text-[11px] uppercase tracking-wider text-[var(--vscode-text)] font-medium shrink-0">
+              <div className="flex h-[35px] shrink-0 items-center px-4 text-[11px] font-medium uppercase tracking-wider text-[var(--vscode-text)]">
                 {activeActivity === "extensions" ? "Packages" : activeActivity === "workspaces" ? "Workspaces" : activeActivity}
               </div>
             )}

@@ -127,34 +127,40 @@ export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
 
     // Handle input stream
     xterm.onData((data) => {
-      const isEnter = data === "\r";
-      const isBackspace = data === "\x7f";
-      const isCtrlC = data === "\x03";
-      const isCtrlD = data === "\x04";
-
       // Allow typing if waiting for input
       if (terminalStore.getSnapshot().awaitingInput) {
-        if (isEnter) {
-          xterm.write("\r\n");
-          const val = inputBufferRef.current;
-          inputBufferRef.current = "";
-          callbacksRef.current.onInput(val, false);
-        } else if (isBackspace) {
-          if (inputBufferRef.current.length > 0) {
-            xterm.write("\b \b");
-            inputBufferRef.current = inputBufferRef.current.slice(0, -1);
-          }
-        } else if (isCtrlC) {
-          inputBufferRef.current = "";
-          callbacksRef.current.onInterrupt?.();
-        } else if (isCtrlD) {
-          inputBufferRef.current = "";
-          callbacksRef.current.onInput("", true);
-        } else {
-          // Normal printable chars
-          if (data >= String.fromCharCode(0x20) && data <= String.fromCharCode(0x7E)) {
-            inputBufferRef.current += data;
-            xterm.write(data);
+        for (let i = 0; i < data.length; i++) {
+          const char = data[i];
+          const isEnter = char === "\r" || char === "\n";
+          const isBackspace = char === "\x7f" || char === "\b";
+          const isCtrlC = char === "\x03";
+          const isCtrlD = char === "\x04";
+
+          if (isEnter) {
+            // Ignore \n if it immediately follows \r
+            if (char === "\n" && i > 0 && data[i - 1] === "\r") continue;
+            
+            xterm.write("\r\n");
+            const val = inputBufferRef.current;
+            inputBufferRef.current = "";
+            callbacksRef.current.onInput(val, false);
+          } else if (isBackspace) {
+            if (inputBufferRef.current.length > 0) {
+              xterm.write("\b \b");
+              inputBufferRef.current = inputBufferRef.current.slice(0, -1);
+            }
+          } else if (isCtrlC) {
+            inputBufferRef.current = "";
+            callbacksRef.current.onInterrupt?.();
+          } else if (isCtrlD) {
+            inputBufferRef.current = "";
+            callbacksRef.current.onInput("", true);
+          } else {
+            // Normal printable chars
+            if (char >= String.fromCharCode(0x20) && char <= String.fromCharCode(0x7E)) {
+              inputBufferRef.current += char;
+              xterm.write(char);
+            }
           }
         }
       }

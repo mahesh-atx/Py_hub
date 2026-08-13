@@ -62,8 +62,8 @@ export function ActivityBar({
   };
 
   return (
-    <nav aria-label="Primary IDE activities" className="z-10 flex w-12 shrink-0 flex-col items-center border-r border-[var(--vscode-border)] bg-[var(--vscode-hover)] py-2">
-      <div className="flex w-full flex-col gap-1">
+    <nav aria-label="Primary IDE activities" className="z-10 flex w-12 shrink-0 flex-col items-center border-r border-[var(--vscode-border)] bg-[var(--vscode-bg)]">
+      <div className="flex w-full flex-col">
         <ActivityButton
           icon={<Boxes className="h-6 w-6" strokeWidth={1.25} />}
           active={activity === "workspaces" && sidebarOpen}
@@ -89,7 +89,7 @@ export function ActivityBar({
           title="Practice & Learn"
         />
       </div>
-      <div className="mb-2 mt-auto flex w-full flex-col gap-1">
+      <div className="mb-1 mt-auto flex w-full flex-col">
         <ActivityButton
           icon={<Settings className="h-6 w-6" strokeWidth={1.25} />}
           onClick={onOpenSettings}

@@ -272,7 +272,7 @@ input[type="range"] {
 }
 
 .markdown-body.compact {
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1.5 !important;
 }
 
@@ -282,13 +282,18 @@ input[type="range"] {
 .markdown-body.compact h4, 
 .markdown-body.compact h5, 
 .markdown-body.compact h6 {
-  margin-top: 1.2em;
+  margin-top: 0.9em;
+  margin-bottom: 0.35em;
 }
-.markdown-body.compact h1 { font-size: 1.6em; }
-.markdown-body.compact h2 { font-size: 1.4em; }
-.markdown-body.compact h3 { font-size: 1.2em; }
-.markdown-body.compact p { margin-bottom: 0.8em; }
-.markdown-body.compact code { font-size: 13px !important; }
+.markdown-body.compact h1 { font-size: 1.25em; }
+.markdown-body.compact h2 { font-size: 1.15em; border-bottom: 0; padding-bottom: 0; }
+.markdown-body.compact h3 { font-size: 1.05em; }
+.markdown-body.compact p { margin-bottom: 0.65em; }
+.markdown-body.compact code { font-size: 11px !important; }
+.markdown-body.compact pre { margin: 0.5em 0; border-radius: 2px; }
+.markdown-body.compact table { margin: 0.75em 0; border-radius: 0; }
+.markdown-body.compact th,
+.markdown-body.compact td { padding: 4px 6px; }
 
 .markdown-body h1, 
 .markdown-body h2, 
