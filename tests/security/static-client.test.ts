@@ -16,8 +16,9 @@ describe("client-only deployment contract", () => {
     expect(config).not.toContain("async headers()");
     expect(packageJson.scripts.start).toContain("serve-static.js");
     expect(packageJson.scripts.start).not.toContain("next start");
-    expect(packageJson.scripts["build:strict"]).toContain(
-      "PYLAB_PACKAGE_BUNDLE_REQUIRED=1",
+    expect(packageJson.scripts["build:strict"]).toContain("run-strict-build.js");
+    expect(read("scripts/run-strict-build.js")).toContain(
+      'PYLAB_PACKAGE_BUNDLE_REQUIRED: "1"',
     );
     expect(read("vercel.json")).toContain("npm run build:strict");
     expect(read("netlify.toml")).toContain("npm run build:strict");

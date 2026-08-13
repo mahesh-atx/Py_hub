@@ -3,7 +3,11 @@ const path = require("node:path");
 
 async function main() {
   const environment = { ...process.env };
-  if (!environment.CI && !environment.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
+  if (
+    process.platform === "linux" &&
+    !environment.CI &&
+    !environment.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+  ) {
     const chromiumModule = await import("@sparticuz/chromium");
     const chromium = chromiumModule.default;
     const libraryRoot = await chromiumModule.inflate(

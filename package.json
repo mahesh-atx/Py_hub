@@ -24,7 +24,8 @@
     "prepare:packages": "node scripts/prepare-pyodide-packages.js",
     "prepare:runtime": "npm run prepare:pyodide && npm run prepare:packages",
     "check:static": "node scripts/check-static-export.js",
-    "build:strict": "PYLAB_PACKAGE_BUNDLE_REQUIRED=1 npm run build"
+    "build:strict": "node scripts/run-strict-build.js",
+    "e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
