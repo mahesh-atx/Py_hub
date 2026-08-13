@@ -6,7 +6,9 @@
         {
           "input": "",
           "expected_output": "Should print test success output",
-          "contains": ["All tests passed"]
+          "contains": [
+            "All tests passed"
+          ]
         }
       ]
     },
@@ -16,7 +18,11 @@
         {
           "input": "",
           "expected_output": "Should print file processing stats",
-          "contains": ["chars", "bytes", "csv.reader"]
+          "contains": [
+            "chars",
+            "bytes",
+            "csv.reader"
+          ]
         }
       ]
     },
@@ -26,19 +32,17 @@
         {
           "input": "",
           "expected_output": "Should handle exceptions and print output",
-          "contains": ["Caught", "Error", "Shortfall"]
+          "contains": [
+            "Caught",
+            "Error",
+            "Shortfall"
+          ]
         }
       ]
     },
     {
       "question_id": 13,
-      "tests": [
-        {
-          "input": "4",
-          "expected_output": "Should exit menu",
-          "contains": []
-        }
-      ]
+      "tests": []
     },
     {
       "question_id": 14,
@@ -46,7 +50,10 @@
         {
           "input": "",
           "expected_output": "CLI tool generates or analyzes data",
-          "contains": ["Usage", "python"]
+          "contains": [
+            "Usage",
+            "python"
+          ]
         }
       ]
     }

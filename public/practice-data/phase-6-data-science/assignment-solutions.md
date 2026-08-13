@@ -1,6 +1,6 @@
 # 📊 Phase 6 — Chart Practice Solutions
 
-Reference code for all 30 questions in [chart-practice.md](chart-practice.md). Every solution here was executed to render the target image in that file, so the code and the picture cannot disagree.
+Reference code for all 30 questions in [chart practice assignments](assignments.md). Every solution here was executed to render the target image in that file, so the code and the picture cannot disagree.
 
 > ⚠️ Reading a solution you have not attempted feels like learning and is not. If you open one, close it, delete what you wrote, and reproduce the chart from memory. Recognising correct code and producing it are different skills, and only the second one is short.
 
@@ -717,4 +717,4 @@ ax.grid(alpha=0.3)
 
 ---
 
-[← Questions](chart-practice.md) · [Phase 6 index](README.md)
+[← Questions](assignments.md) · [Phase 6 index](README.md)

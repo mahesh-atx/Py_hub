@@ -20,7 +20,7 @@ python src/eda.py                # the analysis
 python src/charts.py             # the report figures
 ```
 
-> ⚠️ **Do not read `src/clean.py` first.** Run `profile_raw.py`, then attempt the cleaning yourself (Projects 1–2 in the [guides](../project-guides.md)). Reading the answer before trying costs you the entire lesson. The reference solution will still be there in two hours.
+> ⚠️ **Do not read `src/clean.py` first.** Run `profile_raw.py`, then attempt the cleaning yourself (Projects 1–2 in the [guides](../projects.md)). Reading the answer before trying costs you the entire lesson. The reference solution will still be there in two hours.
 >
 
 ---
@@ -128,7 +128,7 @@ merged sales x customers              3000  97 orders unmatched
 
 The `CleaningLog` class exists because **a cleaning step you cannot describe is a cleaning step you cannot defend.** When someone asks "why is revenue lower than the finance report?", this log is your answer.
 
-![Cleaning impact](figures/01-cleaning-impact.png)
+> Generated figure: `figures/01-cleaning-impact.png` (appears after you run the chart pipeline).
 
 ---
 
@@ -218,7 +218,7 @@ Hyderabad     299   844749.0     3072.0        100.0
 
 It takes **6 of 7 cities** to reach 80% of revenue, and average order value barely varies (₹2,765–₹3,130). Mumbai leads on **volume**, not on customer value. Those are two different business conclusions, and only the second one is true here.
 
-![Category and city](figures/03-category-city.png)
+> Generated figure: `figures/03-category-city.png` (appears after you run the chart pipeline).
 
 ### Three honest null results
 
@@ -248,7 +248,7 @@ UPI                521    2950.16          3.48        3.76
 
 Payment method barely moves anything.
 
-![Null result and missingness](figures/05-null-result-and-missingness.png)
+> Generated figure: `figures/05-null-result-and-missingness.png` (appears after you run the chart pipeline).
 
 **Resisting the urge to find a story in noise is the skill.** A junior analyst reports "UPI users rate 0.10 higher!". A good one checks whether 0.10 on a 5-point scale across 521 orders means anything, and reports that it does not.
 
@@ -290,4 +290,4 @@ Ideas: negative prices, a `country` column that is 99% "India" and 1% "india ", 
 
 ---
 
-[← Phase 6 index](../README.md) · [Project guides →](../project-guides.md)
+[← Phase 6 index](../README.md) · [Project guides →](../projects.md)

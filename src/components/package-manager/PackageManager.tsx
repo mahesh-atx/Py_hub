@@ -1,117 +1,169 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Package, Search, Plus, Check, Loader2 } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  Loader2,
+  Package,
+  Plus,
+  RotateCcw,
+  Search,
+} from "lucide-react";
 import { searchPackages, KNOWN_PACKAGES } from "@/lib/packages";
+
+const LOGO_OVERRIDES: Record<string, string> = {
+  "scikit-learn": "scikitlearn",
+  pillow: "python",
+};
+
+const PackageLogo = ({ name }: { name: string }) => {
+  const [error, setError] = useState(false);
+  const slug = LOGO_OVERRIDES[name] ?? name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (error) {
+    return (
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
+        <Package className="h-4 w-4 text-[var(--vscode-text-muted)]" />
+      </div>
+    );
+  }
+  return (
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
+      <img
+        src={`https://cdn.simpleicons.org/${slug}`}
+        alt={`${name} logo`}
+        className="h-5 w-5"
+        onError={() => setError(true)}
+      />
+    </div>
+  );
+};
 
 interface PackageManagerProps {
   installed: string[];
+  bundled?: string[];
   installing: string | null;
+  failures?: Record<string, string>;
   onInstall: (packages: string[]) => void;
 }
 
 export function PackageManager({
   installed,
   installing,
+  failures = {},
   onInstall,
 }: PackageManagerProps) {
   const [query, setQuery] = useState("");
-  const [custom, setCustom] = useState("");
-
   const results = useMemo(() => searchPackages(query), [query]);
 
   const isInstalled = (name: string) =>
-    installed.some((n) => n.toLowerCase() === name.toLowerCase());
+    installed.some((entry) => entry.toLowerCase() === name.toLowerCase());
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-        Python Packages
-      </div>
-
-      <div className="px-3 pb-2">
+    <div className="flex h-full flex-col text-[var(--vscode-text)]">
+      {/* Search input — VS Code style */}
+      <div className="px-2 pt-2 pb-1">
         <div className="relative">
-          <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-500" />
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--vscode-text-muted)]" />
           <input
+            aria-label="Search Python packages"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search packages…"
-            className="w-full rounded border border-white/10 bg-[#0d1117] py-1.5 pl-7 pr-2 text-xs text-slate-200 outline-none focus:border-sky-500/60"
+            className="h-[28px] w-full rounded-[3px] border border-[var(--vscode-border)] bg-[var(--vscode-input)] pl-8 pr-2 text-[13px] text-[var(--vscode-text)] placeholder-[var(--vscode-text-muted)] outline-none focus:border-[var(--vscode-accent)]"
           />
         </div>
       </div>
 
-
-
-      <div className="flex-1 overflow-auto px-2 pb-3">
+      {/* Package list */}
+      <div className="flex-1 overflow-auto px-1 pb-2">
         {results.map((pkg) => {
           const done = isInstalled(pkg.name);
+          const failure = failures[pkg.name];
+          const active = Boolean(installing?.toLowerCase().includes(pkg.name));
           return (
             <div
               key={pkg.name}
-              className="flex items-center justify-between rounded px-1.5 py-1.5 hover:bg-white/5"
+              data-testid={`package-${pkg.name}`}
+              className="group flex gap-2.5 rounded-[3px] px-2 py-2 cursor-default hover:bg-[var(--vscode-hover)] transition-colors"
             >
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <Package className="h-3.5 w-3.5 shrink-0 text-slate-500" />
-                  <span className="truncate text-xs font-medium text-slate-200">
-                    {pkg.name}
-                  </span>
-                  {pkg.builtin && (
-                    <span className="rounded bg-emerald-500/15 px-1 text-[9px] font-semibold uppercase text-emerald-400">
-                      built-in
-                    </span>
-                  )}
+              {/* Icon */}
+              <PackageLogo name={pkg.name} />
+
+              {/* Info + action */}
+              <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="truncate text-[13px] font-medium leading-tight">{pkg.name}</span>
+                  <button
+                    type="button"
+                    disabled={Boolean(installing) || done}
+                    onClick={() => onInstall([pkg.name])}
+                    aria-label={failure ? `Retry installing ${pkg.name}` : `Install ${pkg.name}`}
+                    className={`flex shrink-0 items-center gap-1 rounded-[3px] px-2 py-[3px] text-[11px] font-medium outline-none transition-colors focus-visible:ring-1 focus-visible:ring-[var(--vscode-accent)] disabled:cursor-not-allowed ${
+                      done
+                        ? "bg-transparent text-[var(--vscode-text-muted)]"
+                        : failure
+                          ? "bg-[var(--vscode-hover)] text-rose-400 hover:bg-rose-600/20"
+                          : "bg-[var(--vscode-accent)] text-white hover:opacity-90"
+                    }`}
+                  >
+                    {active ? (
+                      <Loader2 className="h-3 w-3 animate-spin" aria-hidden="true" />
+                    ) : done ? (
+                      <Check className="h-3 w-3" aria-hidden="true" />
+                    ) : failure ? (
+                      <RotateCcw className="h-3 w-3" aria-hidden="true" />
+                    ) : (
+                      <Plus className="h-3 w-3" aria-hidden="true" />
+                    )}
+                    {active ? "Installing…" : done ? "Installed" : failure ? "Retry" : "Install"}
+                  </button>
                 </div>
-                <p className="truncate pl-5 text-[10px] text-slate-500">
+                <p className="truncate text-[11px] leading-snug text-[var(--vscode-text-muted)]">
                   {pkg.description}
                 </p>
               </div>
-              <button
-                disabled={!!installing}
-                onClick={() => onInstall([pkg.name])}
-                className={`flex shrink-0 items-center gap-1 rounded px-2 py-1 text-[11px] font-medium ${
-                  done
-                    ? "bg-emerald-600/20 text-emerald-300"
-                    : "bg-white/5 text-slate-300 hover:bg-white/10"
-                }`}
-              >
-                {installing && installing.includes(pkg.name) ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : done ? (
-                  <Check className="h-3 w-3" />
-                ) : (
-                  <Plus className="h-3 w-3" />
-                )}
-                {done ? "Installed" : "Install"}
-              </button>
+
+              {/* Error */}
+              {failure && (
+                <div role="alert" className="mt-1 flex items-start gap-1.5 rounded bg-rose-950/40 p-1.5 text-[10px] leading-relaxed text-rose-200">
+                  <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" aria-hidden="true" />
+                  <span className="line-clamp-2">{failure}</span>
+                </div>
+              )}
             </div>
           );
         })}
         {results.length === 0 && (
-          <p className="px-2 py-3 text-xs text-slate-600">
-            No matching packages in the catalog.
-          </p>
+          <div className="px-2 py-8 text-center text-[12px] text-[var(--vscode-text-muted)]">
+            <Package className="mx-auto mb-2 h-5 w-5 opacity-50" aria-hidden="true" />
+            No packages match &ldquo;{query}&rdquo;
+          </div>
         )}
       </div>
 
-      {installed.length > 0 && (
-        <div className="border-t border-white/10 px-3 py-2">
-          <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-500">
-            Installed ({installed.length})
+      {/* Installed footer */}
+      <div aria-live="polite" className="border-t border-[var(--vscode-border)] px-3 py-2">
+        {installing && (
+          <p className="mb-1.5 flex items-center gap-1.5 text-[11px] text-[var(--vscode-accent)]">
+            <Loader2 className="h-3 w-3 animate-spin" aria-hidden="true" /> {installing}
           </p>
+        )}
+        <p className="mb-1 text-[11px] font-medium text-[var(--vscode-text-muted)]">
+          Installed ({installed.length})
+        </p>
+        {installed.length ? (
           <div className="flex flex-wrap gap-1">
             {installed.map((name) => (
-              <span
-                key={name}
-                className="rounded bg-emerald-600/15 px-1.5 py-0.5 text-[10px] text-emerald-300"
-              >
+              <span key={name} className="rounded-[3px] bg-[var(--vscode-hover)] px-1.5 py-0.5 text-[11px] text-[var(--vscode-text)]">
                 {name}
               </span>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-[11px] text-[var(--vscode-text-muted)]">No packages installed yet.</p>
+        )}
+      </div>
     </div>
   );
 }

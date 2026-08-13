@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { terminalStore } from "@/lib/terminal/store";
 import type { SegmentKind } from "@/lib/terminal/types";
 import { Terminal as XTerm } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { WebLinksAddon } from "@xterm/addon-web-links";
+import { SearchAddon } from "@xterm/addon-search";
+import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import "@xterm/xterm/css/xterm.css";
 
 interface TerminalProps {
   onInput: (value: string, eof?: boolean) => void;
   onClear: () => void;
+  onInterrupt?: () => void;
 }
 
 const ANSI_KIND: Record<SegmentKind, string> = {
@@ -22,10 +25,18 @@ const ANSI_KIND: Record<SegmentKind, string> = {
   result: "\x1b[36m", // Cyan -> Sky 500
 };
 
-export function Terminal({ onInput, onClear }: TerminalProps) {
+export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<XTerm | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
+  const searchAddonRef = useRef<SearchAddon | null>(null);
+  const callbacksRef = useRef({ onInput, onClear, onInterrupt });
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    callbacksRef.current = { onInput, onClear, onInterrupt };
+  }, [onInput, onClear, onInterrupt]);
   
   const snap = useSyncExternalStore(
     terminalStore.subscribe,
@@ -58,6 +69,14 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
         magenta: "#bc3fbc",
         cyan: "#11a8cd",
         white: "#e5e5e5",
+        brightBlack: "#a6a6a6",
+        brightRed: "#ff7b72",
+        brightGreen: "#56d4a0",
+        brightYellow: "#f2e96b",
+        brightBlue: "#79b8ff",
+        brightMagenta: "#d98bd9",
+        brightCyan: "#70d7eb",
+        brightWhite: "#ffffff",
       },
       cursorBlink: true,
       cursorStyle: "block",
@@ -66,7 +85,9 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
     });
 
     const fitAddon = new FitAddon();
+    const searchAddon = new SearchAddon();
     xterm.loadAddon(fitAddon);
+    xterm.loadAddon(searchAddon);
     xterm.loadAddon(new WebLinksAddon());
 
     xterm.open(containerRef.current);
@@ -74,12 +95,26 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
 
     xtermRef.current = xterm;
     fitAddonRef.current = fitAddon;
+    searchAddonRef.current = searchAddon;
 
-    // Handle Copy (Ctrl+C / Cmd+C)
-    xterm.attachCustomKeyEventHandler((e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "c" && xterm.hasSelection()) {
-        navigator.clipboard.writeText(xterm.getSelection());
-        return false; // Prevent default xterm behavior
+    // Copy selected text, interrupt otherwise, and expose terminal search.
+    xterm.attachCustomKeyEventHandler((event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "f") {
+        event.preventDefault();
+        setSearchOpen(true);
+        return false;
+      }
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
+        callbacksRef.current.onClear();
+        return false;
+      }
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "c") {
+        if (xterm.hasSelection()) {
+          void navigator.clipboard.writeText(xterm.getSelection());
+        } else {
+          callbacksRef.current.onInterrupt?.();
+        }
+        return false;
       }
       return true;
     });
@@ -92,31 +127,40 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
 
     // Handle input stream
     xterm.onData((data) => {
-      const isEnter = data === "\r";
-      const isBackspace = data === "\x7f";
-      const isCtrlC = data === "\x03";
-      const isCtrlD = data === "\x04";
-
       // Allow typing if waiting for input
       if (terminalStore.getSnapshot().awaitingInput) {
-        if (isEnter) {
-          xterm.write("\r\n");
-          const val = inputBufferRef.current;
-          inputBufferRef.current = "";
-          onInput(val, false);
-        } else if (isBackspace) {
-          if (inputBufferRef.current.length > 0) {
-            xterm.write("\b \b");
-            inputBufferRef.current = inputBufferRef.current.slice(0, -1);
-          }
-        } else if (isCtrlC || isCtrlD) {
-          inputBufferRef.current = "";
-          onInput("", true);
-        } else {
-          // Normal printable chars
-          if (data >= String.fromCharCode(0x20) && data <= String.fromCharCode(0x7E)) {
-            inputBufferRef.current += data;
-            xterm.write(data);
+        for (let i = 0; i < data.length; i++) {
+          const char = data[i];
+          const isEnter = char === "\r" || char === "\n";
+          const isBackspace = char === "\x7f" || char === "\b";
+          const isCtrlC = char === "\x03";
+          const isCtrlD = char === "\x04";
+
+          if (isEnter) {
+            // Ignore \n if it immediately follows \r
+            if (char === "\n" && i > 0 && data[i - 1] === "\r") continue;
+            
+            xterm.write("\r\n");
+            const val = inputBufferRef.current;
+            inputBufferRef.current = "";
+            callbacksRef.current.onInput(val, false);
+          } else if (isBackspace) {
+            if (inputBufferRef.current.length > 0) {
+              xterm.write("\b \b");
+              inputBufferRef.current = inputBufferRef.current.slice(0, -1);
+            }
+          } else if (isCtrlC) {
+            inputBufferRef.current = "";
+            callbacksRef.current.onInterrupt?.();
+          } else if (isCtrlD) {
+            inputBufferRef.current = "";
+            callbacksRef.current.onInput("", true);
+          } else {
+            // Normal printable chars
+            if (char >= String.fromCharCode(0x20) && char <= String.fromCharCode(0x7E)) {
+              inputBufferRef.current += char;
+              xterm.write(char);
+            }
           }
         }
       }
@@ -149,6 +193,13 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
       lastLineCount.current = 0;
       pendingWritten.current = false;
       return;
+    }
+
+    // A previously rendered partial line is about to become a full line. Clear
+    // its local rendering first so streamed chunks are never duplicated.
+    if (snap.lines.length > lastLineCount.current && pendingWritten.current) {
+      xterm.write("\x1b[2K\r");
+      pendingWritten.current = false;
     }
 
     // Write new full lines
@@ -201,11 +252,60 @@ export function Terminal({ onInput, onClear }: TerminalProps) {
   }, [snap.awaitingInput]);
 
   return (
-    <div className="h-full w-full bg-transparent pl-4 pr-2 py-3 overflow-hidden">
-      <div
-        ref={containerRef}
-        className="h-full w-full"
-      />
+    <div className="relative h-full w-full overflow-hidden bg-transparent pl-4 pr-2 py-3">
+      {searchOpen && (
+        <div className="absolute right-3 top-2 z-20 flex items-center gap-1 rounded border border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] p-1 shadow-xl">
+          <Search className="ml-1 h-3.5 w-3.5 text-[var(--vscode-text-muted)]" />
+          <input
+            autoFocus
+            value={searchQuery}
+            onChange={(event) => {
+              const value = event.target.value;
+              setSearchQuery(value);
+              if (value) searchAddonRef.current?.findNext(value);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && searchQuery) {
+                event.shiftKey
+                  ? searchAddonRef.current?.findPrevious(searchQuery)
+                  : searchAddonRef.current?.findNext(searchQuery);
+              } else if (event.key === "Escape") {
+                setSearchOpen(false);
+                xtermRef.current?.focus();
+              }
+            }}
+            placeholder="Find in terminal"
+            aria-label="Find in terminal"
+            className="w-44 bg-[var(--vscode-input)] px-2 py-1 text-xs text-[var(--vscode-text)] outline-none"
+          />
+          <button
+            onClick={() => searchQuery && searchAddonRef.current?.findPrevious(searchQuery)}
+            aria-label="Previous terminal match"
+            className="p-1 hover:bg-[var(--vscode-hover)]"
+          >
+            <ChevronUp className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={() => searchQuery && searchAddonRef.current?.findNext(searchQuery)}
+            aria-label="Next terminal match"
+            className="p-1 hover:bg-[var(--vscode-hover)]"
+          >
+            <ChevronDown className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={() => {
+              setSearchOpen(false);
+              setSearchQuery("");
+              xtermRef.current?.focus();
+            }}
+            aria-label="Close terminal search"
+            className="p-1 hover:bg-[var(--vscode-hover)]"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+      <div ref={containerRef} className="h-full w-full" />
     </div>
   );
 }

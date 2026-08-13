@@ -6,7 +6,12 @@
         {
           "input": "The quick brown fox jumps over the lazy dog. The dog is lazy, but the fox is quick!",
           "expected_output": "Should print characters, words, sentences, and top 10 words",
-          "contains": ["Characters", "Words", "Sentences", "Top 10"]
+          "contains": [
+            "Characters",
+            "Words",
+            "Sentences",
+            "Top 10"
+          ]
         }
       ]
     },
@@ -16,7 +21,14 @@
         {
           "input": "",
           "expected_output": "Should print matching sort outputs and search times",
-          "contains": ["Bubble", "Selection", "Insertion", "Merge", "Linear Search", "Binary Search"]
+          "contains": [
+            "Bubble",
+            "Selection",
+            "Insertion",
+            "Merge",
+            "Linear Search",
+            "Binary Search"
+          ]
         }
       ]
     },
@@ -25,8 +37,13 @@
       "tests": [
         {
           "input": "7",
-          "expected_output": "Should exit cleanly",
-          "contains": []
+          "expected_output": "The menu is displayed and option 7 exits without requesting another value.",
+          "contains": [
+            "1. Add",
+            "6. Stats",
+            "7. Exit",
+            "Choice: 7"
+          ]
         }
       ]
     },
@@ -35,8 +52,13 @@
       "tests": [
         {
           "input": "5",
-          "expected_output": "Should exit cleanly",
-          "contains": []
+          "expected_output": "The contact menu is displayed and option 5 exits cleanly.",
+          "contains": [
+            "1. Add",
+            "3. Search Tag",
+            "5. Exit",
+            "Choice: 5"
+          ]
         }
       ]
     },
@@ -46,7 +68,11 @@
         {
           "input": "",
           "expected_output": "Should print conversion test outputs",
-          "contains": ["List of dicts", "Deduplication", "inversion"]
+          "contains": [
+            "List of dicts",
+            "Deduplication",
+            "inversion"
+          ]
         }
       ]
     }

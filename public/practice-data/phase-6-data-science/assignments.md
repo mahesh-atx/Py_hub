@@ -4,7 +4,7 @@
 
 This is the companion to [Module 27: Data Visualization](module-27-data-visualization.md). That module shows you the syntax; this file finds out whether you can produce it from a blank file, which is a different skill and the one you are actually short of.
 
-Solutions are in a **separate file** — [chart-practice-solutions.md](chart-practice-solutions.md) — on purpose. Having them one scroll away is the difference between practice and reading.
+Solutions are in a **separate file** — [assignment solutions](assignment-solutions.md) — on purpose. Having them one scroll away is the difference between practice and reading.
 
 ---
 
@@ -1010,4 +1010,4 @@ Ratings 1–5 against delivery days 1–7 gives 35 possible positions. Two thous
 
 ---
 
-[← Phase 6 index](README.md) · [Module 27: Data Visualization](module-27-data-visualization.md) · [Solutions](chart-practice-solutions.md) · [60 Practice Questions](practice-questions.md)
+[← Phase 6 index](README.md) · [Module 27: Data Visualization](module-27-data-visualization.md) · [Solutions](assignment-solutions.md) · [60 Practice Questions](questions.md)

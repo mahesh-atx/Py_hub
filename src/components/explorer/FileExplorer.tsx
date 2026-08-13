@@ -219,11 +219,11 @@ export function FileExplorer(props: FileExplorerProps) {
       onClick={() => { setSelectedIds(new Set()); closeContextMenu(); }}
       onContextMenu={(e) => { e.preventDefault(); closeContextMenu(); }}
     >
-      <div className="flex items-center justify-between px-4 py-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--vscode-text)] flex-1">
+      <div className="group/root flex min-h-6 items-center justify-between px-2 hover:bg-[var(--vscode-hover)]">
+        <span className="flex-1 truncate text-[11px] font-semibold uppercase text-[var(--vscode-text)]">
           Pylab
         </span>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center opacity-60 transition-opacity group-hover/root:opacity-100 focus-within:opacity-100">
           <IconBtn title="New file" onClick={() => startCreate("file", getActiveFolder())}>
             <FilePlus2 className="h-4 w-4" />
           </IconBtn>

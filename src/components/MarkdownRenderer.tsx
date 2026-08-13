@@ -16,6 +16,7 @@ const MarkdownContext = React.createContext<{
   getCheckboxIndex: () => number;
   dirPath: string;
   setSelectedImage: (src: string) => void;
+  onNavigateLink?: (href: string) => void;
   isCompact?: boolean;
 }>({
   checkboxState: {},
@@ -23,6 +24,7 @@ const MarkdownContext = React.createContext<{
   getCheckboxIndex: () => 0,
   dirPath: '',
   setSelectedImage: () => {},
+  onNavigateLink: undefined,
   isCompact: false
 });
 
@@ -52,10 +54,10 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={isCompact ? false : { opacity: 0, y: 20 }}
+      whileInView={isCompact ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: isCompact ? 0 : 0.5 }}
       style={{ position: 'relative', margin: isCompact ? '0.5em 0' : '1.5em 0' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -67,10 +69,10 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
           whileTap={{ scale: 0.95 }}
           style={{
             position: 'absolute',
-            top: '12px',
-            right: '12px',
-            padding: '6px',
-            borderRadius: '6px',
+            top: isCompact ? '4px' : '12px',
+            right: isCompact ? '4px' : '12px',
+            padding: isCompact ? '4px' : '6px',
+            borderRadius: isCompact ? '2px' : '6px',
             backgroundColor: 'var(--interactive-bg)',
             border: '1px solid var(--border-color)',
             color: 'var(--text-color)',
@@ -103,11 +105,11 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
         language={language}
         style={dracula as any}
         customStyle={{ 
-          borderRadius: '8px', 
-          padding: '16px', 
-          margin: '1.5em 0', 
-          backgroundColor: '#252627',
-          fontSize: '0.9em'
+          borderRadius: isCompact ? '2px' : '8px',
+          padding: isCompact ? '8px 10px' : '16px',
+          margin: 0,
+          backgroundColor: isCompact ? 'var(--vscode-bg)' : '#252627',
+          fontSize: isCompact ? '11px' : '0.9em'
         }}
       >
         {code}
@@ -120,12 +122,13 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
 
 function ScrollReveal({ children, as: Component = 'div', ...props }: { children: React.ReactNode, as?: any, [key: string]: any }) {
   const MotionComponent = (motion as any)[Component] || motion.div;
+  const { isCompact } = React.useContext(MarkdownContext);
   return (
     <MotionComponent
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={isCompact ? false : { opacity: 0, y: 15 }}
+      whileInView={isCompact ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: isCompact ? 0 : 0.5 }}
       {...props}
     >
       {children}
@@ -153,6 +156,31 @@ function MarkdownInput({ type, checked, disabled, ...rest }: any) {
   return <input type={type} checked={checked} disabled={disabled} {...rest} />;
 }
 
+function MarkdownLink({ href, children, ...rest }: any) {
+  const context = React.useContext(MarkdownContext);
+  const value = typeof href === "string" ? href : "";
+  const internalMarkdown =
+    value.length > 0 &&
+    !value.startsWith("#") &&
+    !/^(?:[a-z]+:)?\/\//i.test(value) &&
+    value.split("#")[0].toLowerCase().endsWith(".md");
+
+  return (
+    <a
+      href={value}
+      {...rest}
+      onClick={(event) => {
+        if (internalMarkdown && context.onNavigateLink) {
+          event.preventDefault();
+          context.onNavigateLink(value);
+        }
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
 function MarkdownImage({ src, alt }: any) {
   const context = React.useContext(MarkdownContext);
   if (!src) return null;
@@ -168,11 +196,11 @@ function MarkdownImage({ src, alt }: any) {
 
   return (
     <motion.span
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={context.isCompact ? false : { opacity: 0, y: 20 }}
+      whileInView={context.isCompact ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -50px 0px" }}
-      transition={{ duration: 0.5 }}
-      style={{ display: 'inline-block', width: '100%', margin: '1em 0' }}
+      transition={{ duration: context.isCompact ? 0 : 0.5 }}
+      style={{ display: 'inline-block', width: '100%', margin: context.isCompact ? '0.5em 0' : '1em 0' }}
     >
       <Image
         src={actualSrc}
@@ -180,7 +208,7 @@ function MarkdownImage({ src, alt }: any) {
         width={800}
         height={500}
         unoptimized
-        style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', cursor: 'zoom-in', border: '1px solid var(--border-color)', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
+        style={{ maxWidth: '100%', height: 'auto', borderRadius: context.isCompact ? '2px' : '8px', cursor: 'zoom-in', border: '1px solid var(--vscode-border)', boxShadow: context.isCompact ? 'none' : '0 4px 12px rgba(0,0,0,0.05)' }}
         onClick={() => context.setSelectedImage(actualSrc)}
       />
     </motion.span>
@@ -189,6 +217,7 @@ function MarkdownImage({ src, alt }: any) {
 
 const markdownComponents: any = {
   input: MarkdownInput,
+  a: MarkdownLink,
   code: (props: any) => {
     const { children, className, node, ref, ...rest } = props;
     const match = /language-(\w+)/.exec(className || '');
@@ -217,14 +246,25 @@ const markdownComponents: any = {
     </motion.div>
   ),
   h1: ({ children }: any) => <ScrollReveal as="h1" style={{ scrollMarginTop: '60px' }}>{children}</ScrollReveal>,
-  p: ({ children }: any) => <ScrollReveal as="p" style={{ lineHeight: 1.7, margin: '1.2em 0' }}>{children}</ScrollReveal>,
-  ul: ({ children }: any) => <ScrollReveal as="ul" style={{ margin: '1em 0', paddingLeft: '2em' }}>{children}</ScrollReveal>,
-  ol: ({ children }: any) => <ScrollReveal as="ol" style={{ margin: '1em 0', paddingLeft: '2em' }}>{children}</ScrollReveal>,
-  li: ({ children, className }: any) => {
-    if (className === 'task-list-item') return <li className={className}>{children}</li>;
-    return <ScrollReveal as="li" style={{ margin: '0.5em 0' }}>{children}</ScrollReveal>;
+  p: function MarkdownParagraph({ children }: any) {
+    const { isCompact } = React.useContext(MarkdownContext);
+    return <ScrollReveal as="p" style={{ lineHeight: isCompact ? 1.5 : 1.7, margin: isCompact ? '0.65em 0' : '1.2em 0' }}>{children}</ScrollReveal>;
   },
-  blockquote: ({ children }: any) => {
+  ul: function MarkdownUnorderedList({ children }: any) {
+    const { isCompact } = React.useContext(MarkdownContext);
+    return <ScrollReveal as="ul" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em' }}>{children}</ScrollReveal>;
+  },
+  ol: function MarkdownOrderedList({ children }: any) {
+    const { isCompact } = React.useContext(MarkdownContext);
+    return <ScrollReveal as="ol" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em' }}>{children}</ScrollReveal>;
+  },
+  li: function MarkdownListItem({ children, className }: any) {
+    const { isCompact } = React.useContext(MarkdownContext);
+    if (className === 'task-list-item') return <li className={className}>{children}</li>;
+    return <ScrollReveal as="li" style={{ margin: isCompact ? '0.2em 0' : '0.5em 0' }}>{children}</ScrollReveal>;
+  },
+  blockquote: function MarkdownBlockquote({ children }: any) {
+    const { isCompact } = React.useContext(MarkdownContext);
     const text = extractText(children);
     const lowerText = text.toLowerCase().trim();
     
@@ -273,17 +313,18 @@ const markdownComponents: any = {
 
     return (
       <ScrollReveal as="blockquote" style={{ 
-        backgroundColor: style.bg,
-        border: style.border,
-        color: style.color,
-        padding: '16px 20px', 
-        borderRadius: '12px',
+        backgroundColor: isCompact ? 'transparent' : style.bg,
+        border: isCompact ? 'none' : style.border,
+        borderLeft: isCompact ? `2px solid ${style.color}` : undefined,
+        color: isCompact ? 'var(--vscode-text)' : style.color,
+        padding: isCompact ? '6px 8px' : '16px 20px',
+        borderRadius: isCompact ? 0 : '12px',
         display: 'flex',
         alignItems: 'flex-start',
-        gap: '14px',
-        margin: '1.5em 0',
+        gap: isCompact ? '8px' : '14px',
+        margin: isCompact ? '0.75em 0' : '1.5em 0',
       }}>
-        <div style={{ marginTop: '2px' }}><Icon size={20} color={style.color} /></div>
+        <div style={{ marginTop: '2px' }}><Icon size={isCompact ? 14 : 20} color={style.color} /></div>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }} className="blockquote-content">
           {cleanChildren(children)}
         </div>
@@ -302,7 +343,7 @@ const markdownComponents: any = {
   }
 };
 
-const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId, dirPath = '', isCompact = false }: { content: string, fileId: string, dirPath?: string, isCompact?: boolean }) {
+const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId, dirPath = '', isCompact = false, onNavigateLink }: { content: string, fileId: string, dirPath?: string, isCompact?: boolean, onNavigateLink?: (href: string) => void }) {
   const [checkboxState, setCheckboxState] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -332,8 +373,9 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
     getCheckboxIndex: () => checkboxIndexRef.current++,
     dirPath,
     setSelectedImage,
+    onNavigateLink,
     isCompact
-  }), [checkboxState, toggleCheckbox, dirPath, isCompact]);
+  }), [checkboxState, toggleCheckbox, dirPath, onNavigateLink, isCompact]);
 
   return (
     <MarkdownContext.Provider value={contextValue}>

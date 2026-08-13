@@ -827,13 +827,13 @@ Roughly 8% of men have some colour vision deficiency. Use `palette='colorblind'`
 Reading a chart gallery teaches you that `ax.twinx()` exists. It does not teach
 you _when you need it_, and that is the part that never transfers from reading.
 
-[**30 Chart Practice Questions**](chart-practice.md) shows you a rendered chart
+[**30 Chart Practice Questions**](assignments.md) shows you a rendered chart
 and asks you to write the code that produces it. Tiers 1–4 cover everything on
 this page. Tier 5 adds composition and annotation, and **Tier 6 rebuilds four
 report charts from the starter project's cleaned data**, so the numbers you are
 checking against are the same 3,000 rows you cleaned in Module 26.
 
-Solutions live in a [separate file](chart-practice-solutions.md) on purpose.
+Solutions live in a [separate file](assignment-solutions.md) on purpose.
 
 > 💡 **Tip:** Start at Q1 even if it looks trivial. The Tier 1 charts take
 > ninety seconds each if you genuinely know them, and if they take longer than

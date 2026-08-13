@@ -1,13 +1,33 @@
+import type { PlotMetadata, SourceAnalysis } from "@/lib/practice/types";
 import type {
   WorkerMessage,
   WorkerResponse,
   FsFilePayload,
+  FsSyncChanges,
   RuntimeStatus,
 } from "@/types/python";
 
 export interface RuntimeInfo {
   pythonVersion: string;
   pyodideVersion: string;
+}
+
+export interface TestRunResult {
+  stdout: string;
+  stderr: string;
+  traceback?: string;
+  status: number;
+  plots?: string[];
+  sourceAnalysis?: SourceAnalysis;
+  plotMetadata?: PlotMetadata[];
+}
+
+interface QueuedTestRun {
+  code: string;
+  stdin: string;
+  timeoutMs: number;
+  isolated: boolean;
+  resolve: (result: TestRunResult) => void;
 }
 
 export interface PyodideHandlers {
@@ -21,15 +41,20 @@ export interface PyodideHandlers {
   onFinished?: (info: {
     durationMs: number;
     hadError: boolean;
-    newFiles?: FsFilePayload[];
+    fsChanges?: FsSyncChanges;
   }) => void;
   onError?: (info: { error: string; traceback?: string }) => void;
-  onStopped?: (info: { reason: string; durationMs: number }) => void;
+  onStopped?: (info: {
+    reason: string;
+    durationMs: number;
+    fsChanges?: FsSyncChanges;
+  }) => void;
   onPlot?: (data: string) => void;
   onInstallProgress?: (message: string) => void;
   onInstalled?: (info: {
     packages: string[];
     failed: string[];
+    failures: { name: string; reason: string }[];
     message: string;
   }) => void;
   onFatal?: (error: string) => void;
@@ -67,17 +92,15 @@ export class PyodideClient {
     code: string;
     filename: string;
     files?: FsFilePayload[];
+    directories?: string[];
     timeoutMs?: number;
   } | null = null;
 
-  private testResolver:
-    | ((r: {
-        stdout: string;
-        stderr: string;
-        traceback?: string;
-        status: number;
-        plots?: string[];
-      }) => void)
+  private testQueue: QueuedTestRun[] = [];
+  private installQueue: string[][] = [];
+  private installing = false;
+  private activeTest:
+    | (QueuedTestRun & { timer: ReturnType<typeof setTimeout> })
     | null = null;
 
   constructor(handlers: PyodideHandlers) {
@@ -123,11 +146,13 @@ export class PyodideClient {
     code: string,
     filename: string,
     files?: FsFilePayload[],
+    directories?: string[],
     timeoutMs?: number,
   ): void {
-    if (this.running) return;
-    if (!this.ready) {
-      this.pendingRun = { code, filename, files, timeoutMs };
+    if (!this.ready || this.running || this.activeTest || this.installing) {
+      // The UI only needs the most recent pending interactive run; tests and
+      // package installations keep their complete FIFO queues.
+      this.pendingRun = { code, filename, files, directories, timeoutMs };
       return;
     }
     this.lastInterruptAction = null;
@@ -138,7 +163,13 @@ export class PyodideClient {
     this.running = true;
     this.setStatus("running");
     this.startTimeoutTick();
-    const msg: WorkerMessage = { type: "RUN", code, filename, files };
+    const msg: WorkerMessage = {
+      type: "RUN",
+      code,
+      filename,
+      files,
+      directories,
+    };
     this.worker?.postMessage(msg);
   }
 
@@ -187,23 +218,19 @@ export class PyodideClient {
     this.running = false;
     this.ready = false;
     this.pendingRun = null;
+    this.installQueue = [];
+    this.installing = false;
     this.clearTimers();
+    this.cancelTests("Python runtime was restarted.");
     this.worker?.terminate();
     this.start();
   }
 
   install(packages: string[]): void {
-    if (!this.ready) {
-      this.handlers.onInstalled?.({
-        packages: [],
-        failed: packages,
-        message: "Python runtime is not ready yet.",
-      });
-      return;
-    }
-    this.setStatus("installing");
-    const msg: WorkerMessage = { type: "INSTALL", packages };
-    this.worker?.postMessage(msg);
+    const unique = [...new Set(packages.map((pkg) => pkg.trim()).filter(Boolean))];
+    if (!unique.length) return;
+    this.installQueue.push(unique);
+    this.pumpOperations();
   }
 
   /** Run code non-interactively with predefined stdin, capturing output. */
@@ -211,34 +238,110 @@ export class PyodideClient {
     code: string,
     stdin = "",
     timeoutMs = 5000,
-  ): Promise<{
-    stdout: string;
-    stderr: string;
-    traceback?: string;
-    status: number;
-    plots?: string[];
-  }> {
+    isolated = true,
+  ): Promise<TestRunResult> {
     return new Promise((resolve) => {
-      this.interruptView[0] = 0;
-      const timer = setTimeout(() => {
-        this.interruptView[0] = 2; // interrupt runaway loops in tests too
-      }, timeoutMs);
-      this.testResolver = (r) => {
-        clearTimeout(timer);
-        resolve(r);
-      };
-      const msg: WorkerMessage = { type: "TEST_RUN", code, stdin };
-      this.worker?.postMessage(msg);
+      this.testQueue.push({ code, stdin, timeoutMs, isolated, resolve });
+      this.pumpOperations();
     });
   }
 
   dispose(): void {
     this.clearTimers();
+    this.installQueue = [];
+    this.installing = false;
+    this.cancelTests("Python runtime was disposed.");
     this.worker?.terminate();
     this.worker = null;
   }
 
   // ---- internals --------------------------------------------------------
+  private pumpOperations(): void {
+    if (
+      !this.ready ||
+      !this.worker ||
+      this.running ||
+      this.activeTest ||
+      this.installing
+    ) {
+      return;
+    }
+
+    if (this.pendingRun) {
+      const pending = this.pendingRun;
+      this.pendingRun = null;
+      this.run(
+        pending.code,
+        pending.filename,
+        pending.files,
+        pending.directories,
+        pending.timeoutMs,
+      );
+      return;
+    }
+
+    const packages = this.installQueue.shift();
+    if (packages) {
+      this.installing = true;
+      this.setStatus("installing");
+      this.worker.postMessage({ type: "INSTALL", packages } satisfies WorkerMessage);
+      return;
+    }
+
+    this.pumpTestQueue();
+  }
+
+  private pumpTestQueue(): void {
+    if (
+      this.activeTest ||
+      this.running ||
+      !this.ready ||
+      !this.worker ||
+      this.testQueue.length === 0
+    ) {
+      return;
+    }
+
+    const next = this.testQueue.shift()!;
+    this.interruptView[0] = 0;
+    const timer = setTimeout(() => {
+      this.interruptView[0] = 2;
+    }, next.timeoutMs);
+    this.activeTest = { ...next, timer };
+    const message: WorkerMessage = {
+      type: "TEST_RUN",
+      code: next.code,
+      stdin: next.stdin,
+      isolated: next.isolated,
+    };
+    this.worker.postMessage(message);
+  }
+
+  private finishActiveTest(result: TestRunResult): void {
+    const active = this.activeTest;
+    if (!active) return;
+    clearTimeout(active.timer);
+    this.activeTest = null;
+    active.resolve(result);
+
+    this.pumpOperations();
+  }
+
+  private cancelTests(reason: string): void {
+    const result: TestRunResult = {
+      stdout: "",
+      stderr: reason,
+      traceback: reason,
+      status: 1,
+    };
+    if (this.activeTest) {
+      clearTimeout(this.activeTest.timer);
+      this.activeTest.resolve(result);
+      this.activeTest = null;
+    }
+    for (const queued of this.testQueue.splice(0)) queued.resolve(result);
+  }
+
   private startTimeoutTick(): void {
     if (this.tickTimer) clearInterval(this.tickTimer);
     this.tickTimer = setInterval(() => this.checkTimeout(), 250);
@@ -273,6 +376,7 @@ export class PyodideClient {
     this.running = false;
     this.clearTimers();
     if (this.status !== "error") this.setStatus("ready");
+    this.pumpOperations();
   }
 
   private handleResponse(msg: WorkerResponse): void {
@@ -287,11 +391,7 @@ export class PyodideClient {
           pythonVersion: msg.pythonVersion,
           pyodideVersion: msg.pyodideVersion,
         });
-        if (this.pendingRun) {
-          const p = this.pendingRun;
-          this.pendingRun = null;
-          this.run(p.code, p.filename, p.files, p.timeoutMs);
-        }
+        this.pumpOperations();
         break;
       case "STDOUT":
         this.handlers.onStdout?.(msg.data);
@@ -317,7 +417,7 @@ export class PyodideClient {
         this.handlers.onFinished?.({
           durationMs: msg.durationMs,
           hadError: msg.hadError,
-          newFiles: msg.newFiles,
+          fsChanges: msg.fsChanges,
         });
         this.endRun();
         break;
@@ -331,6 +431,7 @@ export class PyodideClient {
         this.handlers.onStopped?.({
           reason,
           durationMs: msg.durationMs,
+          fsChanges: msg.fsChanges,
         });
         this.endRun();
         break;
@@ -339,28 +440,38 @@ export class PyodideClient {
         this.handlers.onInstallProgress?.(msg.message);
         break;
       case "INSTALLED":
+        this.installing = false;
         this.setStatus("ready");
         this.handlers.onInstalled?.({
           packages: msg.packages,
           failed: msg.failed,
+          failures:
+            msg.failures ??
+            msg.failed.map((name) => ({
+              name,
+              reason: "The package could not be downloaded or loaded.",
+            })),
           message: msg.message,
         });
+        this.pumpOperations();
         break;
       case "TEST_RESULT":
-        if (this.testResolver) {
-          this.testResolver({
-            stdout: msg.stdout,
-            stderr: msg.stderr,
-            traceback: msg.traceback,
-            status: msg.status,
-            plots: msg.plots,
-          });
-          this.testResolver = null;
-        }
+        this.finishActiveTest({
+          stdout: msg.stdout,
+          stderr: msg.stderr,
+          traceback: msg.traceback,
+          status: msg.status,
+          plots: msg.plots,
+          sourceAnalysis: msg.sourceAnalysis,
+          plotMetadata: msg.plotMetadata,
+        });
         break;
       case "FATAL":
         this.ready = false;
         this.running = false;
+        this.installing = false;
+        this.installQueue = [];
+        this.cancelTests(msg.error);
         this.setStatus("error");
         this.handlers.onFatal?.(msg.error);
         break;

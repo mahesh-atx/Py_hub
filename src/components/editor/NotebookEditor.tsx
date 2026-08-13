@@ -191,6 +191,8 @@ export function NotebookEditor({ content, theme, onChange, onRunCell }: Notebook
                       {cellOutputs[index].plots && cellOutputs[index].plots!.length > 0 && (
                         <div className="flex flex-col gap-2 mt-2">
                           {cellOutputs[index].plots!.map((src, i) => (
+                            // Runtime plots are ephemeral data URLs and cannot use Next image optimization.
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img key={i} src={`data:image/png;base64,${src}`} className="bg-white rounded border border-[var(--vscode-border)] max-w-full h-auto self-start" alt={`Plot ${i+1}`} />
                           ))}
                         </div>

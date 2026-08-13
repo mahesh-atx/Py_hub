@@ -47,6 +47,26 @@ export function isPythonFile(name: string): boolean {
   return getExtension(name) === "py";
 }
 
+/** Resolve a relative link next to a virtual file without allowing root escape. */
+export function resolveRelativePath(sourceFile: string, target: string): string | null {
+  const targetPath = target.split("#")[0].split("?")[0].replace(/\\/g, "/");
+  if (!targetPath) return sourceFile;
+  const parts = targetPath.startsWith("/")
+    ? []
+    : sourceFile.split("/").filter(Boolean).slice(0, -1);
+
+  for (const part of targetPath.split("/")) {
+    if (!part || part === ".") continue;
+    if (part === "..") {
+      if (!parts.length) return null;
+      parts.pop();
+    } else {
+      parts.push(part);
+    }
+  }
+  return parts.join("/") || null;
+}
+
 /** Validate a file/folder name. Returns an error string or null when valid. */
 export function validateName(name: string, siblings: PyNode[]): string | null {
   const trimmed = name.trim();

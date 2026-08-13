@@ -270,4 +270,4 @@ Run `python analyse.py` with no arguments. You must get usage text and exit code
 
 ---
 
-[← Phase 3 index](README.md) · [Practice Questions](practice-questions.md)
+[← Phase 3 index](README.md) · [Practice Questions](questions.md)

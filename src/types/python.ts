@@ -1,5 +1,6 @@
 // Strongly typed message protocol between the React UI and the Pyodide worker.
 // The worker is the ONLY place Python code executes. No backend is involved.
+import type { PlotMetadata, SourceAnalysis } from "@/lib/practice/types";
 
 export type RuntimeStatus =
   | "loading"
@@ -15,6 +16,15 @@ export interface FsFilePayload {
   content: string;
 }
 
+export interface FsSyncChanges {
+  /** New files and changed existing text files. */
+  upserted: FsFilePayload[];
+  /** New empty or non-empty directories created by Python. */
+  directories: string[];
+  /** File or directory paths removed by Python, deepest paths first. */
+  deleted: string[];
+}
+
 /** Messages sent FROM the UI TO the worker. */
 export type WorkerMessage =
   | {
@@ -27,13 +37,14 @@ export type WorkerMessage =
       code: string;
       filename: string;
       files?: FsFilePayload[];
+      directories?: string[];
       timeoutMs?: number;
     }
   | { type: "STDIN"; value: string; eof?: boolean }
   | { type: "STOP" }
   | { type: "RESTART" }
   | { type: "INSTALL"; packages: string[] }
-  | { type: "TEST_RUN"; code: string; stdin?: string };
+  | { type: "TEST_RUN"; code: string; stdin?: string; isolated?: boolean };
 
 /** Messages sent FROM the worker TO the UI. */
 export type WorkerResponse =
@@ -47,16 +58,22 @@ export type WorkerResponse =
       type: "FINISHED";
       durationMs: number;
       hadError: boolean;
-      newFiles?: FsFilePayload[];
+      fsChanges?: FsSyncChanges;
     }
   | { type: "ERROR"; error: string; traceback?: string }
-  | { type: "STOPPED"; reason: string; durationMs: number }
+  | {
+      type: "STOPPED";
+      reason: string;
+      durationMs: number;
+      fsChanges?: FsSyncChanges;
+    }
   | { type: "PLOT"; data: string }
   | { type: "INSTALL_PROGRESS"; message: string }
   | {
       type: "INSTALLED";
       packages: string[];
       failed: string[];
+      failures?: { name: string; reason: string }[];
       message: string;
     }
   | {
@@ -66,5 +83,7 @@ export type WorkerResponse =
       traceback?: string;
       status: number;
       plots?: string[];
+      sourceAnalysis?: SourceAnalysis;
+      plotMetadata?: PlotMetadata[];
     }
   | { type: "FATAL"; error: string };

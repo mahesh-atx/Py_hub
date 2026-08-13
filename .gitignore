@@ -6,4 +6,9 @@ node_modules/
 dist/
 out/
 build/
+coverage/
+.vitest/
+playwright-report/
+test-results/
+public/vendor/pyodide/
 node_modules

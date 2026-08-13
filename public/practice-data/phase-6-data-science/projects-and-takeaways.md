@@ -2,7 +2,7 @@
 
 After finishing all 6 modules, build these projects.
 
-> 📖 **Every project below has a full step-by-step guide** — goal, prerequisites, numbered build steps, how it works, and a concrete finish line — in **[Project Build Guides](project-guides.md)**. Projects 1–3 there use the **[starter project](starter-project/README.md)**: 3,060 rows of deliberately messy data, because the modules teach Pandas on tidy data and real data is never tidy.
+> 📖 **Every project below has a full step-by-step guide** — goal, prerequisites, numbered build steps, how it works, and a concrete finish line — in **[Project Build Guides](projects.md)**. Projects 1–3 there use the **[starter project](starter-project/README.md)**: 3,060 rows of deliberately messy data, because the modules teach Pandas on tidy data and real data is never tidy.
 
 - [ ] **NumPy Image Manipulation** — load an image as an array, flip, crop, and adjust brightness with slicing
 - [ ] **Matrix Calculator** — solve systems of equations, find inverses and eigenvalues with `np.linalg`
@@ -76,4 +76,4 @@ After finishing all 6 modules, build these projects.
 
 ---
 
-[← Module 29: Data Science Projects](module-29-python-data-science-projects.md) · [Project Build Guides →](project-guides.md) · [Phase 6 index](README.md)
+[← Module 29: Data Science Projects](module-29-python-data-science-projects.md) · [Project Build Guides →](projects.md) · [Phase 6 index](README.md)

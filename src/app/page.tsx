@@ -45,9 +45,14 @@ function readActiveWorkspace(): string {
 
 function WorkspaceWrapper() {
   const [workspaces, setWorkspaces] = useState<Workspace[]>(readWorkspaces);
-  const [currentId, setCurrentId] = useState<string>(readActiveWorkspace);
+  const [currentId, setCurrentId] = useState<string>(() => {
+    const id = readActiveWorkspace();
+    // Select storage before the child IDE mounts and starts reading IndexedDB.
+    setWorkspaceId(id);
+    return id;
+  });
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [renderedId, setRenderedId] = useState<string>(readActiveWorkspace);
+  const [renderedId, setRenderedId] = useState<string>(currentId);
 
   useEffect(() => {
     setWorkspaceId(currentId);

@@ -26,7 +26,7 @@ const MAX_LINES = 4000;
  * (e.g. 100k iterations) never causes per-character re-renders. Subscribers use
  * `useSyncExternalStore`, so editor/output components update independently.
  */
-class TerminalStore {
+export class TerminalStore {
   private lines: TLine[] = [];
   private cur: Segment[] = [];
   private nextId = 1;
@@ -53,8 +53,10 @@ class TerminalStore {
 
   private commit(): void {
     this.snap = {
-      lines: this.lines,
-      pending: this.cur,
+      // New array identities are required by both useSyncExternalStore and the
+      // xterm synchronization effects; the mutable internal buffers stay private.
+      lines: [...this.lines],
+      pending: this.cur.map((segment) => ({ ...segment })),
       awaitingInput: this.awaitingInput,
       truncated: this.truncated,
     };
@@ -124,7 +126,10 @@ class TerminalStore {
   }
 
   system(message: string): void {
-    this.cur = [];
+    if (this.cur.length > 0) {
+      this.lines.push({ id: this.nextId++, segments: this.cur });
+      this.cur = [];
+    }
     this.lines.push({
       id: this.nextId++,
       segments: [{ kind: "system", text: message }],
@@ -164,6 +169,15 @@ class TerminalStore {
   flush(): void {
     this.commit();
   }
+}
+
+export function terminalSnapshotText(snapshot: TerminalSnapshot): string {
+  const lines = snapshot.lines.map((line) =>
+    line.segments.map((segment) => segment.text).join(""),
+  );
+  const pending = snapshot.pending.map((segment) => segment.text).join("");
+  if (pending) lines.push(pending);
+  return lines.join("\n");
 }
 
 export const terminalStore = new TerminalStore();
