@@ -972,14 +972,7 @@ export function PracticeSidebar({
                   />
                 )}
 
-                {allPassed && (!requiresManualConfirmation || isProjectSolved) && activeIndex < challenges.length - 1 && (
-                  <button
-                    onClick={() => selectChallenge(challenges[activeIndex + 1])}
-                    className="mt-2 flex h-8 w-full items-center justify-center gap-1.5 bg-[var(--vscode-accent)] px-3 text-[11px] font-medium text-white outline-none hover:brightness-110 focus-visible:ring-1 focus-visible:ring-white"
-                  >
-                    Next Question <ArrowRight className="h-3 w-3" />
-                  </button>
-                )}
+
 
               </div>
             ) : (
