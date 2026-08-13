@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   AlertTriangle,
   Check,
@@ -8,9 +8,8 @@ import {
   Package,
   Plus,
   RotateCcw,
-  Search,
 } from "lucide-react";
-import { searchPackages, KNOWN_PACKAGES } from "@/lib/packages";
+import { KNOWN_PACKAGES } from "@/lib/packages";
 
 const PackageLogo = ({ name }: { name: string }) => {
   const [error, setError] = useState(false);
@@ -38,18 +37,10 @@ interface PackageManagerProps {
 
 export function PackageManager({
   installed,
-  bundled = [],
   installing,
   failures = {},
   onInstall,
 }: PackageManagerProps) {
-  const [query, setQuery] = useState("");
-  const results = useMemo(() => searchPackages(query), [query]);
-  const curriculumPackages = useMemo(
-    () => KNOWN_PACKAGES.filter((pkg) => pkg.curriculum).map((pkg) => pkg.name),
-    [],
-  );
-
   const isInstalled = (name: string) =>
     installed.some((entry) => entry.toLowerCase() === name.toLowerCase());
 
@@ -57,9 +48,8 @@ export function PackageManager({
     <div className="flex h-full flex-col text-[var(--vscode-text)] pt-2">
 
       <div className="flex-1 overflow-auto px-2 pb-3">
-        {results.map((pkg) => {
+        {KNOWN_PACKAGES.map((pkg) => {
           const done = isInstalled(pkg.name);
-          const local = bundled.includes(pkg.name);
           const failure = failures[pkg.name];
           const active = Boolean(installing?.toLowerCase().includes(pkg.name));
           return (
@@ -109,12 +99,6 @@ export function PackageManager({
             </div>
           );
         })}
-        {results.length === 0 && (
-          <div className="px-2 py-6 text-center text-xs text-[var(--vscode-text-muted)]">
-            <Package className="mx-auto mb-2 h-6 w-6 opacity-60" aria-hidden="true" />
-            No compatible package matches “{query}”.
-          </div>
-        )}
       </div>
 
       <div aria-live="polite" className="border-t border-[var(--vscode-border)] px-3 py-2">
