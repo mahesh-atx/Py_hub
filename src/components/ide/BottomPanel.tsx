@@ -20,6 +20,7 @@ export interface PracticeResult {
   passed: boolean;
   actual: string;
   expected: string;
+  crashError?: string;
 }
 
 const toolbarButton =
@@ -180,6 +181,12 @@ export function BottomPanel({
                       </span>
                     </div>
                     {!result.passed && <DiffView expected={result.expected} actual={result.actual || "(no output)"} />}
+                    {result.crashError && (
+                      <div className="mt-2 rounded bg-rose-950/30 border border-rose-900/50 p-2 overflow-x-auto text-[11px] font-mono text-rose-400">
+                        <div className="font-semibold mb-1 text-rose-500 uppercase tracking-wider text-[10px]">Runtime Error</div>
+                        <div className="whitespace-pre-wrap">{result.crashError}</div>
+                      </div>
+                    )}
                   </div>
                 ))
               ) : (

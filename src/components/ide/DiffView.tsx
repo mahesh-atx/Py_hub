@@ -60,23 +60,28 @@ function DiffRow({ line, index }: { line: DiffLine; index: number }) {
 }
 
 export default function DiffView({ expected, actual }: { expected: string; actual: string }) {
-  const lines = useMemo(() => {
+  const { lines, expectedCount, actualCount } = useMemo(() => {
     const cap = 800;
-    const e = expected.split("\n").slice(0, cap);
-    const a = actual.split("\n").slice(0, cap);
-    if (e.length === 0 && a.length === 0) return [] as DiffLine[];
-    if (e.every(l => l === "") && a.every(l => l === "")) return [] as DiffLine[];
-    return lineDiff(e, a);
+    const e = expected ? expected.split("\n").slice(0, cap) : [];
+    const a = actual ? actual.split("\n").slice(0, cap) : [];
+    
+    let computedLines = [] as DiffLine[];
+    if (!(e.length === 0 && a.length === 0) && !(e.every(l => l === "") && a.every(l => l === ""))) {
+      computedLines = lineDiff(e, a);
+    }
+    
+    return {
+      lines: computedLines,
+      expectedCount: e.length,
+      actualCount: a.length
+    };
   }, [expected, actual]);
-
-  const added = lines.filter(l => l.kind === "add").length;
-  const removed = lines.filter(l => l.kind === "del").length;
 
   return (
     <div className="rounded bg-black/30 border border-[var(--vscode-border)] overflow-hidden">
       <div className="flex items-center gap-3 px-2 py-1.5 bg-black/20 border-b border-[var(--vscode-border)] text-[10px] font-semibold uppercase tracking-wider text-[var(--vscode-text-muted)]">
-        <span className="text-rose-400">− Expected: {removed} line{removed === 1 ? "" : "s"}</span>
-        <span className="text-emerald-400">+ Your output: {added} line{added === 1 ? "" : "s"}</span>
+        <span className="text-rose-400">− Expected: {expectedCount} line{expectedCount === 1 ? "" : "s"}</span>
+        <span className="text-emerald-400">+ Your output: {actualCount} line{actualCount === 1 ? "" : "s"}</span>
       </div>
       <div className="max-h-64 overflow-y-auto py-1 font-mono text-[11px] leading-5">
         {lines.length === 0 ? (

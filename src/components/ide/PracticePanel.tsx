@@ -427,7 +427,7 @@ export function PracticeSidebar({
       return;
     }
 
-    const out: { passed: boolean; actual: string; expected: string }[] = [];
+    const out: { passed: boolean; actual: string; expected: string; crashError?: string }[] = [];
     const requiredFiles = deliverablesRef.current[activeCategory.id]?.[activeChallenge.id] ?? [];
     const needsManualReview = requiresManualReview(
       questionKind,
@@ -470,7 +470,8 @@ export function PracticeSidebar({
           passed,
           actual: passed
             ? res.stdout || "Execution successful (no output)."
-            : res.stderr || res.traceback || "Runtime Error",
+            : res.stdout || "Execution failed.",
+          crashError: passed ? undefined : res.traceback || res.stderr,
           expected: "A substantive solution that executes without errors, followed by manual rubric confirmation.",
         });
         setManualExecutionPassed(passed);
@@ -492,7 +493,8 @@ export function PracticeSidebar({
       const passed = res.status === 0;
       out.push({
         passed,
-        actual: passed ? (res.stdout ? `Output:\n${res.stdout}` : "Execution successful (no output).") : res.stderr || res.traceback || "Runtime Error",
+        actual: passed ? (res.stdout ? `Output:\n${res.stdout}` : "Execution successful (no output).") : res.stdout || "Execution failed.",
+        crashError: passed ? undefined : res.traceback || res.stderr,
         expected: "Code should execute without errors. Please visually verify your output.",
       });
     } else {
@@ -515,8 +517,9 @@ export function PracticeSidebar({
               ? res.plots?.length
                 ? `${res.stdout}Generated ${res.plots.length} plot(s).`
                 : res.stdout
-              : res.stderr || res.traceback || "";
-        out.push({ passed, actual, expected });
+              : res.stdout;
+        const crashError = res.status === 0 ? undefined : res.traceback || res.stderr;
+        out.push({ passed, actual, expected, crashError });
       }
     }
     setResults(out);

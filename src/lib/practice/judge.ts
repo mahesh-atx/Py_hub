@@ -42,19 +42,45 @@ export function compareOutputs(
     (expectedNormalized.startsWith("{") && expectedNormalized.endsWith("}")) ||
     (expectedNormalized.startsWith("[") && expectedNormalized.endsWith("]"));
 
-  if (!looksLikeCollection) return false;
+  if (looksLikeCollection) {
+    const collectionParts = (value: string) =>
+      value
+        .replace(/[{}[\]]/g, "")
+        .split(",")
+        .map((part) => part.trim())
+        .sort();
 
-  const collectionParts = (value: string) =>
-    value
-      .replace(/[{}[\]]/g, "")
-      .split(",")
-      .map((part) => part.trim())
-      .sort();
+    if (
+      JSON.stringify(collectionParts(actualNormalized)) ===
+      JSON.stringify(collectionParts(expectedNormalized))
+    ) {
+      return true;
+    }
+  }
 
-  return (
-    JSON.stringify(collectionParts(actualNormalized)) ===
-    JSON.stringify(collectionParts(expectedNormalized))
-  );
+  if (actualNormalized.includes(": ") || actualNormalized.includes("> ")) {
+    const stripPrompt = (line: string) => {
+      const colonIdx = line.lastIndexOf(": ");
+      const bracketIdx = line.lastIndexOf("> ");
+      const maxIdx = Math.max(colonIdx, bracketIdx);
+      return maxIdx === -1 ? line : line.substring(maxIdx + 2).trim();
+    };
+
+    const stripOutput = (out: string) =>
+      out.split("\n")
+         .map(stripPrompt)
+         .filter(line => line.length > 0)
+         .join("\n");
+
+    const actualStripped = stripOutput(actualNormalized);
+    const expectedStripped = stripOutput(expectedNormalized);
+
+    if (actualStripped.length > 0 && actualStripped === expectedStripped) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function isSourceTest(test: PracticeTestCase): test is SourceTestCase {

@@ -854,6 +854,10 @@ async function handleTestRun(
     traceback = String(err);
   }
 
+  if (status === 1 && traceback && traceback.includes("EOFError: EOF when reading a line")) {
+    traceback = "Runtime Error: Your program asked for more input than the test case provided. Did you leave an extra input() call at the end of your script?";
+  }
+
   const plotBundle = collectPlotBundle();
 
   const stdout = capOut;
@@ -867,7 +871,7 @@ async function handleTestRun(
   post({
     type: "TEST_RESULT",
     stdout,
-    stderr: stderr + (status === 1 && traceback ? traceback : ""),
+    stderr,
     traceback: status === 1 ? traceback : undefined,
     status,
     plots: plotBundle.plots,
