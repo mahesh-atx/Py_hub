@@ -152,6 +152,7 @@ export function NotebookEditor({ content, theme, onChange, onRunCell }: Notebook
                             overviewRulerBorder: false,
                             scrollbar: { vertical: "hidden", horizontal: "hidden" },
                             padding: { top: 8, bottom: 8 },
+                            fontFamily: "var(--font-mono)",
                           }}
                         />
                       </div>

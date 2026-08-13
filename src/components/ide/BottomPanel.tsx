@@ -24,6 +24,27 @@ export interface PracticeResult {
   crashError?: string;
 }
 
+export interface BottomPanelProps {
+  visible: boolean;
+  isDesktop: boolean;
+  height: number;
+  tab: BottomPanelTab;
+  editorFont?: string;
+  practiceActive: boolean;
+  waitingInput: boolean;
+  plots: string[];
+  results: PracticeResult[] | null;
+  onTab: (tab: BottomPanelTab) => void;
+  onResizeStart: (e: React.MouseEvent) => void;
+  onRestart: () => void;
+  onCopy: () => void;
+  onDownload: () => void;
+  onClear: () => void;
+  onClose: () => void;
+  onInput: (data: string) => void;
+  onInterrupt: () => void;
+}
+
 const toolbarButton =
   "flex min-h-9 min-w-9 items-center justify-center rounded text-[var(--vscode-text)] outline-none hover:bg-[var(--vscode-hover)] focus-visible:ring-2 focus-visible:ring-[var(--vscode-accent)]";
 
@@ -57,6 +78,7 @@ export function BottomPanel({
   isDesktop,
   height,
   tab,
+  editorFont,
   practiceActive,
   waitingInput,
   plots,
@@ -70,25 +92,7 @@ export function BottomPanel({
   onClose,
   onInput,
   onInterrupt,
-}: {
-  visible: boolean;
-  isDesktop: boolean;
-  height: number;
-  tab: BottomPanelTab;
-  practiceActive: boolean;
-  waitingInput: boolean;
-  plots: string[];
-  results: PracticeResult[] | null;
-  onTab: (tab: BottomPanelTab) => void;
-  onResizeStart: () => void;
-  onRestart: () => void;
-  onCopy: () => void;
-  onDownload: () => void;
-  onClear: () => void;
-  onClose: () => void;
-  onInput: (value: string, eof?: boolean) => void;
-  onInterrupt: () => void;
-}) {
+}: BottomPanelProps) {
   return (
     <AnimatePresence>
       {visible && (
@@ -150,7 +154,7 @@ export function BottomPanel({
 
         <div className="min-h-0 flex-1">
           {tab === "terminal" ? (
-            <Terminal onInput={onInput} onClear={onClear} onInterrupt={onInterrupt} />
+            <Terminal onInput={onInput} onClear={onClear} onInterrupt={onInterrupt} editorFont={editorFont} />
           ) : tab === "plots" ? (
             <div className="flex h-full items-center gap-4 overflow-x-auto bg-[#050505] p-4">
               {plots.length ? (

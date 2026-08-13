@@ -528,7 +528,7 @@ export function IDE({
   const splitVisible = isSplit && isDesktop;
 
   return (
-    <div data-theme={settings.theme} className="flex h-full flex-col overflow-hidden bg-[var(--vscode-bg)] text-[var(--vscode-text)] font-sans">
+    <div data-theme={settings.theme} data-ui-font={settings.uiFont || "system"} data-editor-font={settings.editorFont || "system"} className="flex h-full flex-col overflow-hidden bg-[var(--vscode-bg)] text-[var(--vscode-text)] font-sans">
       {!isDesktop && (
         <MobileNavigation
           view={mobileView}
@@ -586,6 +586,7 @@ export function IDE({
             <div className="flex-1 min-h-0">
               {activeActivity === "explorer" && (
                 <FileExplorer
+                  iconStyle={settings.iconStyle}
                   tree={project.tree}
                   nodes={project.nodes}
                   activeId={project.activeId}
@@ -684,6 +685,7 @@ export function IDE({
               <div className={`min-w-0 relative flex flex-col ${splitVisible ? "border-r border-[var(--vscode-border)]" : ""}`} style={{ flex: splitVisible ? "none" : 1, width: splitVisible ? `${splitRatio}%` : "100%" }}>
                 <div className="flex items-center bg-[var(--vscode-sidebar-bg)] shrink-0 pr-3">
                   <EditorTabs
+                    iconStyle={settings.iconStyle}
                     tabs={allVisibleTabs}
                     activeId={effectiveActiveId}
                     dirty={project.dirty}
@@ -833,6 +835,7 @@ export function IDE({
                 <div className="flex-1 min-w-0 relative flex flex-col bg-[var(--vscode-bg)]">
                   <div className="flex items-center bg-[var(--vscode-sidebar-bg)] shrink-0 pr-3">
                     <EditorTabs
+                      iconStyle={settings.iconStyle}
                       tabs={visibleSplitTabs}
                       activeId={effectiveSplitActiveId}
                       dirty={project.dirty}
@@ -996,6 +999,7 @@ export function IDE({
                           tabSize={settings.tabSize}
                           minimap={settings.minimap}
                           wordWrap={settings.wordWrap}
+                          editorFont={settings.editorFont || "system"}
                           paneId="right"
                           readOnly={pathOf(project.nodes, sf.id).startsWith('.course/')}
                         />
@@ -1012,6 +1016,7 @@ export function IDE({
             isDesktop={isDesktop}
             height={termHeight}
             tab={panelTab}
+            editorFont={settings.editorFont || "system"}
             practiceActive={activeActivity === "practice"}
             waitingInput={runtime.waitingInput}
             plots={runtime.plots}

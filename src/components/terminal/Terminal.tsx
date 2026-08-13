@@ -14,6 +14,7 @@ interface TerminalProps {
   onInput: (value: string, eof?: boolean) => void;
   onClear: () => void;
   onInterrupt?: () => void;
+  editorFont?: string;
 }
 
 const ANSI_KIND: Record<SegmentKind, string> = {
@@ -25,7 +26,7 @@ const ANSI_KIND: Record<SegmentKind, string> = {
   result: "\x1b[36m", // Cyan -> Sky 500
 };
 
-export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
+export function Terminal({ onInput, onClear, onInterrupt, editorFont }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<XTerm | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -50,7 +51,7 @@ export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
 
     // Initialize xterm
     const xterm = new XTerm({
-      fontFamily: "Consolas, 'Courier New', monospace",
+      fontFamily: "var(--font-mono)",
       fontSize: 14,
       fontWeight: 400,
       lineHeight: 1.2,
@@ -96,7 +97,6 @@ export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
     xtermRef.current = xterm;
     fitAddonRef.current = fitAddon;
     searchAddonRef.current = searchAddon;
-
     // Copy selected text, interrupt otherwise, and expose terminal search.
     xterm.attachCustomKeyEventHandler((event) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "f") {
@@ -177,6 +177,23 @@ export function Terminal({ onInput, onClear, onInterrupt }: TerminalProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Mount only once
+
+  useEffect(() => {
+    if (xtermRef.current) {
+      let newFontFamily = "Consolas, 'Courier New', monospace";
+      if (editorFont === "fira-code") {
+        newFontFamily = "var(--font-fira-code), 'Fira Code', Consolas, monospace";
+      } else if (editorFont === "jetbrains-mono") {
+        newFontFamily = "var(--font-jetbrains-mono), 'JetBrains Mono', Consolas, monospace";
+      } else if (editorFont === "source-code-pro") {
+        newFontFamily = "var(--font-source-code-pro), 'Source Code Pro', Consolas, monospace";
+      }
+      xtermRef.current.options.fontFamily = newFontFamily;
+      if (fitAddonRef.current) {
+        fitAddonRef.current.fit();
+      }
+    }
+  }, [editorFont]);
 
   // Sync new lines from terminalStore
   // We use a ref to track what we've already written

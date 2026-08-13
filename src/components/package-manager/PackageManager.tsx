@@ -11,6 +11,7 @@ import {
   Search,
 } from "lucide-react";
 import { searchPackages, KNOWN_PACKAGES } from "@/lib/packages";
+import { LineChart, BarChart3 } from "lucide-react";
 
 const LOGO_OVERRIDES: Record<string, string> = {
   "scikit-learn": "scikitlearn",
@@ -20,19 +21,36 @@ const LOGO_OVERRIDES: Record<string, string> = {
 const PackageLogo = ({ name }: { name: string }) => {
   const [error, setError] = useState(false);
   const slug = LOGO_OVERRIDES[name] ?? name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  
+  if (name === "matplotlib") {
+    return (
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
+        <LineChart className="h-5 w-5 text-white opacity-90" />
+      </div>
+    );
+  }
+  
+  if (name === "seaborn") {
+    return (
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
+        <BarChart3 className="h-5 w-5 text-white opacity-90" />
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
-        <Package className="h-4 w-4 text-[var(--vscode-text-muted)]" />
+        <Package className="h-5 w-5 text-white opacity-90" />
       </div>
     );
   }
   return (
     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-[var(--vscode-hover)]">
       <img
-        src={`https://cdn.simpleicons.org/${slug}`}
+        src={`https://cdn.simpleicons.org/${slug}/ffffff`}
         alt={`${name} logo`}
-        className="h-5 w-5"
+        className="h-5 w-5 opacity-90"
         onError={() => setError(true)}
       />
     </div>

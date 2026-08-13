@@ -25,6 +25,7 @@ interface CodeEditorProps {
   wordWrap: boolean;
   paneId?: string;
   readOnly?: boolean;
+  editorFont?: string;
 }
 
 export function CodeEditor(props: CodeEditorProps) {
@@ -37,9 +38,9 @@ export function CodeEditor(props: CodeEditorProps) {
 
   useEffect(() => {
     if (editorRef.current) {
-      const opts = editorRef.current.getRawOptions();
-      if (opts.fontSize !== props.fontSize)
-        editorRef.current.updateOptions({ fontSize: props.fontSize });
+      editorRef.current.updateOptions({ 
+        fontSize: props.fontSize,
+      });
     }
   }, [props.fontSize]);
 
@@ -120,8 +121,7 @@ export function CodeEditor(props: CodeEditorProps) {
         suggestOnTriggerCharacters: true,
         quickSuggestions: { other: true, comments: false, strings: true },
         padding: { top: 12, bottom: 12 },
-        fontFamily:
-          "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace",
+        fontFamily: "var(--font-mono)",
         fontLigatures: true,
         stickyScroll: { enabled: true },
         scrollbar: {

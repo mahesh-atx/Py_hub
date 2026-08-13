@@ -46,8 +46,53 @@ const SETTINGS_DEF: SettingDef[] = [
       { value: "idle-fingers", label: "Idle Fingers (Premium)" },
       { value: "vibrant-ink", label: "Vibrant Ink (Premium)" },
       { value: "brilliance-black", label: "Brilliance Black (Premium)" },
+      { value: "ayu-dark", label: "Ayu Dark (Premium)" },
+      { value: "one-dark-pro", label: "One Dark Pro (Premium)" },
+      { value: "tokyo-night", label: "Tokyo Night (Premium)" },
       { value: "twilight", label: "Twilight" },
       { value: "kuroir", label: "Kuroir" },
+    ]
+  },
+  {
+    id: "iconStyle",
+    group: "Application",
+    label: "File Icon Theme",
+    description: "Specifies the icon style used for files and folders in the explorer.",
+    categories: ["Commonly Used", "Appearance"],
+    type: "select",
+    options: [
+      { value: "lucide", label: "Lucide (Default)" },
+      { value: "vscode", label: "VS Code Icons" },
+      { value: "minimal", label: "Minimalist / Monochrome" },
+    ]
+  },
+  {
+    id: "uiFont",
+    group: "Application",
+    label: "UI Font",
+    description: "Specifies the font family used for the user interface.",
+    categories: ["Commonly Used", "Application"],
+    type: "select",
+    options: [
+      { value: "system", label: "System Default" },
+      { value: "plus-jakarta", label: "Plus Jakarta Sans (Premium)" },
+      { value: "outfit", label: "Outfit (Premium)" },
+      { value: "inter", label: "Inter (Premium)" },
+      { value: "space-grotesk", label: "Space Grotesk (Premium)" },
+    ]
+  },
+  {
+    id: "editorFont",
+    group: "Editor",
+    label: "Font Family",
+    description: "Specifies the font family used in the code editor and terminal.",
+    categories: ["Commonly Used", "Text Editor"],
+    type: "select",
+    options: [
+      { value: "system", label: "System Default" },
+      { value: "fira-code", label: "Fira Code (Premium, with ligatures)" },
+      { value: "jetbrains-mono", label: "JetBrains Mono (Premium)" },
+      { value: "source-code-pro", label: "Source Code Pro (Premium)" },
     ]
   },
   {

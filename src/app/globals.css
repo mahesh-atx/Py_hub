@@ -1,6 +1,40 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+}
+
+[data-ui-font="system"] {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+[data-ui-font="plus-jakarta"] {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+[data-ui-font="outfit"] {
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+}
+[data-ui-font="inter"] {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+[data-ui-font="space-grotesk"] {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-editor-font="system"] {
+  --font-mono: "Consolas", "Courier New", ui-monospace, monospace;
+}
+[data-editor-font="fira-code"] {
+  --font-mono: var(--font-fira-code), ui-monospace, monospace;
+}
+[data-editor-font="jetbrains-mono"] {
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+[data-editor-font="source-code-pro"] {
+  --font-mono: var(--font-source-code-pro), ui-monospace, monospace;
+}
+
 :root {
   color-scheme: dark;
   --vscode-bg: #1e1e1e;
@@ -213,6 +247,39 @@
   --vscode-text-muted: #999999;
 }
 
+[data-theme='ayu-dark'] {
+  --vscode-bg: #0a0e14;
+  --vscode-sidebar-bg: #0d131a;
+  --vscode-border: #151a21;
+  --vscode-hover: #1e2632;
+  --vscode-input: #0a0e14;
+  --vscode-accent: #e6b450;
+  --vscode-text: #b3b1ad;
+  --vscode-text-muted: #4d5566;
+}
+
+[data-theme='one-dark-pro'] {
+  --vscode-bg: #282c34;
+  --vscode-sidebar-bg: #21252b;
+  --vscode-border: #181a1f;
+  --vscode-hover: #323842;
+  --vscode-input: #1b1d23;
+  --vscode-accent: #61afef;
+  --vscode-text: #abb2bf;
+  --vscode-text-muted: #5c6370;
+}
+
+[data-theme='tokyo-night'] {
+  --vscode-bg: #1a1b26;
+  --vscode-sidebar-bg: #16161e;
+  --vscode-border: #111116;
+  --vscode-hover: #212330;
+  --vscode-input: #1f2335;
+  --vscode-accent: #7aa2f7;
+  --vscode-text: #a9b1d6;
+  --vscode-text-muted: #565f89;
+}
+
 
 html,
 body {
@@ -221,8 +288,6 @@ body {
 
 body {
   background: var(--vscode-bg);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
 }
 
 @keyframes pulse {
