@@ -464,8 +464,15 @@ export function useProject() {
         descendantIds(nodes, id).forEach((d) => allIds.add(d));
       });
       setNodes((prev) => prev.filter((n) => !allIds.has(n.id)));
-      setOpenTabs((prev) => prev.filter((t) => !allIds.has(t)));
-      setActiveId((cur) => (cur && allIds.has(cur) ? null : cur));
+      
+      const nextOpen = openTabs.filter((t) => !allIds.has(t));
+      setOpenTabs(nextOpen);
+
+      if (activeId && allIds.has(activeId)) {
+        const idx = openTabs.indexOf(activeId);
+        setActiveId(nextOpen[idx] ?? nextOpen[idx - 1] ?? nextOpen.at(-1) ?? null);
+      }
+      
       setDirty((prev) => {
         const n = new Set(prev);
         allIds.forEach((i) => n.delete(i));
@@ -473,7 +480,7 @@ export function useProject() {
       });
       allIds.forEach((i) => deleteFilePersisted(i));
     },
-    [nodes],
+    [nodes, openTabs, activeId],
   );
 
   const duplicateNodes = useCallback(

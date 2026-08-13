@@ -25,13 +25,14 @@ import {
 } from "lucide-react";
 import type { PyNode, TreeNode } from "@/types/filesystem";
 import { getExtension, pathOf } from "@/lib/filesystem/tree";
+import { toast } from "@/components/ide/ToastContainer";
 
 interface FileExplorerProps {
   tree: TreeNode[];
   nodes: PyNode[];
   activeId: string | null;
   onOpen: (id: string) => void;
-  onCreate: (kind: "file" | "folder", name: string, parentId: string | null) => void;
+  onCreate: (kind: "file" | "folder", name: string, parentId: string | null) => { error?: string } | void;
   onRename: (id: string, name: string) => { error?: string } | void;
   onDelete: (ids: string[]) => void;
   onDuplicate: (ids: string[]) => void;
@@ -127,7 +128,8 @@ export function FileExplorer(props: FileExplorerProps) {
       if (data && props.onMove) {
         try {
           const draggedIds = JSON.parse(data) as string[];
-          props.onMove(draggedIds, null);
+          const res = props.onMove(draggedIds, null);
+          if (res && res.error) toast.error(res.error);
         } catch (err) {}
       }
     }
@@ -143,9 +145,11 @@ export function FileExplorer(props: FileExplorerProps) {
     const trimmed = name.trim();
     if (trimmed) {
       if (edit.mode === "create") {
-        props.onCreate(edit.kind ?? "file", trimmed, edit.parentId);
+        const res = props.onCreate(edit.kind ?? "file", trimmed, edit.parentId);
+        if (res && res.error) toast.error(res.error);
       } else if (edit.id) {
-        props.onRename(edit.id, trimmed);
+        const res = props.onRename(edit.id, trimmed);
+        if (res && res.error) toast.error(res.error);
       }
     }
     setEdit(null);
@@ -462,7 +466,8 @@ function TreeItem(props: TreeItemProps) {
             if (data && props.onMove) {
               try {
                 const draggedIds = JSON.parse(data) as string[];
-                props.onMove(draggedIds, node.id);
+                const res = props.onMove(draggedIds, node.id);
+                if (res && res.error) toast.error(res.error);
               } catch (err) {}
             }
           }}
@@ -555,7 +560,8 @@ function TreeItem(props: TreeItemProps) {
         if (data && props.onMove) {
           try {
             const draggedIds = JSON.parse(data) as string[];
-            props.onMove(draggedIds, node.parentId);
+            const res = props.onMove(draggedIds, node.parentId);
+            if (res && res.error) toast.error(res.error);
           } catch (err) {}
         }
       }}
