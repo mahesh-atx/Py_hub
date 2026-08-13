@@ -231,6 +231,30 @@ describe("curriculum manifest consistency", () => {
     }
   });
 
+  it("ships every dataset preloaded by the browser runtime", () => {
+    const dataRoot = path.join(
+      DATA_ROOT,
+      "phase-6-data-science",
+      "starter-project",
+      "data",
+    );
+    for (const file of [
+      "sales_raw.csv",
+      "customers_raw.csv",
+      "sales_clean.csv",
+      "customers_clean.csv",
+      "merged_clean.csv",
+      "titanic.csv",
+      "iris.csv",
+      "weather_sample.csv",
+      "stock_sample.csv",
+    ]) {
+      const filePath = path.join(dataRoot, file);
+      expect(fs.existsSync(filePath), file).toBe(true);
+      expect(fs.statSync(filePath).size, file).toBeGreaterThan(0);
+    }
+  });
+
   it("keeps every Markdown code fence balanced", () => {
     const markdownFiles = fs
       .readdirSync(DATA_ROOT, { recursive: true })
