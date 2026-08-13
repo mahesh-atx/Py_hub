@@ -58,11 +58,12 @@ export function compareOutputs(
     }
   }
 
-  if (actualNormalized.includes(": ") || actualNormalized.includes("> ")) {
+  if (actualNormalized.includes(": ") || actualNormalized.includes("> ") || actualNormalized.includes("? ")) {
     const stripPrompt = (line: string) => {
       const colonIdx = line.lastIndexOf(": ");
       const bracketIdx = line.lastIndexOf("> ");
-      const maxIdx = Math.max(colonIdx, bracketIdx);
+      const questionIdx = line.lastIndexOf("? ");
+      const maxIdx = Math.max(colonIdx, bracketIdx, questionIdx);
       return maxIdx === -1 ? line : line.substring(maxIdx + 2).trim();
     };
 

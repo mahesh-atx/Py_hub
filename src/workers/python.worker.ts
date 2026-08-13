@@ -122,8 +122,11 @@ def __ide_run(code, filename):
     try:
         exec(compile(code, filename, "exec"), __user_ns)
         return (0, "")
-    except SystemExit:
-        return (0, "")
+    except SystemExit as e:
+        code = e.code if e.code is not None else 0
+        if code == 0:
+            return (0, "")
+        return (1, f"SystemExit: {code}")
     except KeyboardInterrupt:
         return (2, "")
     except BaseException:
