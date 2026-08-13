@@ -10,13 +10,12 @@ Questions for **Modules 1–4**: variables, data types, operators, conditionals 
 
 **How to use this file:**
 
-1. Read the question and write down your approach *before* typing.
+1. Read the question and write down your approach _before_ typing.
 2. Type the code yourself. Do not copy-paste.
 3. Run it, then **deliberately break it** — feed it a negative number, a zero, an empty input.
 4. If you are stuck for more than 20 minutes, re-read the relevant module section, then try again.
 
 > 💡 **Tip:** Every question shows expected output. Match it **exactly**, including spacing and punctuation. Getting output format right is a real skill — a report that says `Total:1234` instead of `Total: 1,234` gets sent back.
->
 
 ---
 
@@ -33,6 +32,7 @@ Learning Python
 ```
 
 **How to solve:**
+
 1. Call the `print()` function with the string `Hello, World!`.
 2. Call the `print()` function with a string containing your name.
 3. Call the `print()` function with the string `Learning Python`.
@@ -53,6 +53,7 @@ After: a = 25, b = 10
 ```
 
 **How to solve:**
+
 1. Initialize variables `a` and `b` with their starting values.
 2. Print the initial values in the required format.
 3. Swap the values using multiple assignment (`a, b = b, a`).
@@ -77,6 +78,7 @@ None <class 'NoneType'>
 ```
 
 **How to solve:**
+
 1. Define five variables, assigning each a value of the specified data type.
 2. For each variable, use a `print()` statement.
 3. Inside `print()`, pass the variable's value and `type(variable)` separated by a comma.
@@ -99,6 +101,7 @@ Perimeter: 34
 ```
 
 **How to solve:**
+
 1. Prompt the user for the length and width, wrapping the `input()` calls in `int()` to cast them to integers.
 2. Calculate the area by multiplying the length and width.
 3. Calculate the perimeter by multiplying the sum of length and width by 2.
@@ -122,6 +125,7 @@ Enter seconds: 7385
 ```
 
 **How to solve:**
+
 1. Prompt the user for the number of seconds and cast the input to an integer.
 2. Divide the total seconds by 3600 using integer division (`//`) to get the hours.
 3. Use modulo (`%`) 3600 to get the remaining seconds.
@@ -147,6 +151,7 @@ Enter Celsius: 37
 ```
 
 **How to solve:**
+
 1. Prompt for a Celsius temperature and cast it to a float.
 2. Compute the Fahrenheit equivalent using the formula `C * 9 / 5 + 32`.
 3. Print the formatted string using f-strings with `:.1f` to round values to 1 decimal place.
@@ -170,6 +175,7 @@ Total amount: 61250.00
 ```
 
 **How to solve:**
+
 1. Ask the user for principal, rate, and time, converting them to float.
 2. Calculate simple interest using the formula `(P * R * T) / 100`.
 3. Compute the total amount by adding the simple interest to the principal.
@@ -191,6 +197,7 @@ Total: ₹1,455,300
 ```
 
 **How to solve:**
+
 1. Prompt for an amount and cast the input to an integer.
 2. Use an f-string to print the amount with a leading rupee symbol and a `,` format specifier.
 
@@ -211,6 +218,7 @@ Area: 153.94
 ```
 
 **How to solve:**
+
 1. Prompt the user for the radius and cast it to float.
 2. Compute the circumference using `2 * 3.14159 * radius`.
 3. Compute the area using `3.14159 * (radius ** 2)`.
@@ -236,6 +244,7 @@ Second number: 5
 ```
 
 **How to solve:**
+
 1. Ask the user for two integers and cast them.
 2. Evaluate and print the results of division (`/`), integer division (`//`), modulo (`%`), and exponentiation (`**`).
 3. Ensure each result includes an explicit label matching the requested format.
@@ -258,6 +267,7 @@ Minutes: 13140000
 ```
 
 **How to solve:**
+
 1. Prompt for the age and cast to integer.
 2. Compute the days lived by multiplying the age by 365.
 3. Compute the hours lived by multiplying the days by 24.
@@ -282,6 +292,7 @@ Rounding difference: 0.01
 ```
 
 **How to solve:**
+
 1. Ask the user for the total bill amount (as float) and number of people (as integer).
 2. Calculate each person's exact share by dividing the total bill by the number of people.
 3. Round the share to 2 decimal places using `round()`.
@@ -306,6 +317,7 @@ Is 47 even? False
 ```
 
 **How to solve:**
+
 1. Ask the user for a number.
 2. Evaluate `number % 2 == 0` within an f-string to determine if it is even.
 3. Print the formatted result.
@@ -326,6 +338,7 @@ Last digit: 3
 ```
 
 **How to solve:**
+
 1. Prompt for a number and cast it to an integer.
 2. Use modulo 10 to extract the last digit.
 3. Print the extracted digit.
@@ -347,6 +360,7 @@ Sum: 13
 ```
 
 **How to solve:**
+
 1. Prompt for a 3-digit number.
 2. Extract each digit using combinations of integer division `//` and modulo `%`.
 3. Calculate the sum of the digits and print both the digits and the sum.
@@ -367,6 +381,7 @@ Reversed: 274
 ```
 
 **How to solve:**
+
 1. Read a 3-digit number from the user.
 2. Extract the hundreds, tens, and units digits.
 3. Reconstruct the reversed number by multiplying the extracted units by 100, tens by 10, and hundreds by 1, then summing them.
@@ -389,6 +404,7 @@ Is a the largest? True
 ```
 
 **How to solve:**
+
 1. Ask the user for three numbers.
 2. Use the `and` operator to evaluate if the first number is greater than the other two.
 3. Print the boolean result directly within an f-string.
@@ -412,6 +428,7 @@ False False False     False     True
 ```
 
 **How to solve:**
+
 1. Print the header row with appropriate spacing.
 2. Manually determine the boolean outcome of each logical combination.
 3. Print each row using formatting to ensure the columns align.
@@ -437,6 +454,7 @@ a >> 1 = 6
 ```
 
 **How to solve:**
+
 1. Read two integers from the user.
 2. Evaluate and print the results for bitwise AND (`&`), OR (`|`), and XOR (`^`).
 3. Evaluate and print the results for left shift (`<<`) and right shift (`>>`) on the first integer.
@@ -457,6 +475,7 @@ Is power of two? True
 ```
 
 **How to solve:**
+
 1. Read an integer from the user.
 2. Evaluate the bitwise expression `n & (n - 1) == 0`.
 3. Print the boolean outcome inside an f-string.
@@ -477,6 +496,7 @@ Is vowel? True
 ```
 
 **How to solve:**
+
 1. Ask the user for a character.
 2. Convert the character to lowercase (or check against both cases).
 3. Use the `in` operator to check if it's within the string of vowels.
@@ -499,6 +519,7 @@ Create two variables holding the value `1000` as separate literals, and two hold
 ```
 
 **How to solve:**
+
 1. Assign the value `1000` to two distinct variables and `100` to two other distinct variables.
 2. Print the evaluation of `==` and `is` for both pairs.
 3. Observe the output and add a comment explaining the results.
@@ -525,6 +546,7 @@ print(True or False and False)
 ```
 
 **How to solve:**
+
 1. Review each expression and apply order of operations precedence.
 2. Document your prediction in a comment above each print statement.
 3. Run the code and compare the outputs.
@@ -550,6 +572,7 @@ Interest earned: 46932.81
 ```
 
 **How to solve:**
+
 1. Read principal, rate, and time as floats.
 2. Calculate the final amount using the compound interest formula `P * (1 + r/100)**t`.
 3. Calculate the interest earned by subtracting the principal from the final amount.
@@ -573,6 +596,7 @@ Negative
 ```
 
 **How to solve:**
+
 1. Prompt for a number and cast to float or int.
 2. Use an `if/elif/else` structure to check if it's > 0, < 0, or zero.
 3. Print the corresponding classification.
@@ -595,6 +619,7 @@ Largest: 71
 ```
 
 **How to solve:**
+
 1. Ask for three numbers and cast them.
 2. Use an `if` statement to check if the first is largest, an `elif` for the second, and an `else` for the third.
 3. Print the largest value.
@@ -609,14 +634,14 @@ Largest: 71
 
 Ask for a mark out of 100 and print the grade:
 
-| Marks | Grade |
-| --- | --- |
-| 90–100 | A+ |
-| 80–89 | A |
-| 70–79 | B |
-| 60–69 | C |
-| 40–59 | D |
-| Below 40 | Fail |
+| Marks    | Grade |
+| -------- | ----- |
+| 90–100   | A+    |
+| 80–89    | A     |
+| 70–79    | B     |
+| 60–69    | C     |
+| 40–59    | D     |
+| Below 40 | Fail  |
 
 ```
 Enter marks: 84
@@ -626,6 +651,7 @@ Grade: A
 Also reject invalid input: marks below 0 or above 100 should print `Invalid marks`.
 
 **How to solve:**
+
 1. Ask for the marks and cast to float/int.
 2. First check if the marks are invalid (<0 or >100).
 3. Use a descending `elif` chain (>=90, >=80, etc.) to assign the grade.
@@ -651,6 +677,7 @@ Enter year: 1900
 Test with 2000, 1900, 2024 and 2023.
 
 **How to solve:**
+
 1. Read the year as an integer.
 2. Determine if it's a leap year using the rule: divisible by 4 AND (not divisible by 100 OR divisible by 400).
 3. Print the appropriate output.
@@ -673,6 +700,7 @@ Valid triangle: Isosceles
 ```
 
 **How to solve:**
+
 1. Read the three side lengths as numbers.
 2. Check if they form a valid triangle (`a+b>c and a+c>b and b+c>a`).
 3. If valid, check for equilateral (3 equal sides), isosceles (2 equal sides), or scalene (no equal sides) and print the classification.
@@ -687,12 +715,12 @@ Valid triangle: Isosceles
 
 Ask for units consumed and compute the bill using slab rates:
 
-| Units | Rate per unit |
-| --- | --- |
-| First 100 | ₹3 |
-| Next 100 (101–200) | ₹5 |
-| Next 100 (201–300) | ₹8 |
-| Above 300 | ₹12 |
+| Units              | Rate per unit |
+| ------------------ | ------------- |
+| First 100          | ₹3            |
+| Next 100 (101–200) | ₹5            |
+| Next 100 (201–300) | ₹8            |
+| Above 300          | ₹12           |
 
 Charges are **cumulative** — 250 units costs `100×3 + 100×5 + 50×8`.
 
@@ -702,6 +730,7 @@ Bill: ₹1200
 ```
 
 **How to solve:**
+
 1. Read the number of units consumed.
 2. Use a cumulative approach: if units > 300, compute the 300+ chunk, then subtract it. Repeat for each slab.
 3. Sum the charges and print the final bill.
@@ -716,12 +745,12 @@ Bill: ₹1200
 
 Ask for annual income and compute tax using these cumulative slabs:
 
-| Income range | Rate |
-| --- | --- |
-| Up to ₹2,50,000 | 0% |
-| ₹2,50,001 – ₹5,00,000 | 5% |
-| ₹5,00,001 – ₹10,00,000 | 20% |
-| Above ₹10,00,000 | 30% |
+| Income range           | Rate |
+| ---------------------- | ---- |
+| Up to ₹2,50,000        | 0%   |
+| ₹2,50,001 – ₹5,00,000  | 5%   |
+| ₹5,00,001 – ₹10,00,000 | 20%  |
+| Above ₹10,00,000       | 30%  |
 
 ```
 Enter annual income: 1200000
@@ -731,6 +760,7 @@ Tax payable: ₹172500.00
 Verify by hand: `0 + 12500 + 100000 + 60000 = 172500`.
 
 **How to solve:**
+
 1. Read the annual income.
 2. Calculate tax in cumulative slabs using `if/elif` logic, subtracting the base of each slab to find the taxable amount at that rate.
 3. Print the calculated tax to 2 decimal places.
@@ -751,6 +781,7 @@ Digit
 ```
 
 **How to solve:**
+
 1. Read a single character string.
 2. Use range comparisons (e.g., `'a' <= ch <= 'z'`) to classify it as uppercase, lowercase, or digit.
 3. Use `else` for special characters and print the classification.
@@ -773,6 +804,7 @@ Error: cannot divide by zero
 ```
 
 **How to solve:**
+
 1. Read two numbers and an operator character.
 2. Explicitly check for `/` or `%` combined with a zero divisor before evaluating.
 3. Execute the operation matching the string operator and print the result or an error if invalid.
@@ -787,12 +819,12 @@ Error: cannot divide by zero
 
 Ask for weight in kg and height in metres. Compute BMI (`weight / height²`), print it to 1 decimal, and classify:
 
-| BMI | Category |
-| --- | --- |
-| Below 18.5 | Underweight |
-| 18.5–24.9 | Normal |
-| 25.0–29.9 | Overweight |
-| 30.0 and above | Obese |
+| BMI            | Category    |
+| -------------- | ----------- |
+| Below 18.5     | Underweight |
+| 18.5–24.9      | Normal      |
+| 25.0–29.9      | Overweight  |
+| 30.0 and above | Obese       |
 
 ```
 Weight (kg): 68
@@ -802,6 +834,7 @@ Category: Normal
 ```
 
 **How to solve:**
+
 1. Prompt for weight and height as floats.
 2. Compute BMI as `weight / (height ** 2)`.
 3. Use an `if/elif` chain to classify the BMI into the correct category and print it.
@@ -830,6 +863,7 @@ Final price: ₹100.00
 ```
 
 **How to solve:**
+
 1. Start with the base price of ₹250.
 2. Check age and apply a 50% discount if applicable.
 3. Check student status and subtract ₹30 if applicable.
@@ -854,6 +888,7 @@ Rejected: income below 25000
 ```
 
 **How to solve:**
+
 1. Read the three inputs.
 2. Check each condition in order using `if` and `elif` for failures, printing the specific rejection reason.
 3. Use a final `else` for approval when all checks pass.
@@ -876,6 +911,7 @@ Enter n: 10
 ```
 
 **How to solve:**
+
 1. Ask the user for a number `n`.
 2. Use a `for` loop with `range(1, n + 1)`.
 3. Print each number inside the loop, setting `end=" "` to avoid newlines.
@@ -901,6 +937,7 @@ Average: 15.00
 ```
 
 **How to solve:**
+
 1. Read the number of elements `n`.
 2. Initialise a `total = 0` variable.
 3. Use a loop that runs `n` times to ask for a number and add it to `total`.
@@ -925,6 +962,7 @@ Enter a number: 7
 ```
 
 **How to solve:**
+
 1. Ask the user for a number.
 2. Use a `for` loop running from 1 to 10.
 3. In each iteration, multiply the number by the loop variable.
@@ -946,6 +984,7 @@ Enter a number: 6
 ```
 
 **How to solve:**
+
 1. Read the integer `n` and ensure it's non-negative.
 2. Initialize `result = 1`.
 3. Use a `for` loop to iterate from 1 to `n`.
@@ -967,6 +1006,7 @@ Enter n: 10
 ```
 
 **How to solve:**
+
 1. Read `n`.
 2. Initialize two variables, e.g., `a = 0` and `b = 1`.
 3. Loop `n` times, printing `a` on each pass.
@@ -988,6 +1028,7 @@ Enter a number: 97
 ```
 
 **How to solve:**
+
 1. Read a number `n`.
 2. If `n < 2`, it's not prime.
 3. Use a `while` loop starting from 2 up to the square root (`i * i <= n`).
@@ -1011,6 +1052,7 @@ Count: 11
 ```
 
 **How to solve:**
+
 1. Ask for a start and end range.
 2. Use an outer loop to iterate through every number in the range.
 3. Use an inner loop to check if the current number is prime.
@@ -1034,6 +1076,7 @@ Reversed: 12749
 ```
 
 **How to solve:**
+
 1. Prompt for a number and initialize count=0, sum=0, reversed=0.
 2. Use a `while number > 0` loop.
 3. In each pass, extract the last digit with `% 10`. Update count, sum, and reverse variables.
@@ -1057,6 +1100,7 @@ Enter a number: 9474
 **Test with:** 153, 370, 9474, 9475.
 
 **How to solve:**
+
 1. Ask for a number.
 2. Store the original number and find the number of digits.
 3. Use a `while` loop to extract each digit and add its value raised to the power of the digit count to a running sum.
@@ -1080,6 +1124,7 @@ LCM: 240
 ```
 
 **How to solve:**
+
 1. Prompt for two numbers, `a` and `b`.
 2. Save the original values.
 3. Use a `while b:` loop replacing `a, b` with `b, a % b` until `b` is 0 to find the GCD.
@@ -1105,6 +1150,7 @@ Correct! You took 3 attempts.
 ```
 
 **How to solve:**
+
 1. Hardcode a secret integer.
 2. Use a `while True` loop with a counter to take guesses.
 3. If the guess is correct, break the loop. If higher/lower, print the appropriate hint.
@@ -1131,6 +1177,7 @@ Choice:
 For options 1–3, ask for two numbers and show the result, then show the menu again. Option 4 exits. Handle invalid choices.
 
 **How to solve:**
+
 1. Use a `while True` loop to display the menu options on every pass.
 2. Ask for the user's choice. If 4, `break` the loop.
 3. For choices 1, 2, or 3, read two numbers and perform the requested math operation.
@@ -1153,6 +1200,7 @@ Steps: 8
 ```
 
 **How to solve:**
+
 1. Prompt for a number `n`.
 2. Initialize a counter for steps.
 3. Use a `while n != 1` loop, incrementing the counter each pass.
@@ -1174,6 +1222,7 @@ A perfect number equals the sum of its proper divisors (`6 = 1 + 2 + 3`). Find a
 ```
 
 **How to solve:**
+
 1. Loop `n` from 1 to 9999.
 2. For each `n`, initialize a sum of divisors to 0.
 3. Iterate from 1 up to `n // 2` to find divisors and add them to the sum.
@@ -1201,6 +1250,7 @@ n = 5
 ```
 
 **How to solve:**
+
 1. Ask the user for `n`.
 2. Use a `for` loop from 1 to `n` (inclusive).
 3. In each iteration, print `*` multiplied by the current loop variable `i`.
@@ -1223,6 +1273,7 @@ n = 5
 ```
 
 **How to solve:**
+
 1. Prompt for `n`.
 2. Use a loop that counts downwards from `n` to 1.
 3. In each pass, multiply the `*` string by the loop counter and print it.
@@ -1245,6 +1296,7 @@ n = 5
 ```
 
 **How to solve:**
+
 1. Prompt for `n`.
 2. Loop `i` from 1 to `n`.
 3. Print `n - i` spaces concatenated with `2 * i - 1` stars.
@@ -1267,6 +1319,7 @@ n = 5
 ```
 
 **How to solve:**
+
 1. Read `n`.
 2. Use an outer loop from 1 to `n`.
 3. Inside, use an inner loop from 1 to the current outer loop value.
@@ -1291,6 +1344,7 @@ n = 4
 ```
 
 **How to solve:**
+
 1. Read `n`.
 2. Initialize a counter to 1 before the loops.
 3. Use an outer loop for the rows and an inner loop for the columns of each row.
@@ -1316,6 +1370,7 @@ n = 5
 ```
 
 **How to solve:**
+
 1. Read `n`.
 2. Loop `row` from 0 to `n - 1`.
 3. Print leading spaces for formatting.
@@ -1351,6 +1406,7 @@ Withdrawn ₹2500. Balance: ₹7500
 ```
 
 **How to solve:**
+
 1. Handle PIN authentication with a loop and a 3-attempt limit.
 2. If successful, enter a `while True` main menu loop.
 3. Implement `Deposit` and `Withdraw` using conditional statements to validate amounts.
@@ -1388,6 +1444,7 @@ Highest: 92  Lowest: 71
 ```
 
 **How to solve:**
+
 1. Ask for the student's name.
 2. Loop 5 times to collect marks, using an inner loop to ensure each mark is between 0 and 100.
 3. Accumulate total marks, keep track of highest and lowest, and track if any subject is < 40.
@@ -1426,6 +1483,7 @@ Largest prime: 23
 ```
 
 **How to solve:**
+
 1. Read the total count of numbers to process.
 2. Initialize multiple tracking variables (positives, negatives, sum, max, min, largest prime).
 3. Loop `n` times to process each number dynamically.
@@ -1454,6 +1512,7 @@ Enter n: 5
 ```
 
 **How to solve:**
+
 1. Read `n`.
 2. Use a `for` loop to print the top column headers and separator line.
 3. Use an outer loop for rows, starting each by printing the row header.
@@ -1474,7 +1533,6 @@ There are no solutions in this file, and that is deliberate. Instead:
 3. **Re-solve from scratch after a week.** If you can write Q42 (prime check) from memory in under 5 minutes, you own it. If not, you recognised the answer rather than knowing it.
 
 > ⚠️ The single most common mistake in this set will be **forgetting that `input()` returns a string**. `input() + 5` raises `TypeError`, but `input() * 3` silently repeats the text three times — no error, wrong answer. Cast every numeric input immediately.
->
 
 ---
 

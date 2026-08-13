@@ -115,6 +115,7 @@ export function IDE({
     if (splitOpenTabs.length > 0) {
       const validTabs = splitOpenTabs.filter(id => project.nodes.some(n => n.id === id));
       if (validTabs.length !== splitOpenTabs.length) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSplitOpenTabs(validTabs);
         if (validTabs.length === 0) {
           setIsSplit(false);
