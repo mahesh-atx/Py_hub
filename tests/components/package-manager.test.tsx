@@ -11,7 +11,7 @@ describe("PackageManager", () => {
       expect(screen.getByAltText(`${pkg.name} logo`)).toBeInTheDocument();
     }
     expect(screen.queryByText("built-in")).not.toBeInTheDocument();
-    expect(screen.getByText("No optional packages installed yet.")).toBeVisible();
+    expect(screen.getByText("No packages installed yet.")).toBeVisible();
   });
 
   it("shows installed state for bundled packages", () => {
