@@ -290,14 +290,26 @@ test.describe.serial("PyLab browser integration", () => {
         `exec(${JSON.stringify(challenge.solution)})`,
       );
       await page.getByTitle("Submit Practice Code").click();
-      if (index < CHART_CHALLENGES.length - 1) {
-        await expect(
-          page.getByText(CHART_CHALLENGES[index + 1].title, { exact: true }),
-        ).toBeVisible({ timeout: 120_000 });
-      } else {
-        await expect(page.getByText("Module Complete! 🎉", { exact: true })).toBeVisible({
-          timeout: 120_000,
-        });
+      const advanced =
+        index < CHART_CHALLENGES.length - 1
+          ? page.getByText(CHART_CHALLENGES[index + 1].title, { exact: true })
+          : page.getByText("Module Complete! 🎉", { exact: true });
+      const failed = page.getByText(/Test Case \d+ \(Failed\)/).first();
+      await expect
+        .poll(
+          async () => {
+            if (await failed.isVisible()) return "failed";
+            if (await advanced.isVisible()) return "advanced";
+            return "pending";
+          },
+          { timeout: 120_000, message: `${challenge.id} did not finish judging` },
+        )
+        .not.toBe("pending");
+      if (await failed.isVisible()) {
+        const panel = await page
+          .locator('section[aria-label="Output panel"]')
+          .innerText();
+        throw new Error(`${challenge.id} reference failed:\n${panel}`);
       }
     }
   });
