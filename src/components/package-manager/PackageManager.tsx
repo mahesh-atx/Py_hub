@@ -12,6 +12,22 @@ import {
 } from "lucide-react";
 import { searchPackages, KNOWN_PACKAGES } from "@/lib/packages";
 
+const PackageLogo = ({ name }: { name: string }) => {
+  const [error, setError] = useState(false);
+  const slug = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (error) {
+    return <Package className="h-4 w-4 shrink-0 text-[var(--vscode-text-muted)]" />;
+  }
+  return (
+    <img
+      src={`https://cdn.simpleicons.org/${slug}`}
+      alt={`${name} logo`}
+      className="h-4 w-4 shrink-0"
+      onError={() => setError(true)}
+    />
+  );
+};
+
 interface PackageManagerProps {
   installed: string[];
   bundled?: string[];
@@ -38,36 +54,7 @@ export function PackageManager({
     installed.some((entry) => entry.toLowerCase() === name.toLowerCase());
 
   return (
-    <div className="flex h-full flex-col text-[var(--vscode-text)]">
-      <div className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--vscode-text-muted)]">
-        Python packages
-      </div>
-
-      <div className="px-3 pb-2">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--vscode-text-muted)]" />
-          <input
-            aria-label="Search Python packages"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search packages…"
-            className="min-h-9 w-full rounded border border-[var(--vscode-border)] bg-[var(--vscode-editor-bg)] py-1.5 pl-7 pr-2 text-xs text-[var(--vscode-text)] outline-none focus-visible:border-[var(--vscode-accent)] focus-visible:ring-1 focus-visible:ring-[var(--vscode-accent)]"
-          />
-        </div>
-        <p className="mt-2 text-[10px] leading-relaxed text-[var(--vscode-text-muted)]">
-          Compatible packages execute entirely in your browser. Installation may download static wheel files.
-        </p>
-        <button
-          type="button"
-          disabled={Boolean(installing) || curriculumPackages.every(isInstalled)}
-          onClick={() => onInstall(curriculumPackages.filter((name) => !isInstalled(name)))}
-          className="mt-2 min-h-9 w-full rounded border border-[var(--vscode-border)] bg-[var(--vscode-hover)] px-3 text-[11px] font-semibold text-[var(--vscode-text)] outline-none hover:border-[var(--vscode-accent)] focus-visible:ring-2 focus-visible:ring-[var(--vscode-accent)] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {curriculumPackages.every(isInstalled)
-            ? "Curriculum stack installed"
-            : "Install curriculum packages"}
-        </button>
-      </div>
+    <div className="flex h-full flex-col text-[var(--vscode-text)] pt-2">
 
       <div className="flex-1 overflow-auto px-2 pb-3">
         {results.map((pkg) => {
@@ -84,27 +71,9 @@ export function PackageManager({
               <div className="flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <Package className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />
+                    <PackageLogo name={pkg.name} />
                     <span className="truncate text-xs font-medium">{pkg.name}</span>
-                    {pkg.pyodideCompatible && (
-                      <span className="rounded bg-sky-500/15 px-1 py-0.5 text-[9px] font-semibold uppercase text-sky-300">
-                        Pyodide compatible
-                      </span>
-                    )}
-                    {pkg.curriculum && (
-                      <span className="rounded bg-amber-500/15 px-1 py-0.5 text-[9px] font-semibold uppercase text-amber-300">
-                        Curriculum
-                      </span>
-                    )}
-                    <span className={`rounded px-1 py-0.5 text-[9px] font-semibold uppercase ${
-                      local ? "bg-emerald-500/15 text-emerald-300" : "bg-violet-500/15 text-violet-300"
-                    }`}>
-                      {local ? "Bundled" : "Internet required"}
-                    </span>
                   </div>
-                  <p className="mt-0.5 pl-5 text-[10px] leading-snug text-[var(--vscode-text-muted)]">
-                    {pkg.description}
-                  </p>
                 </div>
                 <button
                   type="button"

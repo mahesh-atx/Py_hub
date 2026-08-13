@@ -124,7 +124,7 @@ test.describe.serial("PyLab browser integration", () => {
     });
     await waitForTerminal(page, "Name:");
     await page.locator(".xterm").click();
-    await page.keyboard.insertText("Arena");
+    await page.keyboard.type("Arena", { delay: 50 });
     await page.keyboard.press("Enter");
     await waitForTerminal(page, "E2E_CREATED Arena");
     await expect(page.getByText("sync-e2e.txt", { exact: true })).toBeVisible();
