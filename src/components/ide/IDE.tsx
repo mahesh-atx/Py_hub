@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -559,11 +560,15 @@ export function IDE({
         )}
 
         {/* Side Bar */}
-        {sidebarOpen && (isDesktop || mobileView === "sidebar") && (
-          <aside
-            className="shrink-0 flex flex-col border-r border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] relative"
-            style={{ width: isDesktop ? sidebarWidth : "100%" }}
-          >
+        <AnimatePresence>
+          {sidebarOpen && (isDesktop || mobileView === "sidebar") && (
+            <motion.aside
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: isDesktop ? sidebarWidth : "100%", opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="shrink-0 flex flex-col border-r border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] relative shadow-[8px_0_20px_rgba(0,0,0,0.4)] z-20 overflow-hidden"
+            >
             {/* Resizer Handle */}
             {isDesktop && <div
               onMouseDown={() => {
@@ -664,8 +669,9 @@ export function IDE({
                 </div>
               )}
             </div>
-          </aside>
+          </motion.aside>
         )}
+        </AnimatePresence>
 
         {/* Main column */}
         {(isDesktop || mobileView !== "sidebar") && <main id="ide-main" className="min-w-0 flex-1 flex-col flex bg-[var(--vscode-bg)]">

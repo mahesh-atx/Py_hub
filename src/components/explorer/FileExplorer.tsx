@@ -230,7 +230,7 @@ export function FileExplorer(props: FileExplorerProps) {
       onContextMenu={(e) => { e.preventDefault(); closeContextMenu(); }}
     >
       <div 
-        className="group/root flex min-h-6 items-center justify-between px-2 hover:bg-[var(--vscode-hover)]"
+        className="group/root flex min-h-6 items-center justify-between px-2 hover:bg-[var(--vscode-hover)] relative hover:-translate-y-[1px] hover:shadow-md hover:z-20 transition-all z-10"
         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragOverId("root"); }}
         onDrop={(e) => { e.stopPropagation(); handleDropRoot(e); }}
         style={{ backgroundColor: dragOverId === "root" ? "var(--vscode-list-dropBackground)" : undefined }}

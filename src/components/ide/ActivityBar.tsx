@@ -62,7 +62,7 @@ export function ActivityBar({
   };
 
   return (
-    <nav aria-label="Primary IDE activities" className="z-10 flex w-12 shrink-0 flex-col items-center border-r border-[var(--vscode-border)] bg-[var(--vscode-bg)]">
+    <nav aria-label="Primary IDE activities" className="z-30 flex w-12 shrink-0 flex-col items-center border-r border-[var(--vscode-border)] bg-[var(--vscode-bg)] relative shadow-[4px_0_15px_rgba(0,0,0,0.3)]">
       <div className="flex w-full flex-col">
         <ActivityButton
           icon={<Boxes className="h-6 w-6" strokeWidth={1.25} />}

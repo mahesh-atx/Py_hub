@@ -72,7 +72,7 @@ export function EditorTabs({
   }
   return (
     <div 
-      className="flex h-[35px] items-stretch overflow-x-auto bg-[var(--vscode-sidebar-bg)] flex-1 scrollbar-hide"
+      className="flex h-[35px] items-stretch overflow-x-auto bg-[var(--vscode-sidebar-bg)] flex-1 scrollbar-hide relative shadow-[0_4px_15px_rgba(0,0,0,0.2)] z-10"
       onDragOver={(e) => { e.preventDefault(); }}
       onDrop={(e) => {
         e.preventDefault();

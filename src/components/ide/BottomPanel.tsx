@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BarChart3,
   CircleCheck,
@@ -88,22 +89,28 @@ export function BottomPanel({
   onInput: (value: string, eof?: boolean) => void;
   onInterrupt: () => void;
 }) {
-  if (!visible) return null;
-
   return (
-    <>
-      {isDesktop && (
-        <div
-          role="separator"
-          aria-label="Resize bottom panel"
-          aria-orientation="horizontal"
-          onMouseDown={onResizeStart}
-          className="h-1 shrink-0 cursor-row-resize bg-[var(--vscode-border)] transition-colors hover:bg-[var(--vscode-accent)]"
-        />
-      )}
-      <section
-        aria-label="Output panel"
-        className="flex min-h-0 flex-1 flex-col bg-[#050505] lg:flex-none"
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: isDesktop ? height : "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="flex flex-col w-full z-20"
+        >
+          {isDesktop && (
+            <div
+              role="separator"
+              aria-label="Resize bottom panel"
+              aria-orientation="horizontal"
+              onMouseDown={onResizeStart}
+              className="h-1 shrink-0 cursor-row-resize bg-[var(--vscode-border)] transition-colors hover:bg-[var(--vscode-accent)] relative z-30"
+            />
+          )}
+          <section
+            aria-label="Output panel"
+            className="flex min-h-0 flex-1 flex-col bg-[#050505] lg:flex-none relative shadow-[0_-8px_20px_rgba(0,0,0,0.4)] z-20"
         style={{ height: isDesktop ? height : undefined }}
       >
         <div className="flex min-h-10 items-center gap-5 px-3 text-[11px] font-medium uppercase tracking-wider text-[var(--vscode-text)]">
@@ -206,6 +213,8 @@ export function BottomPanel({
           )}
         </div>
       </section>
-    </>
+      </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
