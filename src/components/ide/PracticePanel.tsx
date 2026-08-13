@@ -182,7 +182,8 @@ export function PracticeSidebar({
         particleCount: 50,
         spread: 60,
         origin: { y: 0.8, x: 0.8 },
-        colors: ['#4ade80', '#38bdf8', '#fbbf24']
+        colors: ['#4ade80', '#38bdf8', '#fbbf24'],
+        zIndex: 9999
       });
 
       // Check for batch completion
@@ -198,14 +199,16 @@ export function PracticeSidebar({
                angle: 60,
                spread: 55,
                origin: { x: 0 },
-               colors: ['#4ade80', '#38bdf8', '#fbbf24']
+               colors: ['#4ade80', '#38bdf8', '#fbbf24'],
+               zIndex: 9999
              });
              confetti({
                particleCount: 5,
                angle: 120,
                spread: 55,
                origin: { x: 1 },
-               colors: ['#4ade80', '#38bdf8', '#fbbf24']
+               colors: ['#4ade80', '#38bdf8', '#fbbf24'],
+               zIndex: 9999
              });
              if (Date.now() < end) requestAnimationFrame(frame);
            }());
