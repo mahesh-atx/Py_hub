@@ -103,7 +103,7 @@
       "question_id": 12,
       "tests": [
         {
-          "input": "3",
+          "input": "2500\n3",
           "expected_output": "Bill amount: 2500\nNumber of people: 3\nEach pays: 833.33\nRounding difference: 0.01"
         }
       ]
@@ -206,7 +206,7 @@
       "question_id": 24,
       "tests": [
         {
-          "input": "100000\n8",
+          "input": "100000\n8\n5",
           "expected_output": "Principal: 100000\nRate: 8\nYears: 5\nAmount: 146932.81\nInterest earned: 46932.81"
         }
       ]
@@ -314,7 +314,7 @@
       "question_id": 36,
       "tests": [
         {
-          "input": "30",
+          "input": "30\n22000\n750",
           "expected_output": "Age: 30\nMonthly income: 22000\nCredit score: 750\nRejected: income below 25000"
         }
       ]
@@ -332,7 +332,7 @@
       "question_id": 38,
       "tests": [
         {
-          "input": "10\n25\n8\n17",
+          "input": "4\n10\n25\n8\n17",
           "expected_output": "How many numbers? 4\nNumber 1: 10\nNumber 2: 25\nNumber 3: 8\nNumber 4: 17\nSum: 60\nAverage: 15.00"
         }
       ]
@@ -413,7 +413,7 @@
       "question_id": 47,
       "tests": [
         {
-          "input": "",
+          "input": "50\n25\n42",
           "expected_output": "Guess: 50\nToo high\nGuess: 25\nToo low\nGuess: 42\nCorrect! You took 3 attempts."
         }
       ]
@@ -422,7 +422,7 @@
       "question_id": 48,
       "tests": [
         {
-          "input": "",
+          "input": "4",
           "expected_output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nChoice:"
         }
       ]
