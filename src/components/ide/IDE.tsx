@@ -127,6 +127,29 @@ export function IDE({
     }
   }, [project.nodes, splitOpenTabs, splitActiveId]);
 
+  const hasCleanedUpRef = useRef(false);
+  useEffect(() => {
+    if (hasCleanedUpRef.current || project.nodes.length === 0) return;
+    hasCleanedUpRef.current = true;
+    
+    // One-time cleanup of unattempted auto-generated practice files
+    const unattemptedNodeIds = project.nodes
+      .filter((n) => n.kind === "file" && pathOf(project.nodes, n.id).startsWith(".practice/"))
+      .filter((n) => {
+        if (!n.content) return false;
+        const lines = n.content.split("\n");
+        if (lines.length <= 4) {
+          return n.content.includes("# Write your solution below:");
+        }
+        return false;
+      })
+      .map((n) => n.id);
+    
+    if (unattemptedNodeIds.length > 0) {
+      project.deleteNodes(unattemptedNodeIds);
+    }
+  }, [project.nodes, project.deleteNodes]);
+
   // Practice state
   const practiceSubmitRef = useRef<((code: string) => Promise<void>) | null>(null);
   const practiceJudgeRef = useRef<((stdout: string) => void) | null>(null);
@@ -609,11 +632,11 @@ export function IDE({
                   onTestResults={(results) => {
                     setPracticeResults(results);
                   }}
-                  onOpenOrCreateFile={(path, content) => {
+                  onOpenOrCreateFile={(path, content, autoCreate = true) => {
                     const existingNode = project.nodes.find(n => pathOf(project.nodes, n.id) === path);
                     if (existingNode && existingNode.kind === 'file') {
                       project.openFile(existingNode.id);
-                    } else {
+                    } else if (autoCreate) {
                       project.createByPath(path, content);
                     }
                   }}

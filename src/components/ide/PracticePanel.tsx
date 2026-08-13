@@ -76,7 +76,7 @@ export function PracticeSidebar({
   onTestResults
 }: { 
   runTest: RunCapture; 
-  onOpenOrCreateFile: (name: string, content: string) => void;
+  onOpenOrCreateFile: (name: string, content: string, autoCreate?: boolean) => void;
   onSeedFiles?: (relativePaths: string[], batchId: string, batchTitle: string) => Promise<string[]>;
   activeFilePath: string;
   workspaceFiles: WorkspaceTextFile[];
@@ -95,6 +95,23 @@ export function PracticeSidebar({
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({});
 
   const [questionKind, setQuestionKind] = useState<"Q" | "P" | "A">("Q");
+
+  const hasStarted = (c: Challenge | null) => {
+    if (!c || !activeCategory) return false;
+    const batchTitle = getBatchTitle(activeCategory.id) || "General";
+    let targetFile = "";
+    if (questionKind === "P" || questionKind === "A") {
+      const categoryName = questionKind === "P" ? "Projects" : "Assignments";
+      const folder = `.practice/${batchTitle}/${categoryName}/${c.id}-${c.title.replace(/^[APQ]\d+\.\s*/, "").replace(/^Capstone:\s*/, "").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-")}`;
+      const fileList = deliverablesRef.current[activeCategory.id]?.[c.id];
+      if (fileList && fileList.length > 0) targetFile = `${folder}/${fileList[0]}`;
+      else targetFile = `${folder}.py`;
+    } else {
+      const fileName = `${c.id}-${c.title.replace(/^[APQ]\d+\.\s*/, "").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-")}.py`;
+      targetFile = `.practice/${batchTitle}/Practice Questions/${fileName}`;
+    }
+    return workspaceFiles.some(f => f.path === targetFile);
+  };
 
   // Hint reveal state (3 levels: hint -> more code -> full solution)
   const [hintOpen, setHintOpen] = useState(false);
@@ -373,6 +390,7 @@ export function PracticeSidebar({
     c: Challenge | null,
     category = activeCategory,
     kind = questionKind,
+    autoCreate = false
   ) => {
     setActiveChallenge(c);
     setResults(null);
@@ -404,13 +422,13 @@ export function PracticeSidebar({
             return `# ${c.title} — ${f}\n# Write your solution below:\n\n`;
           };
           // create in reverse so the first manifest file ends up active in the editor
-          [...fileList].reverse().forEach(f => onOpenOrCreateFile(`${folder}/${f}`, headerFor(f)));
+          [...fileList].reverse().forEach(f => onOpenOrCreateFile(`${folder}/${f}`, headerFor(f), autoCreate));
         } else {
-          onOpenOrCreateFile(`.practice/${batchTitle}/${categoryName}/${projectFileName(c)}`, `# ${c.title}\n# Write your solution below:\n\n`);
+          onOpenOrCreateFile(`.practice/${batchTitle}/${categoryName}/${projectFileName(c)}`, `# ${c.title}\n# Write your solution below:\n\n`, autoCreate);
         }
       } else {
         const fileName = `${c.id}-${c.title.replace(/^[APQ]\d+\.\s*/, "").trim().replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-")}.py`;
-        onOpenOrCreateFile(`.practice/${batchTitle}/Practice Questions/${fileName}`, `# ${c.title}\n# Write your solution below:\n\n`);
+        onOpenOrCreateFile(`.practice/${batchTitle}/Practice Questions/${fileName}`, `# ${c.title}\n# Write your solution below:\n\n`, autoCreate);
       }
     }
   };
@@ -968,6 +986,20 @@ export function PracticeSidebar({
                     dirPath={activeCategory ? `/practice-data/${activeCategory.id}` : ""}
                   />
                 </div>
+
+                {!hasStarted(activeChallenge) && (
+                  <div className="mb-4 rounded-md border border-[var(--vscode-border)] bg-black/20 p-5 flex flex-col items-center justify-center gap-3">
+                    <p className="text-[12px] text-[var(--vscode-text-muted)] text-center max-w-xs">
+                      You haven't started this challenge yet. Ready to write some code?
+                    </p>
+                    <button
+                      onClick={() => selectChallenge(activeChallenge, activeCategory, questionKind, true)}
+                      className="rounded bg-[var(--vscode-accent)] px-4 py-1.5 text-[12px] font-medium text-white hover:brightness-110"
+                    >
+                      Start Challenge
+                    </button>
+                  </div>
+                )}
 
                 {requiresManualConfirmation && (
                   <ManualReviewCard
