@@ -215,12 +215,73 @@ function MarkdownImage({ src, alt }: any) {
   );
 }
 
+function HowToSolveHoverBlock({ content }: { content: string }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const { isCompact } = React.useContext(MarkdownContext);
+  
+  return (
+    <div 
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+          margin: isCompact ? '0.75em 0' : '1.5em 0',
+          borderRadius: '8px',
+          border: '1px solid rgba(74, 222, 128, 0.3)',
+          backgroundColor: isHovered ? 'rgba(74, 222, 128, 0.05)' : 'transparent',
+          cursor: isHovered ? 'default' : 'help',
+          transition: 'all 0.3s ease',
+          overflow: 'hidden'
+      }}
+    >
+      {!isHovered ? (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: isCompact ? '10px 14px' : '14px 20px',
+            color: '#4ade80',
+            fontWeight: 500,
+            opacity: 0.9
+          }}>
+            <Lightbulb size={isCompact ? 16 : 18} color="#4ade80" />
+            <span>Hover to reveal step-by-step approach</span>
+          </div>
+      ) : (
+          <motion.div 
+            initial={{ opacity: 0, y: -5 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.2 }}
+            style={{
+              padding: isCompact ? '12px 14px' : '16px 20px',
+            }}
+          >
+            <div style={{ fontWeight: '600', marginBottom: '12px', color: '#4ade80', display: 'flex', alignItems: 'center', gap: '8px' }}>
+               <Lightbulb size={isCompact ? 16 : 20} color="#4ade80" />
+               How to solve:
+            </div>
+            <div style={{ color: 'var(--text-color)' }} className="how-to-solve-inner">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {content}
+              </ReactMarkdown>
+            </div>
+          </motion.div>
+      )}
+    </div>
+  );
+}
+
 const markdownComponents: any = {
+  pre: ({ children }: any) => <>{children}</>,
   input: MarkdownInput,
   a: MarkdownLink,
   code: (props: any) => {
     const { children, className, node, ref, ...rest } = props;
-    const match = /language-(\w+)/.exec(className || '');
+    const match = /language-([\w-]+)/.exec(className || '');
+    
+    if (match && match[1] === 'how-to-solve-block') {
+       return <HowToSolveHoverBlock content={String(children).replace(/\n$/, '')} />;
+    }
+
     const isBlock = match || String(children).includes('\n');
     
     if (isBlock) {
@@ -252,11 +313,11 @@ const markdownComponents: any = {
   },
   ul: function MarkdownUnorderedList({ children }: any) {
     const { isCompact } = React.useContext(MarkdownContext);
-    return <ScrollReveal as="ul" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em' }}>{children}</ScrollReveal>;
+    return <ScrollReveal as="ul" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em', listStyleType: 'disc' }}>{children}</ScrollReveal>;
   },
   ol: function MarkdownOrderedList({ children }: any) {
     const { isCompact } = React.useContext(MarkdownContext);
-    return <ScrollReveal as="ol" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em' }}>{children}</ScrollReveal>;
+    return <ScrollReveal as="ol" style={{ margin: isCompact ? '0.5em 0' : '1em 0', paddingLeft: isCompact ? '1.25em' : '2em', listStyleType: 'decimal' }}>{children}</ScrollReveal>;
   },
   li: function MarkdownListItem({ children, className }: any) {
     const { isCompact } = React.useContext(MarkdownContext);
@@ -377,6 +438,13 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
     isCompact
   }), [checkboxState, toggleCheckbox, dirPath, onNavigateLink, isCompact]);
 
+  const processedContent = React.useMemo(() => {
+    if (!content) return '';
+    return content.replace(/\*\*How to solve:\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/g, (match, p1) => {
+      return `\n\n\`\`\`how-to-solve-block\n${p1.trim()}\n\`\`\`\n\n`;
+    });
+  }, [content]);
+
   return (
     <MarkdownContext.Provider value={contextValue}>
       <div className={`markdown-body ${isCompact ? 'compact' : ''}`}>
@@ -384,7 +452,7 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
           remarkPlugins={[remarkGfm]}
           components={markdownComponents}
         >
-          {content}
+          {processedContent}
         </ReactMarkdown>
       </div>
 
