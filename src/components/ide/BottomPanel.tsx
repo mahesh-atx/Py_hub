@@ -180,7 +180,13 @@ export function BottomPanel({
                         Test Case {index + 1} {result.passed ? "(Passed)" : "(Failed)"}
                       </span>
                     </div>
-                    {!result.passed && <DiffView expected={result.expected} actual={result.actual || "(no output)"} />}
+                    {result.passed ? (
+                      <div className="mt-2 rounded bg-[var(--vscode-editor)] border border-[var(--vscode-border)] p-2 overflow-x-auto text-[11px] font-mono text-[var(--vscode-text)] whitespace-pre-wrap">
+                        {result.actual || "(no output)"}
+                      </div>
+                    ) : (
+                      <DiffView expected={result.expected} actual={result.actual || "(no output)"} />
+                    )}
                     {result.crashError && (
                       <div className="mt-2 rounded bg-rose-950/30 border border-rose-900/50 p-2 overflow-x-auto text-[11px] font-mono text-rose-400">
                         <div className="font-semibold mb-1 text-rose-500 uppercase tracking-wider text-[10px]">Runtime Error</div>
