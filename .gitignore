@@ -12,3 +12,6 @@ playwright-report/
 test-results/
 public/vendor/pyodide/
 node_modules
+*.tsbuildinfo
+.vercel/
+.netlify/
