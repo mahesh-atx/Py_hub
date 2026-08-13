@@ -24,7 +24,10 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [["line"], ["html", { open: "never" }]] : "list",
+  maxFailures: process.env.CI ? 1 : undefined,
+  reporter: process.env.CI
+    ? [["line"], ["github"], ["html", { open: "never" }]]
+    : "list",
   use: {
     baseURL: "http://127.0.0.1:3100",
     trace: "retain-on-failure",
