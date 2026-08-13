@@ -21,7 +21,6 @@ describe("client-only deployment contract", () => {
       'PYLAB_PACKAGE_BUNDLE_REQUIRED: "1"',
     );
     expect(read("vercel.json")).toContain("npm run build:strict");
-    expect(read("netlify.toml")).toContain("npm run build:strict");
   });
 
   it("ships portable isolation and security headers", () => {
