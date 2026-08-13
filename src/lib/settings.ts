@@ -9,7 +9,7 @@ export interface IdeSettings {
 }
 
 export const DEFAULT_SETTINGS: IdeSettings = {
-  theme: "vs-dark",
+  theme: "pylab-accessible-dark",
   fontSize: 14,
   tabSize: 4,
   minimap: true,

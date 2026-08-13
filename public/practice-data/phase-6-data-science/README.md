@@ -13,9 +13,9 @@
 | 5   | [Module 28: Data Analysis](module-28-data-analysis.md)                               | The EDA workflow, descriptive statistics, correlation with significance testing, grouping, trends, 4 case studies                                                                     |
 | 6   | [Module 29: Data Science Projects](module-29-python-data-science-projects.md)        | 7 full projects: Sales, Student Performance, IPL, Netflix, COVID-19, Employee Salary, E-commerce (with RFM)                                                                           |
 | —   | [Projects & Key Takeaways](projects-and-takeaways.md)                                | 10 practice projects and the phase summary                                                                                                                                            |
-| —   | [Project Build Guides](project-guides.md)                                            | Step-by-step instructions for all 10 projects: goal, prerequisites, numbered steps, how it works, and a finish line                                                                   |
-| 🧠  | [**60 Practice Questions**](practice-questions.md)                                   | NumPy, Pandas, cleaning, visualisation — Tiers 4–6 use the messy starter data with verified answers                                                                                   |
-| 📊  | [**30 Chart Practice Questions**](chart-practice.md)                                 | Each question is an image — write the matplotlib/seaborn code that reproduces it. Tier 6 rebuilds four report charts from the starter data ([solutions](chart-practice-solutions.md)) |
+| —   | [Project Build Guides](projects.md)                                            | Step-by-step instructions for all 10 projects: goal, prerequisites, numbered steps, how it works, and a finish line                                                                   |
+| 🧠  | [**60 Practice Questions**](questions.md)                                   | NumPy, Pandas, cleaning, visualisation — Tiers 4–6 use the messy starter data with verified answers                                                                                   |
+| 📊  | [**30 Chart Practice Questions**](assignments.md)                                 | Each question is an image — write the matplotlib/seaborn code that reproduces it. Tier 6 rebuilds four report charts from the starter data ([solutions](assignment-solutions.md)) |
 | —   | [Starter Project](starter-project/README.md)                                         | **Deliberately messy data** — 3,060 rows the modules do not prepare you for, plus a reference cleaning pipeline and EDA                                                               |
 
 ---
@@ -52,4 +52,4 @@ The EDA also produces three honest **null results** — delivery speed does not 
 
 ---
 
-[← Phase 5: Mathematics & Statistics](../phase-5-mathematics-statistics/README.md) · [Phase 7: Excel Intelligence →](../phase-7-excel/README.md)
+[← Phase 4: Object-Oriented Programming](../phase-4-oop/README.md) · Return to the [curriculum index](../README.md)

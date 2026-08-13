@@ -12,7 +12,7 @@
 | 3 | [Module 7: Tuples and Sets](module-07-tuples-and-sets.md) | Packing/unpacking, immutability, set operations, frozenset, set comprehension |
 | 4 | [Module 8: Dictionaries](module-08-dictionaries.md) | Creation, methods, nested dicts, iteration, dict comprehension, dictionary vs JSON |
 | — | [Projects & Key Takeaways](projects-and-takeaways.md) | 8 practice projects and the phase summary |
-| — | [**60 Practice Questions**](practice-questions.md) | Strings, lists, tuples, sets and dictionaries — including manual implementations of things the built-ins do for you. Difficulty rises from Q1 to Q60. |
+| — | [**60 Practice Questions**](questions.md) | Strings, lists, tuples, sets and dictionaries — including manual implementations of things the built-ins do for you. Difficulty rises from Q1 to Q60. |
 | 📋 | [**5 Assignments**](assignments.md) | Text analysis engine, sorting lab, grade management, contact book, conversion toolkit |
 
 ---

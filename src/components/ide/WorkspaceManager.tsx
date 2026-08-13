@@ -58,7 +58,7 @@ export function WorkspaceManager({
           >
             {deleteConfirmId === ws.id ? (
               <div className="flex flex-col gap-2 p-2 bg-rose-500/10">
-                <span className="text-xs text-rose-200">Delete "{ws.name}"?</span>
+                <span className="text-xs text-rose-200">Delete &quot;{ws.name}&quot;?</span>
                 <div className="flex gap-2">
                   <button
                     onClick={(e) => {

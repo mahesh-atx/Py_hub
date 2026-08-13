@@ -6,26 +6,25 @@ import { toast } from "@/components/ide/ToastContainer";
 import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { ManualReviewCard } from "@/components/ide/ManualReviewCard";
 import { terminalStore } from "@/lib/terminal/store";
-
-interface TestCase {
-  input: string;
-  expected_output: string;
-  match?: "contains";
-  contains?: string[];
-}
-
-interface Challenge {
-  id: string;
-  title: string;
-  markdown: string;
-  solution: string | null;
-  tests: TestCase[];
-  difficulty?: string;
-  objective?: string;
-  hintText?: string;
-  explanation?: string;
-}
+import {
+  evaluatePracticeTest,
+  getConstraintViolation,
+} from "@/lib/practice/judge";
+import { parsePracticeContent } from "@/lib/practice/parser";
+import {
+  requiresManualReview,
+  reviewManualSubmission,
+  type ManualSubmissionReview,
+  type WorkspaceTextFile,
+} from "@/lib/practice/manual";
+import type {
+  CapturedRun,
+  Challenge,
+  PracticeManifest as Manifest,
+  PracticeTestsDocument,
+} from "@/lib/practice/types";
 
 const HINT_LABELS = ["Hint", "More code", "Full solution"];
 
@@ -35,11 +34,6 @@ function StatBar({ pct, color = "bg-sky-500" }: { pct: number; color?: string })
       <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${Math.min(100, Math.max(0, pct))}%` }} />
     </div>
   );
-}
-
-interface ManifestFile { id: string; title: string; type: 'markdown' | 'practice'; total?: number; }
-interface Manifest {
-  batches: { id: string; title: string; path: string; files: ManifestFile[] }[];
 }
 
 // starter-project files that the Data Science tab needs inside the browser
@@ -66,118 +60,26 @@ const PHASE_6_STARTER_FILES = [
   "starter-project/src/charts.py",
 ];
 
-function normalize(s: string): string {
-  return s
-    .replace(/\r\n/g, "\n")
-    .split("\n")
-    .map((l) => l.replace(/\s+$/, ""))
-    .join("\n")
-    .replace(/\n+$/, "");
-}
-
-function compareOutputs(actual: string, expected: string, test?: TestCase): boolean {
-  const aNorm = normalize(actual);
-  const eNorm = normalize(expected);
-  if (test?.contains && Array.isArray(test.contains) && test.contains.length > 0) {
-    const low = aNorm.toLowerCase();
-    return test.contains.every(s => s.length > 0 && low.includes(s.toLowerCase()));
-  }
-  if (test?.match === "contains" && eNorm) return aNorm.includes(eNorm);
-  if (aNorm === eNorm) return true;
-
-  if ((eNorm.startsWith("{") && eNorm.endsWith("}")) || (eNorm.startsWith("[") && eNorm.endsWith("]"))) {
-    try {
-      const cleanA = aNorm.replace(/[{}[\]]/g, "").split(",").map(s => s.trim()).sort();
-      const cleanE = eNorm.replace(/[{}[\]]/g, "").split(",").map(s => s.trim()).sort();
-      return JSON.stringify(cleanA) === JSON.stringify(cleanE);
-    } catch {
-      return false;
-    }
-  }
-  return false;
-}
-
-type RunCapture = (code: string, stdin?: string, timeoutMs?: number) => Promise<{
-  stdout: string;
-  stderr: string;
-  traceback?: string;
-  status: number;
-}>;
-
-interface ConstraintRule {
-  pattern: RegExp;
-  allow?: RegExp;
-  reason: string;
-}
-
-const PHASE_CONSTRAINTS: Record<string, ConstraintRule[]> = {
-  "phase-1": [
-    {
-      pattern: /\[/,
-      reason: "Phase 1 rule: lists are not allowed yet (no [ ] brackets).",
-    },
-    {
-      pattern: /\bdef\s+[A-Za-z_]/,
-      reason: "Phase 1 rule: user-defined functions are not allowed yet (no def).",
-    },
-    {
-      pattern: /\bimport\b/,
-      reason: "Phase 1 rule: imports are not allowed yet.",
-    },
-  ],
-  "phase-2": [
-    {
-      pattern: /\bdef\s+[A-Za-z_]/,
-      reason: "Phase 2 rule: user-defined functions are not allowed yet (no def).",
-    },
-    {
-      pattern: /\bimport\b/,
-      reason: "Phase 2 rule: imports are not allowed yet.",
-    },
-  ],
-  "phase-3": [
-    {
-      pattern: /\bclass\s+[A-Za-z_]\w*/,
-      allow: /class\s+[A-Za-z_]\w*\s*\(\s*(?:[A-Za-z_]\w*Error|Exception|BaseException)\b/,
-      reason: "Phase 3 rule: classes are not allowed yet (custom Exception subclasses are the one exception).",
-    },
-  ],
-};
-
-function stripCommentsAndStrings(code: string): string {
-  return code
-    .replace(/"""[\s\S]*?"""|'''[\s\S]*?'''/g, "")
-    .replace(/#[^\n]*/g, "")
-    .replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, "");
-}
-
-function getConstraintViolation(code: string, batchId: string): string | null {
-  const phase = batchId.match(/phase-(\d+)/)?.[1];
-  const rules = phase ? PHASE_CONSTRAINTS[`phase-${phase}`] : undefined;
-  if (!rules) return null;
-  const cleaned = stripCommentsAndStrings(code);
-  for (const rule of rules) {
-    if (rule.pattern.test(cleaned) && !(rule.allow && rule.allow.test(cleaned))) {
-      return rule.reason;
-    }
-  }
-  return null;
-}
+type RunCapture = (
+  code: string,
+  stdin?: string,
+  timeoutMs?: number,
+) => Promise<CapturedRun>;
 
 export function PracticeSidebar({ 
   runTest, 
-  onCreateFile, 
   onOpenOrCreateFile,
   onSeedFiles,
-  activeFileContent,
+  activeFilePath,
+  workspaceFiles,
   onPracticeStateChange,
   onTestResults
 }: { 
   runTest: RunCapture; 
-  onCreateFile: (name: string, content: string, append?: boolean) => void;
   onOpenOrCreateFile: (name: string, content: string) => void;
   onSeedFiles?: (relativePaths: string[], batchId: string, batchTitle: string) => Promise<string[]>;
-  activeFileContent: string;
+  activeFilePath: string;
+  workspaceFiles: WorkspaceTextFile[];
   onPracticeStateChange?: (state: { isActive: boolean; hasTests: boolean; submitFn: ((code: string) => Promise<void>) | null; judgeStdoutFn: ((stdout: string) => void) | null; skipFn: (() => void) | null; canSkip: boolean }) => void;
   onTestResults?: (results: { passed: boolean; actual: string; expected: string }[] | null) => void;
 }) {
@@ -203,10 +105,25 @@ export function PracticeSidebar({
   // Dashboard view
   const [dashboardOpen, setDashboardOpen] = useState(false);
 
-  // Multi-file deliverables
-  const [deliverables, setDeliverables] = useState<Record<string, Record<string, string[]>>>({});
+  // Multi-file deliverables and manual-review state for challenges without tests.
+  const deliverablesRef = useRef<Record<string, Record<string, string[]>>>({});
+  const deliverablesPromiseRef = useRef<Promise<Record<string, Record<string, string[]>>> | null>(null);
+  const ensureDeliverables = () => {
+    if (!deliverablesPromiseRef.current) {
+      deliverablesPromiseRef.current = fetch("/practice-data/deliverables.json")
+        .then((response) => (response.ok ? response.json() : {}))
+        .then((data) => {
+          deliverablesRef.current = data;
+          return data;
+        })
+        .catch(() => ({}));
+    }
+    return deliverablesPromiseRef.current;
+  };
+  const [manualScopePath, setManualScopePath] = useState<string | undefined>();
+  const [manualReview, setManualReview] = useState<ManualSubmissionReview | null>(null);
+  const [manualExecutionPassed, setManualExecutionPassed] = useState(false);
 
-  const categoryRef = useRef<{ type: "batch"; id: string; fileId: string } | null>(null);
   const practiceStateRef = useRef<any>(null);
 
   // Persistence State
@@ -330,6 +247,8 @@ export function PracticeSidebar({
     } else {
       onPracticeStateChange({ isActive: false, hasTests: false, submitFn: null, judgeStdoutFn: null, skipFn: null, canSkip: false });
     }
+    // Submission callbacks intentionally refresh when the active challenge changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeChallenge, onPracticeStateChange, challenges]);
 
   const getBatchTitle = (id: string) => {
@@ -338,13 +257,18 @@ export function PracticeSidebar({
 
   const loadMarkdown = async (batchId: string, fileId: string) => {
     try {
-      const res = await fetch(`/practice-data/${batchId}/${fileId}`);
-      if (res.ok) {
-        const text = await res.text();
-        const batchTitle = getBatchTitle(batchId);
-        onOpenOrCreateFile(`.course/${batchTitle}/${fileId}`, text);
+      const response = await fetch(`/practice-data/${batchId}/${fileId}`);
+      if (!response.ok) {
+        toast.error(`Course page not found: ${fileId}`);
+        return;
       }
-    } catch(e) {}
+      onOpenOrCreateFile(
+        `.course/${batchId}/${fileId}`,
+        await response.text(),
+      );
+    } catch {
+      toast.error(`Could not open course page: ${fileId}`);
+    }
     seedPhase6IfNeeded(batchId);
   };
 
@@ -368,6 +292,7 @@ export function PracticeSidebar({
 
   const loadContent = async (type: "batch", id: string, fileId = "questions.md") => {
     setLoading(true);
+    await ensureDeliverables();
     setActiveCategory({ type, id, fileId });
     setChallenges([]);
     setActiveChallenge(null);
@@ -375,159 +300,54 @@ export function PracticeSidebar({
     seedPhase6IfNeeded(id);
     const isProjects = fileId === "projects.md";
     const isAssignments = fileId === "assignments.md";
-    const prefix: "Q" | "P" | "A" = isProjects ? "P" : isAssignments ? "A" : "Q";
-    setQuestionKind(prefix);
     try {
       const mdRes = await fetch(`/practice-data/${id}/${fileId}`);
       const mdText = await mdRes.text();
 
-      let testsData: any = { questions: [] };
-      let solutionsParts: string[] = [];
-      if (isProjects) {
-        try {
-          const solRes = await fetch(`/practice-data/${id}/project-solutions.md`);
-          if (solRes.ok) {
-            const solText = await solRes.text();
-            solutionsParts = solText.split(/^## P\d+\.\s*/m);
-            solutionsParts.shift();
-          }
-        } catch {
-          // ignore
-        }
-      } else {
-        try {
-          const testsFile = isAssignments ? "assignment-tests.json" : "hidden-tests.json";
-          const solFile = isAssignments ? "assignment-solutions.md" : "solutions.md";
-          const [testsRes, solRes] = await Promise.all([
-            fetch(`/practice-data/${id}/${testsFile}`),
-            fetch(`/practice-data/${id}/${solFile}`),
-          ]);
-          
-          if (testsRes.ok) testsData = await testsRes.json();
-          if (solRes.ok) {
-            const solText = await solRes.text();
-            solutionsParts = solText.split(isAssignments ? /^## A\d+\.\s*/m : /^## Q\d+\.\s*/m);
-            solutionsParts.shift(); // remove intro
-          }
-        } catch {
-          // ignore
-        }
+      let testsData: PracticeTestsDocument = { questions: [] };
+      let solutionsMarkdown = "";
+      try {
+        const testsFile = isProjects
+          ? null
+          : isAssignments
+            ? "assignment-tests.json"
+            : "hidden-tests.json";
+        const solutionsFile = isProjects
+          ? "project-solutions.md"
+          : isAssignments
+            ? "assignment-solutions.md"
+            : "solutions.md";
+        const [testsRes, solutionsRes] = await Promise.all([
+          testsFile
+            ? fetch(`/practice-data/${id}/${testsFile}`)
+            : Promise.resolve(null),
+          fetch(`/practice-data/${id}/${solutionsFile}`),
+        ]);
+        if (testsRes?.ok) testsData = await testsRes.json();
+        if (solutionsRes.ok) solutionsMarkdown = await solutionsRes.text();
+      } catch {
+        // Missing optional tests/solutions do not prevent opening a challenge.
       }
-      if (!testsData.questions) testsData.questions = [];
 
-      const parts = isAssignments
-        ? mdText.split(/^##\s*📋\s*/m)
-        : mdText.split(new RegExp(`^## ${prefix}\\d+\\.\\s*`, "m"));
-      parts.shift(); // remove intro text
-
-      const parsedChallenges = parts.map((part, idx): Challenge | null => {
-        const lines = part.split('\n');
-        const rawTitle = lines[0].trim();
-        // Skip trailing sections like "Grading yourself" that are not challenges.
-        if (isAssignments && /^Grading\s+yourself/i.test(rawTitle)) return null;
-
-        let title = rawTitle;
-        let num: number | null = null;
-        if (isAssignments) {
-          const mNum = rawTitle.match(/Assignment\s*(\d+)\s*[—–-]\s*(.*)/i);
-          if (mNum) {
-            num = parseInt(mNum[1], 10);
-            title = mNum[2].trim();
-          } else if (/^Capstone\b/i.test(rawTitle)) {
-            title = rawTitle.replace(/^[^—–-]*[—–-]\s*/, "").trim();
-          }
-        }
-
-        // Fix formatting: sections can lack blank lines between **BoldText:** lines.
-        // This regex ensures a blank line exists before any **BoldText:** line.
-        const rawMarkdown = part.replace(lines[0], "").trim()
-                             .replace(/\n(\*\*[A-Za-z]+:\*\*)/g, '\n\n$1');
-        
-        let difficulty = "Medium";
-        const diffMatch = rawMarkdown.match(/\*\*Difficulty:\*\*\s*(.+)/i);
-        if (diffMatch) {
-            difficulty = diffMatch[1].trim();
-        }
-        
-        let objective: string | undefined = undefined;
-        const objMatch = rawMarkdown.match(/\*\*Learning Objective:\*\*\s*(.+)/i);
-        if (objMatch) {
-            objective = objMatch[1].trim();
-        }
-        
-        let hintText: string | undefined = undefined;
-        const hintMatch = rawMarkdown.match(/^\*\*Hint:\*\*\s*(.+)$/im);
-        if (hintMatch) {
-            hintText = hintMatch[1].trim();
-        }
-
-        let explanation: string | undefined = undefined;
-        const explMatch = rawMarkdown.match(/^\*\*Explanation:\*\*\s*(.+)$/im);
-        if (explMatch) {
-            explanation = explMatch[1].trim();
-        }
-
-        const markdown = rawMarkdown
-                           .replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "")
-                           .replace(/\*\*Learning Objective:\*\*\s*(.+)\n?/i, "")
-                           .replace(/^\*\*Hint:\*\*[^\n]*\n?/gm, "")
-                           .replace(/^\*\*Explanation:\*\*[^\n]*\n?/gm, "")
-                           .replace(/\n{3,}/g, "\n\n")
-                           .trim();
-
-        let actualQId: number | null = null;
-        let challengeTitle: string;
-        if (isAssignments) {
-          actualQId = num;
-          if (num !== null) {
-            challengeTitle = `A${num}. ${title}`;
-          } else if (/^Capstone\b/i.test(rawTitle)) {
-            challengeTitle = `Capstone: ${title}`;
-          } else {
-            challengeTitle = title;
-          }
-        } else {
-          actualQId = testsData.questions[idx]?.question_id ?? (idx + 1);
-          challengeTitle = `${prefix}${actualQId}. ${title}`;
-        }
-
-        const testObj = isAssignments
-          ? testsData.questions.find((q: any) => q.question_id === num) ?? testsData.questions[idx] ?? null
-          : testsData.questions[idx] || null;
-        
-        let solution = null;
-        if (solutionsParts[idx]) {
-          const rawSol = solutionsParts[idx];
-          const codeMatch = rawSol.match(/```(?:python)?\n([\s\S]*?)\n```/);
-          if (codeMatch) {
-            solution = codeMatch[1].trim();
-          } else {
-            const solLines = rawSol.split('\n');
-            solution = rawSol.replace(solLines[0], "").trim();
-          }
-        }
-
-        return {
-          id: isAssignments
-            ? (num !== null ? `A${num}` : /^Capstone\b/i.test(rawTitle) ? "ACap" : `A${idx + 1}`)
-            : `${prefix}${actualQId}`,
-          title: challengeTitle,
-          markdown,
-          solution,
-          tests: testObj ? testObj.tests : [],
-          difficulty,
-          objective,
-          hintText,
-          explanation
-        };
-      }).filter((c): c is Challenge => c !== null);
-
-      setChallenges(parsedChallenges);
-      if (parsedChallenges.length > 0) {
+      const parsed = parsePracticeContent({
+        markdown: mdText,
+        fileId,
+        tests: testsData,
+        solutionsMarkdown,
+      });
+      setQuestionKind(parsed.kind);
+      setChallenges(parsed.challenges);
+      if (parsed.challenges.length > 0) {
         getKV("practiceState").then((state: any) => {
-          const sSet = new Set(state?.solved || []);
-          const firstUnsolved = parsedChallenges.find(c => !sSet.has(`${id}__${c.id}`));
-          selectChallenge(firstUnsolved || parsedChallenges[0]);
+          const solved = new Set<string>(state?.solved || []);
+          const firstUnsolved = parsed.challenges.find(
+            (challenge) => !solved.has(`${id}__${challenge.id}`),
+          );
+          selectChallenge(
+            firstUnsolved || parsed.challenges[0],
+            { type, id, fileId },
+            parsed.kind,
+          );
         });
       }
     } catch (e) {
@@ -546,15 +366,22 @@ export function PracticeSidebar({
     return `${c.id}-${base}.py`;
   };
 
-  const selectChallenge = (c: Challenge | null) => {
+  const selectChallenge = (
+    c: Challenge | null,
+    category = activeCategory,
+    kind = questionKind,
+  ) => {
     setActiveChallenge(c);
     setResults(null);
+    setManualReview(null);
+    setManualExecutionPassed(false);
+    setManualScopePath(undefined);
     terminalStore.clear();
     if (onTestResults) onTestResults(null);
     setHintOpen(false);
     if (c) {
-      const uniqueId = activeCategory ? `${activeCategory.id}__${c.id}` : c.id;
-      const batchTitle = activeCategory ? getBatchTitle(activeCategory.id) : "General";
+      const uniqueId = category ? `${category.id}__${c.id}` : c.id;
+      const batchTitle = category ? getBatchTitle(category.id) : "General";
       
       getKV("practiceState").then((state: any) => {
         const s = state || {};
@@ -562,11 +389,12 @@ export function PracticeSidebar({
         setHintView(Math.max(1, s.hints?.[uniqueId] || 1));
         setHintAttempts(s.hintAttempts?.[uniqueId] || 0);
       });
-      if (questionKind === "P" || questionKind === "A") {
-        const fileList = deliverables[activeCategory?.id || ""]?.[c.id];
-        const categoryName = questionKind === "P" ? "Projects" : "Assignments";
+      if (kind === "P" || kind === "A") {
+        const fileList = deliverablesRef.current[category?.id || ""]?.[c.id];
+        const categoryName = kind === "P" ? "Projects" : "Assignments";
         if (fileList && fileList.length > 0) {
           const folder = `.practice/${batchTitle}/${categoryName}/${projectFileName(c).replace(/\.py$/, "")}`;
+          setManualScopePath(folder);
           const headerFor = (f: string) => {
             if (f.endsWith(".md")) return `# ${c.title}\n# ${f}\n\nDesign notes, reflections, and written answers live here.\n`;
             if (f.endsWith(".json")) return `{}\n`;
@@ -600,6 +428,64 @@ export function PracticeSidebar({
     }
 
     const out: { passed: boolean; actual: string; expected: string }[] = [];
+    const requiredFiles = deliverablesRef.current[activeCategory.id]?.[activeChallenge.id] ?? [];
+    const needsManualReview = requiresManualReview(
+      questionKind,
+      activeChallenge.tests.length,
+    );
+
+    if (needsManualReview) {
+      const review = reviewManualSubmission({
+        activePath: activeFilePath,
+        activeContent: codeToTest,
+        scopePath: manualScopePath,
+        requiredFiles,
+        workspaceFiles,
+      });
+      setManualReview(review);
+      if (!review.ready) {
+        const details = [
+          review.missing.length ? `Missing: ${review.missing.join(", ")}` : "",
+          review.incomplete.length
+            ? `Still placeholders: ${review.incomplete.join(", ")}`
+            : "",
+        ].filter(Boolean).join("\n");
+        out.push({
+          passed: false,
+          actual: details || "No substantive solution was found.",
+          expected: "Complete the required deliverables before requesting manual review.",
+        });
+        setManualExecutionPassed(false);
+      } else if (requiredFiles.length > 0) {
+        out.push({
+          passed: true,
+          actual: `${review.checks.length} required deliverable(s) are ready for review.`,
+          expected: "Review the rubric, run the relevant entry point, then confirm completion.",
+        });
+        setManualExecutionPassed(true);
+      } else {
+        const res = await runTest(codeToTest, "");
+        const passed = res.status === 0;
+        out.push({
+          passed,
+          actual: passed
+            ? res.stdout || "Execution successful (no output)."
+            : res.stderr || res.traceback || "Runtime Error",
+          expected: "A substantive solution that executes without errors, followed by manual rubric confirmation.",
+        });
+        setManualExecutionPassed(passed);
+      }
+
+      setResults(out);
+      onTestResults?.(out);
+      setRunning(false);
+      if (out.every((result) => result.passed)) {
+        toast.info("Validation passed. Review the rubric and confirm completion.");
+      } else {
+        toast.warn("Complete the missing or placeholder deliverables first.");
+      }
+      return;
+    }
     
     if (activeChallenge.tests.length === 0) {
       const res = await runTest(codeToTest, "");
@@ -610,14 +496,27 @@ export function PracticeSidebar({
         expected: "Code should execute without errors. Please visually verify your output.",
       });
     } else {
-      for (const t of activeChallenge.tests) {
-        const res = await runTest(codeToTest, t.input);
-        const passed = res.status === 0 && compareOutputs(res.stdout, t.expected_output, t);
-        out.push({
-          passed,
-          actual: res.status === 0 ? res.stdout : res.stderr || res.traceback || "",
-          expected: t.expected_output,
-        });
+      for (const test of activeChallenge.tests) {
+        const stdin = "input" in test ? test.input ?? "" : "";
+        const res = await runTest(codeToTest, stdin);
+        const passed = evaluatePracticeTest(codeToTest, res, test);
+        const expected =
+          test.type === "ast"
+            ? test.hint ?? `Source should match /${test.pattern}/.`
+            : test.type === "quality"
+              ? test.hint ?? "Source must satisfy the inferred structural requirements."
+              : test.expected_output ?? "Expected output was not provided.";
+        const actual =
+          test.type === "quality"
+            ? res.sourceAnalysis?.syntaxValid
+              ? `AST valid; ${res.sourceAnalysis.statementCount} statement(s) analyzed.`
+              : "Python source could not be parsed."
+            : res.status === 0
+              ? res.plots?.length
+                ? `${res.stdout}Generated ${res.plots.length} plot(s).`
+                : res.stdout
+              : res.stderr || res.traceback || "";
+        out.push({ passed, actual, expected });
       }
     }
     setResults(out);
@@ -650,9 +549,12 @@ export function PracticeSidebar({
   const allPassed = results && results.length > 0 && results.every(r => r.passed);
   const activeIndex = activeChallenge ? challenges.findIndex(c => c.id === activeChallenge.id) : -1;
   const isProjectSolved = !!activeCategory && !!activeChallenge && solvedChallenges.has(activeCategory.id + "__" + activeChallenge.id);
+  const requiresManualConfirmation =
+    !!activeChallenge &&
+    requiresManualReview(questionKind, activeChallenge.tests.length);
 
   const markProjectComplete = () => {
-    if (!activeChallenge || !activeCategory) return;
+    if (!activeChallenge || !activeCategory || !manualExecutionPassed) return;
     markSolved(activeChallenge.id, activeCategory.id, challenges.length);
     const idx = challenges.findIndex(c => c.id === activeChallenge.id);
     if (idx < challenges.length - 1) {
@@ -661,10 +563,8 @@ export function PracticeSidebar({
   };
 
   useEffect(() => {
-    fetch("/practice-data/deliverables.json")
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => { if (d) setDeliverables(d); })
-      .catch(() => {});
+    void ensureDeliverables();
+    // The promise is memoized in a ref and should only be started on mount.
   }, []);
 
   const uniqueHintId = activeCategory && activeChallenge ? `${activeCategory.id}__${activeChallenge.id}` : null;
@@ -1063,10 +963,24 @@ export function PracticeSidebar({
                 </div>
 
                 <div className="text-[var(--vscode-text)] mb-4">
-                  <MarkdownRenderer content={activeChallenge.markdown} isCompact={true} fileId={activeCategory ? `${activeCategory.id}__${activeChallenge.id}` : activeChallenge.id} />
+                  <MarkdownRenderer
+                    content={activeChallenge.markdown}
+                    isCompact={true}
+                    fileId={activeCategory ? `${activeCategory.id}__${activeChallenge.id}` : activeChallenge.id}
+                    dirPath={activeCategory ? `/practice-data/${activeCategory.id}` : ""}
+                  />
                 </div>
 
-                {allPassed && activeIndex < challenges.length - 1 && (
+                {requiresManualConfirmation && (
+                  <ManualReviewCard
+                    review={manualReview}
+                    validated={manualExecutionPassed}
+                    solved={isProjectSolved}
+                    onConfirm={markProjectComplete}
+                  />
+                )}
+
+                {allPassed && (!requiresManualConfirmation || isProjectSolved) && activeIndex < challenges.length - 1 && (
                   <button
                     onClick={() => selectChallenge(challenges[activeIndex + 1])}
                     className="flex items-center justify-center gap-1.5 rounded bg-sky-600 px-3 py-2 text-[11px] font-semibold text-white hover:bg-sky-500 transition-colors mt-2 shadow-lg shadow-sky-500/20 animate-in fade-in zoom-in duration-300 w-full"

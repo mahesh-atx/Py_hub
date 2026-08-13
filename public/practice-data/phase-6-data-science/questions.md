@@ -991,4 +991,4 @@ Then state which of your real analysis steps you are least confident about.
 
 ---
 
-[← Phase 6 index](README.md) · [Project Guides](project-guides.md) · [Starter Project](starter-project/README.md)
+[← Phase 6 index](README.md) · [Project Guides](projects.md) · [Starter Project](starter-project/README.md)

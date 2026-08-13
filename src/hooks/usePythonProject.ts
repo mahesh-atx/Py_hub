@@ -2,8 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PyNode, TreeNode } from "@/types/filesystem";
-import type { FsFilePayload, RuntimeStatus } from "@/types/python";
+import type {
+  FsFilePayload,
+  FsSyncChanges,
+  RuntimeStatus,
+} from "@/types/python";
 import type { HistoryEntry, RunOutcome } from "@/types/execution";
+import type { CapturedRun } from "@/lib/practice/types";
 import { PyodideClient, type RuntimeInfo } from "@/lib/pyodide/worker-client";
 import { terminalStore } from "@/lib/terminal/store";
 import {
@@ -13,6 +18,7 @@ import {
   pathOf,
   validateName,
 } from "@/lib/filesystem/tree";
+import { applyFilesystemChanges } from "@/lib/filesystem/sync";
 import {
   bulkPutFiles,
   clearFiles,
@@ -26,7 +32,7 @@ import { exampleNodes } from "@/lib/examples";
 import { toast } from "@/components/ide/ToastContainer";
 
 interface RuntimeOptions {
-  onNewFiles?: (files: FsFilePayload[]) => void;
+  onFilesystemChanges?: (changes: FsSyncChanges) => void;
   onRunSuccess?: (stdout: string) => void;
   clearOnRun?: boolean;
   timeoutMs?: number;
@@ -53,6 +59,8 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [installMsg, setInstallMsg] = useState<string | null>(null);
   const [installed, setInstalled] = useState<string[]>([]);
+  const [bundledPackages, setBundledPackages] = useState<string[]>([]);
+  const [packageFailures, setPackageFailures] = useState<Record<string, string>>({});
 
   const addHistory = useCallback((outcome: RunOutcome, durationMs: number) => {
     setHistory((h) =>
@@ -67,6 +75,13 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
         ...h,
       ].slice(0, 50),
     );
+  }, []);
+
+  useEffect(() => {
+    fetch("/vendor/pyodide/bundled-packages.json")
+      .then((response) => response.json())
+      .then((manifest: { roots?: string[] }) => setBundledPackages(manifest.roots ?? []))
+      .catch(() => setBundledPackages([]));
   }, []);
 
   useEffect(() => {
@@ -94,9 +109,9 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
       },
       onStderr: (d) => terminalStore.stderr(d),
       onStdinRequest: () => terminalStore.requestInput(),
-      onFinished: ({ durationMs, hadError, newFiles }) => {
+      onFinished: ({ durationMs, hadError, fsChanges }) => {
         setLastDuration(durationMs);
-        if (newFiles && newFiles.length) optsRef.current.onNewFiles?.(newFiles);
+        if (fsChanges) optsRef.current.onFilesystemChanges?.(fsChanges);
         if (!hadError) {
           terminalStore.system(`Finished in ${(durationMs / 1000).toFixed(2)}s`);
           if (optsRef.current.onRunSuccess) {
@@ -111,25 +126,37 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
           terminalStore.stderr(t);
         }
       },
-      onStopped: ({ reason, durationMs }) => {
+      onStopped: ({ reason, durationMs, fsChanges }) => {
         setLastDuration(durationMs);
+        if (fsChanges) optsRef.current.onFilesystemChanges?.(fsChanges);
+        terminalStore.cancelInput();
         terminalStore.system(reason);
         addHistory("stopped", durationMs);
       },
       onPlot: (data) =>
         setPlots((p) => [...p, `data:image/png;base64,${data}`]),
       onInstallProgress: (m) => setInstallMsg(m),
-      onInstalled: ({ packages, message }) => {
+      onInstalled: ({ packages, failures, message }) => {
         setInstallMsg(message);
+        setPackageFailures((current) => {
+          const next = { ...current };
+          packages.forEach((name) => delete next[name]);
+          failures.forEach(({ name, reason }) => {
+            next[name] = reason;
+          });
+          return next;
+        });
         setInstalled((prev) => {
           const next = Array.from(new Set([...prev, ...packages]));
           setKV("installedPackages", next);
           return next;
         });
-        toast.info(message);
+        if (failures.length) toast.warn(message);
+        else toast.info(message);
       },
       onFatal: (err) => {
         setFatalError(err);
+        terminalStore.cancelInput();
         terminalStore.system(err);
       },
     });
@@ -141,7 +168,12 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
   }, [addHistory]);
 
   const run = useCallback(
-    (code: string, filename = "main.py", files?: FsFilePayload[]) => {
+    (
+      code: string,
+      filename = "main.py",
+      files?: FsFilePayload[],
+      directories?: string[],
+    ) => {
       if (status === "loading" || !clientRef.current?.isReady()) return;
       filenameRef.current = filename;
       interactiveStdoutRef.current = "";
@@ -151,7 +183,13 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
         terminalStore.clear();
       }
       terminalStore.system(`\u25b6 Running ${filename}\u2026`);
-      clientRef.current?.run(code, filename, files, optsRef.current.timeoutMs);
+      clientRef.current?.run(
+        code,
+        filename,
+        files,
+        directories,
+        optsRef.current.timeoutMs,
+      );
     },
     [status],
   );
@@ -160,10 +198,16 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
   const restart = useCallback(() => {
     setPlots([]);
     setLastDuration(null);
+    terminalStore.cancelInput();
     terminalStore.system("Restarting Python runtime\u2026");
     clientRef.current?.restart();
   }, []);
   const install = useCallback((packages: string[]) => {
+    setPackageFailures((current) => {
+      const next = { ...current };
+      packages.forEach((name) => delete next[name]);
+      return next;
+    });
     setInstallMsg("Starting installation\u2026");
     clientRef.current?.install(packages);
   }, []);
@@ -177,14 +221,9 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
       code: string,
       stdin = "",
       timeoutMs?: number,
-    ): Promise<{
-      stdout: string;
-      stderr: string;
-      traceback?: string;
-      status: number;
-      plots?: string[];
-    }> =>
-      clientRef.current?.runTest(code, stdin, timeoutMs) ??
+      isolated = true,
+    ): Promise<CapturedRun> =>
+      clientRef.current?.runTest(code, stdin, timeoutMs, isolated) ??
       Promise.resolve({
         stdout: "",
         stderr: "",
@@ -206,6 +245,8 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
     fatalError,
     installMsg,
     installed,
+    bundledPackages,
+    packageFailures,
     ready: status === "ready" || status === "waiting-input",
     running: status === "running",
     waitingInput: status === "waiting-input",
@@ -218,12 +259,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
 }
 
 /** Manage the virtual project: files, folders, tabs, and persistence. */
-export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
-  const onNewFilesRef = useRef(onNewFiles);
-  useEffect(() => {
-    onNewFilesRef.current = onNewFiles;
-  });
-
+export function useProject() {
   const [nodes, setNodes] = useState<PyNode[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [openTabs, setOpenTabs] = useState<string[]>([]);
@@ -596,17 +632,41 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
     [],
   );
 
-  const ingestRuntimeFiles = useCallback(
-    (files: FsFilePayload[]) => {
-      const existingPaths = new Set(nodes.map((n) => pathOf(nodes, n.id)));
-      const fresh = files.filter((f) => !existingPaths.has(f.path));
-      if (!fresh.length) return;
-      for (const f of fresh) createByPath(f.path, f.content);
-      terminalStore.system(
-        `Created file${fresh.length > 1 ? "s" : ""}: ${fresh.map((f) => f.path).join(", ")}`,
-      );
+  const applyRuntimeFilesystemChanges = useCallback(
+    (changes: FsSyncChanges) => {
+      if (
+        changes.upserted.length === 0 &&
+        changes.directories.length === 0 &&
+        changes.deleted.length === 0
+      ) {
+        return;
+      }
+
+      const result = applyFilesystemChanges(nodesRef.current, changes);
+      nodesRef.current = result.nodes;
+      setNodes(result.nodes);
+      void bulkPutFiles([...result.created, ...result.updated]);
+      result.deletedIds.forEach((id) => void deleteFilePersisted(id));
+
+      const deletedIds = new Set(result.deletedIds);
+      setOpenTabs((tabs) => tabs.filter((id) => !deletedIds.has(id)));
+      setActiveId((id) => (id && deletedIds.has(id) ? null : id));
+      setDirty((current) => {
+        const next = new Set(current);
+        result.deletedIds.forEach((id) => next.delete(id));
+        result.updated.forEach((node) => next.delete(node.id));
+        return next;
+      });
+
+      const summary: string[] = [];
+      if (result.created.length) summary.push(`${result.created.length} created`);
+      if (result.updated.length) summary.push(`${result.updated.length} updated`);
+      if (result.deletedIds.length) summary.push(`${result.deletedIds.length} deleted`);
+      if (summary.length) {
+        terminalStore.system(`Filesystem synchronized: ${summary.join(", ")}.`);
+      }
     },
-    [nodes, createByPath],
+    [],
   );
 
   const resetToExamples = useCallback(() => {
@@ -656,7 +716,7 @@ export function useProject(onNewFiles?: (files: FsFilePayload[]) => void) {
     duplicateNodes,
     moveNodes,
     createByPath,
-    ingestRuntimeFiles,
+    applyRuntimeFilesystemChanges,
     resetToExamples,
   };
 }

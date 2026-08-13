@@ -6,7 +6,10 @@
         {
           "input": "",
           "expected_output": "Should print distance, square, and mutable bug trace",
-          "contains": ["Book reading time", "buddy tricks"]
+          "contains": [
+            "Book reading time",
+            "buddy tricks"
+          ]
         }
       ]
     },
@@ -16,7 +19,10 @@
         {
           "input": "",
           "expected_output": "Should demonstrate encapsulation concepts",
-          "contains": ["Mangled", "Accessible"]
+          "contains": [
+            "Mangled",
+            "Accessible"
+          ]
         }
       ]
     },
@@ -26,7 +32,10 @@
         {
           "input": "",
           "expected_output": "Should print MRO traces",
-          "contains": ["MRO", "Flying"]
+          "contains": [
+            "MRO",
+            "Flying"
+          ]
         }
       ]
     },
@@ -36,29 +45,20 @@
         {
           "input": "",
           "expected_output": "Should use magic methods to compute shapes/math",
-          "contains": ["v1 + v2", "Inside context"]
+          "contains": [
+            "v1 + v2",
+            "Inside context"
+          ]
         }
       ]
     },
     {
       "question_id": 19,
-      "tests": [
-        {
-          "input": "",
-          "expected_output": "CLI library tool prints usage or loads successfully",
-          "contains": []
-        }
-      ]
+      "tests": []
     },
     {
       "question_id": 20,
-      "tests": [
-        {
-          "input": "",
-          "expected_output": "Capstone project runs",
-          "contains": []
-        }
-      ]
+      "tests": []
     }
   ]
 }

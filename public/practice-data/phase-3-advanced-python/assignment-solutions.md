@@ -265,7 +265,7 @@ if __name__ == "__main__":
     try:
         withdraw(100, 50)
     except InsufficientFundsError as e:
-        print(f"Failed. Shortfall: {e.requested - e.available}")
+        print(f"Caught InsufficientFundsError. Shortfall: {e.requested - e.available}")
 ```
 
 ## A13. Expense Tracker with Persistence

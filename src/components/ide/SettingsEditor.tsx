@@ -28,6 +28,7 @@ const SETTINGS_DEF: SettingDef[] = [
     categories: ["Commonly Used", "Workbench"],
     type: "select",
     options: [
+      { value: "pylab-accessible-dark", label: "PyLab Accessible Dark" },
       { value: "vs-dark", label: "Dark (VS Code)" },
       { value: "light", label: "Light (VS Code)" },
       { value: "dracula", label: "Dracula" },

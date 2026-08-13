@@ -16,6 +16,7 @@ const MarkdownContext = React.createContext<{
   getCheckboxIndex: () => number;
   dirPath: string;
   setSelectedImage: (src: string) => void;
+  onNavigateLink?: (href: string) => void;
   isCompact?: boolean;
 }>({
   checkboxState: {},
@@ -23,6 +24,7 @@ const MarkdownContext = React.createContext<{
   getCheckboxIndex: () => 0,
   dirPath: '',
   setSelectedImage: () => {},
+  onNavigateLink: undefined,
   isCompact: false
 });
 
@@ -153,6 +155,31 @@ function MarkdownInput({ type, checked, disabled, ...rest }: any) {
   return <input type={type} checked={checked} disabled={disabled} {...rest} />;
 }
 
+function MarkdownLink({ href, children, ...rest }: any) {
+  const context = React.useContext(MarkdownContext);
+  const value = typeof href === "string" ? href : "";
+  const internalMarkdown =
+    value.length > 0 &&
+    !value.startsWith("#") &&
+    !/^(?:[a-z]+:)?\/\//i.test(value) &&
+    value.split("#")[0].toLowerCase().endsWith(".md");
+
+  return (
+    <a
+      href={value}
+      {...rest}
+      onClick={(event) => {
+        if (internalMarkdown && context.onNavigateLink) {
+          event.preventDefault();
+          context.onNavigateLink(value);
+        }
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
 function MarkdownImage({ src, alt }: any) {
   const context = React.useContext(MarkdownContext);
   if (!src) return null;
@@ -189,6 +216,7 @@ function MarkdownImage({ src, alt }: any) {
 
 const markdownComponents: any = {
   input: MarkdownInput,
+  a: MarkdownLink,
   code: (props: any) => {
     const { children, className, node, ref, ...rest } = props;
     const match = /language-(\w+)/.exec(className || '');
@@ -302,7 +330,7 @@ const markdownComponents: any = {
   }
 };
 
-const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId, dirPath = '', isCompact = false }: { content: string, fileId: string, dirPath?: string, isCompact?: boolean }) {
+const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId, dirPath = '', isCompact = false, onNavigateLink }: { content: string, fileId: string, dirPath?: string, isCompact?: boolean, onNavigateLink?: (href: string) => void }) {
   const [checkboxState, setCheckboxState] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -332,8 +360,9 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
     getCheckboxIndex: () => checkboxIndexRef.current++,
     dirPath,
     setSelectedImage,
+    onNavigateLink,
     isCompact
-  }), [checkboxState, toggleCheckbox, dirPath, isCompact]);
+  }), [checkboxState, toggleCheckbox, dirPath, onNavigateLink, isCompact]);
 
   return (
     <MarkdownContext.Provider value={contextValue}>

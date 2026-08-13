@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   X,
   Loader2,
@@ -30,29 +30,66 @@ export function Modal({
   children: React.ReactNode;
   wide?: boolean;
 }) {
+  const titleId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    const focusable = () =>
+      dialog?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+    focusable()?.[0]?.focus();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const elements = [...(focusable() ?? [])];
+      if (!elements.length) return;
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      previousFocus?.focus();
+    };
   }, [onClose]);
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-      onClick={onClose}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
         className={`flex max-h-[85vh] w-full ${
           wide ? "max-w-2xl" : "max-w-md"
-        } flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0d1117] shadow-2xl`}
+        } flex-col overflow-hidden rounded-lg border border-[var(--vscode-border)] bg-[var(--vscode-editor-bg)] shadow-2xl`}
       >
-        <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-          <h2 className="text-sm font-semibold text-slate-100">{title}</h2>
+        <div className="flex items-center justify-between border-b border-[var(--vscode-border)] px-4 py-3">
+          <h2 id={titleId} className="text-sm font-semibold text-[var(--vscode-text)]">{title}</h2>
           <button
+            type="button"
             onClick={onClose}
-            className="rounded p-1 text-slate-400 hover:bg-white/10 hover:text-slate-200"
-            aria-label="Close"
+            className="min-h-9 min-w-9 rounded p-2 text-[var(--vscode-text-muted)] outline-none hover:bg-[var(--vscode-hover)] hover:text-[var(--vscode-text)] focus-visible:ring-2 focus-visible:ring-[var(--vscode-accent)]"
+            aria-label="Close dialog"
           >
             <X className="h-4 w-4" />
           </button>
