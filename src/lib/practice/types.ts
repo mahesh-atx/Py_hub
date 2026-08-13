@@ -5,6 +5,8 @@ export interface PlotExpectation {
   minCollections?: number;
   minImages?: number;
   title?: string;
+  titles?: string[];
+  figureTitle?: string;
   xlabel?: string;
   ylabel?: string;
   legend?: boolean;
@@ -100,6 +102,7 @@ export interface PlotAxesMetadata {
 
 export interface PlotMetadata {
   axes: PlotAxesMetadata[];
+  figureTitle?: string;
 }
 
 export interface CapturedRun {

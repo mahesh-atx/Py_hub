@@ -118,7 +118,13 @@ export function inferPlotExpectation(markdown: string): PlotExpectation {
   const lower = markdown.toLowerCase();
   const expectation: PlotExpectation = { minAxes: 1 };
   const expectedLine = markdown.match(/^\*\*Expected:\*\*\s*(.+)$/im)?.[1] ?? markdown;
-  expectation.title = expectedLine.match(/title\s+`([^`]+)`/i)?.[1];
+  expectation.figureTitle = expectedLine.match(/suptitle\s+`([^`]+)`/i)?.[1];
+  const withoutFigureTitle = expectedLine.replace(/suptitle\s+`[^`]+`/i, "");
+  expectation.title = withoutFigureTitle.match(/(?<!sup)title\s+`([^`]+)`/i)?.[1];
+  const panelTitles = expectedLine.match(/panel titles?\s+(.+)$/i)?.[1];
+  if (panelTitles) {
+    expectation.titles = [...panelTitles.matchAll(/`([^`]+)`/g)].map((match) => match[1]);
+  }
   expectation.xlabel = expectedLine.match(/xlabel\s+`([^`]+)`/i)?.[1];
   expectation.ylabel = expectedLine.match(/ylabel\s+`([^`]+)`/i)?.[1];
 

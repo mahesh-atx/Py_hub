@@ -96,6 +96,7 @@ describe("practice output judging", () => {
       stderr: "",
       plotMetadata: [
         {
+          figureTitle: "Dashboard",
           axes: [
             {
               title: "Revenue by category",
@@ -116,10 +117,14 @@ describe("practice output judging", () => {
         minAxes: 1,
         minBars: 5,
         title: "Revenue by category",
+        titles: ["Revenue by category"],
+        figureTitle: "Dashboard",
         ylabel: "Revenue (lakh)",
       }),
     ).toBe(true);
     expect(matchesPlotExpectation(run, { minBars: 6 })).toBe(false);
+    expect(matchesPlotExpectation(run, { figureTitle: "Other" })).toBe(false);
+    expect(matchesPlotExpectation(run, { titles: ["Missing panel"] })).toBe(false);
   });
 
   it("judges chart tests by captured figures", () => {

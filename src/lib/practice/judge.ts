@@ -123,6 +123,28 @@ export function matchesPlotExpectation(
         normalizeOutput(expected).toLowerCase(),
     );
   if (!textMatches("title", expectation.title)) return false;
+  if (
+    expectation.titles?.some(
+      (title) =>
+        !axes.some(
+          (axis) =>
+            normalizeOutput(axis.title).toLowerCase() ===
+            normalizeOutput(title).toLowerCase(),
+        ),
+    )
+  ) {
+    return false;
+  }
+  if (
+    expectation.figureTitle &&
+    !plots.some(
+      (plot) =>
+        normalizeOutput(plot.figureTitle).toLowerCase() ===
+        normalizeOutput(expectation.figureTitle).toLowerCase(),
+    )
+  ) {
+    return false;
+  }
   if (!textMatches("xlabel", expectation.xlabel)) return false;
   if (!textMatches("ylabel", expectation.ylabel)) return false;
   if (expectation.legend && !axes.some((axis) => axis.hasLegend)) return false;

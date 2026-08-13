@@ -53,6 +53,18 @@ describe("practice content parser", () => {
     });
   });
 
+  it("distinguishes figure and panel titles in subplot expectations", () => {
+    expect(
+      inferPlotExpectation(
+        "Create a two by two grid. **Expected:** suptitle `Four views`; panel titles `Trend`, `Categories`, `Distribution`, `Relationship`.",
+      ),
+    ).toMatchObject({
+      minAxes: 4,
+      figureTitle: "Four views",
+      titles: ["Trend", "Categories", "Distribution", "Relationship"],
+    });
+  });
+
   it("parses questions, metadata, output tests, and numbered solutions", () => {
     const parsed = parsePracticeContent({
       fileId: "questions.md",

@@ -210,9 +210,13 @@ def __ide_collect_plot_bundle():
                 "images": len(ax.images),
                 "hasLegend": ax.get_legend() is not None,
             })
+        suptitle = getattr(fig, "_suptitle", None)
         out.append({
             "image": base64.b64encode(buf.getvalue()).decode(),
-            "metadata": {"axes": axes},
+            "metadata": {
+                "axes": axes,
+                "figureTitle": suptitle.get_text() if suptitle is not None else "",
+            },
         })
     plt.close("all")
     return json.dumps(out)
