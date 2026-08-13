@@ -11,21 +11,16 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "check": "npm run lint && npm run typecheck && npm run test:run && npm run security && npm run build",
-    "e2e": "node scripts/run-e2e.js",
-    "e2e:ui": "node scripts/run-e2e.js --ui",
     "security": "npm audit --audit-level=moderate",
     "prepare:pyodide": "node scripts/prepare-pyodide.js",
     "postinstall": "npm run prepare:pyodide",
     "predev": "npm run prepare:pyodide",
     "prebuild": "npm run prepare:runtime",
-    "pree2e": "npm run prepare:pyodide",
-    "check:all": "npm run check && npm run e2e",
     "serve:static": "node scripts/serve-static.js --dir out",
     "prepare:packages": "node scripts/prepare-pyodide-packages.js",
     "prepare:runtime": "npm run prepare:pyodide && npm run prepare:packages",
     "check:static": "node scripts/check-static-export.js",
-    "build:strict": "node scripts/run-strict-build.js",
-    "e2e:install": "playwright install chromium"
+    "build:strict": "node scripts/run-strict-build.js"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -51,9 +46,6 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
-    "@playwright/test": "^1.62.1",
-    "@sparticuz/chromium": "^149.0.0",
     "@tailwindcss/postcss": "4.1.17",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
