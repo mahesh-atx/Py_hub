@@ -30,16 +30,16 @@ Write `greet(name)` that returns a greeting string. Give it a docstring and a ty
 greet("Priya")   # 'Hello, Priya!'
 ```
 
-**How to solve:**
-1. Define the function `greet` taking one parameter `name`.
-2. Return a formatted string combining "Hello, " and the `name`.
-3. Call the function three times with different arguments.
-
 **Explanation:** A docstring is the string literal on the **first line** of the body; a type hint annotates the parameter and the return, as in `def greet(name: str) -> str:`. Neither is enforced at runtime — Python will happily pass an integer — but both are read by your editor and by `help()`.
 
 **Hint:** `return f"Hello, {name}!"` — return the string, do not print it.
 
 ---
+
+**How to solve:**
+1. Define the function `greet` taking one parameter `name`.
+2. Return a formatted string combining "Hello, " and the `name`.
+3. Call the function three times with different arguments.
 
 ## Q2. Rectangle Area with Defaults
 
@@ -50,16 +50,16 @@ area(5, 3)   # 15
 area(7)      # 7
 ```
 
-**How to solve:**
-1. Define the function `area` with parameters `length` and `width`, assigning a default value of 1 to `width`.
-2. Compute the product of `length` and `width`.
-3. Return the calculated area.
-
 **Explanation:** `area(5, 3)` is `15`; `area(7)` uses the default width of 1 and returns `7`. Default parameters must come **after** all non-default ones, otherwise Python raises `SyntaxError: non-default argument follows default argument` at import time.
 
 **Hint:** `def area(length: float, width: float = 1) -> float:`
 
 ---
+
+**How to solve:**
+1. Define the function `area` with parameters `length` and `width`, assigning a default value of 1 to `width`.
+2. Compute the product of `length` and `width`.
+3. Return the calculated area.
 
 ## Q3. Multiple Return Values
 
@@ -70,16 +70,16 @@ stats(10, 4)   # (14, 6, 40, 2.5)
 stats(10, 0)   # (10, 10, 0, None)
 ```
 
-**How to solve:**
-1. Check if `b` is zero to handle the division correctly; if so, set the quotient to `None`.
-2. Compute the sum, difference, and product of `a` and `b`.
-3. Return all four computed values as a tuple.
-
 **Explanation:** `stats(10, 4)` returns `(14, 6, 40, 2.5)` — a bare `return a+b, a-b, a*b, q` packs those four values into a tuple automatically. Check `b == 0` **before** dividing; catching `ZeroDivisionError` afterwards also works, but testing first is clearer when the answer is a defined `None` rather than an error.
 
 **Hint:** Compute the quotient into a variable first, guarded by an `if`, then return all four.
 
 ---
+
+**How to solve:**
+1. Check if `b` is zero to handle the division correctly; if so, set the quotient to `None`.
+2. Compute the sum, difference, and product of `a` and `b`.
+3. Return all four computed values as a tuple.
 
 ## Q4. Even Number Filter
 
@@ -89,16 +89,16 @@ Write `only_evens(numbers)` that returns a new list of the even numbers. Do not 
 only_evens([1, 2, 3, 4, 5, 6])   # [2, 4, 6]
 ```
 
-**How to solve:**
-1. Iterate over the input list `numbers`.
-2. Check if each number is divisible by 2 using the modulo operator.
-3. Collect and return the even numbers in a new list.
-
 **Explanation:** `[1,2,3,4,5,6]` gives `[2, 4, 6]`. "Do not modify the input" is the real constraint: a comprehension builds a **new** list, whereas `numbers.remove(x)` in a loop would mutate the caller's data — a side effect they never asked for and cannot see from the call site.
 
 **Hint:** `return [n for n in numbers if n % 2 == 0]`
 
 ---
+
+**How to solve:**
+1. Iterate over the input list `numbers`.
+2. Check if each number is divisible by 2 using the modulo operator.
+3. Collect and return the even numbers in a new list.
 
 ## Q5. Celsius Converter with Validation
 
@@ -109,16 +109,16 @@ to_fahrenheit(37)      # 98.6
 to_fahrenheit(-300)    # None
 ```
 
-**How to solve:**
-1. Check if the `celsius` input is less than -273.15.
-2. If it is, return `None` immediately to handle the invalid case.
-3. Otherwise, apply the conversion formula `(C * 9/5) + 32` and return the result.
-
 **Explanation:** `37°C` is `98.6°F`. Absolute zero is `-273.15°C`, below which the input is physically meaningless, so the function returns `None`. Returning `None` rather than raising is a design choice — it means every caller must remember to check, which is why raising `ValueError` is often the safer option.
 
 **Hint:** Validate first, return `None` early, then do the conversion.
 
 ---
+
+**How to solve:**
+1. Check if the `celsius` input is less than -273.15.
+2. If it is, return `None` immediately to handle the invalid case.
+3. Otherwise, apply the conversion formula `(C * 9/5) + 32` and return the result.
 
 ## Q6. Variable Arguments
 
@@ -130,16 +130,16 @@ total()             # 0
 total(5)            # 5
 ```
 
-**How to solve:**
-1. Define the function `total` with a variable positional argument `*numbers`.
-2. Use Python's built-in `sum()` function to calculate the total of the `numbers` tuple.
-3. Return the calculated total, which naturally handles empty inputs as 0.
-
 **Explanation:** `*numbers` collects every positional argument into a **tuple**. With no arguments that tuple is empty and `sum(())` is `0`, so the zero case needs no special handling — `sum()` already returns 0 for an empty iterable.
 
 **Hint:** `def total(*numbers: float) -> float:` then `return sum(numbers)`
 
 ---
+
+**How to solve:**
+1. Define the function `total` with a variable positional argument `*numbers`.
+2. Use Python's built-in `sum()` function to calculate the total of the `numbers` tuple.
+3. Return the calculated total, which naturally handles empty inputs as 0.
 
 ## Q7. Keyword Arguments
 
@@ -152,16 +152,16 @@ describe(name="Rohan", age=25, city="Pune")
 # City: Pune
 ```
 
-**How to solve:**
-1. Define `describe` with a keyword arguments parameter `**details`.
-2. Iterate through `details.items()` to get keys and values.
-3. Print each key and value, applying the `.title()` method to the key for formatting.
-
 **Explanation:** `**details` collects keyword arguments into a **dictionary**, so you iterate it with `.items()`. Since Python 3.7 that dictionary preserves the order the arguments were written in, which is why the output matches the call order rather than coming out alphabetical.
 
 **Hint:** `for key, value in details.items():` then `print(f"{key.title()}: {value}")`
 
 ---
+
+**How to solve:**
+1. Define `describe` with a keyword arguments parameter `**details`.
+2. Iterate through `details.items()` to get keys and values.
+3. Print each key and value, applying the `.title()` method to the key for formatting.
 
 ## Q8. Mixed Arguments
 
@@ -175,16 +175,16 @@ order("Pizza", 2, "extra cheese", "olives", size="large", delivery=True)
 # options: {'size': 'large', 'delivery': True}
 ```
 
-**How to solve:**
-1. Define the function `order` with the specified mixed parameters.
-2. Inside the function, print the values of `item`, `quantity`, `extras`, and `options`.
-3. Call the function with various arguments to observe parameter assignments.
-
 **Explanation:** Python fills parameters in a fixed order: positional first (`item`), then defaults (`quantity`), then everything else positional goes into `*extras` as a tuple, and every remaining keyword goes into `**options` as a dictionary. That order is also the order you must **declare** them in, or you get a `SyntaxError`.
 
 **Hint:** Print all four parameters and call the function several ways to see what lands where.
 
 ---
+
+**How to solve:**
+1. Define the function `order` with the specified mixed parameters.
+2. Inside the function, print the values of `item`, `quantity`, `extras`, and `options`.
+3. Call the function with various arguments to observe parameter assignments.
 
 ## Q9. Scope Demonstration
 
@@ -198,16 +198,16 @@ without global -> counter after: 0     (the function made a local copy)
 with global    -> counter after: 1
 ```
 
-**How to solve:**
-1. Define a global variable `counter` and initialize it to 0.
-2. Write one function that assigns a value to `counter` without the `global` keyword.
-3. Write a second function that declares `global counter` before assigning a value to it, and compare their behaviors.
-
 **Explanation:** Assigning to a name inside a function makes it **local** for the whole function, so the first version creates a throwaway local `counter` and the global stays `0`. `global counter` tells Python to bind the outer name instead. Note you can *read* a global without declaring it — the declaration is only needed to **rebind** it.
 
 **Hint:** The version without `global` may raise `UnboundLocalError` if you read the variable before assigning it.
 
 ---
+
+**How to solve:**
+1. Define a global variable `counter` and initialize it to 0.
+2. Write one function that assigns a value to `counter` without the `global` keyword.
+3. Write a second function that declares `global counter` before assigning a value to it, and compare their behaviors.
 
 ## Q10. The Mutable Default Trap
 
@@ -220,16 +220,16 @@ add_item("banana")   # ['apple', 'banana']   <- the bug
 
 **This is one of Python's most notorious traps.** Make sure you can explain *why* it happens.
 
-**How to solve:**
-1. First, define the buggy version using a default list parameter `cart=[]` and demonstrate the persistent state.
-2. Then, define the corrected version with `cart=None`.
-3. Check `if cart is None`, assign it a new list `[]`, append the item, and return the cart.
-
 **Explanation:** The default `[]` is created **once**, when the `def` line executes — not on each call. Every call without a cart therefore shares that same list, so `add_item("banana")` returns `['apple', 'banana']`. The fix is `def add_item(item, cart=None):` then `if cart is None: cart = []`, which builds a fresh list per call. This applies to every mutable default: lists, dictionaries and sets.
 
 **Hint:** Print `id(cart)` inside the function to prove it is the same object each time.
 
 ---
+
+**How to solve:**
+1. First, define the buggy version using a default list parameter `cart=[]` and demonstrate the persistent state.
+2. Then, define the corrected version with `cart=None`.
+3. Check `if cart is None`, assign it a new list `[]`, append the item, and return the cart.
 
 ## Q11. Lambda Practice
 
@@ -240,16 +240,16 @@ sorted([('a', 3), ('b', 1), ('c', 2)], key=lambda t: t[1])
 # [('b', 1), ('c', 2), ('a', 3)]
 ```
 
-**How to solve:**
-1. Create a `lambda` for squaring: `lambda x: x ** 2`.
-2. Create a `lambda` for the larger value: `lambda x, y: x if x > y else y`.
-3. Use a `lambda` as the `key` function in `sorted()` to extract the second element of the tuple.
-
 **Explanation:** `sorted(..., key=lambda t: t[1])` sorts by the second tuple element, giving `[('b',1), ('c',2), ('a',3)]`. A lambda is a single **expression** whose value is returned automatically — no `return`, no statements, no loops. When you want to give it a name, use `def` instead; that is what `def` is for.
 
 **Hint:** `key=` takes a function that maps each item to the value you want compared.
 
 ---
+
+**How to solve:**
+1. Create a `lambda` for squaring: `lambda x: x ** 2`.
+2. Create a `lambda` for the larger value: `lambda x, y: x if x > y else y`.
+3. Use a `lambda` as the `key` function in `sorted()` to extract the second element of the tuple.
 
 ## Q12. map, filter, reduce
 
@@ -265,11 +265,6 @@ Divisible by 3: [3, 6, 9]
 Product: 3628800
 ```
 
-**How to solve:**
-1. Use `map` with a squaring lambda and wrap it in `list()`.
-2. Use `filter` with a divisibility lambda and wrap it in `list()`.
-3. Use `reduce` with a multiplication lambda to find the product of the list.
-
 **Explanation:** Squares run `1, 4, 9 … 100`; the multiples of 3 are `[3, 6, 9]`; and the product of 1–10 is `3,628,800`, which is `10!`. `map` and `filter` return lazy iterators, so you must wrap them in `list()` to see anything. `reduce` needs `from functools import reduce` — it was removed from builtins in Python 3.
 
 **Hint:** `reduce(lambda a, b: a * b, numbers)` folds the list down to one value.
@@ -277,6 +272,11 @@ Product: 3628800
 ---
 
 ## Tier 2 — Recursion and Function Design (Q13–Q24)
+
+**How to solve:**
+1. Use `map` with a squaring lambda and wrap it in `list()`.
+2. Use `filter` with a divisibility lambda and wrap it in `list()`.
+3. Use `reduce` with a multiplication lambda to find the product of the list.
 
 ## Q13. Recursive Factorial
 
@@ -288,16 +288,16 @@ factorial(0)    # 1
 factorial(-1)   # ValueError
 ```
 
-**How to solve:**
-1. Define the function `factorial(n)`.
-2. Handle the base cases: if `n < 0`, raise `ValueError`; if `n <= 1`, return 1.
-3. Return `n * factorial(n-1)` for the recursive step.
-
 **Explanation:** `6! = 720` and `0! = 1` — that second one is the base case, and getting it right is what stops the recursion. Without a base case you recurse until Python raises `RecursionError` at roughly 1,000 frames deep. Raise `ValueError` for negatives, because they have no factorial and would otherwise recurse forever.
 
 **Hint:** `if n < 0: raise ValueError(...)`, `if n <= 1: return 1`, else `return n * factorial(n-1)`.
 
 ---
+
+**How to solve:**
+1. Define the function `factorial(n)`.
+2. Handle the base cases: if `n < 0`, raise `ValueError`; if `n <= 1`, return 1.
+3. Return `n * factorial(n-1)` for the recursive step.
 
 ## Q14. Recursive Fibonacci
 
@@ -310,16 +310,16 @@ fib(30) iterative: 832040 in 0.00 s
 
 Your exact timing will differ by machine — what matters is the **ratio**, which should be enormous. The recursive version recomputes `fib(28)` thousands of times.
 
-**How to solve:**
-1. Implement the naive recursive version with `fib(n-1) + fib(n-2)`.
-2. Implement an iterative version using a loop that updates two variables.
-3. Import the `time` module and measure the duration for both versions.
-
 **Explanation:** `fib(30) = 832040`. On this machine the recursive version took **0.110 s** — your timing will differ, the ratio will not. The reason is measurable: naive `fib(30)` makes **2,692,537 function calls** because each branch recomputes the same sub-results independently. The iterative version makes 30 loop iterations. The recursion tree has exponential width, O(2ⁿ), against the loop's O(n).
 
 **Hint:** Add a counter to the recursive version and print how many times it was called.
 
 ---
+
+**How to solve:**
+1. Implement the naive recursive version with `fib(n-1) + fib(n-2)`.
+2. Implement an iterative version using a loop that updates two variables.
+3. Import the `time` module and measure the duration for both versions.
 
 ## Q15. Memoized Fibonacci
 
@@ -333,16 +333,16 @@ dict memo        fib(35) = 9227465   ~0.00002 s
 lru_cache        fib(35) = 9227465   ~0.00002 s
 ```
 
-**How to solve:**
-1. Create a version of the recursive `fib` function that stores previously computed values in a dictionary parameter.
-2. Create another version using the `@functools.lru_cache` decorator on the plain recursive function.
-3. Time both memoized versions to observe the performance gains over standard recursion.
-
 **Explanation:** `fib(35) = 9227465`. Memoisation stores each result the first time it is computed, collapsing the exponential tree to a linear walk — 36 real computations instead of tens of millions. `functools.lru_cache` does exactly this in one decorator, and the dictionary-default trick shows what it is doing underneath. This is the one legitimate use of a mutable default argument, and even then `lru_cache` is clearer.
 
 **Hint:** `@functools.lru_cache(maxsize=None)` above the plain recursive version is the whole change.
 
 ---
+
+**How to solve:**
+1. Create a version of the recursive `fib` function that stores previously computed values in a dictionary parameter.
+2. Create another version using the `@functools.lru_cache` decorator on the plain recursive function.
+3. Time both memoized versions to observe the performance gains over standard recursion.
 
 ## Q16. Recursive Sum of Digits
 
@@ -352,16 +352,16 @@ Write `digit_sum(n)` that recursively sums a number's digits until a single digi
 digit_sum(9875)   # 9+8+7+5=29 -> 2+9=11 -> 1+1=2 -> returns 2
 ```
 
-**How to solve:**
-1. Define the `digit_sum` function that takes an integer `n`.
-2. Sum the digits by converting the number to a string and iterating, or by using modulo and integer division.
-3. If the sum is 10 or greater, return `digit_sum` of the new sum; otherwise, return the sum.
-
 **Explanation:** `9875 → 29 → 11 → 2`. Each pass sums the digits; the recursion continues while the result is still more than one digit. The base case is `n < 10`, at which point the number *is* its own digit sum. This value is the **digital root**, and it always equals `1 + (n-1) % 9` for positive `n` — worth checking your answer against.
 
 **Hint:** Sum the digits once, then call yourself again if the result is still 10 or more.
 
 ---
+
+**How to solve:**
+1. Define the `digit_sum` function that takes an integer `n`.
+2. Sum the digits by converting the number to a string and iterating, or by using modulo and integer division.
+3. If the sum is 10 or greater, return `digit_sum` of the new sum; otherwise, return the sum.
 
 ## Q17. Recursive Power
 
@@ -372,16 +372,16 @@ power(2, 10)   # 1024
 power(2, -2)   # 0.25
 ```
 
-**How to solve:**
-1. Identify the base case: if `exp` is 0, return 1.
-2. If `exp` is negative, return the reciprocal `1 / power(base, -exp)`.
-3. If `exp` is positive, return `base * power(base, exp - 1)`.
-
 **Explanation:** `power(2, 10) = 1024`; `power(2, -2) = 0.25`, because a negative exponent is the reciprocal of the positive one. Base case: any base to the power 0 is 1. For the negative case, compute `power(base, -exp)` and return `1 / result` rather than trying to recurse downwards past zero.
 
 **Hint:** Three branches: exponent zero, exponent negative, exponent positive.
 
 ---
+
+**How to solve:**
+1. Identify the base case: if `exp` is 0, return 1.
+2. If `exp` is negative, return the reciprocal `1 / power(base, -exp)`.
+3. If `exp` is positive, return `base * power(base, exp - 1)`.
 
 ## Q18. Tower of Hanoi
 
@@ -397,16 +397,16 @@ Total moves: 7
 
 Verify that `n` disks always take exactly `2**n - 1` moves.
 
-**How to solve:**
-1. Define the base case: if `n` is 0, return 0 moves.
-2. Recursively move `n-1` disks to the auxiliary peg, print the move for the `n`-th disk, and move the `n-1` disks to the target peg.
-3. Sum the moves from the two recursive calls plus 1 for the current move.
-
 **Explanation:** `n` disks always take exactly `2ⁿ - 1` moves: 7 for 3 disks, 31 for 5, and **1,048,575** for 20. Each additional disk doubles the work, because you must move the whole stack above it, move the disk, then move that stack back. The recursion mirrors that sentence exactly — three lines, one for each phase.
 
 **Hint:** `hanoi(n-1, source, auxiliary, target)`, move disk n, `hanoi(n-1, auxiliary, target, source)`.
 
 ---
+
+**How to solve:**
+1. Define the base case: if `n` is 0, return 0 moves.
+2. Recursively move `n-1` disks to the auxiliary peg, print the move for the `n`-th disk, and move the `n-1` disks to the target peg.
+3. Sum the moves from the two recursive calls plus 1 for the current move.
 
 ## Q19. Recursive Binary Search
 
@@ -417,16 +417,16 @@ binary_search([2, 5, 8, 12, 16, 23, 38, 56, 72, 91], 23)   # 5
 binary_search([2, 5, 8], 100)                              # -1
 ```
 
-**How to solve:**
-1. Check the base case: if `low > high` (or list is empty depending on implementation), return `-1`.
-2. Find the midpoint and compare it to the target. If it matches, return the midpoint index.
-3. If the target is smaller, recurse on the left half; otherwise, recurse on the right half.
-
 **Explanation:** `23` sits at index 5. Recursive binary search passes a narrowed `low`/`high` pair down each call instead of looping. The base case is `low > high`, meaning the range is empty and the target is absent — return `-1`. Forgetting that case gives infinite recursion on a missing value.
 
 **Hint:** Compare against `arr[mid]`, then recurse into the left or right half with adjusted bounds.
 
 ---
+
+**How to solve:**
+1. Check the base case: if `low > high` (or list is empty depending on implementation), return `-1`.
+2. Find the midpoint and compare it to the target. If it matches, return the midpoint index.
+3. If the target is smaller, recurse on the left half; otherwise, recurse on the right half.
 
 ## Q20. Flatten a Nested List
 
@@ -437,16 +437,16 @@ flatten([1, [2, 3, [4, [5, 6]], 7], 8])
 # [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
-**How to solve:**
-1. Initialize an empty result list.
-2. Iterate through each item in the `nested` list.
-3. If the item is a list, recursively `flatten` it and extend the result; otherwise, append the item.
-
 **Explanation:** The result is `[1,2,3,4,5,6,7,8]` from three levels of nesting. For each element, ask whether it is itself a list: if so recurse and extend with the result, otherwise append it. `isinstance(item, list)` is the test. This is genuine recursion rather than a loop, because you cannot know the depth in advance.
 
 **Hint:** `if isinstance(item, list): result.extend(flatten(item)) else: result.append(item)`
 
 ---
+
+**How to solve:**
+1. Initialize an empty result list.
+2. Iterate through each item in the `nested` list.
+3. If the item is a list, recursively `flatten` it and extend the result; otherwise, append the item.
 
 ## Q21. Recursive Palindrome
 
@@ -457,16 +457,16 @@ is_palindrome("racecar")   # True
 is_palindrome("python")    # False
 ```
 
-**How to solve:**
-1. Define the base case: if the length of the string is 0 or 1, return `True`.
-2. Check if the first and last characters are equal.
-3. If they are, return the result of `is_palindrome` on the substring without the first and last characters.
-
 **Explanation:** Compare the first and last characters; if they match, recurse on everything between them. Base case: a string of length 0 or 1 is always a palindrome. `racecar` → `aceca` → `cec` → `e` → `True`. Each call strips two characters, so the depth is half the length.
 
 **Hint:** `return s[0] == s[-1] and is_palindrome(s[1:-1])` — the `and` short-circuits on a mismatch.
 
 ---
+
+**How to solve:**
+1. Define the base case: if the length of the string is 0 or 1, return `True`.
+2. Check if the first and last characters are equal.
+3. If they are, return the result of `is_palindrome` on the substring without the first and last characters.
 
 ## Q22. Function Returning a Function
 
@@ -477,18 +477,18 @@ double = multiplier(2)
 double(15)   # 30
 ```
 
+**Explanation:** `multiplier(2)` returns a function that has captured `n = 2`, so `double(15)` is `30`. The inner function keeps a live reference to the enclosing scope even after `multiplier` has returned — that is what makes it a **closure**. This is the mechanism decorators are built on.
+
+**Hint:** Define a function inside the function and return it **without calling it** — no parentheses.
+
+---
+
 **How to solve:**
 1. Define `multiplier` that takes `n`.
 2. Define an inner function `multiply(x)` that returns `x * n`.
 3. Return the inner function from `multiplier`.
 
 **This is a closure** — the returned function remembers `n`.
-
-**Explanation:** `multiplier(2)` returns a function that has captured `n = 2`, so `double(15)` is `30`. The inner function keeps a live reference to the enclosing scope even after `multiplier` has returned — that is what makes it a **closure**. This is the mechanism decorators are built on.
-
-**Hint:** Define a function inside the function and return it **without calling it** — no parentheses.
-
----
 
 ## Q23. Function as an Argument
 
@@ -498,16 +498,16 @@ Write `apply_twice(func, value)` that applies a function to a value twice. Test 
 apply_twice(lambda x: x * 3, 5)   # 45
 ```
 
-**How to solve:**
-1. Define `apply_twice` accepting two parameters: `func` and `value`.
-2. Call `func(value)` to apply it once.
-3. Call `func` again on the result of the first application and return it.
-
 **Explanation:** `apply_twice(lambda x: x*3, 5)` computes `(5×3)×3 = 45`. Functions are ordinary objects in Python: you can pass them, store them in lists, and return them. Note `func(value)` calls it while a bare `func` is the object itself — passing `func()` by mistake calls it too early and passes the *result*.
 
 **Hint:** `return func(func(value))`
 
 ---
+
+**How to solve:**
+1. Define `apply_twice` accepting two parameters: `func` and `value`.
+2. Call `func(value)` to apply it once.
+3. Call `func` again on the result of the first application and return it.
 
 ## Q24. Simple Timing Wrapper
 
@@ -518,11 +518,6 @@ result, elapsed = time_it(factorial, 500)
 # elapsed: 0.000132 s
 ```
 
-**How to solve:**
-1. Capture the start time using `time.perf_counter()`.
-2. Execute `func(*args)` and store the result.
-3. Capture the end time, calculate the elapsed time, and return both as a tuple.
-
 **Explanation:** `time.perf_counter()` is the right clock here — it is monotonic and high-resolution, unlike `time.time()`, which can jump backwards if the system clock is adjusted. Capture the start, call `func(*args)`, capture the end, and return both the result and the difference so the caller loses nothing.
 
 **Hint:** `return result, end - start` — a tuple the caller unpacks.
@@ -530,6 +525,11 @@ result, elapsed = time_it(factorial, 500)
 ---
 
 ## Tier 3 — Modules and the Standard Library (Q25–Q34)
+
+**How to solve:**
+1. Capture the start time using `time.perf_counter()`.
+2. Execute `func(*args)` and store the result.
+3. Capture the end time, calculate the elapsed time, and return both as a tuple.
 
 ## Q25. Build Your Own Module
 
@@ -546,16 +546,16 @@ mymath.factorial(6)     # 720
 mymath.__doc__          # your module docstring
 ```
 
-**How to solve:**
-1. Create a new file named `mymath.py` with a module-level docstring at the top.
-2. Define the four required math functions in `mymath.py`.
-3. Create a second file, import `mymath`, and call each function to verify they work.
-
 **Explanation:** A module is just a `.py` file; importing it runs the file top to bottom once and caches it in `sys.modules`. The module docstring is the string literal at the very top of the file, and it becomes `mymath.__doc__`. Both files must be in the same directory, or Python will not find the import.
 
 **Hint:** Put the docstring on line 1, before any imports or definitions.
 
 ---
+
+**How to solve:**
+1. Create a new file named `mymath.py` with a module-level docstring at the top.
+2. Define the four required math functions in `mymath.py`.
+3. Create a second file, import `mymath`, and call each function to verify they work.
 
 ## Q26. The `__name__` Guard
 
@@ -572,16 +572,16 @@ $ python -c "import mymath"
 (no output — the guard blocked the tests)
 ```
 
-**How to solve:**
-1. Add an `if __name__ == "__main__":` block at the end of `mymath.py`.
-2. Inside the block, write code that calls the functions and prints results (the self-tests).
-3. Run the file directly to see the tests, then import it in another script to confirm the tests don't run.
-
 **Explanation:** When you run a file directly, Python sets `__name__` to `"__main__"`. When you import it, `__name__` is the module's own name (`"mymath"`). The guard therefore runs your tests only in the first case. Without it, importing the module would execute your test output as a side effect — which is exactly the kind of surprise that makes a library unusable.
 
 **Hint:** `if __name__ == "__main__":` at the bottom, with the test calls indented under it.
 
 ---
+
+**How to solve:**
+1. Add an `if __name__ == "__main__":` block at the end of `mymath.py`.
+2. Inside the block, write code that calls the functions and prints results (the self-tests).
+3. Run the file directly to see the tests, then import it in another script to confirm the tests don't run.
 
 ## Q27. math Module Tour
 
@@ -596,16 +596,16 @@ pi = 3.1416
 log10(1000) = 3.0
 ```
 
-**How to solve:**
-1. Import the `math` module.
-2. Call the required functions from `math` like `math.sqrt`, `math.ceil`, `math.factorial`, etc.
-3. Print the results with appropriate formatting.
-
 **Explanation:** `sqrt(144)=12.0`, `ceil(7.3)=8`, `floor(7.3)=7`, `8!=40320`, `gcd(48,60)=12`, `pi≈3.1416`, `log10(1000)=3.0`. Note `sqrt` returns a **float** even for a perfect square, while `ceil` and `floor` return **integers** in Python 3. `math.log10(1000)` gives exactly `3.0` here, but floating-point logs can land a hair off — never compare them with `==`.
 
 **Hint:** `import math` and reach for `math.sqrt`, `math.ceil`, `math.floor`, `math.factorial`, `math.gcd`.
 
 ---
+
+**How to solve:**
+1. Import the `math` module.
+2. Call the required functions from `math` like `math.sqrt`, `math.ceil`, `math.factorial`, etc.
+3. Print the results with appropriate formatting.
 
 ## Q28. random Module — Dice Simulation
 
@@ -623,16 +623,16 @@ total   count   percent   theoretical
 Your counts will vary slightly; 7 must be the most common and the
 percentages must approach the theoretical column.
 
-**How to solve:**
-1. Import `random`, call `random.seed(42)`, and use a dictionary or list to track counts.
-2. Loop 10,000 times, rolling two dice via `random.randint(1, 6)` and summing them.
-3. Calculate and print the percentage for each total.
-
 **Explanation:** Two dice have 36 equally likely outcomes; six of them total 7, so the theoretical probability is `6/36 = 16.67%`, against `1/36 = 2.78%` for 2 and for 12. Measured here with `random.seed(42)` and `randint(1,6)` twice per roll: **7 appeared 1,704 times (17.04%)**, 2 appeared 270 (2.70%) and 12 appeared 311 (3.11%). Your exact counts depend on how many times you call `random` per roll — the seed fixes the *sequence*, not the outcome of a different algorithm. The shape must be a symmetric triangle peaking at 7.
 
 **Hint:** Sum two separate `randint(1, 6)` calls. `randint(2, 12)` would be wrong — it makes every total equally likely.
 
 ---
+
+**How to solve:**
+1. Import `random`, call `random.seed(42)`, and use a dictionary or list to track counts.
+2. Loop 10,000 times, rolling two dice via `random.randint(1, 6)` and summing them.
+3. Calculate and print the percentage for each total.
 
 ## Q29. random Module — Password Generator
 
@@ -649,31 +649,31 @@ any(c.isdigit() for c in p)              # True
 any(not c.isalnum() for c in p)          # True
 ```
 
-**How to solve:**
-1. Import the `string` and `random` modules.
-2. Ensure you pick at least one character from each required category, then fill the remaining length randomly from a combined pool.
-3. Shuffle the resulting list of characters and join them into a string.
-
 **Explanation:** Building a password from a single shuffled pool does **not** guarantee one of each character class — it only makes it likely, and "likely" fails silently on a small fraction of runs. Force it: pick one character from each required class first, fill the remainder from the combined pool, then shuffle the result so the guaranteed characters are not always at the front.
 
 **Hint:** `string.ascii_uppercase`, `string.ascii_lowercase`, `string.digits` and `string.punctuation` give you the pools.
 
 ---
 
+**How to solve:**
+1. Import the `string` and `random` modules.
+2. Ensure you pick at least one character from each required category, then fill the remaining length randomly from a combined pool.
+3. Shuffle the resulting list of characters and join them into a string.
+
 ## Q30. datetime Basics
 
 Using `datetime`, print: today's date, the current time, the date 100 days from now, the day of the week you were born, and the number of days until the next New Year.
-
-**How to solve:**
-1. Use `date.today()` and `datetime.now()` to get current times.
-2. Use `timedelta(days=100)` to calculate a future date.
-3. Subtract dates to calculate remaining days to the next New Year.
 
 **Explanation:** `date.today()` for the date, `datetime.now()` for the time. Arithmetic uses `timedelta`: `date.today() + timedelta(days=100)`. `.strftime('%A')` gives the weekday name. Subtracting two dates yields a `timedelta`, and `.days` pulls the whole number of days out of it.
 
 **Hint:** `from datetime import date, datetime, timedelta`
 
 ---
+
+**How to solve:**
+1. Use `date.today()` and `datetime.now()` to get current times.
+2. Use `timedelta(days=100)` to calculate a future date.
+3. Subtract dates to calculate remaining days to the next New Year.
 
 ## Q31. Age Calculator
 
@@ -684,16 +684,16 @@ calculate_age(date(1998, 7, 15))
 # 27 years, 0 months, 12 days
 ```
 
-**How to solve:**
-1. Extract the years, months, and days from both the current date and the birth date.
-2. Calculate the base age in years by subtracting the birth year from the current year.
-3. Adjust the age downwards by 1 if the current month and day are earlier than the birth month and day.
-
 **Explanation:** Subtract the years, then subtract one more if this year's birthday has not yet arrived — the comparison `(today.month, today.day) < (birth.month, birth.day)` handles that in one tuple comparison. ⚠️ **The expected output above is frozen in time.** For a birth date of 1998-07-15 the answer depends on when you run it: it was 27 years when this file was written, and is 28 as of August 2026. Any test asserting a fixed age will start failing on a birthday — pass a reference date in as a parameter so the function is testable.
 
 **Hint:** Compare `(month, day)` tuples rather than writing nested `if` statements.
 
 ---
+
+**How to solve:**
+1. Extract the years, months, and days from both the current date and the birth date.
+2. Calculate the base age in years by subtracting the birth year from the current year.
+3. Adjust the age downwards by 1 if the current month and day are earlier than the birth month and day.
 
 ## Q32. os Module Exploration
 
@@ -710,16 +710,16 @@ os.makedirs('testdir')           # creates it
 os.rmdir('testdir')              # removes it
 ```
 
-**How to solve:**
-1. Import the `os` module.
-2. Use `os.getcwd()` to get the current directory and `os.listdir()` to list its contents.
-3. Use `os.path.exists()`, `os.path.getsize()`, `os.makedirs()`, and `os.rmdir()` to perform the file and directory checks.
-
 **Explanation:** `os.path.exists()` before opening avoids a crash, but note the gap between checking and opening — the file can vanish in between, which is why catching `FileNotFoundError` is usually more robust than checking first. Use `os.path.join()` rather than concatenating with `/`, so your code works on Windows too.
 
 **Hint:** `os.getcwd()`, `os.listdir()`, `os.path.getsize()`, `os.makedirs()`, `os.rmdir()`.
 
 ---
+
+**How to solve:**
+1. Import the `os` module.
+2. Use `os.getcwd()` to get the current directory and `os.listdir()` to list its contents.
+3. Use `os.path.exists()`, `os.path.getsize()`, `os.makedirs()`, and `os.rmdir()` to perform the file and directory checks.
 
 ## Q33. sys Module
 
@@ -733,25 +733,20 @@ python sum_args.py
 # Usage: python sum_args.py <numbers...>
 ```
 
-**How to solve:**
-1. Import the `sys` module and check `len(sys.argv)`.
-2. If no arguments are given (length < 2), print usage instructions and exit using `sys.exit(1)`.
-3. Otherwise, convert the arguments in `sys.argv[1:]` to numbers, sum them, and print the result.
-
 **Explanation:** `sys.argv[0]` is the **script name**, so the actual arguments start at `sys.argv[1:]`. Every element is a string and must be cast before summing. `sys.exit(1)` signals failure to the shell; `sys.exit(0)` or falling off the end means success — that convention is what lets scripts be chained together.
 
 **Hint:** `if len(sys.argv) < 2:` print usage and `sys.exit(1)`.
 
 ---
 
+**How to solve:**
+1. Import the `sys` module and check `len(sys.argv)`.
+2. If no arguments are given (length < 2), print usage instructions and exit using `sys.exit(1)`.
+3. Otherwise, convert the arguments in `sys.argv[1:]` to numbers, sum them, and print the result.
+
 ## Q34. Standard Library Scavenger Hunt
 
 Using `dir()` and `help()`, find and demonstrate one useful function you did not previously know from each of: `math`, `random`, `string`, and `datetime`. Write a one-line comment explaining what each does.
-
-**How to solve:**
-1. Open a Python REPL or script and import `math`, `random`, `string`, and `datetime`.
-2. Use `dir(module)` to see all available attributes and functions.
-3. Use `help(module.function)` to read the documentation for an interesting function from each module.
 
 **Hint:** `dir(module)` lists the names; `help(module.name)` explains one. Good candidates: `math.isclose`, `random.sample`, `string.punctuation`, `datetime.fromisoformat`.
 
@@ -761,20 +756,25 @@ Using `dir()` and `help()`, find and demonstrate one useful function you did not
 
 Work in a scratch folder. Clean up your test files when done.
 
+**How to solve:**
+1. Open a Python REPL or script and import `math`, `random`, `string`, and `datetime`.
+2. Use `dir(module)` to see all available attributes and functions.
+3. Use `help(module.function)` to read the documentation for an interesting function from each module.
+
 ## Q35. Write and Read
 
 Write five lines of text to `notes.txt`, then read the whole file back and print it. Use `with` in both cases.
-
-**How to solve:**
-1. Use `with open("notes.txt", "w") as f:` and write five lines.
-2. Use `with open("notes.txt", "r") as f:` and call `f.read()`.
-3. Print the read contents.
 
 **Explanation:** `with open(...)` closes the file automatically, even if an exception is raised inside the block — that is its entire purpose. Without it, a crash mid-write can leave data sitting in a buffer, never flushed to disk, and the file on disk is silently short.
 
 **Hint:** `with open("notes.txt", "w") as f:` then `f.write(...)` per line.
 
 ---
+
+**How to solve:**
+1. Use `with open("notes.txt", "w") as f:` and write five lines.
+2. Use `with open("notes.txt", "r") as f:` and call `f.read()`.
+3. Print the read contents.
 
 ## Q36. Read Line by Line
 
@@ -785,16 +785,16 @@ Read `notes.txt` and print each line prefixed with its line number, with trailin
 2: Second line
 ```
 
-**How to solve:**
-1. Open the file in read mode using a `with` block.
-2. Loop over the file object using `enumerate(f, start=1)` to get the line number and text.
-3. Print the line number and the line text, stripping the trailing newline with `.rstrip("\n")`.
-
 **Explanation:** Iterating a file object yields lines **with** their trailing `\n` still attached, so `print(line)` produces a blank line between each. Strip it with `.rstrip("\n")`. Use `enumerate(f, start=1)` to number from 1 rather than maintaining your own counter.
 
 **Hint:** `for i, line in enumerate(f, start=1):`
 
 ---
+
+**How to solve:**
+1. Open the file in read mode using a `with` block.
+2. Loop over the file object using `enumerate(f, start=1)` to get the line number and text.
+3. Print the line number and the line text, stripping the trailing newline with `.rstrip("\n")`.
 
 ## Q37. Append vs Overwrite
 
@@ -807,16 +807,16 @@ after two "w" writes:  ['second write']       <- first was destroyed
 after two "a" writes:  ['first', 'second']    <- both kept
 ```
 
-**How to solve:**
-1. Write to a file using mode `"w"` twice and show it only contains the second write.
-2. Write to another file using mode `"a"` twice and show it contains both writes.
-3. Read the contents back after the writes to demonstrate the difference.
-
 **Explanation:** Mode `"w"` truncates the file to empty the moment it is opened — before you write anything — so two `"w"` writes leave only the second. Mode `"a"` seeks to the end and keeps both. This is the most destructive default in file handling: opening a file with `"w"` just to read it destroys it instantly.
 
 **Hint:** Write, close, write again, then read back the whole file for each mode.
 
 ---
+
+**How to solve:**
+1. Write to a file using mode `"w"` twice and show it only contains the second write.
+2. Write to another file using mode `"a"` twice and show it contains both writes.
+3. Read the contents back after the writes to demonstrate the difference.
 
 ## Q38. Count File Statistics
 
@@ -827,16 +827,16 @@ file_stats("notes.txt")
 # {'lines': 5, 'words': 23, 'characters': 142}
 ```
 
-**How to solve:**
-1. Open the file and read its entire content into a single string.
-2. Count lines using `content.splitlines()`, words using `content.split()`, and characters using `len(content)`.
-3. Return the three counts in a dictionary.
-
 **Explanation:** Read the file once and derive all three counts from the same content — `len(lines)`, `len(text.split())`, `len(text)`. Reading it three times is three times the I/O and risks the counts disagreeing if the file changes between reads. Note the character count includes the newline characters.
 
 **Hint:** `return {"lines": ..., "words": ..., "characters": ...}`
 
 ---
+
+**How to solve:**
+1. Open the file and read its entire content into a single string.
+2. Count lines using `content.splitlines()`, words using `content.split()`, and characters using `len(content)`.
+3. Return the three counts in a dictionary.
 
 ## Q39. Copy a File
 
@@ -849,16 +849,16 @@ copy_file("notes.txt", "notes_copy.txt")   # 5
 open("notes_copy.txt").read() == open("notes.txt").read()   # True
 ```
 
-**How to solve:**
-1. Open the source file for reading and the destination file for writing within a single `with` statement.
-2. Loop through the source file line by line, writing each to the destination file.
-3. Keep a counter of lines copied and return it.
-
 **Explanation:** Copying line by line preserves the content exactly, so the equality check passes. Open the source for reading and the destination for writing in the same `with` statement — `with open(a) as src, open(b, "w") as dst:` — and both close correctly. Count the lines as you go rather than reading the file again afterwards.
 
 **Hint:** Two file handles in one `with`, separated by a comma.
 
 ---
+
+**How to solve:**
+1. Open the source file for reading and the destination file for writing within a single `with` statement.
+2. Loop through the source file line by line, writing each to the destination file.
+3. Keep a counter of lines copied and return it.
 
 ## Q40. Search Within a File
 
@@ -873,31 +873,31 @@ find_in_file("notes.txt", "ZZZ")
 # []
 ```
 
-**How to solve:**
-1. Initialize an empty list to hold the matches.
-2. Read the file line by line using `enumerate` to track line numbers.
-3. Check if the lowercase `term` is in the lowercase `line`; if so, append the `(line_number, line.rstrip("\n"))` tuple to the list.
-
 **Explanation:** Case-insensitive matching means lowercasing **both** sides: `if term.lower() in line.lower()`. Return a list of `(line_number, line)` tuples, and an **empty list** when nothing matches — not `None`, because the caller can loop over an empty list without a special case.
 
 **Hint:** `enumerate(f, start=1)` again, appending matches to a list.
 
 ---
 
+**How to solve:**
+1. Initialize an empty list to hold the matches.
+2. Read the file line by line using `enumerate` to track line numbers.
+3. Check if the lowercase `term` is in the lowercase `line`; if so, append the `(line_number, line.rstrip("\n"))` tuple to the list.
+
 ## Q41. Word Frequency from a File
 
 Read a text file, count word frequencies, and write the top 10 to `report.txt` in a formatted table. Reuse your Phase 2 logic, now wrapped in functions.
-
-**How to solve:**
-1. Read the text file and count the frequency of each word using a dictionary or `collections.Counter`.
-2. Sort the counts in descending order to get the top 10.
-3. Open `report.txt` in write mode and format the top 10 as a table.
 
 **Explanation:** This is Phase 2's word counting with an I/O layer around it. Keep them separate: one function reads the file, one counts, one formats the report. That separation is what makes the counting function testable without touching the disk at all.
 
 **Hint:** `sorted(counts.items(), key=lambda kv: kv[1], reverse=True)[:10]` for the top ten.
 
 ---
+
+**How to solve:**
+1. Read the text file and count the frequency of each word using a dictionary or `collections.Counter`.
+2. Sort the counts in descending order to get the top 10.
+3. Open `report.txt` in write mode and format the top 10 as a table.
 
 ## Q42. CSV Write and Read
 
@@ -910,31 +910,31 @@ Priya,92,88,95
 Class average: 85.00
 ```
 
-**How to solve:**
-1. Open `students.csv` in write mode, create a `csv.DictWriter`, write the header, and write the rows.
-2. Re-open the file in read mode and use `csv.DictReader` to parse it.
-3. Iterate over the rows, convert grades to integers, and calculate the average.
-
 **Explanation:** The average of `78, 85, 72, 92, 88, 95` is **85.00**. `DictReader` uses the header row as keys and gives you one dictionary per row — but every value arrives as a **string**, so `row['math'] + row['science']` concatenates text instead of adding. Cast with `int()` before any arithmetic.
 
 **Hint:** `csv.DictWriter` needs `fieldnames=` and a `writeheader()` call.
 
 ---
 
+**How to solve:**
+1. Open `students.csv` in write mode, create a `csv.DictWriter`, write the header, and write the rows.
+2. Re-open the file in read mode and use `csv.DictReader` to parse it.
+3. Iterate over the rows, convert grades to integers, and calculate the average.
+
 ## Q43. CSV Filtering
 
 Read `students.csv`, filter for students whose average exceeds 80, and write those rows to `toppers.csv`. Report how many rows were kept out of how many read.
-
-**How to solve:**
-1. Read all rows from `students.csv` using `csv.DictReader`.
-2. Filter the rows to keep only those with an average grade strictly greater than 80.
-3. Write the filtered rows to `toppers.csv` with `csv.DictWriter` and print the counts.
 
 **Explanation:** Report both numbers — kept and read — because "12 toppers" means nothing without the denominator. Compute each student's average once into a variable rather than recomputing it inside the comparison and again for the output.
 
 **Hint:** Read all rows first, filter in memory, then write the survivors in one pass.
 
 ---
+
+**How to solve:**
+1. Read all rows from `students.csv` using `csv.DictReader`.
+2. Filter the rows to keep only those with an average grade strictly greater than 80.
+3. Write the filtered rows to `toppers.csv` with `csv.DictWriter` and print the counts.
 
 ## Q44. JSON Round Trip
 
@@ -944,16 +944,16 @@ Build a nested dictionary of configuration data. Write it to `config.json` with 
 loaded == original   # True
 ```
 
-**How to solve:**
-1. Build a nested dictionary and write it to `config.json` using `json.dump()` with `indent=2`.
-2. Read the file back using `json.load()`.
-3. Compare the loaded object with the original object using `==`.
-
 **Explanation:** `json.dump(obj, f, indent=2)` writes formatted JSON; `json.load(f)` reads it back. The round trip is only lossless for JSON's own types — a tuple comes back as a **list**, and integer dictionary keys come back as **strings**, so `loaded == original` can be `False` even when nothing went wrong.
 
 **Hint:** Use dictionaries, lists, strings, numbers, booleans and `None` only, and the comparison will pass.
 
 ---
+
+**How to solve:**
+1. Build a nested dictionary and write it to `config.json` using `json.dump()` with `indent=2`.
+2. Read the file back using `json.load()`.
+3. Compare the loaded object with the original object using `==`.
 
 ## Q45. JSON Update
 
@@ -967,16 +967,16 @@ after:  {'app': {'name': 'demo', 'debug': True}, 'version': '1.0'}
 ```
 (`debug` changed, `version` added, `retries` deleted.)
 
-**How to solve:**
-1. Read the JSON from `config.json` into a Python dictionary.
-2. Modify the dictionary by updating a value, adding a new key, and popping an existing key.
-3. Write the updated dictionary back to `config.json` using `json.dump()` with `indent=2`.
-
 **Explanation:** Read the whole structure into Python, modify the dictionary in memory, then write the entire thing back — JSON has no concept of editing in place. Nested values need nested access: `config["app"]["debug"] = True`. Use `.pop("retries", None)` to delete safely whether or not the key exists.
 
 **Hint:** Load → mutate → dump. Three separate steps, and the file is only open for the first and last.
 
 ---
+
+**How to solve:**
+1. Read the JSON from `config.json` into a Python dictionary.
+2. Modify the dictionary by updating a value, adding a new key, and popping an existing key.
+3. Write the updated dictionary back to `config.json` using `json.dump()` with `indent=2`.
 
 ## Q46. Log File Analyser
 
@@ -988,11 +988,6 @@ INFO: 32  WARNING: 12  ERROR: 6
 Busiest hour: 10:00 (14 entries)
 ```
 
-**How to solve:**
-1. Open the file and process it line by line.
-2. Use `line.split(maxsplit=3)` to separate date, time, level, and message.
-3. Update counters for levels, store error messages, and keep track of hour frequencies to find the busiest hour.
-
 **Explanation:** Split each line on whitespace with a `maxsplit`, so the message itself is not chopped up: `line.split(maxsplit=3)` gives date, time, level and the rest intact. The busiest hour comes from the first two characters of the time field. Guard against malformed lines — a real log always has some.
 
 **Hint:** Count levels into a dictionary and hours into another, in a single pass over the file.
@@ -1000,6 +995,11 @@ Busiest hour: 10:00 (14 entries)
 ---
 
 ## Tier 5 — Exception Handling (Q47–Q56)
+
+**How to solve:**
+1. Open the file and process it line by line.
+2. Use `line.split(maxsplit=3)` to separate date, time, level, and message.
+3. Update counters for levels, store error messages, and keep track of hour frequencies to find the busiest hour.
 
 ## Q47. Safe Division
 
@@ -1010,16 +1010,16 @@ safe_divide(10, 2)   # 5.0
 safe_divide(10, 0)   # None, prints 'Cannot divide by zero'
 ```
 
-**How to solve:**
-1. Use a `try` block to perform the division `a / b`.
-2. Catch `ZeroDivisionError` specifically in an `except` block.
-3. Print an error message in the `except` block and return `None`.
-
 **Explanation:** `safe_divide(10, 2)` returns `5.0` — true division always returns a float. The zero case is caught and returns `None`. Catch `ZeroDivisionError` specifically rather than using a bare `except`, which would also swallow a `TypeError` from passing a string and leave you debugging the wrong thing.
 
 **Hint:** `try: return a / b` / `except ZeroDivisionError:` / print and `return None`.
 
 ---
+
+**How to solve:**
+1. Use a `try` block to perform the division `a / b`.
+2. Catch `ZeroDivisionError` specifically in an `except` block.
+3. Print an error message in the `except` block and return `None`.
 
 ## Q48. Safe Integer Input
 
@@ -1032,16 +1032,16 @@ Enter a number: 12
 Got: 12
 ```
 
-**How to solve:**
-1. Start an infinite `while True:` loop.
-2. Use `input(prompt)` inside a `try` block and immediately attempt to cast it to an `int`.
-3. If successful, `return` the integer; if `ValueError` is raised, catch it, print a warning, and the loop will naturally repeat.
-
 **Explanation:** `int("abc")` raises `ValueError`, so the loop catches it and asks again. The `while True` only exits via `return` on success. This is the standard input validation shape, and it is why `try`/`except` beats checking `.isdigit()` — `isdigit()` is `False` for `"-5"` and for `" 12 "`, both of which `int()` accepts happily.
 
 **Hint:** Loop forever; return from inside the `try` when the cast succeeds.
 
 ---
+
+**How to solve:**
+1. Start an infinite `while True:` loop.
+2. Use `input(prompt)` inside a `try` block and immediately attempt to cast it to an `int`.
+3. If successful, `return` the integer; if `ValueError` is raised, catch it, print a warning, and the loop will naturally repeat.
 
 ## Q49. Multiple Exception Types
 
@@ -1055,16 +1055,16 @@ missing.txt   -> FileNotFoundError: no such file: missing.txt
 letters.txt   -> ValueError: first line is not an integer
 ```
 
-**How to solve:**
-1. Wrap the file open and integer cast operations in a single `try` block.
-2. Add `except FileNotFoundError:`, `except PermissionError:`, and `except ValueError:` blocks in that order.
-3. Print a distinct and clear error message in each `except` block.
-
 **Explanation:** Three different failures need three different messages, so list the `except` clauses separately — Python runs the **first** matching one. Order matters when the exceptions are related: a subclass must be caught before its parent, or the parent clause swallows it first. `FileNotFoundError` and `PermissionError` are both subclasses of `OSError`.
 
 **Hint:** Stack several `except` clauses under one `try`, most specific first.
 
 ---
+
+**How to solve:**
+1. Wrap the file open and integer cast operations in a single `try` block.
+2. Add `except FileNotFoundError:`, `except PermissionError:`, and `except ValueError:` blocks in that order.
+3. Print a distinct and clear error message in each `except` block.
 
 ## Q50. else and finally
 
@@ -1075,16 +1075,16 @@ Success case: try -> else -> finally
 Failure case: try -> except -> finally
 ```
 
-**How to solve:**
-1. Write a `try` block with a statement that may or may not fail (like division by a parameter).
-2. Follow it with an `except` block to catch the error, an `else` block for success, and a `finally` block for cleanup.
-3. Add a print statement in each block to trace the execution path.
-
 **Explanation:** `else` runs only when the `try` block raised nothing; `finally` runs **always**, exception or not, and even if the `try` block executes a `return`. So the two orders are try→else→finally and try→except→finally. Put cleanup in `finally` and the success path in `else` — code after the `try` that belongs in `else` will also run after a caught exception, which is rarely what you want.
 
 **Hint:** Print a marker in each of the four blocks and call the function twice.
 
 ---
+
+**How to solve:**
+1. Write a `try` block with a statement that may or may not fail (like division by a parameter).
+2. Follow it with an `except` block to catch the error, an `else` block for success, and a `finally` block for cleanup.
+3. Add a print statement in each block to trace the execution path.
 
 ## Q51. Raising Exceptions
 
@@ -1095,16 +1095,16 @@ set_age(-5)      # ValueError: Age cannot be negative, got -5
 set_age("ten")   # TypeError: Age must be an integer, got str
 ```
 
-**How to solve:**
-1. First, check if `age` is an instance of `int` using `isinstance(age, int)`. If not, raise `TypeError`.
-2. Then, check if `age < 0`. If it is, raise `ValueError`.
-3. Make sure to include the actual invalid value in the error message for debugging purposes.
-
 **Explanation:** Choose the exception type by what is wrong: `ValueError` when the type is right but the value is not, `TypeError` when the type itself is wrong. Include the offending value in the message — `f"Age cannot be negative, got {age}"` tells you what happened; a bare `"Invalid age"` does not. Check the type **first**, because `-5 < 0` would raise `TypeError` anyway on a string, but with a far less helpful message.
 
 **Hint:** `isinstance(age, int)` for the type check, and note `bool` is a subclass of `int`.
 
 ---
+
+**How to solve:**
+1. First, check if `age` is an instance of `int` using `isinstance(age, int)`. If not, raise `TypeError`.
+2. Then, check if `age < 0`. If it is, raise `ValueError`.
+3. Make sure to include the actual invalid value in the error message for debugging purposes.
 
 ## Q52. Custom Exception
 
@@ -1116,16 +1116,16 @@ InsufficientFundsError: requested ₹5000 but only ₹3200 available (short by �
 
 **Note:** Defining an exception class is allowed here even though classes are Phase 4 — the syntax is minimal and exceptions require it.
 
-**How to solve:**
-1. Define the custom exception class inheriting from `Exception`, and initialize it with `requested` and `available`.
-2. In the withdrawal function, compare the request to the balance and `raise InsufficientFundsError` if it exceeds.
-3. Catch the error in a `try`/`except` block and use the exception's attributes to print the shortfall.
-
 **Explanation:** A custom exception carries structured data, not just text: store `requested` and `available` as attributes in `__init__`, then the handler can compute the shortfall itself rather than parsing your message string. Always call `super().__init__(message)` so the exception still prints sensibly if nobody catches it.
 
 **Hint:** `class InsufficientFundsError(Exception):` with an `__init__` taking both amounts.
 
 ---
+
+**How to solve:**
+1. Define the custom exception class inheriting from `Exception`, and initialize it with `requested` and `available`.
+2. In the withdrawal function, compare the request to the balance and `raise InsufficientFundsError` if it exceeds.
+3. Catch the error in a `try`/`except` block and use the exception's attributes to print the shortfall.
 
 ## Q53. Assertions
 
@@ -1141,16 +1141,16 @@ average([])          # AssertionError: cannot average an empty list
 Then run with `python -O yourfile.py` and note the assertion is **skipped
 entirely** — which is exactly why assertions must never validate user input.
 
-**How to solve:**
-1. Add an `assert` statement at the top of the function to check if the input list is truthy (not empty).
-2. Provide a descriptive error message as the second argument to the `assert`.
-3. Demonstrate that the assertion works normally, but gets bypassed when Python runs in optimized mode (`-O`).
-
 **Explanation:** `average([1,2,3])` is `2.0`; the empty list trips the assertion. The critical part is the second half: running with `python -O` **strips every assert statement from the bytecode**, so the check simply does not exist in optimised mode. Assertions are for catching your own logic bugs during development; user input must be validated with a real `if` and a real `raise`.
 
 **Hint:** `assert numbers, "cannot average an empty list"` — an empty list is falsy.
 
 ---
+
+**How to solve:**
+1. Add an `assert` statement at the top of the function to check if the input list is truthy (not empty).
+2. Provide a descriptive error message as the second argument to the `assert`.
+3. Demonstrate that the assertion works normally, but gets bypassed when Python runs in optimized mode (`-O`).
 
 ## Q54. Retry Logic
 
@@ -1171,16 +1171,16 @@ attempt 1 failed / attempt 2 failed / attempt 3 failed
 ConnectionError raised to the caller
 ```
 
-**How to solve:**
-1. Use a `for` loop to iterate up to `attempts` times.
-2. Inside the loop, wrap the function call in a `try`/`except` block.
-3. If successful, return immediately. If it fails and it's the last attempt, re-raise the exception; otherwise, print the failure and continue.
-
 **Explanation:** Loop `attempts` times, returning immediately on success. The subtlety is the final failure: catch the exception each time, but on the **last** attempt re-raise it instead of swallowing it, or the caller gets `None` and no idea anything went wrong. Store the exception and `raise` it after the loop.
 
 **Hint:** `for i in range(attempts):` with `try`/`except`, and re-raise when `i == attempts - 1`.
 
 ---
+
+**How to solve:**
+1. Use a `for` loop to iterate up to `attempts` times.
+2. Inside the loop, wrap the function call in a `try`/`except` block.
+3. If successful, return immediately. If it fails and it's the last attempt, re-raise the exception; otherwise, print the failure and continue.
 
 ## Q55. Exception Chaining
 
@@ -1198,16 +1198,16 @@ ConfigurationError: could not parse the port setting
 
 Both exceptions appear. That chain is what `from err` preserves.
 
-**How to solve:**
-1. Catch the original exception (e.g., `ValueError`) using `except ValueError as err:`.
-2. Raise the new custom exception from the caught exception: `raise CustomError(...) from err`.
-3. Run the code and inspect the output to see both tracebacks.
-
 **Explanation:** `raise NewError(...) from err` sets `__cause__`, which is what produces the *"The above exception was the direct cause of…"* line and keeps **both** tracebacks visible. Without `from err` you still get a chained traceback, but worded as *"During handling of the above exception, another exception occurred"* — which reads like a bug in your handler rather than a deliberate translation.
 
 **Hint:** Catch the low-level error as `err`, then raise your own `from err`.
 
 ---
+
+**How to solve:**
+1. Catch the original exception (e.g., `ValueError`) using `except ValueError as err:`.
+2. Raise the new custom exception from the caught exception: `raise CustomError(...) from err`.
+3. Run the code and inspect the output to see both tracebacks.
 
 ## Q56. Robust File Processor
 
@@ -1218,11 +1218,6 @@ process_file("missing.txt")
 # {'success': False, 'error': 'File not found: missing.txt', 'data': None}
 ```
 
-**How to solve:**
-1. Wrap the entire file processing logic in one large `try` block.
-2. Catch specific exceptions like `FileNotFoundError`, `PermissionError`, and `UnicodeDecodeError` in separate `except` clauses.
-3. In each `except` block, return a dictionary with `'success': False` and a descriptive `'error'` message.
-
 **Explanation:** Returning a result dictionary instead of raising pushes the decision to the caller — useful at a boundary such as a web handler, where a crash is not an option. Keep the shape identical in every branch (`success`, `error`, `data` always present) so callers never have to check whether a key exists. `UnicodeDecodeError` is the one people forget: a file that is not UTF-8 fails on **read**, not on open.
 
 **Hint:** One `try` with several `except` clauses, each returning the same dictionary shape.
@@ -1232,6 +1227,11 @@ process_file("missing.txt")
 ## Tier 6 — Integration Challenges (Q57–Q60)
 
 Expect 45–90 minutes each.
+
+**How to solve:**
+1. Wrap the entire file processing logic in one large `try` block.
+2. Catch specific exceptions like `FileNotFoundError`, `PermissionError`, and `UnicodeDecodeError` in separate `except` clauses.
+3. In each `except` block, return a dictionary with `'success': False` and a descriptive `'error'` message.
 
 ## Q57. Contact Manager with Persistence
 
@@ -1249,14 +1249,14 @@ Requirements:
 
 **The test that matters:** run the program, add contacts, exit, restart. Your data must still be there.
 
+**Hint:** Write `load_contacts` to return `{}` when the file is missing — that single decision removes the entire first-run special case from every other function.
+
+---
+
 **How to solve:**
 1. Define the load and save functions with proper `try`/`except` blocks for file operations.
 2. Build the contact operations in memory (adding, searching, updating, deleting).
 3. Connect the functions with a menu loop that auto-saves before exit.
-
-**Hint:** Write `load_contacts` to return `{}` when the file is missing — that single decision removes the entire first-run special case from every other function.
-
----
 
 ## Q58. CSV Data Analysis Pipeline
 
@@ -1273,14 +1273,14 @@ Then build an analysis pipeline as separate functions:
 
 Handle malformed rows by skipping them and counting how many were skipped. Print the report and write it to `sales_report.txt`.
 
+**Hint:** Make `revenue_by(sales, key)` take the column name as a string so one function serves region, product and month. Skip malformed rows with a counter, never silently.
+
+---
+
 **How to solve:**
 1. Generate the initial CSV data and implement `load_sales` using `csv.DictReader` while casting numeric types.
 2. Implement aggregation functions like `total_revenue`, `revenue_by`, and `top_n` to process the in-memory list.
 3. Write a function to format the aggregated results and write them to a text file.
-
-**Hint:** Make `revenue_by(sales, key)` take the column name as a string so one function serves region, product and month. Skip malformed rows with a counter, never silently.
-
----
 
 ## Q59. Text File Word Game
 
@@ -1294,14 +1294,14 @@ Build a word-guessing game that reads its word list from a file.
 - Save a high-score table to JSON, appending each game's result
 - Show statistics on exit: games played, win rate, average guesses
 
+**Hint:** `display_progress` should return a string rather than printing, so you can test it without capturing output. Pass the random seed in as a parameter.
+
+---
+
 **How to solve:**
 1. Write the word loading and selection logic, ensuring words are appropriately filtered.
 2. Implement the game loop to display progress, handle user guesses, and track state.
 3. Add JSON logic to append game results to a high-score table and show statistics on exit.
-
-**Hint:** `display_progress` should return a string rather than printing, so you can test it without capturing output. Pass the random seed in as a parameter.
-
----
 
 ## Q60. Mini Expense Tracker
 
@@ -1326,11 +1326,6 @@ Build a complete expense tracker using everything from Phase 3.
 - The menu loop never crashes, whatever the user types
 - A `--demo` command-line flag (via `sys.argv`) that loads 20 sample expenses so you can test quickly
 
-**How to solve:**
-1. Abstract data persistence into standalone load and save JSON functions.
-2. Implement application logic (filtering, summaries, deleting) to act solely on the loaded list of dictionaries.
-3. Handle user interaction via a robust loop and integrate CSV export/import using the `csv` module.
-
 **Hint:** Do the JSON load and save in exactly two functions, and let every other function work on the in-memory list. Mixing file access into the logic is what makes these projects collapse.
 
 ---
@@ -1347,3 +1342,9 @@ Build a complete expense tracker using everything from Phase 3.
 ---
 
 [← Phase 3 index](README.md) · [Projects & Key Takeaways](projects-and-takeaways.md)
+
+**How to solve:**
+1. Abstract data persistence into standalone load and save JSON functions.
+2. Implement application logic (filtering, summaries, deleting) to act solely on the loaded list of dictionaries.
+3. Handle user interaction via a robust loop and integrate CSV export/import using the `csv` module.
+
