@@ -122,6 +122,51 @@ print(sum(map(int, input().split())))
     expect(parsed.challenges[1].tests[0]).toMatchObject({ input: "2\n3" });
   });
 
+  it("does not include trailing level-two sections in an assignment", () => {
+    const parsed = parsePracticeContent({
+      fileId: "assignments.md",
+      markdown: `# Charts
+
+## 📋 Assignment 1 — Scatter plot
+Create a scatter plot.
+
+**Expected:** title \`Relationship\`.
+
+## Common Mistakes
+Create 8 bars and include a legend.
+`,
+      tests: {
+        questions: [
+          {
+            question_id: 1,
+            tests: [{ expected_output: "Should generate chart" }],
+          },
+        ],
+      },
+      solutionsMarkdown: [
+        "# Solutions",
+        "## A1. Scatter plot",
+        "```python",
+        "plt.scatter([1], [2])",
+        "```",
+      ].join("\r\n"),
+    });
+
+    expect(parsed.challenges).toHaveLength(1);
+    expect(parsed.challenges[0].markdown).not.toContain("Common Mistakes");
+    expect(parsed.challenges[0].solution).toBe("import matplotlib.pyplot as plt\n\nplt.scatter([1], [2])");
+    expect(parsed.challenges[0].tests[0]).toMatchObject({
+      plot: {
+        minAxes: 1,
+        minCollections: 1,
+        title: "Relationship",
+      },
+    });
+    expect(parsed.challenges[0].tests[0]).not.toMatchObject({
+      plot: { minBars: 8, legend: true },
+    });
+  });
+
   it("supports the Phase 6 id/AST test schema", () => {
     const parsed = parsePracticeContent({
       fileId: "questions.md",

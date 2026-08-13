@@ -29,8 +29,8 @@ async function main() {
   }
 
   const child = spawn(
-    process.platform === "win32" ? "npx.cmd" : "npx",
-    ["playwright", "test", ...process.argv.slice(2)],
+    process.execPath,
+    [require.resolve("@playwright/test/cli"), "test", ...process.argv.slice(2)],
     { stdio: "inherit", env: environment },
   );
   child.on("exit", (code) => process.exit(code ?? 1));

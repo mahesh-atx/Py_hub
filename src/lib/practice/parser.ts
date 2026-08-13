@@ -206,7 +206,7 @@ function solutionSections(
 
 function extractSolution(section: string | undefined): string | null {
   if (!section) return null;
-  const codeMatch = section.match(/```(?:python)?\n([\s\S]*?)\n```/i);
+  const codeMatch = section.match(/```(?:python)?\r?\n([\s\S]*?)\r?\n```/i);
   const code = (codeMatch?.[1] ?? section).trim();
   if (!code) return null;
 
@@ -274,7 +274,9 @@ export function parsePracticeContent({
 
   const challenges = parts
     .map((part, index): Challenge | null => {
-      const lines = part.split("\n");
+      const challengePart =
+        kind === "A" ? part.split(/^##\s+/m, 1)[0] : part;
+      const lines = challengePart.split("\n");
       const rawTitle = lines[0]?.trim() ?? "";
       if (!rawTitle || (kind === "A" && /^Grading\s+yourself/i.test(rawTitle))) {
         return null;
@@ -289,7 +291,7 @@ export function parsePracticeContent({
       const id = assignment?.id ?? `${kind}${number}`;
       const title = assignment?.title ?? `${kind}${number}. ${rawTitle}`;
 
-      const rawMarkdown = part
+      const rawMarkdown = challengePart
         .replace(lines[0], "")
         .trim()
         .replace(/\n(\*\*[A-Za-z]+:\*\*)/g, "\n\n$1");
