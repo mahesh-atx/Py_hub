@@ -237,6 +237,49 @@ async function loadPyodideLoader(): Promise<
   return mod.loadPyodide;
 }
 
+async function preloadCurriculumDatasets(): Promise<void> {
+  const FS = pyodide.FS;
+  const files = [
+    "sales_raw.csv",
+    "customers_raw.csv",
+    "merged_clean.csv",
+    "sales_clean.csv",
+    "customers_clean.csv",
+    "titanic.csv",
+    "iris.csv",
+    "weather_sample.csv",
+    "stock_sample.csv",
+  ];
+  const contents = new Map<string, Uint8Array>();
+  for (const file of files) {
+    const url = new URL(
+      `/practice-data/phase-6-data-science/starter-project/data/${file}`,
+      self.location.origin,
+    );
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Required curriculum dataset ${file} returned HTTP ${response.status}.`);
+    }
+    contents.set(file, new Uint8Array(await response.arrayBuffer()));
+  }
+
+  // Support the short paths used by lessons and the full starter-project paths
+  // used by report assignments, without fetching the assets twice.
+  for (const root of ["data", "starter-project/data"]) {
+    const absoluteRoot = `${HOME}/${root}`;
+    FS.mkdirTree(absoluteRoot);
+    const rootParts = root.split("/");
+    for (let index = 1; index <= rootParts.length; index += 1) {
+      runtimeSeedDirectories.add(rootParts.slice(0, index).join("/"));
+    }
+    for (const [file, bytes] of contents) {
+      const relativeTarget = `${root}/${file}`;
+      FS.writeFile(`${absoluteRoot}/${file}`, bytes);
+      runtimeSeedFiles.add(relativeTarget);
+    }
+  }
+}
+
 async function initPyodide(): Promise<void> {
   try {
     post({ type: "LOADING", message: "Downloading Python runtime…", progress: 15 });
@@ -298,6 +341,12 @@ async function initPyodide(): Promise<void> {
     const pythonVersion: string = pyodide.runPython(
       "import sys; '.'.join(str(v) for v in sys.version_info[:3])",
     );
+    post({
+      type: "LOADING",
+      message: "Preparing curriculum datasets…",
+      progress: 90,
+    });
+    await preloadCurriculumDatasets();
     ready = true;
     post({ type: "LOADING", message: "Python ready", progress: 100 });
     post({
@@ -305,47 +354,6 @@ async function initPyodide(): Promise<void> {
       pythonVersion,
       pyodideVersion: PYODIDE_VERSION,
     });
-
-    // Background: preload phase 6 datasets into Pyodide virtual filesystem
-    // so the offline practice/course data always works — including isolated
-    // TEST_RUN executions, which receive no file payload from the UI.
-    setTimeout(async () => {
-      try {
-        const FS = pyodide.FS;
-        const csvs = [
-          "sales_raw.csv",
-          "customers_raw.csv",
-          "merged_clean.csv",
-          "sales_clean.csv",
-          "customers_clean.csv",
-          "titanic.csv",
-          "iris.csv",
-          "weather_sample.csv",
-          "stock_sample.csv",
-        ];
-        // Mirror into both "data/" (cwd-relative, legacy questions) and
-        // "starter-project/data/" (as the guides write it).
-        for (const root of ["data", "starter-project/data"]) {
-          FS.mkdirTree(root);
-          const rootParts = root.split("/");
-          for (let i = 1; i <= rootParts.length; i++) {
-            runtimeSeedDirectories.add(rootParts.slice(0, i).join("/"));
-          }
-          for (const f of csvs) {
-            try {
-              if (!FS.analyzePath(`${root}/${f}`).exists) {
-                const res = await fetch(`/practice-data/phase-6-data-science/starter-project/data/${f}`);
-                if (res.ok) {
-                  const buffer = await res.arrayBuffer();
-                  FS.writeFile(`${root}/${f}`, new Uint8Array(buffer));
-                  runtimeSeedFiles.add(`${root}/${f}`);
-                }
-              }
-            } catch (e) {}
-          }
-        }
-      } catch (e) {}
-    }, 50);
 
   } catch (err) {
     post({
