@@ -105,10 +105,26 @@ export function IDE({
   const [settingsTabOpen, setSettingsTabOpen] = useState(false);
   const [activeTabOverride, setActiveTabOverride] = useState<string | null>(null);
 
-  // Split view state
   const [isSplit, setIsSplit] = useState(false);
   const [splitActiveId, setSplitActiveId] = useState<string | null>(null);
   const [splitOpenTabs, setSplitOpenTabs] = useState<string[]>([]);
+
+  const project = useProject();
+
+  useEffect(() => {
+    if (splitOpenTabs.length > 0) {
+      const validTabs = splitOpenTabs.filter(id => project.nodes.some(n => n.id === id));
+      if (validTabs.length !== splitOpenTabs.length) {
+        setSplitOpenTabs(validTabs);
+        if (validTabs.length === 0) {
+          setIsSplit(false);
+          setSplitActiveId(null);
+        } else if (splitActiveId && !validTabs.includes(splitActiveId)) {
+          setSplitActiveId(validTabs[validTabs.length - 1]);
+        }
+      }
+    }
+  }, [project.nodes, splitOpenTabs, splitActiveId]);
 
   // Practice state
   const practiceSubmitRef = useRef<((code: string) => Promise<void>) | null>(null);
@@ -119,7 +135,6 @@ export function IDE({
   const [practiceCanSkip, setPracticeCanSkip] = useState(false);
   const [practiceResults, setPracticeResults] = useState<{ passed: boolean; actual: string; expected: string }[] | null>(null);
 
-  const project = useProject();
   const runtime = usePythonRuntime({
     onFilesystemChanges: project.applyRuntimeFilesystemChanges,
     onRunSuccess: (stdout) => {

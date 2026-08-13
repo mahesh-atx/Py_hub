@@ -146,10 +146,16 @@ export function FileExplorer(props: FileExplorerProps) {
     if (trimmed) {
       if (edit.mode === "create") {
         const res = props.onCreate(edit.kind ?? "file", trimmed, edit.parentId);
-        if (res && res.error) toast.error(res.error);
+        if (res && res.error) {
+          toast.error(res.error);
+          return;
+        }
       } else if (edit.id) {
         const res = props.onRename(edit.id, trimmed);
-        if (res && res.error) toast.error(res.error);
+        if (res && res.error) {
+          toast.error(res.error);
+          return;
+        }
       }
     }
     setEdit(null);
@@ -223,7 +229,12 @@ export function FileExplorer(props: FileExplorerProps) {
       onClick={() => { setSelectedIds(new Set()); closeContextMenu(); }}
       onContextMenu={(e) => { e.preventDefault(); closeContextMenu(); }}
     >
-      <div className="group/root flex min-h-6 items-center justify-between px-2 hover:bg-[var(--vscode-hover)]">
+      <div 
+        className="group/root flex min-h-6 items-center justify-between px-2 hover:bg-[var(--vscode-hover)]"
+        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragOverId("root"); }}
+        onDrop={(e) => { e.stopPropagation(); handleDropRoot(e); }}
+        style={{ backgroundColor: dragOverId === "root" ? "var(--vscode-list-dropBackground)" : undefined }}
+      >
         <span className="flex-1 truncate text-[11px] font-semibold uppercase text-[var(--vscode-text)]">
           Pylab
         </span>
@@ -276,7 +287,13 @@ export function FileExplorer(props: FileExplorerProps) {
           />
         ))}
         {props.tree.length === 0 && (
-          <p className="px-5 py-2 text-[13px] text-[var(--vscode-text-muted)]">No files yet.</p>
+          <div className="flex flex-col items-center justify-center h-full px-4 text-center opacity-60 mt-10">
+            <FolderOpen className="w-10 h-10 mb-3 text-[var(--vscode-text-muted)]" />
+            <p className="text-[var(--vscode-text-muted)] mb-2 font-medium">Workspace is empty</p>
+            <p className="text-[11px] text-[var(--vscode-text-muted)] leading-relaxed">
+              Use the toolbar icons above or drag and drop to create files.
+            </p>
+          </div>
         )}
         {edit?.mode === "create" && edit.parentId === null && (
           <EditRow
