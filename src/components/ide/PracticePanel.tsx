@@ -396,7 +396,7 @@ export function PracticeSidebar({
     c: Challenge | null,
     category = activeCategory,
     kind = questionKind,
-    autoCreate = false
+    autoCreate = true
   ) => {
     setActiveChallenge(c);
     setResults(null);
