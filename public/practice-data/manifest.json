@@ -237,13 +237,13 @@
           "total": 10
         }
       ],
-      "topic": "Python Programming"
+      "topic": "OOP & Data Science"
     },
     {
       "id": "phase-6-data-science",
       "title": "Data Science",
       "path": "/practice-data/phase-6-data-science",
-      "topic": "Data Science",
+      "topic": "OOP & Data Science",
       "files": [
         {
           "id": "README.md",
@@ -307,6 +307,168 @@
           "title": "10 Practice Projects",
           "type": "practice",
           "total": 10
+        }
+      ]
+    },
+    {
+      "id": "python-logic-levels",
+      "title": "Python Logic: Levels",
+      "path": "/practice-data/python-logic-library/levels",
+      "topic": "Python Logic Library",
+      "files": [
+        {
+          "id": "Level_1_Basic_Thinking.md",
+          "title": "Level 1 Basic Thinking",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_2_Conditions_Loops.md",
+          "title": "Level 2 Conditions Loops",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_3_Strings_Lists.md",
+          "title": "Level 3 Strings Lists",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_4_Tuples_Sets.md",
+          "title": "Level 4 Tuples Sets",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_5_Dictionaries.md",
+          "title": "Level 5 Dictionaries",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_6_Functions.md",
+          "title": "Level 6 Functions",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_7_Files_Errors.md",
+          "title": "Level 7 Files Errors",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_8_Modules_OOP.md",
+          "title": "Level 8 Modules OOP",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Level_9_Projects.md",
+          "title": "Level 9 Projects",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "README.md",
+          "title": "README",
+          "type": "markdown",
+          "total": 30
+        }
+      ]
+    },
+    {
+      "id": "python-logic-topics",
+      "title": "Python Logic: Topics",
+      "path": "/practice-data/python-logic-library/topics",
+      "topic": "Python Logic Library",
+      "files": [
+        {
+          "id": "Topic_01_Conditions.md",
+          "title": "Topic 01 Conditions",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_02_Loops.md",
+          "title": "Topic 02 Loops",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_03_Strings.md",
+          "title": "Topic 03 Strings",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_04_Lists.md",
+          "title": "Topic 04 Lists",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_05_Tuples.md",
+          "title": "Topic 05 Tuples",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_06_Sets.md",
+          "title": "Topic 06 Sets",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_07_Dictionaries.md",
+          "title": "Topic 07 Dictionaries",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_08_Functions.md",
+          "title": "Topic 08 Functions",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_09_Files.md",
+          "title": "Topic 09 Files",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_10_Errors.md",
+          "title": "Topic 10 Errors",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_11_Modules.md",
+          "title": "Topic 11 Modules",
+          "type": "practice",
+          "total": 30
+        },
+        {
+          "id": "Topic_12_OOP.md",
+          "title": "Topic 12 OOP",
+          "type": "practice",
+          "total": 30
+        }
+      ]
+    },
+    {
+      "id": "python-logic-projects",
+      "title": "Python Logic: Projects",
+      "path": "/practice-data/python-logic-library/projects",
+      "topic": "Python Logic Library",
+      "files": [
+        {
+          "id": "Projects_Advanced.md",
+          "title": "Projects Advanced",
+          "type": "practice",
+          "total": 30
         }
       ]
     }

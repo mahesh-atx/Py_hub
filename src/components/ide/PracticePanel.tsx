@@ -759,112 +759,152 @@ export function PracticeSidebar({
                 )}
               </div>
 
-              {courseStats.phases.map(p => (
-                <div key={p.b.id} className="border-b border-[var(--vscode-border)]">
-                  <button
-                    onClick={() => setExpandedFolders(prev => ({ ...prev, [p.b.id]: !prev[p.b.id] }))}
-                    className="flex w-full items-center justify-between px-3 py-2 text-left hover:bg-[var(--vscode-hover)]"
-                  >
-                    <span className="flex min-w-0 items-center gap-1.5 text-[12px] text-[var(--vscode-text)]">
-                      {expandedFolders[p.b.id] ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
-                      <span className="truncate">{p.b.title}</span>
-                      {p.complete && <CircleCheck className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
-                    </span>
-                    <span className="shrink-0 text-[10px] tabular-nums text-[var(--vscode-text-muted)]">{p.pct}%</span>
-                  </button>
-                  {expandedFolders[p.b.id] && (
-                    <div className="flex flex-col gap-2 px-3 pb-3 pl-8">
-                      {p.items.map(it => (
-                        <div key={it.f.id} className="flex items-center gap-3">
-                          <span className="text-[11px] text-[var(--vscode-text-muted)] w-40 shrink-0 truncate" title={it.f.title}>{it.f.title}</span>
-                          <div className="flex-1">
-                            <StatBar pct={it.total ? (it.solved / it.total) * 100 : 0} />
-                          </div>
-                          <span className="w-12 shrink-0 text-right text-[10px] tabular-nums text-[var(--vscode-text-muted)]">
-                            {it.solved}/{it.total}
-                          </span>
-                        </div>
-                      ))}
-                      {p.items.length === 0 && <div className="text-[11px] text-[var(--vscode-text-muted)]">No practice files.</div>}
+              {Array.from(new Set(courseStats.phases.map(p => p.b.topic || "Main"))).map(topic => {
+                const topicPhases = courseStats.phases.filter(p => (p.b.topic || "Main") === topic);
+                const isTopicExpanded = expandedFolders[`dashboard_topic_${topic}`] !== false;
+                
+                // Calculate topic stats
+                const topicSolved = topicPhases.reduce((a, p) => a + p.solvedTotal, 0);
+                const topicTotal = topicPhases.reduce((a, p) => a + p.totalTotal, 0);
+                const topicPct = topicTotal > 0 ? Math.round((topicSolved / topicTotal) * 100) : 0;
+                
+                return (
+                  <div key={topic} className="border-b border-[var(--vscode-border)]">
+                    <div 
+                      className="flex cursor-pointer select-none items-center justify-between px-3 py-2 text-[12px] font-semibold text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)]"
+                      onClick={() => setExpandedFolders(prev => ({ ...prev, [`dashboard_topic_${topic}`]: !isTopicExpanded }))}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        {isTopicExpanded ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
+                        {topic}
+                      </div>
+                      <span className="shrink-0 text-[10px] tabular-nums text-[var(--vscode-text-muted)] font-normal">{topicPct}%</span>
                     </div>
-                  )}
-                </div>
-              ))}
+                    
+                    {isTopicExpanded && (
+                      <div className="flex flex-col">
+                        {topicPhases.map(p => (
+                          <div key={p.b.id} className="border-t border-[var(--vscode-border)]/50">
+                            <button
+                              onClick={() => setExpandedFolders(prev => ({ ...prev, [p.b.id]: !prev[p.b.id] }))}
+                              className="flex w-full items-center justify-between px-3 py-2 pl-6 text-left hover:bg-[var(--vscode-hover)]"
+                            >
+                              <span className="flex min-w-0 items-center gap-1.5 text-[12px] text-[var(--vscode-text)]">
+                                {expandedFolders[p.b.id] ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
+                                <span className="truncate">{p.b.title}</span>
+                                {p.complete && <CircleCheck className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
+                              </span>
+                              <span className="shrink-0 text-[10px] tabular-nums text-[var(--vscode-text-muted)]">{p.pct}%</span>
+                            </button>
+                            {expandedFolders[p.b.id] && (
+                              <div className="flex flex-col gap-2 px-3 pb-3 pl-11">
+                                {p.items.map(it => (
+                                  <div key={it.f.id} className="flex items-center gap-3">
+                                    <span className="text-[11px] text-[var(--vscode-text-muted)] w-40 shrink-0 truncate" title={it.f.title}>{it.f.title}</span>
+                                    <div className="flex-1">
+                                      <StatBar pct={it.total ? (it.solved / it.total) * 100 : 0} />
+                                    </div>
+                                    <span className="w-12 shrink-0 text-right text-[10px] tabular-nums text-[var(--vscode-text-muted)]">
+                                      {it.solved}/{it.total}
+                                    </span>
+                                  </div>
+                                ))}
+                                {p.items.length === 0 && <div className="text-[11px] text-[var(--vscode-text-muted)]">No practice files.</div>}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           ) : (
           <div className="flex flex-col">
             
             {/* Batches Section */}
-            <div 
-              className="flex cursor-pointer select-none items-center gap-1 px-2 py-1.5 text-[11px] font-semibold uppercase text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)]"
-              onClick={() => setBatchesExpanded(!batchesExpanded)}
-            >
-              {batchesExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-              Python Programming
-            </div>
-            {batchesExpanded && (
-              <div className="flex flex-col pb-2">
-                {manifest.batches.map(b => {
-                  const isActive = lastActive?.id === b.id;
-                  const isExpanded = expandedFolders[b.id] || false;
-                  
-                  return (
-                    <div key={b.id} className="flex flex-col">
-                      <div
-                        onClick={() => setExpandedFolders(prev => ({ ...prev, [b.id]: !prev[b.id] }))}
-                        className={`flex cursor-pointer items-center justify-between py-1 pl-4 pr-2 hover:bg-[var(--vscode-hover)] ${isActive ? "bg-[var(--vscode-hover)]" : ""}`}
-                      >
-                        <div className="flex min-w-0 items-center gap-1.5 truncate text-[12px] text-[var(--vscode-text)]">
-                          {isExpanded ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
-                          <span className="truncate">{b.title}</span>
-                        </div>
-                      </div>
-                      
-                      {isExpanded && b.files && (
-                        <div className="flex flex-col pb-1">
-                          {b.files.map(f => {
-                            const isPractice = f.type === 'practice';
-                            const fileKind = f.id === "projects.md" ? "P" : f.id === "assignments.md" ? "A" : "Q";
-                            const fileSolved = isPractice
-                              ? Array.from(solvedChallenges).filter(x => x.startsWith(`${b.id}__${fileKind}`)).length
-                              : 0;
-                            const fileTotal = isPractice ? (f.total || 0) : 0;
-                            const fileComplete = isPractice && fileTotal > 0 && fileSolved === fileTotal;
-                            return (
-                              <div
-                                key={f.id}
-                                draggable
-                                onDragStart={(e) => {
-                                  e.dataTransfer.setData("application/x-practice-file", JSON.stringify({ batchId: b.id, fileId: f.id, isPractice }));
-                                }}
-                                onClick={() => {
-                                  if (isPractice) {
-                                    loadContent("batch", b.id, f.id);
-                                  } else {
-                                    loadMarkdown(b.id, f.id);
-                                  }
-                                }}
-                                className="flex cursor-pointer items-center justify-between py-1 pl-10 pr-2 text-[12px] text-[var(--vscode-text-muted)] hover:bg-[var(--vscode-hover)] hover:text-[var(--vscode-text)]"
-                              >
-                                <div className="flex min-w-0 items-center gap-1.5 truncate">
-                                  {isPractice ? <TerminalSquare className="h-3.5 w-3.5 shrink-0" /> : <BookOpen className="h-3.5 w-3.5 shrink-0" />}
-                                  <span className="truncate">{f.title}</span>
-                                </div>
-                                {isPractice && (
-                                  <span className="text-[10px] tabular-nums text-[var(--vscode-text-muted)]">
-                                    {fileComplete ? "Done" : `${fileSolved}/${fileTotal}`}
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
+            <div className="flex flex-col pb-2">
+              {Array.from(new Set(manifest.batches.map(b => b.topic || "Main"))).map(topic => {
+                const topicBatches = manifest.batches.filter(b => (b.topic || "Main") === topic);
+                const isTopicExpanded = expandedFolders[`topic_${topic}`] !== false;
+                
+                return (
+                  <div key={topic} className="flex flex-col mb-1">
+                    <div 
+                      className="flex cursor-pointer select-none items-center gap-1 px-2 py-1.5 text-[12px] font-semibold text-[var(--vscode-text)] hover:bg-[var(--vscode-hover)]"
+                      onClick={() => setExpandedFolders(prev => ({ ...prev, [`topic_${topic}`]: !isTopicExpanded }))}
+                    >
+                      {isTopicExpanded ? <ChevronDown className="h-3 w-3 shrink-0" /> : <ChevronRight className="h-3 w-3 shrink-0" />}
+                      {topic}
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                    {isTopicExpanded && (
+                      <div className="flex flex-col">
+                        {topicBatches.map(b => {
+                          const isActive = lastActive?.id === b.id;
+                          const isExpanded = expandedFolders[b.id] || false;
+                          
+                          return (
+                            <div key={b.id} className="flex flex-col">
+                              <div
+                                onClick={() => setExpandedFolders(prev => ({ ...prev, [b.id]: !prev[b.id] }))}
+                                className="flex cursor-pointer items-center justify-between py-1 pl-4 pr-2 hover:bg-[var(--vscode-hover)]"
+                              >
+                                <div className="flex min-w-0 items-center gap-1.5 truncate text-[12px] text-[var(--vscode-text)]">
+                                  {isExpanded ? <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--vscode-text-muted)]" />}
+                                  <span className="truncate">{b.title}</span>
+                                </div>
+                              </div>
+                              
+                              {isExpanded && b.files && (
+                                <div className="flex flex-col pb-1">
+                                  {b.files.map(f => {
+                                    const isPractice = f.type === 'practice';
+                                    const fileKind = f.id === "projects.md" ? "P" : f.id === "assignments.md" ? "A" : "Q";
+                                    const fileSolved = isPractice
+                                      ? Array.from(solvedChallenges).filter(x => x.startsWith(`${b.id}__${fileKind}`)).length
+                                      : 0;
+                                    const fileTotal = isPractice ? (f.total || 0) : 0;
+                                    const fileComplete = isPractice && fileTotal > 0 && fileSolved === fileTotal;
+                                    return (
+                                      <div
+                                        key={f.id}
+                                        draggable
+                                        onDragStart={(e) => {
+                                          e.dataTransfer.setData("application/x-practice-file", JSON.stringify({ batchId: b.id, fileId: f.id, isPractice }));
+                                        }}
+                                        onClick={() => {
+                                          if (isPractice) {
+                                            loadContent("batch", b.id, f.id);
+                                          } else {
+                                            loadMarkdown(b.id, f.id);
+                                          }
+                                        }}
+                                        className="flex cursor-pointer items-center justify-between py-1 pl-10 pr-2 text-[12px] text-[var(--vscode-text-muted)] hover:bg-[var(--vscode-hover)] hover:text-[var(--vscode-text)]"
+                                      >
+                                        <div className="flex min-w-0 items-center gap-1.5 truncate">
+                                          {isPractice ? <TerminalSquare className="h-3.5 w-3.5 shrink-0" /> : <BookOpen className="h-3.5 w-3.5 shrink-0" />}
+                                          <span className="truncate">{f.title}</span>
+                                        </div>
+                                        {isPractice && (
+                                          <span className="text-[10px] tabular-nums text-[var(--vscode-text-muted)]">
+                                            {fileComplete ? "Done" : `${fileSolved}/${fileTotal}`}
+                                          </span>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
 
           </div>

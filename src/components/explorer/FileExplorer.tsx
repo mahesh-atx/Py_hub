@@ -62,7 +62,7 @@ const ICON_BY_EXT: Record<string, string> = {
   json: "text-[#cbcb41]",
 };
 
-function getFileIcon(ext: string, className: string, style: string) {
+export function getFileIcon(ext: string, className: string, style: string) {
   if (style === "minimal") {
     if (ext === "py") {
       return (

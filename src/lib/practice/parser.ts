@@ -269,7 +269,7 @@ export function parsePracticeContent({
   const parts =
     kind === "A"
       ? markdown.split(/^##\s*📋\s*/m)
-      : markdown.split(new RegExp(`^## ${kind}\\d+\\.\\s*`, "m"));
+      : markdown.split(new RegExp(`^##\\s*(?:${kind}\\d+\\.|(?:Question|Project)\\s+\\d+:)\\s*`, "im"));
   parts.shift();
 
   const challenges = parts
@@ -305,12 +305,17 @@ export function parsePracticeContent({
       const hintText = rawMarkdown
         .match(/^\*\*Hint:\*\*\s*(.+)$/im)?.[1]
         ?.trim();
-      const explanation = rawMarkdown
-        .match(/^\*\*Explanation:\*\*\s*(.+)$/im)?.[1]
-        ?.trim();
+      const logicMatch = rawMarkdown.match(/^\*\*(?:Explanation|Logic):\*\*\s*(.+)$/im);
+      const explanation = logicMatch?.[1]?.trim();
+
+      const solutionMatch = rawMarkdown.match(/\*\*Solution:\*\*\s*\n*```(?:python)?\r?\n([\s\S]*?)\r?\n```/im);
+      const inlineSolution = solutionMatch ? extractSolution(solutionMatch[0]) : null;
+
       const body = rawMarkdown
         .replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "")
         .replace(/\*\*Learning Objective:\*\*\s*(.+)\n?/i, "")
+        .replace(/\*\*Solution:\*\*\s*\n*```(?:python)?\r?\n([\s\S]*?)\r?\n```/im, "")
+        .replace(/^\*\*(?:Explanation|Logic):\*\*\s*(.+)$/im, "")
         .replace(/\n{3,}/g, "\n\n")
         .trim();
 
@@ -325,7 +330,7 @@ export function parsePracticeContent({
         id,
         title,
         markdown: body,
-        solution: extractSolution(solutions.get(id)),
+        solution: extractSolution(solutions.get(id)) ?? inlineSolution,
         tests: strengthenTests(testRecord?.tests ?? [], title, body, kind),
         difficulty,
         objective,
