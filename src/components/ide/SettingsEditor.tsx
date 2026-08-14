@@ -64,6 +64,9 @@ const SETTINGS_DEF: SettingDef[] = [
       { value: "lucide", label: "Lucide (Default)" },
       { value: "vscode", label: "VS Code Icons" },
       { value: "minimal", label: "Minimalist / Monochrome" },
+      { value: "mono", label: "Monochrome Outline" },
+      { value: "flat", label: "Flat Color" },
+      { value: "pastel", label: "Pastel" },
     ]
   },
   {

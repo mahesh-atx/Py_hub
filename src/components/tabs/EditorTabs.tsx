@@ -1,6 +1,6 @@
 "use client";
 
-import { X, FileCode2, Settings, FileJson, FileText, FileImage, FileSpreadsheet, Book } from "lucide-react";
+import { X, Settings } from "lucide-react";
 import type { PyNode } from "@/types/filesystem";
 import { getExtension } from "@/lib/filesystem/tree";
 import { getFileIcon } from "@/components/explorer/FileExplorer";
