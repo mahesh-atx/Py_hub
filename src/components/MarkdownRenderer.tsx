@@ -106,7 +106,7 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
         style={dracula as any}
         customStyle={{ 
           borderRadius: isCompact ? '2px' : '8px',
-          padding: isCompact ? '1em 0' : '1em 0',
+          padding: isCompact ? '12px 16px' : '16px 20px',
           margin: 0,
           backgroundColor: isCompact ? 'var(--vscode-bg)' : '#252627',
           fontSize: isCompact ? '11px' : '0.9em'
