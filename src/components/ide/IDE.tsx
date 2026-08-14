@@ -524,6 +524,53 @@ export function IDE({
     };
   }, [activityBarVisible]);
 
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      if (cmdOrCtrl && !e.shiftKey && !e.altKey) {
+        if (e.key.toLowerCase() === 'a') {
+          e.preventDefault();
+          if (focusedPane === 'left' && effectiveActiveId) {
+            handleCloseTab(effectiveActiveId);
+          } else if (focusedPane === 'right' && effectiveSplitActiveId) {
+            const newTabs = splitOpenTabs.filter(t => t !== effectiveSplitActiveId);
+            setSplitOpenTabs(newTabs);
+            if (newTabs.length === 0) {
+              setIsSplit(false);
+              setSplitActiveId(null);
+            } else if (effectiveSplitActiveId === splitActiveId) {
+              setSplitActiveId(newTabs[newTabs.length - 1]);
+            }
+          }
+        } else if (e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          if (focusedPane === 'left' && effectiveActiveId && effectiveActiveId !== 'settings') {
+            handleSaveFile(effectiveActiveId);
+          } else if (focusedPane === 'right' && effectiveSplitActiveId) {
+            handleSaveFile(effectiveSplitActiveId);
+          }
+        } else if (e.key.toLowerCase() === 'b') {
+          e.preventDefault();
+          setSidebarOpen(prev => !prev);
+        } else if (e.key.toLowerCase() === 'p') {
+          e.preventDefault();
+          setPanel("quickopen");
+        } else if (e.key === '`') {
+          e.preventDefault();
+          setPanelOpen(prev => !prev);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [
+    focusedPane, effectiveActiveId, effectiveSplitActiveId, splitOpenTabs,
+    handleCloseTab, handleSaveFile, splitActiveId
+  ]);
+
   const showBottomPanel = isDesktop ? panelOpen : mobileView === "terminal";
   const splitVisible = isSplit && isDesktop;
 
@@ -802,6 +849,7 @@ export function IDE({
                         onRun={() => { setFocusedPane("left"); runFile(effectiveActiveFile); }}
                         onSave={() => handleSaveFile(effectiveActiveFile.id)}
                         onQuickOpen={() => setPanel("quickopen")}
+                        onCloseFile={() => handleCloseTab(effectiveActiveFile.id)}
                         onCursorChange={(position) => {
                           setFocusedPane("left");
                           setLeftCursor(position);
@@ -990,6 +1038,16 @@ export function IDE({
                           onRun={() => { setFocusedPane("right"); runFile(sf); }}
                           onSave={() => handleSaveFile(sf.id)}
                           onQuickOpen={() => setPanel("quickopen")}
+                          onCloseFile={() => {
+                            const newTabs = splitOpenTabs.filter(t => t !== sf.id);
+                            setSplitOpenTabs(newTabs);
+                            if (newTabs.length === 0) {
+                              setIsSplit(false);
+                              setSplitActiveId(null);
+                            } else if (sf.id === splitActiveId) {
+                              setSplitActiveId(newTabs[newTabs.length - 1]);
+                            }
+                          }}
                           onCursorChange={(position) => {
                             setFocusedPane("right");
                             setRightCursor(position);

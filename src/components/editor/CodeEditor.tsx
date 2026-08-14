@@ -17,6 +17,7 @@ interface CodeEditorProps {
   onRun: () => void;
   onSave: () => void;
   onQuickOpen: () => void;
+  onCloseFile: () => void;
   onCursorChange: (pos: CursorPosition) => void;
   theme: string;
   fontSize: number;
@@ -61,6 +62,11 @@ export function CodeEditor(props: CodeEditorProps) {
     editor.addCommand(
       monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyP,
       () => handlers.current.onQuickOpen(),
+    );
+    // Ctrl/Cmd + A -> close file
+    editor.addCommand(
+      monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyA,
+      () => handlers.current.onCloseFile(),
     );
 
     editor.onDidChangeCursorPosition((e) => {
