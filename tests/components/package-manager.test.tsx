@@ -8,7 +8,7 @@ describe("PackageManager", () => {
     render(<PackageManager installed={[]} installing={null} onInstall={vi.fn()} />);
     for (const pkg of KNOWN_PACKAGES) {
       expect(screen.getByTestId(`package-${pkg.name}`)).toBeVisible();
-      expect(screen.getByAltText(`${pkg.name} logo`)).toBeInTheDocument();
+      expect(screen.getByRole("img", { name: `${pkg.name} logo` })).toBeInTheDocument();
     }
     expect(screen.queryByText("built-in")).not.toBeInTheDocument();
     expect(screen.getByText("No packages installed yet.")).toBeVisible();

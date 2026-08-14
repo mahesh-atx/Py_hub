@@ -1,6 +1,6 @@
 # 🔑 Phase 4 — Solutions
 
-A worked solution for every question in [practice-questions.md](practice-questions.md).
+A worked solution for every question in [questions.md](questions.md).
 
 **These stay inside Phase 4's rules.** Everything from Phases 1-3, plus classes: `__init__`, instance and class attributes, class and static methods, properties, inheritance, abstract base classes and magic methods. If a solution here uses something you have not met yet, that is a bug; tell me.
 
@@ -1946,4 +1946,4 @@ Matrix([[1]]) * Matrix([[1, 2], [3, 4]])   # raises ValueError
 
 ---
 
-[← Questions](practice-questions.md) · [Test runner](tests/README.md) · [Phase 4 index](README.md)
+[← Questions](questions.md) · [Test runner](tests/README.md) · [Phase 4 index](README.md)

@@ -1,6 +1,6 @@
 # 🔑 Phase 1 — Solutions
 
-A worked solution for every question in [practice-questions.md](practice-questions.md).
+A worked solution for every question in [questions.md](questions.md).
 
 **These stay inside Phase 1's rules.** Only variables, `input()`, `print()`, type casting, operators, `if`/`elif`/`else`, `for`, `while`, `range()`, `break` and `continue` — no lists, no functions, no imports, and no clever one-liners. If a solution here uses something you have not met yet, that is a bug; tell me.
 
@@ -2012,4 +2012,4 @@ Also tested on 2 hidden cases: `1`, `3`
 
 ---
 
-[← Questions](practice-questions.md) · [Test runner](tests/README.md) · [Phase 1 index](README.md)
+[← Questions](questions.md) · [Test runner](tests/README.md) · [Phase 1 index](README.md)

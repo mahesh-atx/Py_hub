@@ -1,6 +1,6 @@
 ## 🧪 Practice Projects for Phase 1
 
-> 🧠 **Want more reps before the projects?** [**60 Practice Questions**](practice-questions.md) covers this phase in graded difficulty order, from a one-line warm-up to a multi-hour build.
+> 🧠 **Want more reps before the projects?** [**60 Practice Questions**](questions.md) covers this phase in graded difficulty order, from a one-line warm-up to a multi-hour build.
 >
 
 After finishing all 4 modules, build these projects:

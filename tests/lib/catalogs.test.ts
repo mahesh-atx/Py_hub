@@ -7,6 +7,9 @@ describe("IDE defaults and catalogs", () => {
   it("provides safe, usable editor defaults", () => {
     expect(DEFAULT_SETTINGS).toEqual({
       theme: "pylab-accessible-dark",
+      uiFont: "system",
+      editorFont: "system",
+      iconStyle: "lucide",
       fontSize: 14,
       tabSize: 4,
       minimap: true,

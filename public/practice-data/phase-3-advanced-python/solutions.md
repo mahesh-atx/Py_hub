@@ -1,6 +1,6 @@
 # 🔑 Phase 3 — Solutions
 
-A worked solution for every question in [practice-questions.md](practice-questions.md).
+A worked solution for every question in [questions.md](questions.md).
 
 **These stay inside Phase 3's rules.** Everything from Phases 1-2, plus functions, `*args`/`**kwargs`, lambdas, `map`/`filter`/`reduce`, recursion, type hints, the standard library, file I/O and `try`/`except`. No classes, except where a question needs a custom exception. If a solution here uses something you have not met yet, that is a bug; tell me.
 
@@ -1532,4 +1532,4 @@ process_file("good.txt")["data"]   # -> 'hello\n'
 
 ---
 
-[← Questions](practice-questions.md) · [Test runner](tests/README.md) · [Phase 3 index](README.md)
+[← Questions](questions.md) · [Test runner](tests/README.md) · [Phase 3 index](README.md)

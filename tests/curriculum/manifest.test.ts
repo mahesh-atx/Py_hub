@@ -18,6 +18,10 @@ function read(relativePath: string): string {
   return fs.readFileSync(path.join(DATA_ROOT, relativePath), "utf8");
 }
 
+function batchDir(batch: { path: string }): string {
+  return batch.path.replace(/^\/practice-data\//, "");
+}
+
 function readJson<T>(relativePath: string): T {
   return JSON.parse(read(relativePath)) as T;
 }
@@ -55,7 +59,9 @@ describe("curriculum manifest consistency", () => {
     expect(new Set(batchIds).size).toBe(batchIds.length);
 
     for (const batch of manifest.batches) {
-      expect(batch.path).toBe(`/practice-data/${batch.id}`);
+      expect(batch.path, batch.id).toMatch(/^\/practice-data\/[^/]+(\/[^/]+)*$/);
+      const batchPath = path.join(DATA_ROOT, batchDir(batch));
+      expect(fs.existsSync(batchPath), `${batch.id} -> ${batch.path}`).toBe(true);
       const fileIds = batch.files.map((file) => file.id);
       expect(new Set(fileIds).size).toBe(fileIds.length);
     }
@@ -63,9 +69,10 @@ describe("curriculum manifest consistency", () => {
 
   it("points only to files that exist", () => {
     for (const batch of manifest.batches) {
+      const relativeDir = batchDir(batch);
       for (const file of batch.files) {
         expect(
-          fs.existsSync(path.join(DATA_ROOT, batch.id, file.id)),
+          fs.existsSync(path.join(DATA_ROOT, relativeDir, file.id)),
           `${batch.id}/${file.id}`,
         ).toBe(true);
       }
@@ -75,18 +82,19 @@ describe("curriculum manifest consistency", () => {
   it("parses every declared practice item and matches declared totals", () => {
     let total = 0;
     for (const batch of manifest.batches) {
+      const relativeDir = batchDir(batch);
       for (const file of batch.files.filter((entry) => entry.type === "practice")) {
         const testFile = testFileFor(file.id);
         const solutionFile = solutionFileFor(file.id);
         const tests =
-          testFile && fs.existsSync(path.join(DATA_ROOT, batch.id, testFile))
-            ? readJson<PracticeTestsDocument>(`${batch.id}/${testFile}`)
+          testFile && fs.existsSync(path.join(DATA_ROOT, relativeDir, testFile))
+            ? readJson<PracticeTestsDocument>(`${relativeDir}/${testFile}`)
             : undefined;
         const solutionsPath = solutionFile
-          ? path.join(DATA_ROOT, batch.id, solutionFile)
+          ? path.join(DATA_ROOT, relativeDir, solutionFile)
           : "";
         const parsed = parsePracticeContent({
-          markdown: read(`${batch.id}/${file.id}`),
+          markdown: read(`${relativeDir}/${file.id}`),
           fileId: file.id,
           tests,
           solutionsMarkdown:
@@ -138,7 +146,10 @@ describe("curriculum manifest consistency", () => {
         total += parsed.challenges.length;
       }
     }
-    expect(total).toBe(396);
+    const declared = manifest.batches
+      .flatMap((batch) => batch.files.filter((entry) => entry.type === "practice"))
+      .reduce((sum, entry) => sum + (entry.total ?? 0), 0);
+    expect(total).toBe(declared);
   });
 
   it("provides substantive runnable references for every assignment and project", () => {
@@ -148,15 +159,16 @@ describe("curriculum manifest consistency", () => {
         ["assignments.md", "projects.md"].includes(entry.id),
       )) {
         const solutionFile = solutionFileFor(file.id)!;
-        const solutionPath = path.join(DATA_ROOT, batch.id, solutionFile);
+        const relativeDir = batchDir(batch);
+        const solutionPath = path.join(DATA_ROOT, relativeDir, solutionFile);
         expect(fs.existsSync(solutionPath), `${batch.id}/${solutionFile}`).toBe(true);
         const parsed = parsePracticeContent({
-          markdown: read(`${batch.id}/${file.id}`),
+          markdown: read(`${relativeDir}/${file.id}`),
           fileId: file.id,
           tests:
             testFileFor(file.id) &&
-            fs.existsSync(path.join(DATA_ROOT, batch.id, testFileFor(file.id)!))
-              ? readJson<PracticeTestsDocument>(`${batch.id}/${testFileFor(file.id)!}`)
+            fs.existsSync(path.join(DATA_ROOT, relativeDir, testFileFor(file.id)!))
+              ? readJson<PracticeTestsDocument>(`${relativeDir}/${testFileFor(file.id)!}`)
               : undefined,
           solutionsMarkdown: fs.readFileSync(solutionPath, "utf8"),
         });
@@ -272,13 +284,16 @@ describe("curriculum manifest consistency", () => {
     const deliverables = readJson<
       Record<string, Record<string, string[]>>
     >("deliverables.json");
-    const knownBatches = new Set(manifest.batches.map((batch) => batch.id));
+    const batchById = new Map(manifest.batches.map((batch) => [batch.id, batch]));
 
     for (const [batchId, challenges] of Object.entries(deliverables)) {
-      expect(knownBatches.has(batchId), batchId).toBe(true);
+      const batch = batchById.get(batchId);
+      expect(batch, batchId).toBeDefined();
+      if (!batch) continue;
+      const relativeDir = batchDir(batch);
       const challengeIds = new Set<string>();
       for (const fileId of ["assignments.md", "projects.md"]) {
-        const curriculumPath = path.join(DATA_ROOT, batchId, fileId);
+        const curriculumPath = path.join(DATA_ROOT, relativeDir, fileId);
         if (!fs.existsSync(curriculumPath)) continue;
         const parsed = parsePracticeContent({
           markdown: fs.readFileSync(curriculumPath, "utf8"),

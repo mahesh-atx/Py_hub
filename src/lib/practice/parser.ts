@@ -314,6 +314,7 @@ export function parsePracticeContent({
       const body = rawMarkdown
         .replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "")
         .replace(/\*\*Learning Objective:\*\*\s*(.+)\n?/i, "")
+        .replace(/^\*\*(?:Hint|Explanation|Logic):\*\*\s*.+$/gim, "")
         .replace(/\*\*Solution:\*\*\s*\n*```(?:python)?\r?\n([\s\S]*?)\r?\n```/im, "")
         .replace(/\n{3,}/g, "\n\n")
         .trim();

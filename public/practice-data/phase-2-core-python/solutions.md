@@ -1,6 +1,6 @@
 # 🔑 Phase 2 — Solutions
 
-A worked solution for every question in [practice-questions.md](practice-questions.md).
+A worked solution for every question in [questions.md](questions.md).
 
 **These stay inside Phase 2's rules.** Everything from Phase 1, plus strings, lists, tuples, sets, dictionaries, their methods, and comprehensions. Still no user-defined functions, no classes and no imports. If a solution here uses something you have not met yet, that is a bug; tell me.
 
@@ -2241,4 +2241,4 @@ Also tested on 3 hidden cases: `3`, `5`, `7`
 
 ---
 
-[← Questions](practice-questions.md) · [Test runner](tests/README.md) · [Phase 2 index](README.md)
+[← Questions](questions.md) · [Test runner](tests/README.md) · [Phase 2 index](README.md)

@@ -54,21 +54,21 @@ After finishing the levels, go deeper into ONE topic at a time. Each file has 30
 
 | File | Topic | Sample of what's inside |
 |------|-------|------------------------|
-| [Topic_01_Conditions.md](Topic_01_Conditions.md) | Conditions | slabs/bills, triangle rules, zodiac, loan eligibility, match-case |
-| [Topic_02_Loops.md](Topic_02_Loops.md) | Loops | Pascal/Floyd patterns, Collatz, perfect numbers, digit peeling |
-| [Topic_03_Strings.md](Topic_03_Strings.md) | Strings | anagram-adjacent checks, rotations, Caesar cipher, snake↔Camel |
-| [Topic_04_Lists.md](Topic_04_Lists.md) | Lists | rotations, missing number, leaders, recursive flattening, pairs |
-| [Topic_05_Tuples.md](Topic_05_Tuples.md) | Tuples | zip/unzip, namedtuples, tuples as dict keys, columns |
-| [Topic_06_Sets.md](Topic_06_Sets.md) | Sets | powerset, disjoint/proper subsets, sudoku row check, frozensets |
-| [Topic_07_Dictionaries.md](Topic_07_Dictionaries.md) | Dictionaries | defaultdict/Counter, inverting, grouping, composite sorting |
-| [Topic_08_Functions.md](Topic_08_Functions.md) | Functions | closures, generators, recursion, decorators, reduce/partial |
-| [Topic_09_Files.md](Topic_09_Files.md) | Files | CSV/JSON, binary, tempfiles, os.walk, merge/split, zip |
-| [Topic_10_Errors.md](Topic_10_Errors.md) | Errors | custom exceptions, chaining, assertions, context managers |
-| [Topic_11_Modules.md](Topic_11_Modules.md) | Modules | itertools, functools, re, zipfile, hashlib, your own package |
-| [Topic_12_OOP.md](Topic_12_OOP.md) | OOP | properties, magic methods, ABCs, dataclasses, enums, patterns |
+| [Topic_01_Conditions.md](../topics/Topic_01_Conditions.md) | Conditions | slabs/bills, triangle rules, zodiac, loan eligibility, match-case |
+| [Topic_02_Loops.md](../topics/Topic_02_Loops.md) | Loops | Pascal/Floyd patterns, Collatz, perfect numbers, digit peeling |
+| [Topic_03_Strings.md](../topics/Topic_03_Strings.md) | Strings | anagram-adjacent checks, rotations, Caesar cipher, snake↔Camel |
+| [Topic_04_Lists.md](../topics/Topic_04_Lists.md) | Lists | rotations, missing number, leaders, recursive flattening, pairs |
+| [Topic_05_Tuples.md](../topics/Topic_05_Tuples.md) | Tuples | zip/unzip, namedtuples, tuples as dict keys, columns |
+| [Topic_06_Sets.md](../topics/Topic_06_Sets.md) | Sets | powerset, disjoint/proper subsets, sudoku row check, frozensets |
+| [Topic_07_Dictionaries.md](../topics/Topic_07_Dictionaries.md) | Dictionaries | defaultdict/Counter, inverting, grouping, composite sorting |
+| [Topic_08_Functions.md](../topics/Topic_08_Functions.md) | Functions | closures, generators, recursion, decorators, reduce/partial |
+| [Topic_09_Files.md](../topics/Topic_09_Files.md) | Files | CSV/JSON, binary, tempfiles, os.walk, merge/split, zip |
+| [Topic_10_Errors.md](../topics/Topic_10_Errors.md) | Errors | custom exceptions, chaining, assertions, context managers |
+| [Topic_11_Modules.md](../topics/Topic_11_Modules.md) | Modules | itertools, functools, re, zipfile, hashlib, your own package |
+| [Topic_12_OOP.md](../topics/Topic_12_OOP.md) | OOP | properties, magic methods, ABCs, dataclasses, enums, patterns |
 
 ## Advanced projects (30)
 
-[Projects_Advanced.md](Projects_Advanced.md) — build real applications. Each has a **build plan** (steps to think through before you code) plus a full solution. Includes: SQLite apps, a tic-tac-toe AI with minimax, a Sudoku solver with backtracking, tkinter GUIs, a Snake game, an email sender, a socket chat app, a web scraper, a markdown→HTML converter, a Wordle clone, and more.
+[Projects_Advanced.md](../projects/Projects_Advanced.md) — build real applications. Each has a **build plan** (steps to think through before you code) plus a full solution. Includes: SQLite apps, a tic-tac-toe AI with minimax, a Sudoku solver with backtracking, tkinter GUIs, a Snake game, an email sender, a socket chat app, a web scraper, a markdown→HTML converter, a Wordle clone, and more.
 
 > Every solution in these files has been verified to run without errors (and the key algorithms verified for correct output). Solutions that use `input()` are meant to be run on your own computer (or an online Python runner), where you can type responses. GUI/network projects need your computer with Python installed.

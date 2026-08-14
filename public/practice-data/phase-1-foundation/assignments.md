@@ -238,4 +238,4 @@ Enter one student. They must appear as both topper and lowest scorer, and the cl
 
 ---
 
-[← Phase 1 index](README.md) · [Practice Questions](practice-questions.md)
+[← Phase 1 index](README.md) · [Practice Questions](questions.md)
