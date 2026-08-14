@@ -1,0 +1,1893 @@
+{
+ "1": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Hello, World!\nPriya Sharma\nLearning Python",
+    "visible": true
+   }
+  ]
+ },
+ "2": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Before: a = 10, b = 25\nAfter: a = 25, b = 10",
+    "visible": true
+   }
+  ]
+ },
+ "3": {
+  "cases": [
+   {
+    "input": [],
+    "output": "42 <class 'int'>\n3.14 <class 'float'>\nPython <class 'str'>\nTrue <class 'bool'>\nNone <class 'NoneType'>",
+    "visible": true
+   }
+  ]
+ },
+ "4": {
+  "cases": [
+   {
+    "input": [
+     "12",
+     "5"
+    ],
+    "output": "Area: 60\nPerimeter: 34",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "1"
+    ],
+    "output": "Area: 1\nPerimeter: 4",
+    "visible": false
+   },
+   {
+    "input": [
+     "100",
+     "250"
+    ],
+    "output": "Area: 25000\nPerimeter: 700",
+    "visible": false
+   },
+   {
+    "input": [
+     "7",
+     "3"
+    ],
+    "output": "Area: 21\nPerimeter: 20",
+    "visible": false
+   }
+  ]
+ },
+ "5": {
+  "cases": [
+   {
+    "input": [
+     "7385"
+    ],
+    "output": "7385 seconds = 2 hours, 3 minutes, 5 seconds",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "0 seconds = 0 hours, 0 minutes, 0 seconds",
+    "visible": false
+   },
+   {
+    "input": [
+     "59"
+    ],
+    "output": "59 seconds = 0 hours, 0 minutes, 59 seconds",
+    "visible": false
+   },
+   {
+    "input": [
+     "86399"
+    ],
+    "output": "86399 seconds = 23 hours, 59 minutes, 59 seconds",
+    "visible": false
+   },
+   {
+    "input": [
+     "3600"
+    ],
+    "output": "3600 seconds = 1 hours, 0 minutes, 0 seconds",
+    "visible": false
+   }
+  ]
+ },
+ "6": {
+  "cases": [
+   {
+    "input": [
+     "37"
+    ],
+    "output": "37.0°C = 98.6°F",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "0.0°C = 32.0°F",
+    "visible": false
+   },
+   {
+    "input": [
+     "-40"
+    ],
+    "output": "-40.0°C = -40.0°F",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "100.0°C = 212.0°F",
+    "visible": false
+   }
+  ]
+ },
+ "7": {
+  "cases": [
+   {
+    "input": [
+     "50000",
+     "7.5",
+     "3"
+    ],
+    "output": "Interest: 11250.00\nTotal amount: 61250.00",
+    "visible": true
+   },
+   {
+    "input": [
+     "1000",
+     "10",
+     "1"
+    ],
+    "output": "Interest: 100.00\nTotal amount: 1100.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "25000",
+     "0",
+     "5"
+    ],
+    "output": "Interest: 0.00\nTotal amount: 25000.00",
+    "visible": false
+   }
+  ]
+ },
+ "8": {
+  "cases": [
+   {
+    "input": [
+     "1455300"
+    ],
+    "output": "Total: ₹1,455,300",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Total: ₹0",
+    "visible": false
+   },
+   {
+    "input": [
+     "999"
+    ],
+    "output": "Total: ₹999",
+    "visible": false
+   },
+   {
+    "input": [
+     "1000"
+    ],
+    "output": "Total: ₹1,000",
+    "visible": false
+   },
+   {
+    "input": [
+     "123456789"
+    ],
+    "output": "Total: ₹123,456,789",
+    "visible": false
+   }
+  ]
+ },
+ "9": {
+  "cases": [
+   {
+    "input": [
+     "7"
+    ],
+    "output": "Circumference: 43.98\nArea: 153.94",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "Circumference: 6.28\nArea: 3.14",
+    "visible": false
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Circumference: 0.00\nArea: 0.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "2.5"
+    ],
+    "output": "Circumference: 15.71\nArea: 19.63",
+    "visible": false
+   }
+  ]
+ },
+ "10": {
+  "cases": [
+   {
+    "input": [
+     "17",
+     "5"
+    ],
+    "output": "17 / 5 = 3.4\n17 // 5 = 3\n17 % 5 = 2\n17 ** 5 = 1419857",
+    "visible": true
+   },
+   {
+    "input": [
+     "10",
+     "3"
+    ],
+    "output": "10 / 3 = 3.3333333333333335\n10 // 3 = 3\n10 % 3 = 1\n10 ** 3 = 1000",
+    "visible": false
+   },
+   {
+    "input": [
+     "7",
+     "7"
+    ],
+    "output": "7 / 7 = 1.0\n7 // 7 = 1\n7 % 7 = 0\n7 ** 7 = 823543",
+    "visible": false
+   },
+   {
+    "input": [
+     "2",
+     "8"
+    ],
+    "output": "2 / 8 = 0.25\n2 // 8 = 0\n2 % 8 = 2\n2 ** 8 = 256",
+    "visible": false
+   }
+  ]
+ },
+ "11": {
+  "cases": [
+   {
+    "input": [
+     "25"
+    ],
+    "output": "Days: 9125\nHours: 219000\nMinutes: 13140000",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Days: 0\nHours: 0\nMinutes: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "Days: 365\nHours: 8760\nMinutes: 525600",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Days: 36500\nHours: 876000\nMinutes: 52560000",
+    "visible": false
+   }
+  ]
+ },
+ "12": {
+  "cases": [
+   {
+    "input": [
+     "2500",
+     "3"
+    ],
+    "output": "Each pays: 833.33\nRounding difference: 0.01",
+    "visible": true
+   },
+   {
+    "input": [
+     "100",
+     "4"
+    ],
+    "output": "Each pays: 25.00\nRounding difference: 0.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "1000",
+     "7"
+    ],
+    "output": "Each pays: 142.86\nRounding difference: 0.02",
+    "visible": false
+   },
+   {
+    "input": [
+     "50",
+     "1"
+    ],
+    "output": "Each pays: 50.00\nRounding difference: 0.00",
+    "visible": false
+   }
+  ]
+ },
+ "13": {
+  "cases": [
+   {
+    "input": [
+     "47"
+    ],
+    "output": "Is 47 even? False",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Is 0 even? True",
+    "visible": false
+   },
+   {
+    "input": [
+     "-3"
+    ],
+    "output": "Is -3 even? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Is 100 even? True",
+    "visible": false
+   }
+  ]
+ },
+ "14": {
+  "cases": [
+   {
+    "input": [
+     "48293"
+    ],
+    "output": "Last digit: 3",
+    "visible": true
+   },
+   {
+    "input": [
+     "7"
+    ],
+    "output": "Last digit: 7",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Last digit: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "9"
+    ],
+    "output": "Last digit: 9",
+    "visible": false
+   }
+  ]
+ },
+ "15": {
+  "cases": [
+   {
+    "input": [
+     "472"
+    ],
+    "output": "Digits: 4 7 2\nSum: 13",
+    "visible": true
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Digits: 1 0 0\nSum: 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "999"
+    ],
+    "output": "Digits: 9 9 9\nSum: 27",
+    "visible": false
+   },
+   {
+    "input": [
+     "505"
+    ],
+    "output": "Digits: 5 0 5\nSum: 10",
+    "visible": false
+   }
+  ]
+ },
+ "16": {
+  "cases": [
+   {
+    "input": [
+     "472"
+    ],
+    "output": "Reversed: 274",
+    "visible": true
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Reversed: 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "999"
+    ],
+    "output": "Reversed: 999",
+    "visible": false
+   },
+   {
+    "input": [
+     "120"
+    ],
+    "output": "Reversed: 21",
+    "visible": false
+   }
+  ]
+ },
+ "17": {
+  "cases": [
+   {
+    "input": [
+     "15",
+     "9",
+     "12"
+    ],
+    "output": "Is a the largest? True",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "5",
+     "3"
+    ],
+    "output": "Is a the largest? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "7",
+     "7",
+     "7"
+    ],
+    "output": "Is a the largest? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "9",
+     "2",
+     "9"
+    ],
+    "output": "Is a the largest? False",
+    "visible": false
+   }
+  ]
+ },
+ "18": {
+  "cases": [
+   {
+    "input": [],
+    "output": "A     B     A and B   A or B    not A\nTrue  True  True      True      False\nTrue  False False     True      False\nFalse True  False     True      True\nFalse False False     False     True",
+    "visible": true
+   }
+  ]
+ },
+ "19": {
+  "cases": [
+   {
+    "input": [
+     "12",
+     "10"
+    ],
+    "output": "a & b = 8\na | b = 14\na ^ b = 6\na << 1 = 24\na >> 1 = 6",
+    "visible": true
+   },
+   {
+    "input": [
+     "5",
+     "3"
+    ],
+    "output": "a & b = 1\na | b = 7\na ^ b = 6\na << 1 = 10\na >> 1 = 2",
+    "visible": false
+   },
+   {
+    "input": [
+     "0",
+     "7"
+    ],
+    "output": "a & b = 0\na | b = 7\na ^ b = 7\na << 1 = 0\na >> 1 = 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "255",
+     "15"
+    ],
+    "output": "a & b = 15\na | b = 255\na ^ b = 240\na << 1 = 510\na >> 1 = 127",
+    "visible": false
+   }
+  ]
+ },
+ "20": {
+  "cases": [
+   {
+    "input": [
+     "64"
+    ],
+    "output": "Is power of two? True",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "Is power of two? True",
+    "visible": false
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Is power of two? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "6"
+    ],
+    "output": "Is power of two? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "1024"
+    ],
+    "output": "Is power of two? True",
+    "visible": false
+   }
+  ]
+ },
+ "21": {
+  "cases": [
+   {
+    "input": [
+     "e"
+    ],
+    "output": "Is vowel? True",
+    "visible": true
+   },
+   {
+    "input": [
+     "z"
+    ],
+    "output": "Is vowel? False",
+    "visible": false
+   },
+   {
+    "input": [
+     "A"
+    ],
+    "output": "Is vowel? True",
+    "visible": false
+   },
+   {
+    "input": [
+     "u"
+    ],
+    "output": "Is vowel? True",
+    "visible": false
+   }
+  ]
+ },
+ "22": {
+  "manual": "The `is` results depend on how your interpreter folds constants, so there is no single correct output. Run it and record what you see."
+ },
+ "23": {
+  "cases": [
+   {
+    "input": [],
+    "output": "50\n80\n3\n512\nFalse\nTrue",
+    "visible": true
+   }
+  ]
+ },
+ "24": {
+  "cases": [
+   {
+    "input": [
+     "100000",
+     "8",
+     "5"
+    ],
+    "output": "Amount: 146932.81\nInterest earned: 46932.81",
+    "visible": true
+   },
+   {
+    "input": [
+     "1000",
+     "5",
+     "1"
+    ],
+    "output": "Amount: 1050.00\nInterest earned: 50.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "50000",
+     "0",
+     "10"
+    ],
+    "output": "Amount: 50000.00\nInterest earned: 0.00",
+    "visible": false
+   }
+  ]
+ },
+ "25": {
+  "cases": [
+   {
+    "input": [
+     "-14"
+    ],
+    "output": "Negative",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Zero",
+    "visible": false
+   },
+   {
+    "input": [
+     "7"
+    ],
+    "output": "Positive",
+    "visible": false
+   },
+   {
+    "input": [
+     "-0.5"
+    ],
+    "output": "Negative",
+    "visible": false
+   }
+  ]
+ },
+ "26": {
+  "cases": [
+   {
+    "input": [
+     "34",
+     "71",
+     "28"
+    ],
+    "output": "Largest: 71",
+    "visible": true
+   },
+   {
+    "input": [
+     "5",
+     "5",
+     "5"
+    ],
+    "output": "Largest: 5",
+    "visible": false
+   },
+   {
+    "input": [
+     "9",
+     "2",
+     "3"
+    ],
+    "output": "Largest: 9",
+    "visible": false
+   },
+   {
+    "input": [
+     "1",
+     "2",
+     "8"
+    ],
+    "output": "Largest: 8",
+    "visible": false
+   }
+  ]
+ },
+ "27": {
+  "cases": [
+   {
+    "input": [
+     "84"
+    ],
+    "output": "Grade: A",
+    "visible": true
+   },
+   {
+    "input": [
+     "90"
+    ],
+    "output": "Grade: A+",
+    "visible": false
+   },
+   {
+    "input": [
+     "39"
+    ],
+    "output": "Grade: Fail",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Grade: A+",
+    "visible": false
+   },
+   {
+    "input": [
+     "-5"
+    ],
+    "output": "Invalid marks",
+    "visible": false
+   },
+   {
+    "input": [
+     "101"
+    ],
+    "output": "Invalid marks",
+    "visible": false
+   },
+   {
+    "input": [
+     "40"
+    ],
+    "output": "Grade: D",
+    "visible": false
+   }
+  ]
+ },
+ "28": {
+  "cases": [
+   {
+    "input": [
+     "1900"
+    ],
+    "output": "1900 is not a leap year",
+    "visible": true
+   },
+   {
+    "input": [
+     "2000"
+    ],
+    "output": "2000 is a leap year",
+    "visible": false
+   },
+   {
+    "input": [
+     "2024"
+    ],
+    "output": "2024 is a leap year",
+    "visible": false
+   },
+   {
+    "input": [
+     "2023"
+    ],
+    "output": "2023 is not a leap year",
+    "visible": false
+   },
+   {
+    "input": [
+     "1600"
+    ],
+    "output": "1600 is a leap year",
+    "visible": false
+   }
+  ]
+ },
+ "29": {
+  "cases": [
+   {
+    "input": [
+     "5",
+     "5",
+     "8"
+    ],
+    "output": "Valid triangle: Isosceles",
+    "visible": true
+   },
+   {
+    "input": [
+     "3",
+     "4",
+     "5"
+    ],
+    "output": "Valid triangle: Scalene",
+    "visible": false
+   },
+   {
+    "input": [
+     "6",
+     "6",
+     "6"
+    ],
+    "output": "Valid triangle: Equilateral",
+    "visible": false
+   },
+   {
+    "input": [
+     "1",
+     "2",
+     "10"
+    ],
+    "output": "Not a valid triangle",
+    "visible": false
+   }
+  ]
+ },
+ "30": {
+  "cases": [
+   {
+    "input": [
+     "250"
+    ],
+    "output": "Bill: ₹1200",
+    "visible": true
+   },
+   {
+    "input": [
+     "50"
+    ],
+    "output": "Bill: ₹150",
+    "visible": false
+   },
+   {
+    "input": [
+     "100"
+    ],
+    "output": "Bill: ₹300",
+    "visible": false
+   },
+   {
+    "input": [
+     "500"
+    ],
+    "output": "Bill: ₹4000",
+    "visible": false
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Bill: ₹0",
+    "visible": false
+   }
+  ]
+ },
+ "31": {
+  "cases": [
+   {
+    "input": [
+     "1200000"
+    ],
+    "output": "Tax payable: ₹172500.00",
+    "visible": true
+   },
+   {
+    "input": [
+     "250000"
+    ],
+    "output": "Tax payable: ₹0.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "500000"
+    ],
+    "output": "Tax payable: ₹12500.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "Tax payable: ₹0.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "10000000"
+    ],
+    "output": "Tax payable: ₹2812500.00",
+    "visible": false
+   }
+  ]
+ },
+ "32": {
+  "cases": [
+   {
+    "input": [
+     "7"
+    ],
+    "output": "Digit",
+    "visible": true
+   },
+   {
+    "input": [
+     "A"
+    ],
+    "output": "Uppercase letter",
+    "visible": false
+   },
+   {
+    "input": [
+     "z"
+    ],
+    "output": "Lowercase letter",
+    "visible": false
+   },
+   {
+    "input": [
+     "@"
+    ],
+    "output": "Special character",
+    "visible": false
+   }
+  ]
+ },
+ "33": {
+  "cases": [
+   {
+    "input": [
+     "10",
+     "/",
+     "0"
+    ],
+    "output": "Error: cannot divide by zero",
+    "visible": true
+   },
+   {
+    "input": [
+     "10",
+     "+",
+     "5"
+    ],
+    "output": "Result: 15.0",
+    "visible": false
+   },
+   {
+    "input": [
+     "9",
+     "*",
+     "3"
+    ],
+    "output": "Result: 27.0",
+    "visible": false
+   },
+   {
+    "input": [
+     "7",
+     "^",
+     "2"
+    ],
+    "output": "Error: unrecognised operator",
+    "visible": false
+   }
+  ]
+ },
+ "34": {
+  "cases": [
+   {
+    "input": [
+     "68",
+     "1.75"
+    ],
+    "output": "BMI: 22.2\nCategory: Normal",
+    "visible": true
+   },
+   {
+    "input": [
+     "50",
+     "1.8"
+    ],
+    "output": "BMI: 15.4\nCategory: Underweight",
+    "visible": false
+   },
+   {
+    "input": [
+     "95",
+     "1.7"
+    ],
+    "output": "BMI: 32.9\nCategory: Obese",
+    "visible": false
+   },
+   {
+    "input": [
+     "85",
+     "1.7"
+    ],
+    "output": "BMI: 29.4\nCategory: Overweight",
+    "visible": false
+   }
+  ]
+ },
+ "35": {
+  "cases": [
+   {
+    "input": [
+     "65",
+     "no",
+     "yes"
+    ],
+    "output": "Final price: ₹100.00",
+    "visible": true
+   },
+   {
+    "input": [
+     "30",
+     "no",
+     "no"
+    ],
+    "output": "Final price: ₹250.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "10",
+     "yes",
+     "yes"
+    ],
+    "output": "Final price: ₹76.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "25",
+     "yes",
+     "no"
+    ],
+    "output": "Final price: ₹220.00",
+    "visible": false
+   }
+  ]
+ },
+ "36": {
+  "cases": [
+   {
+    "input": [
+     "30",
+     "22000",
+     "750"
+    ],
+    "output": "Rejected: income below 25000",
+    "visible": true
+   },
+   {
+    "input": [
+     "18",
+     "50000",
+     "800"
+    ],
+    "output": "Rejected: age outside 21-60",
+    "visible": false
+   },
+   {
+    "input": [
+     "35",
+     "60000",
+     "650"
+    ],
+    "output": "Rejected: credit score below 700",
+    "visible": false
+   },
+   {
+    "input": [
+     "40",
+     "30000",
+     "720"
+    ],
+    "output": "Approved",
+    "visible": false
+   }
+  ]
+ },
+ "37": {
+  "cases": [
+   {
+    "input": [
+     "10"
+    ],
+    "output": "1 2 3 4 5 6 7 8 9 10",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1",
+    "visible": false
+   },
+   {
+    "input": [
+     "5"
+    ],
+    "output": "1 2 3 4 5",
+    "visible": false
+   },
+   {
+    "input": [
+     "20"
+    ],
+    "output": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20",
+    "visible": false
+   }
+  ]
+ },
+ "38": {
+  "cases": [
+   {
+    "input": [
+     "4",
+     "10",
+     "25",
+     "8",
+     "17"
+    ],
+    "output": "Sum: 60\nAverage: 15.00",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "5"
+    ],
+    "output": "Sum: 5\nAverage: 5.00",
+    "visible": false
+   },
+   {
+    "input": [
+     "3",
+     "-1",
+     "0",
+     "1"
+    ],
+    "output": "Sum: 0\nAverage: 0.00",
+    "visible": false
+   }
+  ]
+ },
+ "39": {
+  "cases": [
+   {
+    "input": [
+     "7"
+    ],
+    "output": "7 x  1 =  7\n7 x  2 = 14\n7 x  3 = 21\n7 x  4 = 28\n7 x  5 = 35\n7 x  6 = 42\n7 x  7 = 49\n7 x  8 = 56\n7 x  9 = 63\n7 x 10 = 70",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1 x  1 =  1\n1 x  2 =  2\n1 x  3 =  3\n1 x  4 =  4\n1 x  5 =  5\n1 x  6 =  6\n1 x  7 =  7\n1 x  8 =  8\n1 x  9 =  9\n1 x 10 = 10",
+    "visible": false
+   },
+   {
+    "input": [
+     "12"
+    ],
+    "output": "12 x  1 = 12\n12 x  2 = 24\n12 x  3 = 36\n12 x  4 = 48\n12 x  5 = 60\n12 x  6 = 72\n12 x  7 = 84\n12 x  8 = 96\n12 x  9 = 108\n12 x 10 = 120",
+    "visible": false
+   }
+  ]
+ },
+ "40": {
+  "cases": [
+   {
+    "input": [
+     "6"
+    ],
+    "output": "6! = 720",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "0! = 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1! = 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "10"
+    ],
+    "output": "10! = 3628800",
+    "visible": false
+   },
+   {
+    "input": [
+     "-3"
+    ],
+    "output": "Invalid: negative",
+    "visible": false
+   }
+  ]
+ },
+ "41": {
+  "cases": [
+   {
+    "input": [
+     "10"
+    ],
+    "output": "0 1 1 2 3 5 8 13 21 34",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "0",
+    "visible": false
+   },
+   {
+    "input": [
+     "2"
+    ],
+    "output": "0 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "15"
+    ],
+    "output": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377",
+    "visible": false
+   }
+  ]
+ },
+ "42": {
+  "cases": [
+   {
+    "input": [
+     "97"
+    ],
+    "output": "97 is prime",
+    "visible": true
+   },
+   {
+    "input": [
+     "2"
+    ],
+    "output": "2 is prime",
+    "visible": false
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1 is not prime",
+    "visible": false
+   },
+   {
+    "input": [
+     "4"
+    ],
+    "output": "4 is not prime",
+    "visible": false
+   },
+   {
+    "input": [
+     "9973"
+    ],
+    "output": "9973 is prime",
+    "visible": false
+   }
+  ]
+ },
+ "43": {
+  "cases": [
+   {
+    "input": [
+     "10",
+     "50"
+    ],
+    "output": "11 13 17 19 23 29 31 37 41 43 47\nCount: 11",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "10"
+    ],
+    "output": "2 3 5 7\nCount: 4",
+    "visible": false
+   },
+   {
+    "input": [
+     "90",
+     "100"
+    ],
+    "output": "97\nCount: 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "2",
+     "2"
+    ],
+    "output": "2\nCount: 1",
+    "visible": false
+   }
+  ]
+ },
+ "44": {
+  "cases": [
+   {
+    "input": [
+     "94721"
+    ],
+    "output": "Digits: 5\nSum: 23\nReversed: 12749",
+    "visible": true
+   },
+   {
+    "input": [
+     "5"
+    ],
+    "output": "Digits: 1\nSum: 5\nReversed: 5",
+    "visible": false
+   },
+   {
+    "input": [
+     "1000"
+    ],
+    "output": "Digits: 4\nSum: 1\nReversed: 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "999999"
+    ],
+    "output": "Digits: 6\nSum: 54\nReversed: 999999",
+    "visible": false
+   }
+  ]
+ },
+ "45": {
+  "cases": [
+   {
+    "input": [
+     "9474"
+    ],
+    "output": "9474 is an Armstrong number",
+    "visible": true
+   },
+   {
+    "input": [
+     "153"
+    ],
+    "output": "153 is an Armstrong number",
+    "visible": false
+   },
+   {
+    "input": [
+     "370"
+    ],
+    "output": "370 is an Armstrong number",
+    "visible": false
+   },
+   {
+    "input": [
+     "9475"
+    ],
+    "output": "9475 is not an Armstrong number",
+    "visible": false
+   },
+   {
+    "input": [
+     "5"
+    ],
+    "output": "5 is an Armstrong number",
+    "visible": false
+   }
+  ]
+ },
+ "46": {
+  "cases": [
+   {
+    "input": [
+     "48",
+     "60"
+    ],
+    "output": "GCD: 12\nLCM: 240",
+    "visible": true
+   },
+   {
+    "input": [
+     "7",
+     "13"
+    ],
+    "output": "GCD: 1\nLCM: 91",
+    "visible": false
+   },
+   {
+    "input": [
+     "12",
+     "12"
+    ],
+    "output": "GCD: 12\nLCM: 12",
+    "visible": false
+   },
+   {
+    "input": [
+     "100",
+     "75"
+    ],
+    "output": "GCD: 25\nLCM: 300",
+    "visible": false
+   }
+  ]
+ },
+ "47": {
+  "cases": [
+   {
+    "input": [
+     "50",
+     "25",
+     "42"
+    ],
+    "output": "Too high\nToo low\nCorrect! You took 3 attempts.",
+    "visible": true
+   },
+   {
+    "input": [
+     "42"
+    ],
+    "output": "Correct! You took 1 attempts.",
+    "visible": false
+   },
+   {
+    "input": [
+     "1",
+     "99",
+     "50",
+     "40",
+     "42"
+    ],
+    "output": "Too low\nToo high\nToo high\nToo low\nCorrect! You took 5 attempts.",
+    "visible": false
+   }
+  ]
+ },
+ "48": {
+  "cases": [
+   {
+    "input": [
+     "1",
+     "10",
+     "5",
+     "4"
+    ],
+    "output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nResult: 15\n1. Add\n2. Subtract\n3. Multiply\n4. Exit\nGoodbye!",
+    "visible": true
+   },
+   {
+    "input": [
+     "4"
+    ],
+    "output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nGoodbye!",
+    "visible": false
+   },
+   {
+    "input": [
+     "9",
+     "4"
+    ],
+    "output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nInvalid choice\n1. Add\n2. Subtract\n3. Multiply\n4. Exit\nGoodbye!",
+    "visible": false
+   },
+   {
+    "input": [
+     "3",
+     "6",
+     "7",
+     "2",
+     "10",
+     "4",
+     "4"
+    ],
+    "output": "1. Add\n2. Subtract\n3. Multiply\n4. Exit\nResult: 42\n1. Add\n2. Subtract\n3. Multiply\n4. Exit\nResult: 6\n1. Add\n2. Subtract\n3. Multiply\n4. Exit\nGoodbye!",
+    "visible": false
+   }
+  ]
+ },
+ "49": {
+  "cases": [
+   {
+    "input": [
+     "6"
+    ],
+    "output": "6 3 10 5 16 8 4 2 1\nSteps: 8",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1\nSteps: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "27"
+    ],
+    "output": "27 82 41 124 62 31 94 47 142 71 214 107 322 161 484 242 121 364 182 91 274 137 412 206 103 310 155 466 233 700 350 175 526 263 790 395 1186 593 1780 890 445 1336 668 334 167 502 251 754 377 1132 566 283 850 425 1276 638 319 958 479 1438 719 2158 1079 3238 1619 4858 2429 7288 3644 1822 911 2734 1367 4102 2051 6154 3077 9232 4616 2308 1154 577 1732 866 433 1300 650 325 976 488 244 122 61 184 92 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1\nSteps: 111",
+    "visible": false
+   },
+   {
+    "input": [
+     "16"
+    ],
+    "output": "16 8 4 2 1\nSteps: 4",
+    "visible": false
+   }
+  ]
+ },
+ "50": {
+  "cases": [
+   {
+    "input": [],
+    "output": "6 28 496 8128",
+    "visible": true
+   }
+  ]
+ },
+ "51": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "*\n**\n***\n****\n*****",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "*",
+    "visible": false
+   },
+   {
+    "input": [
+     "3"
+    ],
+    "output": "*\n**\n***",
+    "visible": false
+   }
+  ]
+ },
+ "52": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "*****\n****\n***\n**\n*",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "*",
+    "visible": false
+   },
+   {
+    "input": [
+     "3"
+    ],
+    "output": "***\n**\n*",
+    "visible": false
+   }
+  ]
+ },
+ "53": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "    *\n   ***\n  *****\n *******\n*********",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "*",
+    "visible": false
+   },
+   {
+    "input": [
+     "4"
+    ],
+    "output": "   *\n  ***\n *****\n*******",
+    "visible": false
+   }
+  ]
+ },
+ "54": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1",
+    "visible": false
+   },
+   {
+    "input": [
+     "3"
+    ],
+    "output": "1\n1 2\n1 2 3",
+    "visible": false
+   }
+  ]
+ },
+ "55": {
+  "cases": [
+   {
+    "input": [
+     "4"
+    ],
+    "output": "1\n2 3\n4 5 6\n7 8 9 10",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1",
+    "visible": false
+   },
+   {
+    "input": [
+     "6"
+    ],
+    "output": "1\n2 3\n4 5 6\n7 8 9 10\n11 12 13 14 15\n16 17 18 19 20 21",
+    "visible": false
+   }
+  ]
+ },
+ "56": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "    1\n   1 1\n  1 2 1\n 1 3 3 1\n1 4 6 4 1",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "1",
+    "visible": false
+   },
+   {
+    "input": [
+     "7"
+    ],
+    "output": "      1\n     1 1\n    1 2 1\n   1 3 3 1\n  1 4 6 4 1\n 1 5 10 10 5 1\n1 6 15 20 15 6 1",
+    "visible": false
+   }
+  ]
+ },
+ "57": {
+  "cases": [
+   {
+    "input": [
+     "1234",
+     "3",
+     "2500",
+     "4"
+    ],
+    "output": "1. Balance  2. Deposit  3. Withdraw  4. Exit\nWithdrawn ₹2500. Balance: ₹7500\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nTransactions: 1",
+    "visible": true
+   },
+   {
+    "input": [
+     "0000",
+     "1111",
+     "2222"
+    ],
+    "output": "Wrong PIN\nWrong PIN\nWrong PIN\nCard locked",
+    "visible": false
+   },
+   {
+    "input": [
+     "1234",
+     "1",
+     "4"
+    ],
+    "output": "1. Balance  2. Deposit  3. Withdraw  4. Exit\nBalance: ₹10000\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nTransactions: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "1234",
+     "3",
+     "250",
+     "3",
+     "99999",
+     "2",
+     "500",
+     "4"
+    ],
+    "output": "1. Balance  2. Deposit  3. Withdraw  4. Exit\nAmount must be a multiple of 100\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nAmount must be a multiple of 100\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nDeposited ₹500. Balance: ₹10500\n1. Balance  2. Deposit  3. Withdraw  4. Exit\nTransactions: 1",
+    "visible": false
+   }
+  ]
+ },
+ "58": {
+  "cases": [
+   {
+    "input": [
+     "Rohan",
+     "78",
+     "105",
+     "85",
+     "92",
+     "71",
+     "75"
+    ],
+    "output": "Invalid. Enter marks between 0 and 100.\nTotal: 401 / 500\nPercentage: 80.20\nGrade: A\nResult: PASS\nHighest: 92  Lowest: 71",
+    "visible": true
+   },
+   {
+    "input": [
+     "Priya",
+     "100",
+     "100",
+     "100",
+     "100",
+     "100"
+    ],
+    "output": "Total: 500 / 500\nPercentage: 100.00\nGrade: A+\nResult: PASS\nHighest: 100  Lowest: 100",
+    "visible": false
+   },
+   {
+    "input": [
+     "Amit",
+     "35",
+     "40",
+     "50",
+     "60",
+     "70"
+    ],
+    "output": "Total: 255 / 500\nPercentage: 51.00\nGrade: D\nResult: FAIL\nHighest: 70  Lowest: 35",
+    "visible": false
+   }
+  ]
+ },
+ "59": {
+  "cases": [
+   {
+    "input": [
+     "6",
+     "17",
+     "-4",
+     "0",
+     "23",
+     "8",
+     "-11"
+    ],
+    "output": "Positives: 3  Negatives: 2  Zeros: 1\nEven: 3  Odd: 3\nSum: 33  Average: 5.50\nMax: 23  Min: -11\nLargest prime: 23",
+    "visible": true
+   },
+   {
+    "input": [
+     "3",
+     "4",
+     "6",
+     "8"
+    ],
+    "output": "Positives: 3  Negatives: 0  Zeros: 0\nEven: 3  Odd: 0\nSum: 18  Average: 6.00\nMax: 8  Min: 4\nLargest prime: None",
+    "visible": false
+   },
+   {
+    "input": [
+     "1",
+     "7"
+    ],
+    "output": "Positives: 1  Negatives: 0  Zeros: 0\nEven: 0  Odd: 1\nSum: 7  Average: 7.00\nMax: 7  Min: 7\nLargest prime: 7",
+    "visible": false
+   }
+  ]
+ },
+ "60": {
+  "cases": [
+   {
+    "input": [
+     "5"
+    ],
+    "output": "\n     |    1    2    3    4    5\n-----+-------------------------\n   1 |    1    2    3    4    5\n   2 |    2    4    6    8   10\n   3 |    3    6    9   12   15\n   4 |    4    8   12   16   20\n   5 |    5   10   15   20   25",
+    "visible": true
+   },
+   {
+    "input": [
+     "1"
+    ],
+    "output": "\n     |    1\n-----+-----\n   1 |    1",
+    "visible": false
+   },
+   {
+    "input": [
+     "3"
+    ],
+    "output": "\n     |    1    2    3\n-----+---------------\n   1 |    1    2    3\n   2 |    2    4    6\n   3 |    3    6    9",
+    "visible": false
+   }
+  ]
+ }
+}

@@ -337,7 +337,7 @@ export function PracticeSidebar({
           ? null
           : isAssignments
             ? "assignment-tests.json"
-            : "hidden-tests.json";
+            : "tests/cases.json"; // fallback to new path
         const solutionsFile = isProjects
           ? "project-solutions.md"
           : isAssignments
@@ -349,7 +349,21 @@ export function PracticeSidebar({
             : Promise.resolve(null),
           fetch(`${basePath}/${solutionsFile}`),
         ]);
-        if (testsRes?.ok) testsData = await testsRes.json();
+        
+        if (testsRes?.ok) {
+          const rawTests = await testsRes.json();
+          // If it's the new cases.json format (object keyed by strings)
+          if (rawTests && !rawTests.questions && typeof rawTests === 'object') {
+            testsData = {
+              questions: Object.entries(rawTests).map(([key, value]: [string, any]) => ({
+                question_id: parseInt(key, 10),
+                tests: value.cases
+              }))
+            };
+          } else {
+            testsData = rawTests;
+          }
+        }
         if (solutionsRes.ok) solutionsMarkdown = await solutionsRes.text();
       } catch {
         // Missing optional tests/solutions do not prevent opening a challenge.
@@ -526,7 +540,8 @@ export function PracticeSidebar({
       });
     } else {
       for (const test of activeChallenge.tests) {
-        const stdin = "input" in test ? test.input ?? "" : "";
+        const rawInput = "input" in test ? test.input ?? "" : "";
+        const stdin = Array.isArray(rawInput) ? rawInput.join("\n") : rawInput;
         const res = await runTest(codeToTest, stdin);
         const passed = evaluatePracticeTest(codeToTest, res, test);
         const expected =
@@ -534,7 +549,7 @@ export function PracticeSidebar({
             ? test.hint ?? `Source should match /${test.pattern}/.`
             : test.type === "quality"
               ? test.hint ?? "Source must satisfy the inferred structural requirements."
-              : test.expected_output ?? "Expected output was not provided.";
+              : test.output ?? test.expected_output ?? "Expected output was not provided.";
         const actual =
           test.type === "quality"
             ? res.sourceAnalysis?.syntaxValid

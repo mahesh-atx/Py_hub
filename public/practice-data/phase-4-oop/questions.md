@@ -17,11 +17,28 @@ Questions for **Modules 13–19**: classes and objects, constructors, encapsulat
 > 💡 **Tip:** The most common beginner error in this phase is putting data on the **class** that belongs on the **instance**. If two objects of your class accidentally share a list, you have hit it. Question 14 makes you produce the bug deliberately so you recognise it later.
 >
 
+## ✅ Check your answers automatically
+
+This phase grades **object behaviour**:
+
+```bash
+cd tests
+python run_tests.py --new 3     # creates answers/q03.py to write in
+python run_tests.py 3 --diff    # grade it, and see which check failed
+python run_tests.py --all       # everything you have attempted
+```
+
+The grader builds instances from your classes, calls methods and reads attributes — `Rectangle(5, 5).area()` must **return** `25`, and `Circle(-1)` must **raise** `ValueError`. **Class, method and attribute names must match the question exactly**, or the grader cannot find them.
+
+**56 of the 60 questions are graded automatically** across **192 checks**. The last four are complete multi-class systems, which no automatic grader can judge as a design.
+
+Stuck? [**solutions.md**](solutions.md) has a verified solution for every graded question — but write yours first. See [tests/README.md](tests/README.md).
+
 ---
 
 ## Tier 1 — Classes and Objects (Q1–Q12)
 
-## Q1. First Class
+### Q1. First Class
 
 Create a `Book` class with attributes `title`, `author` and `pages`, set in `__init__`. Create two book objects and print their attributes.
 
@@ -35,12 +52,7 @@ Create a `Book` class with attributes `title`, `author` and `pages`, set in `__i
 
 ---
 
-**How to solve:**
-1. Define a `Book` class with an `__init__` method taking `title`, `author`, and `pages`.
-2. Inside `__init__`, assign these parameters to instance attributes using `self`.
-3. Instantiate the class twice with different data and print the attributes.
-
-## Q2. Method with Logic
+### Q2. Method with Logic
 
 Add a `reading_time(wpm=250)` method to `Book` that estimates reading hours, assuming 300 words per page. Return the value rounded to 1 decimal.
 
@@ -56,12 +68,7 @@ Verify: `320 pages × 300 words ÷ 250 wpm ÷ 60 min = 6.4 hours`.
 
 ---
 
-**How to solve:**
-1. Define a method `reading_time` inside the `Book` class that takes `wpm` with a default of 250.
-2. Calculate reading time by multiplying `self.pages` by 300, dividing by `wpm`, and dividing by 60.
-3. Return the result rounded to 1 decimal place using the `round()` function.
-
-## Q3. Rectangle Class
+### Q3. Rectangle Class
 
 Create `Rectangle` with `length` and `width`. Add methods `area()`, `perimeter()`, and `is_square()`.
 
@@ -77,12 +84,7 @@ r.is_square()   # True
 
 ---
 
-**How to solve:**
-1. Define a `Rectangle` class with an `__init__` storing `length` and `width`.
-2. Create `area()` and `perimeter()` methods that compute their respective formulas using `self.length` and `self.width`.
-3. Create an `is_square()` method that returns True if `self.length == self.width`.
-
-## Q4. Circle with Validation
+### Q4. Circle with Validation
 
 Create `Circle` with a `radius`. Raise `ValueError` in `__init__` if the radius is not positive. Add `area()` and `circumference()`.
 
@@ -96,12 +98,7 @@ Circle(-3)   # ValueError: Radius must be positive, got -3
 
 ---
 
-**How to solve:**
-1. In `Circle.__init__`, check if `radius <= 0`. If so, raise a `ValueError` with a descriptive message.
-2. If valid, assign `self.radius = radius`.
-3. Implement `area()` and `circumference()` using `math.pi` and `self.radius`.
-
-## Q5. Counter Object
+### Q5. Counter Object
 
 Create a `Counter` class with `increment()`, `decrement()`, `reset()` and a `value` attribute. Ensure the count never goes below zero.
 
@@ -124,12 +121,7 @@ c.value          # 0   <- never goes below zero
 
 ---
 
-**How to solve:**
-1. Create a `Counter` class initializing `self.value = 0` in `__init__`.
-2. Implement `increment()` to add 1 to `self.value`, and `reset()` to set it to 0.
-3. Implement `decrement()` to subtract 1, ensuring it only does so if `self.value > 0`.
-
-## Q6. Bank Account — First Version
+### Q6. Bank Account — First Version
 
 Create `BankAccount` with `owner` and `balance`. Add `deposit(amount)` and `withdraw(amount)`, both validating that the amount is positive and that withdrawals do not exceed the balance. Return the new balance.
 
@@ -149,12 +141,7 @@ acc.deposit(-100)     # rejected — amount must be positive
 
 ---
 
-**How to solve:**
-1. Define `BankAccount` with `owner` and `balance` in `__init__`.
-2. In `deposit()`, check if amount is positive, add to `balance`, and return it.
-3. In `withdraw()`, check if amount is positive and `<=` current balance. Deduct if valid, otherwise reject, and return the balance.
-
-## Q7. Object Inspection
+### Q7. Object Inspection
 
 Using the `Book` class, demonstrate `type()`, `isinstance()`, `hasattr()`, `getattr()`, `setattr()` and `__dict__`. Print what each returns.
 
@@ -168,12 +155,7 @@ book.__dict__   # {'title': '...', 'author': '...', 'pages': 320}
 
 ---
 
-**How to solve:**
-1. Instantiate a `Book` object.
-2. Pass the object to `type()`, `isinstance()`, `vars()`, and `dir()` to inspect its type and attributes.
-3. Use `hasattr()`, `getattr()`, and `setattr()` to check for, retrieve, and modify an attribute dynamically, printing the results.
-
-## Q8. Temperature Class
+### Q8. Temperature Class
 
 Create a `Temperature` class storing degrees Celsius. Add methods to return Fahrenheit and Kelvin, and a method reporting whether water would freeze or boil at that temperature.
 
@@ -195,12 +177,7 @@ Temperature(0).water_state()     # 'freezes'
 
 ---
 
-**How to solve:**
-1. Create `Temperature` with `self.celsius` in `__init__`.
-2. Add methods `to_fahrenheit()` and `to_kelvin()` that calculate and return the respective converted values.
-3. Add `water_state()` that returns 'freezes' if `<= 0`, 'boils' if `>= 100`, and 'liquid' otherwise.
-
-## Q9. Student Record
+### Q9. Student Record
 
 Create a `Student` class with `name`, `roll_no` and a `marks` dictionary. Add `add_mark(subject, score)`, `total()`, `percentage()` and `grade()` using the Phase 1 grading scale.
 
@@ -220,12 +197,7 @@ s.grade()        # 'B'
 
 ---
 
-**How to solve:**
-1. Initialize `name`, `roll_no`, and an empty dictionary `self.marks` in `Student.__init__`.
-2. In `add_mark()`, update `self.marks[subject] = score`.
-3. Compute `total()` using `sum(self.marks.values())`, calculate `percentage()`, and return the appropriate letter grade in `grade()`.
-
-## Q10. Timer Class
+### Q10. Timer Class
 
 Create a `Timer` class with `start()`, `stop()` and `elapsed()` using `time.perf_counter()`. Raise a `RuntimeError` if `stop()` is called before `start()`.
 
@@ -245,12 +217,7 @@ t.elapsed()      # a small float, e.g. 0.0001
 
 ---
 
-**How to solve:**
-1. In `Timer.__init__`, set `self._start_time` and `self._elapsed` to None or 0.
-2. In `start()`, record the current time using `time.perf_counter()`.
-3. In `stop()`, check if started, calculate the difference, and store it. Raise `RuntimeError` if stopped before starting or if `elapsed()` is called without a valid time.
-
-## Q11. Playlist
+### Q11. Playlist
 
 Create a `Playlist` class holding a list of song titles. Add `add_song()`, `remove_song()`, `shuffle()` (using `random`), `total_songs()` and `show()`. Prevent duplicate songs.
 
@@ -272,12 +239,7 @@ p.remove_song("Ghost")   # handled, not a crash
 
 ---
 
-**How to solve:**
-1. Create `Playlist` with an empty list `self.songs`.
-2. In `add_song()`, check if the song is not already in `self.songs` before appending.
-3. In `remove_song()`, remove if it exists. Use `random.shuffle()` for `shuffle()`, and `len()` for `total_songs()`.
-
-## Q12. Point and Distance
+### Q12. Point and Distance
 
 Create a `Point` class with `x` and `y`. Add `distance_to(other)` using the Pythagorean formula, and `move(dx, dy)`.
 
@@ -293,12 +255,7 @@ Point(0, 0).distance_to(Point(3, 4))   # 5.0
 
 ## Tier 2 — Constructors, Class and Static Methods (Q13–Q24)
 
-**How to solve:**
-1. Initialize `Point` with `self.x` and `self.y`.
-2. In `distance_to(other)`, apply the distance formula using `self.x, self.y` and `other.x, other.y`.
-3. In `move(dx, dy)`, add `dx` to `self.x` and `dy` to `self.y`.
-
-## Q13. Instance vs Class Attribute
+### Q13. Instance vs Class Attribute
 
 Create a `Dog` class where `species = "Canis familiaris"` is a class attribute and `name` is an instance attribute. Create three dogs, print each one's species, then change the class attribute and show that all three see the change.
 
@@ -318,12 +275,7 @@ a.name, b.name                 # 'Buddy', 'Max'  <- instance attrs unaffected
 
 ---
 
-**How to solve:**
-1. Define a `Dog` class with `species = "Canis familiaris"` at the class level.
-2. In `__init__`, accept `name` and assign it to `self.name`.
-3. Create instances, print their `species`, then change `Dog.species` and verify the instances reflect the change while their names remain unaffected.
-
-## Q14. The Shared Mutable Trap
+### Q14. The Shared Mutable Trap
 
 Deliberately create this bug: define a class with `tricks = []` as a **class** attribute, create two dog objects, append a trick to one, and show that both now have it. Then fix it by moving the list into `__init__`.
 
@@ -344,12 +296,7 @@ max.tricks:   []
 
 ---
 
-**How to solve:**
-1. First, create the bug by defining `tricks = []` inside the class body, not in `__init__`. Add a trick to one instance and show it affects both.
-2. Fix it by removing `tricks = []` from the class body.
-3. Instead, define `self.tricks = []` inside `__init__` so each instance gets its own list.
-
-## Q15. Instance Counter
+### Q15. Instance Counter
 
 Add a class attribute to `Student` that counts how many students have been created. Increment it in `__init__`. Add a class method `count()` returning the total.
 
@@ -367,12 +314,7 @@ Student.count()      # 5
 
 ---
 
-**How to solve:**
-1. Add `count = 0` as a class attribute in `Student`.
-2. Inside `__init__`, increment it using `Student.count += 1`.
-3. Add a `@classmethod` named `count()` that returns `cls.count`.
-
-## Q16. Class Method as Alternative Constructor
+### Q16. Class Method as Alternative Constructor
 
 Add `Book.from_string("Title|Author|Pages")` as a `@classmethod` that parses a string and returns a `Book` object.
 
@@ -386,12 +328,7 @@ Book.from_string("Dune|Frank Herbert|412")
 
 ---
 
-**How to solve:**
-1. Above the new method, add the `@classmethod` decorator.
-2. Define `from_string(cls, data_str)`.
-3. Split `data_str` on `"|"`, convert the third element to an `int`, and return `cls(title, author, pages)`.
-
-## Q17. Class Method Factory Chain
+### Q17. Class Method Factory Chain
 
 Add three alternative constructors to `Date`: `from_string("2025-03-15")`, `from_tuple((2025, 3, 15))` and `today()`. Each returns a `Date` object.
 
@@ -409,12 +346,7 @@ Date.today()                            # today's date as a Date object
 
 ---
 
-**How to solve:**
-1. Define a `Date` class with `__init__(self, year, month, day)`.
-2. Add `@classmethod from_string(cls, date_str)` that splits the string on `"-"` and returns `cls()`.
-3. Add `@classmethod from_tuple(cls, date_tuple)` that unpacks the tuple, and `today(cls)` that uses `datetime.date.today()` to return `cls()`.
-
-## Q18. Static Method Utility
+### Q18. Static Method Utility
 
 Add a `@staticmethod` to a `MathHelper` class: `is_prime(n)`, `gcd(a, b)` and `is_leap_year(y)`. Call them without creating an instance.
 
@@ -428,12 +360,7 @@ MathHelper.is_prime(97)   # True
 
 ---
 
-**How to solve:**
-1. In `MathHelper`, add the `@staticmethod` decorator before each utility method.
-2. Define the methods `is_prime(n)`, `gcd(a, b)`, and `is_leap_year(y)` as normal functions without `self` or `cls`.
-3. Call them using `MathHelper.method_name()` directly.
-
-## Q19. Distinguishing the Three Method Types
+### Q19. Distinguishing the Three Method Types
 
 In a single class, write one instance method, one class method and one static method. Each should print what it received (`self`, `cls`, or nothing). Call all three from both an instance and the class itself, and note which calls work.
 
@@ -443,12 +370,7 @@ In a single class, write one instance method, one class method and one static me
 
 ---
 
-**How to solve:**
-1. Define a class with an instance method (takes `self`), a `@classmethod` (takes `cls`), and a `@staticmethod` (takes nothing).
-2. Inside each method, print the argument it receives or a distinct message.
-3. Call each method from an instance and from the class, using `try/except` if necessary to handle `TypeError` for the instance method called on the class.
-
-## Q20. Employee with ID Generation
+### Q20. Employee with ID Generation
 
 Create an `Employee` class that auto-generates sequential employee IDs (`EMP001`, `EMP002`) using a class attribute counter. Add a class method to reset the counter.
 
@@ -468,12 +390,7 @@ Employee("New").emp_id       # 'EMP001'
 
 ---
 
-**How to solve:**
-1. Add `_counter = 0` as a class attribute in `Employee`.
-2. In `__init__`, increment `Employee._counter` and set `self.emp_id` using an f-string with `:03d` padding.
-3. Create a `@classmethod reset_counter(cls)` that sets `cls._counter = 0`.
-
-## Q21. Config Singleton-ish
+### Q21. Config Singleton-ish
 
 Create a `Config` class holding settings in a class-level dictionary, with class methods `set(key, value)`, `get(key, default)` and `all()`. Demonstrate that changes are visible from anywhere without creating an instance.
 
@@ -493,12 +410,7 @@ Config.all()                   # {'debug': True, 'retries': 3}
 
 ---
 
-**How to solve:**
-1. Create a `Config` class with a class attribute dictionary `_settings = {}`.
-2. Implement `@classmethod set(cls, key, value)` and `@classmethod get(cls, key, default=None)` to manipulate `cls._settings`.
-3. Implement `@classmethod all(cls)` to return the dictionary, and test without instantiating `Config`.
-
-## Q22. Validating Constructor
+### Q22. Validating Constructor
 
 Create a `Rectangle` whose `__init__` validates that both dimensions are positive numbers, raising `TypeError` for non-numbers and `ValueError` for non-positive values, with distinct messages.
 
@@ -517,12 +429,7 @@ Rectangle(5, 3)       # works
 
 ---
 
-**How to solve:**
-1. In `Rectangle.__init__`, use `isinstance(val, (int, float))` and `not isinstance(val, bool)` to check type. If false, raise `TypeError`.
-2. Next, check if `val <= 0`. If true, raise `ValueError`.
-3. Perform these checks for both `length` and `width` before assigning to `self`.
-
-## Q23. Object Equality Without Dunders
+### Q23. Object Equality Without Dunders
 
 Create two `Point` objects with identical coordinates. Show that `==` returns `False` and `is` returns `False`. Explain why. (You will fix this in Q40.)
 
@@ -532,12 +439,7 @@ Create two `Point` objects with identical coordinates. Show that `==` returns `F
 
 ---
 
-**How to solve:**
-1. Define a basic `Point` class storing `x` and `y`. Do not implement `__eq__`.
-2. Instantiate `p1 = Point(1, 2)` and `p2 = Point(1, 2)`.
-3. Evaluate `p1 == p2` and `p1 is p2`, and print the results (both will be `False`).
-
-## Q24. The `__del__` Destructor
+### Q24. The `__del__` Destructor
 
 Add a `__del__` method to a class that prints a message. Create an object, delete it with `del`, and observe the message. Then explain why relying on `__del__` for cleanup is a bad idea compared with a `with` block.
 
@@ -560,12 +462,7 @@ decides to, which may be much later or never if a reference cycle exists.
 
 ## Tier 3 — Encapsulation and Abstraction (Q25–Q36)
 
-**How to solve:**
-1. Define a class with an `__init__` storing a name, and a `__del__(self)` method that prints `"Resource {self.name} is being destroyed"`.
-2. Instantiate the object, then call `del obj` and observe the print output.
-3. Write a brief comment explaining that `__del__` execution timing is up to the garbage collector and can be delayed by reference cycles, making `with` blocks a better choice for explicit cleanup.
-
-## Q25. Protected Members
+### Q25. Protected Members
 
 Create a `Vehicle` class with a protected attribute `_speed`. Show that Python does not prevent access, and explain what the single underscore actually communicates.
 
@@ -586,12 +483,7 @@ The single underscore is a **convention**, not enforcement. It means
 
 ---
 
-**How to solve:**
-1. Create a `Vehicle` class and initialize `self._speed = 0` in `__init__`.
-2. Instantiate `Vehicle` and access `v._speed`, printing its value.
-3. Modify `v._speed = 999` and print it again to show it was changed successfully, then write a comment explaining the underscore convention.
-
-## Q26. Private Members and Name Mangling
+### Q26. Private Members and Name Mangling
 
 Create an `Account` with a private `__balance`. Show that `account.__balance` raises `AttributeError`, then show that `account._Account__balance` works. Explain name mangling.
 
@@ -601,12 +493,7 @@ Create an `Account` with a private `__balance`. Show that `account.__balance` ra
 
 ---
 
-**How to solve:**
-1. Define an `Account` class with `self.__balance = 0` in `__init__`.
-2. Create an instance `account` and attempt to access `account.__balance` (which will raise `AttributeError`).
-3. Access the attribute using its mangled name `account._Account__balance` and verify it works.
-
-## Q27. Getters and Setters
+### Q27. Getters and Setters
 
 Add `get_balance()` and `set_balance(amount)` methods to `Account`, with the setter rejecting negative values. Use them instead of direct attribute access.
 
@@ -625,12 +512,7 @@ acc.set_balance(-100)   # rejected, balance stays 7000
 
 ---
 
-**How to solve:**
-1. In `Account`, store the balance in a private or protected attribute (e.g., `self._balance`).
-2. Add `get_balance(self)` that returns `self._balance`.
-3. Add `set_balance(self, amount)` that updates `self._balance` only if `amount >= 0`, and reject negative values.
-
-## Q28. The @property Decorator
+### Q28. The @property Decorator
 
 Rewrite Q27 using `@property` and `@balance.setter` so that `account.balance = -100` raises `ValueError` while still reading like a plain attribute.
 
@@ -645,12 +527,7 @@ account.balance = -100   # ValueError: Balance cannot be negative
 
 ---
 
-**How to solve:**
-1. In `Account`, define a method `balance(self)` decorated with `@property` that returns `self._balance`.
-2. Define a second method `balance(self, value)` decorated with `@balance.setter`.
-3. Inside the setter, raise a `ValueError` if `value < 0`, otherwise update `self._balance`. Test it via attribute assignment.
-
-## Q29. Computed Property
+### Q29. Computed Property
 
 Create a `Circle` where `area` and `circumference` are read-only `@property` values computed from the radius. Setting `circle.area = 50` should raise `AttributeError`.
 
@@ -669,12 +546,7 @@ c.area = 50        # AttributeError: property 'area' has no setter
 
 ---
 
-**How to solve:**
-1. Define a `Circle` class with `radius` in `__init__`.
-2. Create an `area(self)` method decorated with `@property` that returns `math.pi * self.radius ** 2`.
-3. Do the same for `circumference(self)` and test that assigning to `circle.area` raises an `AttributeError`.
-
-## Q30. Property with Validation Chain
+### Q30. Property with Validation Chain
 
 Create a `Person` class where setting `age` validates the type and range (0–150), and setting `email` validates that it contains `@` and `.`. Both raise `ValueError` with useful messages.
 
@@ -694,12 +566,7 @@ p.email = "a@b.com"   # accepted
 
 ---
 
-**How to solve:**
-1. In `Person.__init__`, assign `self.name`, `self.age`, and `self.email` using the public property names.
-2. Create `@property` and `@age.setter` for `age`. In the setter, check if `isinstance(value, (int, float))` and `0 <= value <= 150`, raising `ValueError` otherwise.
-3. Create `@property` and `@email.setter` for `email`. In the setter, verify `"@" in value` and `"." in value`.
-
-## Q31. Temperature with Two-Way Property
+### Q31. Temperature with Two-Way Property
 
 Create a `Temperature` class storing Celsius internally, but exposing `fahrenheit` as a property with **both** a getter and a setter. Setting `temp.fahrenheit = 212` should make `temp.celsius` equal 100.
 
@@ -709,12 +576,7 @@ Create a `Temperature` class storing Celsius internally, but exposing `fahrenhei
 
 ---
 
-**How to solve:**
-1. Define `Temperature` with `self._celsius` initialized in `__init__`.
-2. Create a `@property fahrenheit(self)` that returns `self._celsius * 9/5 + 32`.
-3. Create `@fahrenheit.setter` that updates `self._celsius` to `(value - 32) * 5/9`. Test by assigning to `temp.fahrenheit`.
-
-## Q32. Read-Only ID
+### Q32. Read-Only ID
 
 Create an `Order` class whose `order_id` is set once in `__init__` and exposed as a read-only property. Attempting to change it should raise `AttributeError`.
 
@@ -732,12 +594,7 @@ o.order_id = "ORD999" # AttributeError: property 'order_id' has no setter
 
 ---
 
-**How to solve:**
-1. In `Order.__init__`, store the id in a private attribute like `self._order_id`.
-2. Define a method `order_id(self)` decorated with `@property` returning `self._order_id`.
-3. Do not define a setter for `order_id`. Test that assigning a new value to `order_id` raises an `AttributeError`.
-
-## Q33. First Abstract Class
+### Q33. First Abstract Class
 
 Using `ABC` and `@abstractmethod`, create an abstract `Shape` with abstract methods `area()` and `perimeter()`. Show that instantiating `Shape()` directly raises `TypeError`.
 
@@ -754,12 +611,7 @@ for abstract methods 'area', 'perimeter'
 
 ---
 
-**How to solve:**
-1. Import `ABC` and `abstractmethod` from the `abc` module.
-2. Define `class Shape(ABC):` and inside it, create `area(self)` and `perimeter(self)` methods, both decorated with `@abstractmethod` and passing.
-3. Attempt to instantiate `Shape()` and catch the resulting `TypeError` to observe the message.
-
-## Q34. Concrete Implementations
+### Q34. Concrete Implementations
 
 Implement `Circle`, `Rectangle` and `Triangle` as concrete subclasses of `Shape`. Store them in a list and print each one's area and perimeter in a loop.
 
@@ -781,12 +633,7 @@ for s in shapes:
 
 ---
 
-**How to solve:**
-1. Define `Circle(Shape)`, `Rectangle(Shape)`, and `Triangle(Shape)`.
-2. Provide concrete implementations for `area()` and `perimeter()` in all three subclasses using the appropriate math formulas.
-3. Instantiate them, store them in a list, and loop through to print their names, areas, and perimeters.
-
-## Q35. Abstract with Shared Behaviour
+### Q35. Abstract with Shared Behaviour
 
 Extend `Shape` with a **concrete** method `describe()` that calls the abstract `area()`. Show that subclasses inherit `describe()` without reimplementing it.
 
@@ -806,12 +653,7 @@ each subclass's own `area()`.
 
 ---
 
-**How to solve:**
-1. In the `Shape` ABC, add a concrete method `describe(self)`.
-2. Inside `describe(self)`, return a formatted string that includes `type(self).__name__` and calls `self.area()`.
-3. Call `describe()` on instances of `Circle` and `Rectangle` to show it works.
-
-## Q36. Abstract Payment Processor
+### Q36. Abstract Payment Processor
 
 Create an abstract `PaymentProcessor` with abstract `process(amount)` and `refund(transaction_id)`. Implement `UPIPayment`, `CardPayment` and `WalletPayment`, each with different validation rules and fees.
 
@@ -823,12 +665,7 @@ Create an abstract `PaymentProcessor` with abstract `process(amount)` and `refun
 
 ## Tier 4 — Inheritance (Q37–Q46)
 
-**How to solve:**
-1. Create `PaymentProcessor(ABC)` with abstract methods `process(amount)` and `refund(transaction_id)`.
-2. Create subclasses `UPIPayment`, `CardPayment`, and `WalletPayment`.
-3. Implement the abstract methods in each subclass with distinct print statements or simple logic, then test by iterating over a list of processors and calling `process()`.
-
-## Q37. Single Inheritance
+### Q37. Single Inheritance
 
 Create `Animal` with `name` and a `speak()` method. Create `Dog` inheriting from it, overriding `speak()`. Demonstrate that `Dog` also has `name`.
 
@@ -848,12 +685,7 @@ isinstance(d, Animal)       # True
 
 ---
 
-**How to solve:**
-1. Define `Animal` with an `__init__` setting `self.name` and a `speak()` method returning a generic sound.
-2. Define `class Dog(Animal):` and override `speak()` to return `"Woof!"`.
-3. Instantiate `Dog("Buddy")`, access `d.name`, call `d.speak()`, and verify `isinstance(d, Animal)`.
-
-## Q38. super() in the Constructor
+### Q38. super() in the Constructor
 
 Create `Person(name, age)` and `Employee(name, age, salary)` where `Employee.__init__` calls `super().__init__(name, age)` before setting `salary`. Show what breaks if you forget the `super()` call.
 
@@ -875,12 +707,7 @@ e.name          # AttributeError: 'Employee' object has no attribute 'name'
 
 ---
 
-**How to solve:**
-1. Define `Person(name, age)` assigning them to `self`.
-2. Define `Employee(name, age, salary)` inheriting from `Person`. Inside `__init__`, call `super().__init__(name, age)` before setting `self.salary = salary`.
-3. Instantiate `Employee` and test attributes. Comment out the `super()` call to observe the `AttributeError`.
-
-## Q39. Multilevel Inheritance
+### Q39. Multilevel Inheritance
 
 Build a three-level chain: `Vehicle` → `Car` → `ElectricCar`. Each level adds attributes and overrides one method. Print the MRO with `ElectricCar.__mro__`.
 
@@ -899,12 +726,7 @@ Four entries: the class itself, each parent in order, then `object`.
 
 ---
 
-**How to solve:**
-1. Create `Vehicle`, then `class Car(Vehicle):`, then `class ElectricCar(Car):`, overriding or adding something at each level.
-2. Print `ElectricCar.__mro__` to view the Method Resolution Order.
-3. Observe how it matches the class hierarchy down to `object`.
-
-## Q40. Hierarchical Inheritance
+### Q40. Hierarchical Inheritance
 
 From one `Employee` base, create `Manager`, `Developer` and `Designer`. Each overrides a `calculate_bonus()` method with different rules. Store all three in a list and total the bonuses.
 
@@ -929,12 +751,7 @@ different implementations.
 
 ---
 
-**How to solve:**
-1. Create `Employee` with `name` and `salary` in `__init__`.
-2. Create three subclasses (`Manager`, `Developer`, `Designer`) inheriting from `Employee`. Each should implement `calculate_bonus()` returning `self.salary * rate`.
-3. Store instances in a list, iterate through it, print each bonus, and compute the sum using polymorphism.
-
-## Q41. Multiple Inheritance and MRO
+### Q41. Multiple Inheritance and MRO
 
 Create classes `Flyer` and `Swimmer`, each with a `move()` method. Create `Duck(Flyer, Swimmer)`. Determine which `move()` runs, then print `Duck.__mro__` to explain why.
 
@@ -954,12 +771,7 @@ Python resolves left to right through the base list.
 
 ---
 
-**How to solve:**
-1. Create `Flyer` with `move(self)` returning `'Flying'` and `Swimmer` with `move(self)` returning `'Swimming'`.
-2. Create `class Duck(Flyer, Swimmer): pass` and instantiate it.
-3. Call `Duck().move()` and print `Duck.__mro__` to confirm Python found the method in the first parent.
-
-## Q42. The Diamond Problem
+### Q42. The Diamond Problem
 
 Build the classic diamond: `A` → `B`, `A` → `C`, `B, C` → `D`. Put a print statement in each `__init__` and use `super()` throughout. Trace the order in which the constructors run.
 
@@ -982,12 +794,7 @@ is why `A.__init__` is not called twice despite two paths reaching it.
 
 ---
 
-**How to solve:**
-1. Create `A`, then `B(A)` and `C(A)`, then `D(B, C)`.
-2. In every `__init__`, add a print statement like `print("A.__init__")` and call `super().__init__()`.
-3. Instantiate `D()` and observe the print order, verifying `A`'s constructor only runs once.
-
-## Q43. Method Overriding vs Extending
+### Q43. Method Overriding vs Extending
 
 In a subclass, write one method that **replaces** the parent's behaviour entirely and another that **extends** it by calling `super().method()` first. Demonstrate the difference in output.
 
@@ -1004,12 +811,7 @@ child.extended()   # 'Parent version' then 'Child addition'
 
 ---
 
-**How to solve:**
-1. In a base class, define `replaced(self)` and `extended(self)` returning strings.
-2. In the subclass, define `replaced(self)` returning a completely new string.
-3. In the subclass, define `extended(self)`, call `super().extended()`, and append new text to its result.
-
-## Q44. isinstance vs type
+### Q44. isinstance vs type
 
 Given the `Vehicle` → `Car` → `ElectricCar` chain, compare `isinstance(tesla, Vehicle)` with `type(tesla) == Vehicle`. Explain why `isinstance` is almost always the right choice.
 
@@ -1029,12 +831,7 @@ type(tesla) == ElectricCar      # True
 
 ---
 
-**How to solve:**
-1. Instantiate `tesla = ElectricCar(...)`.
-2. Evaluate `isinstance(tesla, Vehicle)` and `type(tesla) == Vehicle`.
-3. Print the results. Understand that `isinstance` checks the whole MRO while `type()` only checks exact class identity.
-
-## Q45. Composition Over Inheritance
+### Q45. Composition Over Inheritance
 
 Model a `Car` that **has an** `Engine` (composition) rather than **is an** `Engine`. Then explain, in a comment, one situation where composition is clearly better than inheritance.
 
@@ -1053,12 +850,7 @@ isinstance(car, Engine)     # False  <- a Car HAS an engine, it is not one
 
 ---
 
-**How to solve:**
-1. Create `Engine` with `horsepower` and a `start()` method.
-2. Create `Car` with `name` and `engine` (an instance of `Engine`) stored as `self.engine`.
-3. Define `Car.start()` to call `self.engine.start()` and verify that `isinstance(car, Engine)` is `False`.
-
-## Q46. Shape Hierarchy with Abstract Base
+### Q46. Shape Hierarchy with Abstract Base
 
 Combine Tiers 3 and 4: an abstract `Shape`, concrete `Circle`/`Rectangle`, then `Square` inheriting from `Rectangle` and enforcing equal sides through a property. Setting `square.side = 7` must update both dimensions.
 
@@ -1080,12 +872,7 @@ sq.area()        # 49
 
 ## Tier 5 — Polymorphism and Magic Methods (Q47–Q56)
 
-**How to solve:**
-1. Define `Shape(ABC)` with abstract `area()`.
-2. Define `Rectangle(Shape)` with `length` and `width`.
-3. Define `Square(Rectangle)`. In its `__init__`, call `super().__init__(side, side)`. Add a `@property side` and a setter that updates both `self.length` and `self.width` to keep them equal.
-
-## Q47. Duck Typing
+### Q47. Duck Typing
 
 Create three unrelated classes — `Duck`, `Robot`, `Person` — each with a `speak()` method. Write a loop that calls `speak()` on all of them without any shared base class. Explain why this works.
 
@@ -1108,12 +895,7 @@ method exists at call time.
 
 ---
 
-**How to solve:**
-1. Create `Duck`, `Robot`, and `Person`, giving each a `speak()` method returning a unique string. Do not make them inherit from anything.
-2. Put instances of all three in a list.
-3. Write a `for` loop to iterate over the list and call `speak()` on each item, observing that it works purely via duck typing.
-
-## Q48. Operator Overloading — Addition
+### Q48. Operator Overloading — Addition
 
 Create a `Vector2D` class with `__add__`, `__sub__` and `__mul__` (scalar multiplication).
 
@@ -1128,12 +910,7 @@ Vector2D(2, 3) * 3                # Vector2D(6, 9)
 
 ---
 
-**How to solve:**
-1. Create `Vector2D` storing `x` and `y`.
-2. Implement `__add__(self, other)` returning a new `Vector2D(self.x + other.x, self.y + other.y)`. Do the same for `__sub__`.
-3. Implement `__mul__(self, scalar)` returning `Vector2D(self.x * scalar, self.y * scalar)`. Optionally implement `__rmul__` for left-side multiplication.
-
-## Q49. `__str__` vs `__repr__`
+### Q49. `__str__` vs `__repr__`
 
 Add both to `Vector2D`. Make `__str__` human-friendly and `__repr__` unambiguous. Show what `print(v)`, `str(v)`, `repr(v)` and evaluating `v` in the REPL each produce.
 
@@ -1148,12 +925,7 @@ repr(v)    # Vector2D(x=2, y=3)
 
 ---
 
-**How to solve:**
-1. In `Vector2D`, define `__str__(self)` returning a formatted string like `f"({self.x}, {self.y})"`.
-2. Define `__repr__(self)` returning `f"Vector2D(x={self.x}, y={self.y})"`.
-3. Test by printing the object and using the `repr()` function.
-
-## Q50. Comparison Dunders
+### Q50. Comparison Dunders
 
 Add `__eq__`, `__lt__`, `__le__`, `__gt__` and `__ge__` to a `Money` class comparing amounts. Then sort a list of `Money` objects.
 
@@ -1165,12 +937,7 @@ Add `__eq__`, `__lt__`, `__le__`, `__gt__` and `__ge__` to a `Money` class compa
 
 ---
 
-**How to solve:**
-1. Define a `Money` class with an `amount`.
-2. Import `total_ordering` from `functools` and apply `@total_ordering` above the class.
-3. Implement `__eq__(self, other)` returning `self.amount == other.amount` and `__lt__(self, other)` returning `self.amount < other.amount`. The decorator provides the rest.
-
-## Q51. `__len__` and `__getitem__`
+### Q51. `__len__` and `__getitem__`
 
 Create a `Playlist` class supporting `len(playlist)`, `playlist[0]`, and slicing `playlist[1:3]`. Also make it iterable so a `for` loop works.
 
@@ -1192,12 +959,7 @@ for song in p:  # iterates A, B, C, D
 
 ---
 
-**How to solve:**
-1. In `Playlist`, define `__len__(self)` returning `len(self.songs)`.
-2. Define `__getitem__(self, index)` returning `self.songs[index]`.
-3. Verify that `len()`, indexing `[0]`, slicing `[1:3]`, and `for` loops all work automatically.
-
-## Q52. `__contains__`
+### Q52. `__contains__`
 
 Add `__contains__` to `Playlist` so that `"Song Title" in playlist` works case-insensitively.
 
@@ -1215,12 +977,7 @@ Add `__contains__` to `Playlist` so that `"Song Title" in playlist` works case-i
 
 ---
 
-**How to solve:**
-1. In `Playlist`, add `__contains__(self, item)`.
-2. Lowercase the `item` and compare it against the lowercase versions of the strings in `self.songs`.
-3. Return `True` if a match is found, `False` otherwise, and test with the `in` operator.
-
-## Q53. `__call__`
+### Q53. `__call__`
 
 Create a `Multiplier` class whose instances can be called like functions.
 
@@ -1237,12 +994,7 @@ Compare this with the closure you wrote in Phase 3 Q22. When would you choose ea
 
 ---
 
-**How to solve:**
-1. Define a `Multiplier` class holding a `factor` from `__init__`.
-2. Add `__call__(self, x)` returning `x * self.factor`.
-3. Instantiate `double = Multiplier(2)` and call `double(15)`.
-
-## Q54. Context Manager with `__enter__` / `__exit__`
+### Q54. Context Manager with `__enter__` / `__exit__`
 
 Create a `FileManager` class usable in a `with` block that opens a file, yields it, and guarantees closure even if an exception occurs. Print messages in both dunders to trace the flow.
 
@@ -1267,12 +1019,7 @@ with FileManager("test.txt", "r") as f:
 
 ---
 
-**How to solve:**
-1. Define `FileManager` with `filename` and `mode` in `__init__`.
-2. In `__enter__(self)`, print a message, open the file, store it in `self.file`, and return it.
-3. In `__exit__(self, exc_type, exc_val, exc_tb)`, print a message and call `self.file.close()`.
-
-## Q55. `__hash__` and Set Membership
+### Q55. `__hash__` and Set Membership
 
 Make a `Point` class hashable by defining both `__eq__` and `__hash__`. Show that two equal points collapse into one entry in a set. Then remove `__hash__` and observe the `TypeError`.
 
@@ -1292,12 +1039,7 @@ Make a `Point` class hashable by defining both `__eq__` and `__hash__`. Show tha
 
 ---
 
-**How to solve:**
-1. In `Point`, define `__eq__(self, other)` comparing `x` and `y`.
-2. Define `__hash__(self)` returning `hash((self.x, self.y))`. Test putting duplicates in a `set`.
-3. Remove or comment out `__hash__` and attempt to use the set again to see the `TypeError`.
-
-## Q56. Full-Featured Class
+### Q56. Full-Featured Class
 
 Build a `Matrix` class implementing `__init__`, `__str__`, `__repr__`, `__add__`, `__sub__`, `__mul__` (matrix multiplication), `__eq__`, `__len__` and `__getitem__`. Validate dimensions in every operation, raising `ValueError` on a mismatch.
 
@@ -1319,12 +1061,7 @@ print(A * B)
 
 These are full projects. Expect 2–4 hours each.
 
-**How to solve:**
-1. Start with `Matrix.__init__` storing the 2D list. Implement `__str__` and `__repr__`.
-2. Implement `__add__` and `__sub__` checking dimensions first.
-3. Implement `__mul__` for matrix multiplication, checking if `len(self.data[0]) == len(other.data)`. Raise `ValueError` if dimensions don't match.
-
-## Q57. Library Management System
+### Q57. Library Management System
 
 Design a complete library system.
 
@@ -1348,12 +1085,7 @@ Design a complete library system.
 
 ---
 
-**How to solve:**
-1. Outline `Book` and `Member` classes with basic properties.
-2. Add `Library` to manage the collection and write tests for basic borrowing.
-3. Introduce the `Loan` class to track dates and calculate fines. Finally, add JSON persistence methods.
-
-## Q58. E-Commerce Order System
+### Q58. E-Commerce Order System
 
 **Classes required:**
 - `Product` — id, name, price, stock; a `reduce_stock()` method that raises on insufficient inventory
@@ -1375,12 +1107,7 @@ Print a formatted invoice on checkout.
 
 ---
 
-**How to solve:**
-1. Start by modeling `Product`, `CartItem`, and `Cart`.
-2. Define the `Discount` abstract base class and its concrete subclasses.
-3. Create `Order` that takes a `Cart` and a `Customer`, handles state transitions, applies discounts, calculates shipping, and prints the invoice.
-
-## Q59. Employee Payroll System
+### Q59. Employee Payroll System
 
 **Classes required:**
 - `Employee` (abstract) — with abstract `calculate_pay()`
@@ -1401,12 +1128,7 @@ Print a formatted invoice on checkout.
 
 ---
 
-**How to solve:**
-1. Define the abstract `Employee` and its concrete implementations.
-2. Build `Department` to hold employees and compute departmental stats.
-3. Build `Payroll` to iterate over all employees in departments, compute taxes, generate payslips, and handle the CSV export.
-
-## Q60. Design Your Own System
+### Q60. Design Your Own System
 
 Pick a domain you actually understand — a gym, a restaurant, a hospital ward, a cricket team, a music streaming service — and design a complete object system for it.
 
@@ -1447,10 +1169,4 @@ Pick a domain you actually understand — a gym, a restaurant, a hospital ward, 
 
 ---
 
-[← Phase 4 index](README.md) · [Projects & Key Takeaways](projects-and-takeaways.md)
-
-**How to solve:**
-1. Write the design document defining the classes, attributes, methods, and relationships.
-2. Implement the abstract base classes and their concrete implementations first.
-3. Build the core logic (composition and relationships), followed by custom exceptions, JSON persistence, and finally the interactive menu.
-
+[← Phase 4 index](README.md) · [Solutions](solutions.md) · [Test runner](tests/README.md) · [Projects & Key Takeaways](projects-and-takeaways.md)

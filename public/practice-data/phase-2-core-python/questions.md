@@ -17,11 +17,30 @@ Questions for **Modules 5–8**: strings, lists, tuples, sets and dictionaries.
 > 💡 **Tip:** Phase 2 is where most people start reaching for `for` loops when a comprehension or a dictionary would be clearer. After solving each question, ask: *could a dict have replaced this loop?* Frequently the answer is yes, and that instinct is what interviewers look for.
 >
 
+## ✅ Check your answers automatically
+
+Write your solution in a file and let the grader run it against several test cases:
+
+```bash
+cd tests
+python run_tests.py --new 4     # creates answers/q04.py to write in
+python run_tests.py 4 --diff    # grade it, and see the failing case
+python run_tests.py --all       # everything you have attempted
+```
+
+**Prompts are ignored.** The grader throws away whatever you pass to `input()`, so `input("Enter text: ")` and `input()` score the same. Trailing whitespace is ignored too; everything else is exact.
+
+**Sets must be printed sorted.** A bare `print(my_set)` gives a different order on every run, so every set question expects `sorted(...)`.
+
+**All 60 questions are graded automatically** across **116 test cases**, most of them hidden.
+
+Stuck? [**solutions.md**](solutions.md) has a verified solution for every question — but write yours first. See [tests/README.md](tests/README.md).
+
 ---
 
 ## Tier 1 — String Basics (Q1–Q12)
 
-## Q1. String Facts
+### Q1. String Facts
 
 Ask for a string. Print its length, its uppercase form, its lowercase form, and the string with leading/trailing spaces removed.
 
@@ -39,12 +58,7 @@ Stripped: 'Hello World'
 
 ---
 
-**How to solve:**
-1. Call `input()` to get the text.
-2. Use `len()`, `.upper()`, `.lower()`, and `.strip()` on the string.
-3. Print all the returned values.
-
-## Q2. First and Last
+### Q2. First and Last
 
 Ask for a word and print its first character, last character, and the middle character (or the two middle characters if the length is even).
 
@@ -61,12 +75,7 @@ Middle: th
 
 ---
 
-**How to solve:**
-1. Ask the user for a word using `input()`.
-2. Extract the first and last characters using index `0` and `-1`.
-3. Calculate the middle index using `len(s)//2` and handle even length by slicing.
-
-## Q3. Slicing Practice
+### Q3. Slicing Practice
 
 Given `text = "PythonProgramming"`, print:
 
@@ -90,12 +99,7 @@ gnimmargorPnohtyP
 
 ---
 
-**How to solve:**
-1. Use slice `[:6]` for the first 6 characters.
-2. Use slice `[-11:]` for the last 11 characters.
-3. Use slice `[::2]` for every second character and `[::-1]` for reversing.
-
-## Q4. Vowel and Consonant Count
+### Q4. Vowel and Consonant Count
 
 Ask for a sentence. Count vowels, consonants, digits and spaces.
 
@@ -115,12 +119,7 @@ Spaces: 3
 
 ---
 
-**How to solve:**
-1. Iterate over each character in the string.
-2. Check if the character is a digit or a space, and count them.
-3. For alphabetic characters, check if they are in `"aeiou"` to count as vowels, otherwise count as consonants.
-
-## Q5. Palindrome Check
+### Q5. Palindrome Check
 
 Ask for a word and check whether it reads the same backwards. Ignore case.
 
@@ -135,12 +134,7 @@ Palindrome: True
 
 ---
 
-**How to solve:**
-1. Convert the input string to lowercase using `.lower()`.
-2. Reverse the string using the `[::-1]` slice.
-3. Check if the lowercased string is equal to its reversed version.
-
-## Q6. Sentence Palindrome
+### Q6. Sentence Palindrome
 
 Extend Q5 to full sentences, ignoring spaces, case and punctuation.
 
@@ -155,12 +149,7 @@ Palindrome: True
 
 ---
 
-**How to solve:**
-1. Iterate through the sentence and keep only characters where `.isalnum()` is true.
-2. Convert the cleaned string to lowercase.
-3. Compare the cleaned string with its reverse `[::-1]`.
-
-## Q7. Word Count
+### Q7. Word Count
 
 Ask for a sentence and print the number of words, the longest word, and the shortest word.
 
@@ -177,12 +166,7 @@ Shortest: Python
 
 ---
 
-**How to solve:**
-1. Split the sentence into a list of words using `.split()`.
-2. Use `len()` on the list to get the word count.
-3. Use `max()` and `min()` with `key=len` to find the longest and shortest words.
-
-## Q8. Title Case Manually
+### Q8. Title Case Manually
 
 Convert a sentence to title case **without** using `.title()` or `.capitalize()`.
 
@@ -197,12 +181,7 @@ Title case: The Quick Brown Fox
 
 ---
 
-**How to solve:**
-1. Split the sentence into words using `.split()`.
-2. For each word, capitalize the first character and concatenate the rest.
-3. Join the modified words back together with spaces.
-
-## Q9. Character Frequency
+### Q9. Character Frequency
 
 Ask for a word and print how many times each character appears, in order of first appearance.
 
@@ -224,12 +203,7 @@ n: 1
 
 ---
 
-**How to solve:**
-1. Initialize an empty dictionary to store character frequencies.
-2. Loop through each character in the word.
-3. Update the count for each character in the dictionary and print the keys with their counts.
-
-## Q10. Remove Duplicates from a String
+### Q10. Remove Duplicates from a String
 
 Remove duplicate characters while preserving the original order.
 
@@ -244,12 +218,7 @@ Result: progamin
 
 ---
 
-**How to solve:**
-1. Create an empty set to track seen characters and an empty string for the result.
-2. Iterate through the string; if a character is not in the set, add it to the set and append to the result string.
-3. Return the result string.
-
-## Q11. Reverse Word Order
+### Q11. Reverse Word Order
 
 Reverse the order of words in a sentence, keeping each word intact.
 
@@ -264,12 +233,7 @@ Result: powerful really is Python
 
 ---
 
-**How to solve:**
-1. Split the sentence into a list of words using `.split()`.
-2. Reverse the list using `[::-1]`.
-3. Join the reversed list back into a string with spaces using `" ".join()`.
-
-## Q12. Password Strength Checker
+### Q12. Password Strength Checker
 
 Ask for a password and check whether it has: at least 8 characters, an uppercase letter, a lowercase letter, a digit and a special character. Report which requirements failed.
 
@@ -291,12 +255,7 @@ Strength: Medium (4/5)
 
 ## Tier 2 — List Fundamentals (Q13–Q24)
 
-**How to solve:**
-1. Check the length of the password.
-2. Use `.isupper()`, `.islower()`, and `.isdigit()` to check for required character types.
-3. Determine if there is a special character and output the combined strength score.
-
-## Q13. List Statistics
+### Q13. List Statistics
 
 Given a list of numbers entered by the user (ask for `n`, then read them), print the sum, average, maximum and minimum. Do **not** use `sum()`, `max()` or `min()`.
 
@@ -315,12 +274,7 @@ Min: 7
 
 ---
 
-**How to solve:**
-1. Initialize variables for sum, max, min, and count.
-2. Loop through the input numbers, updating the variables accordingly.
-3. Compute the average by dividing the sum by the count, and print all results.
-
-## Q14. Second Largest
+### Q14. Second Largest
 
 Find the second largest number in a list without sorting it.
 
@@ -337,12 +291,7 @@ Handle the case where all elements are identical.
 
 ---
 
-**How to solve:**
-1. Initialize two variables for the largest and second largest numbers.
-2. Iterate through the list, updating both variables when a larger number is found, or just the second largest when appropriate.
-3. Handle the edge case where all numbers are identical.
-
-## Q15. Reverse a List Manually
+### Q15. Reverse a List Manually
 
 Reverse a list in place without using `.reverse()` or slicing.
 
@@ -357,12 +306,7 @@ After: [5, 4, 3, 2, 1]
 
 ---
 
-**How to solve:**
-1. Loop from the start of the list up to the midpoint (`n // 2`).
-2. Swap the element at index `i` with the element at index `n - 1 - i`.
-3. Print the modified list.
-
-## Q16. Remove Duplicates, Keep Order
+### Q16. Remove Duplicates, Keep Order
 
 Remove duplicates from a list while preserving order. Do not use `set()`.
 
@@ -377,12 +321,7 @@ Output: [3, 1, 4, 5, 9, 2, 6]
 
 ---
 
-**How to solve:**
-1. Create an empty list to store the results.
-2. Loop through the input list.
-3. If an element is not already in the result list, append it.
-
-## Q17. Even and Odd Split
+### Q17. Even and Odd Split
 
 Split a list into two lists — evens and odds — using a comprehension for each.
 
@@ -398,12 +337,7 @@ Odd: [1, 3, 5, 7, 9]
 
 ---
 
-**How to solve:**
-1. Use a list comprehension with the condition `x % 2 == 0` for evens.
-2. Use another list comprehension with `x % 2 != 0` for odds.
-3. Print both lists.
-
-## Q18. Squares and Cubes
+### Q18. Squares and Cubes
 
 Using comprehensions, build a list of squares of even numbers from 1 to 20, and a list of cubes of odd numbers in the same range.
 
@@ -418,12 +352,7 @@ Cubes of odds: [1, 27, 125, 343, 729, 1331, 2197, 3375, 4913, 6859]
 
 ---
 
-**How to solve:**
-1. Create a list comprehension for `x**2` where `x` is in `range(1, 21)` and even.
-2. Create another list comprehension for `x**3` where `x` is in `range(1, 21)` and odd.
-3. Print both lists.
-
-## Q19. Rotate a List
+### Q19. Rotate a List
 
 Rotate a list to the right by `k` positions.
 
@@ -441,12 +370,7 @@ Handle `k` larger than the list length.
 
 ---
 
-**How to solve:**
-1. Modulo the rotation amount `k` by the length of the list to handle large `k`.
-2. Slice the last `k` elements and concatenate them with the rest of the list.
-3. Print the new list.
-
-## Q20. Merge Two Sorted Lists
+### Q20. Merge Two Sorted Lists
 
 Given two already-sorted lists, merge them into one sorted list **without** using `sorted()` or `.sort()`.
 
@@ -462,12 +386,7 @@ Merged: [1, 2, 3, 4, 7, 8, 10, 11, 15]
 
 ---
 
-**How to solve:**
-1. Use two pointers to track the current index in each sorted list.
-2. Compare the elements at both pointers, appending the smaller one to the result list and advancing its pointer.
-3. Append any remaining elements from both lists after one is exhausted.
-
-## Q21. Bubble Sort
+### Q21. Bubble Sort
 
 Sort a list ascending using bubble sort. Print the list after each complete pass.
 
@@ -486,12 +405,7 @@ Sorted: [1, 2, 5, 7, 9]
 
 ---
 
-**How to solve:**
-1. Create an outer loop for the number of passes.
-2. Create an inner loop to compare adjacent elements and swap them if they are out of order.
-3. Use a swapped flag to break early if no swaps occurred in a pass, and print the list.
-
-## Q22. Linear vs Binary Search
+### Q22. Linear vs Binary Search
 
 Implement both searches on a sorted list and report how many comparisons each needed to find the target.
 
@@ -508,12 +422,7 @@ Binary search: found at index 8 in 2 comparisons
 
 ---
 
-**How to solve:**
-1. Implement a linear search loop and count the comparisons until the target is found.
-2. Implement a binary search using a while loop, updating left/right bounds and counting comparisons.
-3. Print the number of comparisons for both.
-
-## Q23. Two-Dimensional List
+### Q23. Two-Dimensional List
 
 Build a 3×3 matrix from user input, then print it as a grid, print its transpose, and print the sum of the main diagonal.
 
@@ -535,12 +444,7 @@ Diagonal sum: 15
 
 ---
 
-**How to solve:**
-1. Read input to construct a 3x3 nested list.
-2. Compute the transpose by looping through columns and rows.
-3. Compute the diagonal sum by adding elements where the row index equals the column index.
-
-## Q24. Matrix Multiplication
+### Q24. Matrix Multiplication
 
 Multiply two 2×2 matrices using nested loops.
 
@@ -560,12 +464,7 @@ Verify by hand: `19 = 1×5 + 2×7`.
 
 ## Tier 3 — Tuples and Sets (Q25–Q34)
 
-**How to solve:**
-1. Initialize an empty result matrix with appropriate dimensions.
-2. Use three nested loops (for rows of A, columns of B, and their shared dimension).
-3. Accumulate the product of corresponding elements into the result matrix.
-
-## Q25. Tuple Basics
+### Q25. Tuple Basics
 
 Create a tuple of 6 numbers. Print its length, maximum, minimum, the count of a chosen value, and the index of a chosen value. Then try to modify an element and observe the error.
 
@@ -584,12 +483,7 @@ TypeError: 'tuple' object does not support item assignment
 
 ---
 
-**How to solve:**
-1. Define a tuple with 6 numbers.
-2. Use `len()`, `max()`, and `min()` to print the respective statistics.
-3. Use `.count()` and `.index()` methods, then wrap an item assignment in a `try...except` block to show the error.
-
-## Q26. Tuple Unpacking
+### Q26. Tuple Unpacking
 
 Given a tuple of student data `("Rohan", 18, 85.5, "Mumbai")`, unpack it into four named variables and print a formatted line. Then use starred unpacking to grab the first value and the rest.
 
@@ -605,12 +499,7 @@ Rest: [18, 85.5, 'Mumbai']
 
 ---
 
-**How to solve:**
-1. Define the tuple.
-2. Unpack the tuple into four specific variable names.
-3. Unpack using `first, *rest = data` to capture the remaining items in a list, then print both.
-
-## Q27. Swap Without Temp
+### Q27. Swap Without Temp
 
 Using tuple packing, swap three variables in a single statement so that `a→b`, `b→c`, `c→a`.
 
@@ -625,12 +514,7 @@ After:  a=3 b=1 c=2
 
 ---
 
-**How to solve:**
-1. Assign three variables some initial values.
-2. Use tuple packing and unpacking to swap them in one line: `a, b, c = c, a, b`.
-3. Print the variables before and after the swap.
-
-## Q28. Set Operations
+### Q28. Set Operations
 
 Ask for two sets of numbers. Print their union, intersection, difference (both directions) and symmetric difference.
 
@@ -650,12 +534,7 @@ Symmetric difference: {1, 2, 3, 6, 7}
 
 ---
 
-**How to solve:**
-1. Accept two sets of numbers from the user.
-2. Calculate union `|`, intersection `&`, and symmetric difference `^`.
-3. Calculate differences `A - B` and `B - A` and print all results.
-
-## Q29. Common Characters
+### Q29. Common Characters
 
 Given two words, find the characters they share, the characters unique to each, and whether they use exactly the same set of letters.
 
@@ -674,12 +553,7 @@ Same letters: True
 
 ---
 
-**How to solve:**
-1. Convert both words to sets of characters.
-2. Use `&` to find common characters, and `-` to find unique characters in both directions.
-3. Use `==` to check if both sets are identical.
-
-## Q30. Anagram Groups
+### Q30. Anagram Groups
 
 Given a list of words, determine which pairs are anagrams of each other. Compare sorted characters.
 
@@ -696,12 +570,7 @@ silent & enlist are anagrams
 
 ---
 
-**How to solve:**
-1. Create a nested loop, comparing each word with words that come after it.
-2. For each pair, compare `sorted(word1)` with `sorted(word2)`.
-3. Print the pair if they match as anagrams.
-
-## Q31. Remove Duplicates — Three Ways
+### Q31. Remove Duplicates — Three Ways
 
 Given a list with duplicates, remove them three different ways: with a set (order lost), with a loop (order kept), and with `dict.fromkeys()` (order kept). Print all three results and note which preserve order.
 
@@ -718,12 +587,7 @@ Via dict: [3, 1, 4, 5, 9, 2, 6]   (order kept)
 
 ---
 
-**How to solve:**
-1. Convert the list to a `set` and back to a list to remove duplicates (loses order).
-2. Loop through the list and append unseen items to a new list (keeps order).
-3. Use `list(dict.fromkeys(items))` to remove duplicates (keeps order) and print all three.
-
-## Q32. Subset and Superset
+### Q32. Subset and Superset
 
 Given three sets, determine all subset/superset relationships between them and whether any pair is disjoint.
 
@@ -742,12 +606,7 @@ A and C disjoint: True
 
 ---
 
-**How to solve:**
-1. Define the three sets.
-2. Use `<=` and `>=` (or `.issubset()` and `.issuperset()`) to test for relationships.
-3. Use `.isdisjoint()` to test if `A` and `C` overlap.
-
-## Q33. Set from Sentence
+### Q33. Set from Sentence
 
 Given a sentence, produce the set of unique words (lowercase, punctuation removed) and report how many unique words there are versus total words.
 
@@ -764,12 +623,7 @@ Unique set: {'cat', 'left', 'mat', 'on', 'sat', 'the'}
 
 ---
 
-**How to solve:**
-1. Convert the sentence to lowercase and remove punctuation if necessary.
-2. Split the sentence into a list of words, then pass the list to `set()` to find unique words.
-3. Print the lengths of the list and the set, as well as the set itself.
-
-## Q34. Frozen Set as a Dictionary Key
+### Q34. Frozen Set as a Dictionary Key
 
 Demonstrate why a regular set cannot be a dictionary key but a `frozenset` can. Build a dictionary mapping frozensets of ingredients to dish names, then look one up.
 
@@ -787,12 +641,7 @@ TypeError: unhashable type: 'set'
 
 ## Tier 4 — Dictionaries (Q35–Q46)
 
-**How to solve:**
-1. Create a dictionary mapping `frozenset` instances to dish names.
-2. Perform a lookup using a `frozenset` key.
-3. Try to use a regular `set` as a dictionary key to observe the `TypeError`.
-
-## Q35. Dictionary Basics
+### Q35. Dictionary Basics
 
 Build a dictionary of five countries and their capitals. Print all keys, all values, all items, and look up one capital safely with `.get()` including a default for a missing country.
 
@@ -808,12 +657,7 @@ Atlantis -> Not found
 
 ---
 
-**How to solve:**
-1. Create a dictionary with country-capital pairs.
-2. Print the `.keys()`, `.values()`, and `.items()` views.
-3. Use the `.get('Atlantis', 'Not found')` method to safely lookup a missing key.
-
-## Q36. Word Frequency Counter
+### Q36. Word Frequency Counter
 
 Count how often each word appears in a sentence, then print the results sorted by count descending.
 
@@ -833,12 +677,7 @@ left: 1
 
 ---
 
-**How to solve:**
-1. Split the sentence into words.
-2. Loop through the words, incrementing their count in a dictionary using `.get(word, 0) + 1`.
-3. Sort the dictionary's `.items()` by count in descending order and print.
-
-## Q37. Character Frequency with a Dictionary
+### Q37. Character Frequency with a Dictionary
 
 Redo Q9 using a dictionary and `.get()`. Then print only the characters that appear more than once.
 
@@ -853,12 +692,7 @@ Repeated: r(2) g(2) m(2)
 
 ---
 
-**How to solve:**
-1. Create a character frequency dictionary using a loop and `.get()`.
-2. Use a dictionary comprehension to filter and keep only characters with a count greater than 1.
-3. Print the resulting filtered dictionary.
-
-## Q38. Invert a Dictionary
+### Q38. Invert a Dictionary
 
 Given a dictionary, swap keys and values. Then handle the case where two keys share a value — the inverted dictionary should map each value to a **list** of keys.
 
@@ -874,12 +708,7 @@ Safe invert: {1: ['a', 'c'], 2: ['b']}
 
 ---
 
-**How to solve:**
-1. Initialize an empty dictionary for the result.
-2. Iterate over the original dictionary's `.items()`.
-3. Use `.setdefault(value, []).append(key)` to map each value to a list of original keys.
-
-## Q39. Merge Dictionaries
+### Q39. Merge Dictionaries
 
 Merge two dictionaries three ways: with `.update()`, with `{**a, **b}`, and with the `|` operator. Show what happens to duplicate keys.
 
@@ -896,12 +725,7 @@ Note: B's value for 'y' wins in all three methods.
 
 ---
 
-**How to solve:**
-1. Use `A.update(B)` to merge in place.
-2. Use `{**A, **B}` to merge into a new dictionary.
-3. Use `A | B` (Python 3.9+) to merge into a new dictionary and print the results to show how duplicate keys are resolved.
-
-## Q40. Student Marks Dictionary
+### Q40. Student Marks Dictionary
 
 Build a dictionary mapping student names to marks. Then print: the topper, the average, everyone above average, and everyone who failed (below 40).
 
@@ -919,12 +743,7 @@ Failed: ['Amit']
 
 ---
 
-**How to solve:**
-1. Calculate the average using `sum(marks.values()) / len(marks)`.
-2. Find the topper using `max(marks, key=marks.get)`.
-3. Use list comprehensions to find students above average and students who failed (marks < 40).
-
-## Q41. Nested Dictionary
+### Q41. Nested Dictionary
 
 Build a dictionary of students where each value is itself a dictionary of subject marks. Print each student's total and percentage.
 
@@ -943,12 +762,7 @@ Priya: total 275, percentage 91.67
 
 ---
 
-**How to solve:**
-1. Loop over each student in the outer dictionary.
-2. Loop over their subjects in the inner dictionary (or use `sum()`) to compute their total marks.
-3. Divide the total by the number of subjects for the percentage and print both.
-
-## Q42. Dictionary Comprehension
+### Q42. Dictionary Comprehension
 
 Using comprehensions, build:
 
@@ -968,12 +782,7 @@ Using comprehensions, build:
 
 ---
 
-**How to solve:**
-1. Write `{x: x**2 for x in range(1, 11)}`.
-2. Write `{k: v for k, v in dict1.items() if k % 2 == 0}`.
-3. Split the sentence into words and write `{word: len(word) for word in words}`.
-
-## Q43. Group Words by First Letter
+### Q43. Group Words by First Letter
 
 Given a list of words, group them into a dictionary keyed by first letter.
 
@@ -988,12 +797,7 @@ Words: ['apple', 'avocado', 'banana', 'blueberry', 'cherry']
 
 ---
 
-**How to solve:**
-1. Initialize an empty dictionary.
-2. Iterate through the list of words.
-3. Extract the first letter and append the word to the list at that key using `.setdefault()`.
-
-## Q44. Shopping Cart
+### Q44. Shopping Cart
 
 Build a cart as a dictionary of item → (price, quantity). Compute the line total for each item and the grand total. Apply a 10% discount if the grand total exceeds ₹1000.
 
@@ -1011,12 +815,7 @@ Total: 1975.50
 
 ---
 
-**How to solve:**
-1. Loop through the items and calculate `price * quantity` for each line subtotal.
-2. Sum the subtotals to get the grand total.
-3. If the grand total > 1000, calculate a 10% discount and subtract it.
-
-## Q45. Two-Sum with a Dictionary
+### Q45. Two-Sum with a Dictionary
 
 Given a list of numbers and a target, find **two** numbers that add to the target, using a dictionary for one-pass lookup rather than nested loops.
 
@@ -1032,12 +831,7 @@ Found: 2 + 7 = 9 (indices 0 and 1)
 
 ---
 
-**How to solve:**
-1. Initialize an empty dictionary to store seen numbers and their indices.
-2. Iterate through the list; for each number, calculate `target - number`.
-3. If the difference is in the dictionary, return the current index and the index from the dictionary. Otherwise, add the number to the dictionary.
-
-## Q46. Inventory Management
+### Q46. Inventory Management
 
 Build an inventory dictionary. Then implement a loop-driven menu: add stock, remove stock, check stock, list low stock (below 10), and exit. Reject removals that exceed available stock.
 
@@ -1057,12 +851,7 @@ Error: only 45 in stock
 
 ## Tier 5 — Combining Data Structures (Q47–Q56)
 
-**How to solve:**
-1. Define a `while True:` loop to show the menu and accept user input.
-2. Validate user input and existence of items in stock before attempting modifications.
-3. Use a list comprehension to filter items with stock below 10 for the "low stock" report.
-
-## Q47. List of Dictionaries
+### Q47. List of Dictionaries
 
 Build a list of dictionaries representing employees (name, department, salary). Then print: the highest paid, the average salary per department, and everyone in a chosen department.
 
@@ -1079,12 +868,7 @@ Average by department:
 
 ---
 
-**How to solve:**
-1. Find the highest paid using `max(employees, key=lambda e: e['salary'])`.
-2. Group salaries by department using a dictionary mapping department to a list of salaries.
-3. Compute the average for each department and filter the original list by department name.
-
-## Q48. Dictionary of Lists
+### Q48. Dictionary of Lists
 
 Track which subjects each student is enrolled in. Then find: students taking a chosen subject, the most popular subject, and any student taking every subject.
 
@@ -1104,12 +888,7 @@ Most popular: Math (2 students)
 
 ---
 
-**How to solve:**
-1. Initialize an inverted dictionary `{subject: [students]}`.
-2. Iterate through the `student, subjects` pairs, and for each subject, append the student.
-3. Find the longest student list to determine the most popular subject.
-
-## Q49. Sort a Dictionary
+### Q49. Sort a Dictionary
 
 Given a dictionary of names to scores, print it sorted three ways: by key alphabetically, by value ascending, and by value descending.
 
@@ -1126,12 +905,7 @@ By value desc: [('Priya', 92), ('Rohan', 78), ('Amit', 35)]
 
 ---
 
-**How to solve:**
-1. Sort the dictionary's keys to print alphabetically.
-2. Sort the `.items()` using a lambda function returning the value.
-3. Sort the `.items()` again with `reverse=True` to print descending by value.
-
-## Q50. Matrix Row and Column Operations
+### Q50. Matrix Row and Column Operations
 
 Given a 3×4 matrix as a nested list, compute: the sum of each row, the sum of each column, the overall maximum with its position, and the flattened list.
 
@@ -1148,12 +922,7 @@ Flattened: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 ---
 
-**How to solve:**
-1. Use `sum(row)` in a list comprehension for row sums.
-2. Transpose the matrix using `zip(*matrix)` and sum the resulting columns for column sums.
-3. Iterate over rows and elements to find the max and its position, and use a nested list comprehension to flatten the list.
-
-## Q51. Longest Common Prefix
+### Q51. Longest Common Prefix
 
 Given a list of strings, find the longest prefix common to all of them.
 
@@ -1171,12 +940,7 @@ Longest common prefix: ''
 
 ---
 
-**How to solve:**
-1. Assume the first string is the prefix.
-2. Iterate through the other strings and continuously shorten the prefix while the current string does not start with it.
-3. If the prefix becomes empty, return it immediately.
-
-## Q52. Run-Length Encoding
+### Q52. Run-Length Encoding
 
 Compress a string by replacing runs of repeated characters with the character and its count. Then write the decoder.
 
@@ -1193,12 +957,7 @@ Match: True
 
 ---
 
-**How to solve:**
-1. To encode, iterate through characters keeping track of the previous one and its count, appending to a result string when it changes.
-2. Handle the last character's run after the loop finishes.
-3. To decode, iterate over the string finding digits and multiplying the preceding character.
-
-## Q53. Caesar Cipher
+### Q53. Caesar Cipher
 
 Implement a Caesar cipher that shifts each letter by `k` positions, wrapping from z to a. Preserve case and leave non-letters untouched. Then decode by shifting back.
 
@@ -1215,12 +974,7 @@ Decrypted: Hello, World!
 
 ---
 
-**How to solve:**
-1. Check if the character is a letter; if not, add it unchanged.
-2. For letters, find the ascii base (`65` for upper, `97` for lower) and use modulo 26 arithmetic with `ord()` and `chr()`.
-3. Wrap both logic in a function and use `shift` for encryption and `-shift` for decryption.
-
-## Q54. Balanced Brackets
+### Q54. Balanced Brackets
 
 Check whether a string of brackets `()`, `[]`, `{}` is properly balanced and nested, using a list as a stack.
 
@@ -1236,12 +990,7 @@ Check whether a string of brackets `()`, `[]`, `{}` is properly balanced and nes
 
 ---
 
-**How to solve:**
-1. Create a mapping for brackets like `{')': '(', ']': '[', '}': '{'}` and an empty stack.
-2. Push opening brackets onto the stack, and for closing brackets, pop and check if they match.
-3. Check that the stack is completely empty at the end.
-
-## Q55. Sales Data Analysis
+### Q55. Sales Data Analysis
 
 Given a list of tuples `(region, product, amount)`, compute total sales per region, total per product, the best-selling product, and the region with the highest average sale.
 
@@ -1259,12 +1008,7 @@ Highest average: North (₹361,000.00)
 
 ---
 
-**How to solve:**
-1. Initialize dictionaries for region sales, product sales, and region counts.
-2. Loop over the tuples and accumulate the amounts into the respective dictionaries.
-3. Use `max()` to find the best-selling product and compute the highest average from the region amounts and counts.
-
-## Q56. Text Analyser
+### Q56. Text Analyser
 
 Given a paragraph, produce a full report: total characters, words and sentences; average word length; the 5 most common words excluding stopwords (`the, a, an, is, of, and, to, in`); and the longest word.
 
@@ -1287,12 +1031,7 @@ Longest word: programming
 
 Expect 30–45 minutes each.
 
-**How to solve:**
-1. Clean the paragraph, then count length, `.split()` into words, and split by punctuation for sentences.
-2. Build a frequency dictionary and remove stopwords.
-3. Find the longest word and sort the dictionary to get the top 5 most common words.
-
-## Q57. Student Grade Management System
+### Q57. Student Grade Management System
 
 Build a menu-driven system storing students in a dictionary of dictionaries: `{name: {'marks': [...], 'grade': ''}}`.
 
@@ -1312,12 +1051,7 @@ Handle every error: student not found, duplicate name, invalid marks, empty data
 
 ---
 
-**How to solve:**
-1. Create a main `while` loop containing input options.
-2. Use dictionary operations to add, view, update, and delete entries from the nested dictionary.
-3. Use a loop over all entries to calculate class statistics like the average and counts for pass/fail.
-
-## Q58. Contact Book with Search
+### Q58. Contact Book with Search
 
 Build a contact book: `{name: {'phone': ..., 'email': ..., 'city': ...}}`.
 
@@ -1335,12 +1069,7 @@ Requirements:
 
 ---
 
-**How to solve:**
-1. Maintain a dictionary for the contact book.
-2. For add/update, perform necessary validation before assigning the sub-dictionary.
-3. Use list comprehensions or a loop with substring checks for search and sorting logic.
-
-## Q59. Word Frequency Report with Ranking
+### Q59. Word Frequency Report with Ranking
 
 Given a long paragraph, produce a complete frequency report:
 
@@ -1364,12 +1093,7 @@ Average frequency: 1.7
 
 ---
 
-**How to solve:**
-1. Clean the text, split it into words, and generate counts using a dictionary.
-2. Calculate max frequency to scale the bar chart appropriately and print top 10.
-3. Invert the frequency dictionary to group words by frequency for final outputs.
-
-## Q60. Matrix Operations Suite
+### Q60. Matrix Operations Suite
 
 Build a menu-driven matrix calculator that reads two matrices from the user and supports:
 
@@ -1403,10 +1127,4 @@ Cannot multiply: A has 3 columns but B has 2 rows.
 
 ---
 
-[← Phase 2 index](README.md) · [Projects & Key Takeaways](projects-and-takeaways.md)
-
-**How to solve:**
-1. Create functions for adding, subtracting, multiplying, transposing, etc.
-2. Perform size validation checks at the beginning of each operation.
-3. Call the correct function in a loop and print using a formatted grid loop.
-
+[← Phase 2 index](README.md) · [Solutions](solutions.md) · [Test runner](tests/README.md) · [Projects & Key Takeaways](projects-and-takeaways.md)

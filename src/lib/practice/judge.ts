@@ -193,7 +193,7 @@ export function evaluatePracticeTest(
   // Chart exercises describe their expected result as a generated chart. A
   // captured Matplotlib figure is the assertion; stdout is irrelevant.
   if (
-    normalizeOutput(test.expected_output).toLowerCase() ===
+    normalizeOutput(test.output ?? test.expected_output).toLowerCase() ===
     "should generate chart"
   ) {
     return test.plot
@@ -201,7 +201,7 @@ export function evaluatePracticeTest(
       : (run.plots?.length ?? 0) > 0;
   }
 
-  return compareOutputs(run.stdout, test.expected_output, test);
+  return compareOutputs(run.stdout, test.output ?? test.expected_output, test);
 }
 
 interface ConstraintRule {

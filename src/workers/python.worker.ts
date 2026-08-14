@@ -109,6 +109,20 @@ class CustomStdin:
         pass
 
 sys.stdin = CustomStdin()
+__ide_capture_mode = False
+
+_original_input = builtins.input
+def _ide_input(prompt=""):
+    if not __ide_capture_mode:
+        import sys
+        sys.stdout.write(str(prompt))
+        sys.stdout.flush()
+    import sys
+    res = sys.stdin.readline()
+    if not res:
+        raise EOFError("EOF when reading a line")
+    return res.rstrip("\\n")
+builtins.input = _ide_input
 
 os.environ["MPLBACKEND"] = "AGG"
 try:
@@ -375,9 +389,8 @@ function pyStdin(): string | undefined {
   if (captureMode) {
     if (testStdinIdx < testStdinLines.length) {
       const line = testStdinLines[testStdinIdx++];
-      // Captured practice runs should match what learners see in the terminal:
-      // input() writes its prompt and the terminal driver echoes the entered line.
-      capOut += `${line}\n`;
+      // Captured practice runs now suppress the prompt and echo via __ide_capture_mode
+      // so output matching aligns with strict grading standards.
       return line + "\n";
     }
     return undefined;
@@ -662,6 +675,7 @@ async function handleRun(msg: {
   let status = 0;
   let traceback = "";
   try {
+    pyodide.globals.set("__ide_capture_mode", false);
     const fn = pyodide.globals.get("__ide_run");
     const res = fn(msg.code, msg.filename).toJs();
     status = res[0] as number;
@@ -838,6 +852,7 @@ async function handleTestRun(
     }
   }
   captureMode = true;
+  try { pyodide.globals.set("__ide_capture_mode", true); } catch {}
   capOut = "";
   capErr = "";
   testStdinLines = stdin ? stdin.replace(/\r\n/g, "\n").split("\n") : [];

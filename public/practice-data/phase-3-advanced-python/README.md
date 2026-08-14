@@ -12,7 +12,9 @@
 | 3 | [Module 11: File Handling](module-11-file-handling.md) | File modes, the `with` statement, reading & writing, `seek()`/`tell()`, CSV, JSON, binary files |
 | 4 | [Module 12: Exception Handling](module-12-exception-handling.md) | `try`/`except`/`else`/`finally`, `raise`, `assert`, custom exceptions, the exception hierarchy, LBYL vs EAFP |
 | — | [Projects & Key Takeaways](projects-and-takeaways.md) | 10 practice projects and the phase summary |
-| — | [**60 Practice Questions**](questions.md) | Functions, recursion, the standard library, file I/O and exceptions — every answer written as a documented, type-hinted function. Difficulty rises from Q1 to Q60. |
+| — | [**60 Practice Questions**](practice-questions.md) | Functions, recursion, the standard library, file I/O and exceptions — every answer written as a documented, type-hinted function. Difficulty rises from Q1 to Q60. |
+| ✅ | [**Automated Judge**](tests/README.md) | Write your answer, run `python run_tests.py 4 --diff`, get PASS/FAIL. **166 checks across 50 questions.** |
+| 🔑 | [**Solutions**](solutions.md) | A worked solution for every graded question, each verified against the full suite. Write yours first. |
 | 📋 | [**5 Assignments**](assignments.md) | Function library, file pipeline, error handling, expense tracker, data analysis CLI |
 
 ---

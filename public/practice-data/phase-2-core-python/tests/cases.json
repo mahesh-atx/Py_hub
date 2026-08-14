@@ -1,0 +1,1049 @@
+{
+ "1": {
+  "cases": [
+   {
+    "input": [
+     "  Hello World"
+    ],
+    "output": "Length: 13\nUpper:   HELLO WORLD\nLower:   hello world\nStripped: 'Hello World'",
+    "visible": true
+   },
+   {
+    "input": [
+     "Python"
+    ],
+    "output": "Length: 6\nUpper: PYTHON\nLower: python\nStripped: 'Python'",
+    "visible": false
+   },
+   {
+    "input": [
+     "   "
+    ],
+    "output": "Length: 3\nUpper:\nLower:\nStripped: ''",
+    "visible": false
+   },
+   {
+    "input": [
+     "a"
+    ],
+    "output": "Length: 1\nUpper: A\nLower: a\nStripped: 'a'",
+    "visible": false
+   }
+  ]
+ },
+ "2": {
+  "cases": [
+   {
+    "input": [
+     "Python"
+    ],
+    "output": "First: P\nLast: n\nMiddle: th",
+    "visible": true
+   },
+   {
+    "input": [
+     "a"
+    ],
+    "output": "First: a\nLast: a\nMiddle: a",
+    "visible": false
+   },
+   {
+    "input": [
+     "hi"
+    ],
+    "output": "First: h\nLast: i\nMiddle: hi",
+    "visible": false
+   },
+   {
+    "input": [
+     "abcde"
+    ],
+    "output": "First: a\nLast: e\nMiddle: c",
+    "visible": false
+   }
+  ]
+ },
+ "3": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Python\nProgramming\nPtoPormig\ngnimmargorPnohtyP",
+    "visible": true
+   }
+  ]
+ },
+ "4": {
+  "cases": [
+   {
+    "input": [
+     "Python 3 is great"
+    ],
+    "output": "Vowels: 4\nConsonants: 9\nDigits: 1\nSpaces: 3",
+    "visible": true
+   },
+   {
+    "input": [
+     "aeiou"
+    ],
+    "output": "Vowels: 5\nConsonants: 0\nDigits: 0\nSpaces: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "12345"
+    ],
+    "output": "Vowels: 0\nConsonants: 0\nDigits: 5\nSpaces: 0",
+    "visible": false
+   },
+   {
+    "input": [
+     "Hello, World!"
+    ],
+    "output": "Vowels: 3\nConsonants: 7\nDigits: 0\nSpaces: 1",
+    "visible": false
+   }
+  ]
+ },
+ "5": {
+  "cases": [
+   {
+    "input": [
+     "Racecar"
+    ],
+    "output": "Palindrome: True",
+    "visible": true
+   },
+   {
+    "input": [
+     "python"
+    ],
+    "output": "Palindrome: False",
+    "visible": false
+   },
+   {
+    "input": [
+     "a"
+    ],
+    "output": "Palindrome: True",
+    "visible": false
+   },
+   {
+    "input": [
+     "Noon"
+    ],
+    "output": "Palindrome: True",
+    "visible": false
+   }
+  ]
+ },
+ "6": {
+  "cases": [
+   {
+    "input": [
+     "A man, a plan, a canal: Panama"
+    ],
+    "output": "Palindrome: True",
+    "visible": true
+   },
+   {
+    "input": [
+     "Hello world"
+    ],
+    "output": "Palindrome: False",
+    "visible": false
+   },
+   {
+    "input": [
+     "No 'x' in Nixon"
+    ],
+    "output": "Palindrome: True",
+    "visible": false
+   }
+  ]
+ },
+ "7": {
+  "cases": [
+   {
+    "input": [
+     "Python makes programming enjoyable"
+    ],
+    "output": "Words: 4\nLongest: programming\nShortest: makes",
+    "visible": true
+   },
+   {
+    "input": [
+     "one"
+    ],
+    "output": "Words: 1\nLongest: one\nShortest: one",
+    "visible": false
+   },
+   {
+    "input": [
+     "a bb ccc dddd"
+    ],
+    "output": "Words: 4\nLongest: dddd\nShortest: a",
+    "visible": false
+   }
+  ]
+ },
+ "8": {
+  "cases": [
+   {
+    "input": [
+     "the quick brown fox"
+    ],
+    "output": "Title case: The Quick Brown Fox",
+    "visible": true
+   },
+   {
+    "input": [
+     "hello"
+    ],
+    "output": "Title case: Hello",
+    "visible": false
+   },
+   {
+    "input": [
+     "a b c"
+    ],
+    "output": "Title case: A B C",
+    "visible": false
+   }
+  ]
+ },
+ "9": {
+  "cases": [
+   {
+    "input": [
+     "programming"
+    ],
+    "output": "p: 1\nr: 2\no: 1\ng: 2\na: 1\nm: 2\ni: 1\nn: 1",
+    "visible": true
+   },
+   {
+    "input": [
+     "aaa"
+    ],
+    "output": "a: 3",
+    "visible": false
+   },
+   {
+    "input": [
+     "abc"
+    ],
+    "output": "a: 1\nb: 1\nc: 1",
+    "visible": false
+   }
+  ]
+ },
+ "10": {
+  "cases": [
+   {
+    "input": [
+     "programming"
+    ],
+    "output": "Result: progamin",
+    "visible": true
+   },
+   {
+    "input": [
+     "aaaa"
+    ],
+    "output": "Result: a",
+    "visible": false
+   },
+   {
+    "input": [
+     "abcdef"
+    ],
+    "output": "Result: abcdef",
+    "visible": false
+   }
+  ]
+ },
+ "11": {
+  "cases": [
+   {
+    "input": [
+     "Python is really powerful"
+    ],
+    "output": "Result: powerful really is Python",
+    "visible": true
+   },
+   {
+    "input": [
+     "one"
+    ],
+    "output": "Result: one",
+    "visible": false
+   },
+   {
+    "input": [
+     "a b c d"
+    ],
+    "output": "Result: d c b a",
+    "visible": false
+   }
+  ]
+ },
+ "12": {
+  "cases": [
+   {
+    "input": [
+     "Python123"
+    ],
+    "output": "Length 8+: True\nUppercase: True\nLowercase: True\nDigit: True\nSpecial char: False\nStrength: Medium (4/5)",
+    "visible": true
+   },
+   {
+    "input": [
+     "abc"
+    ],
+    "output": "Length 8+: False\nUppercase: False\nLowercase: True\nDigit: False\nSpecial char: False\nStrength: Weak (1/5)",
+    "visible": false
+   },
+   {
+    "input": [
+     "Password1!"
+    ],
+    "output": "Length 8+: True\nUppercase: True\nLowercase: True\nDigit: True\nSpecial char: True\nStrength: Strong (5/5)",
+    "visible": false
+   },
+   {
+    "input": [
+     "ALLUPPER123!"
+    ],
+    "output": "Length 8+: True\nUppercase: True\nLowercase: False\nDigit: True\nSpecial char: True\nStrength: Medium (4/5)",
+    "visible": false
+   }
+  ]
+ },
+ "13": {
+  "cases": [
+   {
+    "input": [
+     "5",
+     "12",
+     "45",
+     "7",
+     "89",
+     "23"
+    ],
+    "output": "Sum: 176\nAverage: 35.20\nMax: 89\nMin: 7",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "42"
+    ],
+    "output": "Sum: 42\nAverage: 42.00\nMax: 42\nMin: 42",
+    "visible": false
+   },
+   {
+    "input": [
+     "3",
+     "-5",
+     "0",
+     "5"
+    ],
+    "output": "Sum: 0\nAverage: 0.00\nMax: 5\nMin: -5",
+    "visible": false
+   }
+  ]
+ },
+ "14": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Second largest: 45",
+    "visible": true
+   }
+  ]
+ },
+ "15": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Before: [1, 2, 3, 4, 5]\nAfter: [5, 4, 3, 2, 1]",
+    "visible": true
+   }
+  ]
+ },
+ "16": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Input: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]\nOutput: [3, 1, 4, 5, 9, 2, 6]",
+    "visible": true
+   }
+  ]
+ },
+ "17": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nEven: [2, 4, 6, 8, 10]\nOdd: [1, 3, 5, 7, 9]",
+    "visible": true
+   }
+  ]
+ },
+ "18": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Squares of evens: [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]\nCubes of odds: [1, 27, 125, 343, 729, 1331, 2197, 3375, 4913, 6859]",
+    "visible": true
+   }
+  ]
+ },
+ "19": {
+  "cases": [
+   {
+    "input": [
+     "3"
+    ],
+    "output": "List: [1, 2, 3, 4, 5, 6, 7]\nRotate by: 3\nResult: [5, 6, 7, 1, 2, 3, 4]",
+    "visible": true
+   },
+   {
+    "input": [
+     "0"
+    ],
+    "output": "List: [1, 2, 3, 4, 5, 6, 7]\nRotate by: 0\nResult: [1, 2, 3, 4, 5, 6, 7]",
+    "visible": false
+   },
+   {
+    "input": [
+     "7"
+    ],
+    "output": "List: [1, 2, 3, 4, 5, 6, 7]\nRotate by: 7\nResult: [1, 2, 3, 4, 5, 6, 7]",
+    "visible": false
+   },
+   {
+    "input": [
+     "10"
+    ],
+    "output": "List: [1, 2, 3, 4, 5, 6, 7]\nRotate by: 10\nResult: [5, 6, 7, 1, 2, 3, 4]",
+    "visible": false
+   }
+  ]
+ },
+ "20": {
+  "cases": [
+   {
+    "input": [],
+    "output": "List A: [1, 4, 7, 10]\nList B: [2, 3, 8, 11, 15]\nMerged: [1, 2, 3, 4, 7, 8, 10, 11, 15]",
+    "visible": true
+   }
+  ]
+ },
+ "21": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Initial: [5, 2, 9, 1, 7]\nPass 1: [2, 5, 1, 7, 9]\nPass 2: [2, 1, 5, 7, 9]\nPass 3: [1, 2, 5, 7, 9]\nPass 4: [1, 2, 5, 7, 9]\nSorted: [1, 2, 5, 7, 9]",
+    "visible": true
+   }
+  ]
+ },
+ "22": {
+  "cases": [
+   {
+    "input": [],
+    "output": "List: [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]\nTarget: 72\nLinear search: found at index 8 in 9 comparisons\nBinary search: found at index 8 in 3 comparisons",
+    "visible": true
+   }
+  ]
+ },
+ "23": {
+  "cases": [
+   {
+    "input": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "output": "Matrix:\n1 2 3\n4 5 6\n7 8 9\nTranspose:\n1 4 7\n2 5 8\n3 6 9\nDiagonal sum: 15",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "0",
+     "0",
+     "0",
+     "1",
+     "0",
+     "0",
+     "0",
+     "1"
+    ],
+    "output": "Matrix:\n1 0 0\n0 1 0\n0 0 1\nTranspose:\n1 0 0\n0 1 0\n0 0 1\nDiagonal sum: 3",
+    "visible": false
+   }
+  ]
+ },
+ "24": {
+  "cases": [
+   {
+    "input": [],
+    "output": "A = [[1, 2], [3, 4]]\nB = [[5, 6], [7, 8]]\nA x B = [[19, 22], [43, 50]]",
+    "visible": true
+   }
+  ]
+ },
+ "25": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Tuple: (12, 45, 7, 45, 89, 23)\nLength: 6\nMax: 89  Min: 7\nCount of 45: 2\nIndex of 89: 4\nTypeError: 'tuple' object does not support item assignment",
+    "visible": true
+   }
+  ]
+ },
+ "26": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Name: Rohan, Age: 18, Score: 85.5, City: Mumbai\nFirst: Rohan\nRest: [18, 85.5, 'Mumbai']",
+    "visible": true
+   }
+  ]
+ },
+ "27": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Before: a=1 b=2 c=3\nAfter:  a=3 b=1 c=2",
+    "visible": true
+   }
+  ]
+ },
+ "28": {
+  "cases": [
+   {
+    "input": [
+     "1 2 3 4 5",
+     "4 5 6 7"
+    ],
+    "output": "Set A: [1, 2, 3, 4, 5]\nSet B: [4, 5, 6, 7]\nUnion: [1, 2, 3, 4, 5, 6, 7]\nIntersection: [4, 5]\nA - B: [1, 2, 3]\nB - A: [6, 7]\nSymmetric difference: [1, 2, 3, 6, 7]",
+    "visible": true
+   },
+   {
+    "input": [
+     "1",
+     "1"
+    ],
+    "output": "Set A: [1]\nSet B: [1]\nUnion: [1]\nIntersection: [1]\nA - B: []\nB - A: []\nSymmetric difference: []",
+    "visible": false
+   },
+   {
+    "input": [
+     "1 2",
+     "3 4"
+    ],
+    "output": "Set A: [1, 2]\nSet B: [3, 4]\nUnion: [1, 2, 3, 4]\nIntersection: []\nA - B: [1, 2]\nB - A: [3, 4]\nSymmetric difference: [1, 2, 3, 4]",
+    "visible": false
+   }
+  ]
+ },
+ "29": {
+  "cases": [
+   {
+    "input": [
+     "listen",
+     "silent"
+    ],
+    "output": "Common: ['e', 'i', 'l', 'n', 's', 't']\nUnique to word 1: []\nUnique to word 2: []\nSame letters: True",
+    "visible": true
+   },
+   {
+    "input": [
+     "hello",
+     "world"
+    ],
+    "output": "Common: ['l', 'o']\nUnique to word 1: ['e', 'h']\nUnique to word 2: ['d', 'r', 'w']\nSame letters: False",
+    "visible": false
+   },
+   {
+    "input": [
+     "abc",
+     "abc"
+    ],
+    "output": "Common: ['a', 'b', 'c']\nUnique to word 1: []\nUnique to word 2: []\nSame letters: True",
+    "visible": false
+   }
+  ]
+ },
+ "30": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Words: ['listen', 'silent', 'enlist', 'google', 'banana']\nlisten & silent are anagrams\nlisten & enlist are anagrams\nsilent & enlist are anagrams",
+    "visible": true
+   }
+  ]
+ },
+ "31": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Input: [3, 1, 4, 1, 5, 9, 2, 6, 5]\nVia set:  [1, 2, 3, 4, 5, 6, 9]   (order lost)\nVia loop: [3, 1, 4, 5, 9, 2, 6]   (order kept)\nVia dict: [3, 1, 4, 5, 9, 2, 6]   (order kept)",
+    "visible": true
+   }
+  ]
+ },
+ "32": {
+  "cases": [
+   {
+    "input": [],
+    "output": "A = [1, 2]\nB = [1, 2, 3, 4]\nC = [5, 6]\nA is subset of B: True\nB is superset of A: True\nA and C disjoint: True",
+    "visible": true
+   }
+  ]
+ },
+ "33": {
+  "cases": [
+   {
+    "input": [
+     "The cat sat on the mat the cat left"
+    ],
+    "output": "Total words: 9\nUnique words: 6\nUnique set: ['cat', 'left', 'mat', 'on', 'sat', 'the']",
+    "visible": true
+   },
+   {
+    "input": [
+     "Hello hello HELLO"
+    ],
+    "output": "Total words: 3\nUnique words: 1\nUnique set: ['hello']",
+    "visible": false
+   },
+   {
+    "input": [
+     "one two"
+    ],
+    "output": "Total words: 2\nUnique words: 2\nUnique set: ['one', 'two']",
+    "visible": false
+   }
+  ]
+ },
+ "34": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Lookup rice+dal -> Khichdi\nTypeError: unhashable type: 'set'",
+    "visible": true
+   }
+  ]
+ },
+ "35": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Keys: ['India', 'Japan', 'France', 'Kenya', 'Brazil']\nValues: ['New Delhi', 'Tokyo', 'Paris', 'Nairobi', 'Brasilia']\nIndia -> New Delhi\nAtlantis -> Not found",
+    "visible": true
+   }
+  ]
+ },
+ "36": {
+  "cases": [
+   {
+    "input": [
+     "the cat sat on the mat the cat left"
+    ],
+    "output": "the: 3\ncat: 2\nsat: 1\non: 1\nmat: 1\nleft: 1",
+    "visible": true
+   },
+   {
+    "input": [
+     "a a a b"
+    ],
+    "output": "a: 3\nb: 1",
+    "visible": false
+   },
+   {
+    "input": [
+     "one"
+    ],
+    "output": "one: 1",
+    "visible": false
+   }
+  ]
+ },
+ "37": {
+  "cases": [
+   {
+    "input": [
+     "programming"
+    ],
+    "output": "Repeated: r(2) g(2) m(2)",
+    "visible": true
+   },
+   {
+    "input": [
+     "abc"
+    ],
+    "output": "Repeated:",
+    "visible": false
+   },
+   {
+    "input": [
+     "aabbcc"
+    ],
+    "output": "Repeated: a(2) b(2) c(2)",
+    "visible": false
+   }
+  ]
+ },
+ "38": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Input: {'a': 1, 'b': 2, 'c': 1}\nSimple invert: {1: 'c', 2: 'b'}     (data lost!)\nSafe invert: {1: ['a', 'c'], 2: ['b']}",
+    "visible": true
+   }
+  ]
+ },
+ "39": {
+  "cases": [
+   {
+    "input": [],
+    "output": "A = {'x': 1, 'y': 2}\nB = {'y': 99, 'z': 3}\nMerged: {'x': 1, 'y': 99, 'z': 3}\nNote: B's value for 'y' wins in all three methods.",
+    "visible": true
+   }
+  ]
+ },
+ "40": {
+  "cases": [
+   {
+    "input": [],
+    "output": "{'Rohan': 78, 'Priya': 92, 'Amit': 35, 'Sneha': 61}\nTopper: Priya (92)\nAverage: 66.50\nAbove average: ['Rohan', 'Priya']\nFailed: ['Amit']",
+    "visible": true
+   }
+  ]
+ },
+ "41": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Rohan: total 235, percentage 78.33\nPriya: total 275, percentage 91.67",
+    "visible": true
+   }
+  ]
+ },
+ "42": {
+  "cases": [
+   {
+    "input": [],
+    "output": "{1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}\n{2: 4, 4: 16, 6: 36, 8: 64, 10: 100}\n{'Python': 6, 'is': 2, 'great': 5}",
+    "visible": true
+   }
+  ]
+ },
+ "43": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Words: ['apple', 'avocado', 'banana', 'blueberry', 'cherry']\n{'a': ['apple', 'avocado'], 'b': ['banana', 'blueberry'], 'c': ['cherry']}",
+    "visible": true
+   }
+  ]
+ },
+ "44": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Laptop Stand   x2  @  799 =  1598\nUSB Cable      x3  @  199 =   597\nSubtotal: 2195\nDiscount (10%): 219.50\nTotal: 1975.50",
+    "visible": true
+   }
+  ]
+ },
+ "45": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Numbers: [2, 7, 11, 15, 3, 6]\nTarget: 9\nFound: 2 + 7 = 9 (indices 0 and 1)",
+    "visible": true
+   }
+  ]
+ },
+ "46": {
+  "cases": [
+   {
+    "input": [
+     "3",
+     "Pens",
+     "2",
+     "Pens",
+     "500",
+     "5"
+    ],
+    "output": "1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nPens: 45\n1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nError: only 45 in stock\n1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nGoodbye!",
+    "visible": true
+   },
+   {
+    "input": [
+     "5"
+    ],
+    "output": "1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nGoodbye!",
+    "visible": false
+   },
+   {
+    "input": [
+     "2",
+     "Pens",
+     "10",
+     "4",
+     "5"
+    ],
+    "output": "1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nPens now 35\n1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nLow stock: ['Books']\n1. Add  2. Remove  3. Check  4. Low stock  5. Exit\nGoodbye!",
+    "visible": false
+   }
+  ]
+ },
+ "47": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Highest paid: Sneha (Rs 95,000)\nAverage by department:\n  Engineering: Rs 82,500.00\n  Sales: Rs 58,000.00",
+    "visible": true
+   }
+  ]
+ },
+ "48": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Taking Math: ['Rohan', 'Priya']\nMost popular: Math (2 students)",
+    "visible": true
+   }
+  ]
+ },
+ "49": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Original: {'Rohan': 78, 'Priya': 92, 'Amit': 35}\nBy key:   ['Amit', 'Priya', 'Rohan']\nBy value asc:  [('Amit', 35), ('Rohan', 78), ('Priya', 92)]\nBy value desc: [('Priya', 92), ('Rohan', 78), ('Amit', 35)]",
+    "visible": true
+   }
+  ]
+ },
+ "50": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Row sums: [10, 26, 42]\nColumn sums: [15, 18, 21, 24]\nMax: 12 at row 3, column 4\nFlattened: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",
+    "visible": true
+   }
+  ]
+ },
+ "51": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Words: ['flower', 'flow', 'flight']\nLongest common prefix: 'fl'\nWords: ['dog', 'racecar', 'car']\nLongest common prefix: ''",
+    "visible": true
+   }
+  ]
+ },
+ "52": {
+  "cases": [
+   {
+    "input": [
+     "aaabbbccccd"
+    ],
+    "output": "Encoded: a3b3c4d1\nDecoded: aaabbbccccd\nMatch: True",
+    "visible": true
+   },
+   {
+    "input": [
+     "abcd"
+    ],
+    "output": "Encoded: a1b1c1d1\nDecoded: abcd\nMatch: True",
+    "visible": false
+   },
+   {
+    "input": [
+     "aaaaaaaaaaaa"
+    ],
+    "output": "Encoded: a12\nDecoded: aaaaaaaaaaaa\nMatch: True",
+    "visible": false
+   }
+  ]
+ },
+ "53": {
+  "cases": [
+   {
+    "input": [
+     "Hello, World!",
+     "3"
+    ],
+    "output": "Encrypted: Khoor, Zruog!\nDecrypted: Hello, World!",
+    "visible": true
+   },
+   {
+    "input": [
+     "abc xyz",
+     "1"
+    ],
+    "output": "Encrypted: bcd yza\nDecrypted: abc xyz",
+    "visible": false
+   },
+   {
+    "input": [
+     "Zz",
+     "1"
+    ],
+    "output": "Encrypted: Aa\nDecrypted: Zz",
+    "visible": false
+   }
+  ]
+ },
+ "54": {
+  "cases": [
+   {
+    "input": [],
+    "output": "\"{[()]}\"     -> Balanced\n\"{[(])}\"     -> Not balanced\n\"(((\"     -> Not balanced",
+    "visible": true
+   }
+  ]
+ },
+ "55": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Sales by region:\n  North: Rs 1,083,000\n  South: Rs 372,300\nBest-selling product: Laptop (Rs 918,300)\nHighest average: North (Rs 541,500.00)",
+    "visible": true
+   }
+  ]
+ },
+ "56": {
+  "cases": [
+   {
+    "input": [],
+    "output": "Characters: 70\nWords: 13\nSentences: 3\nAverage word length: 4.2\nTop 5 words: python(3) code(2) data(1) great(1) learn(1)\nLongest word: python",
+    "visible": true
+   }
+  ]
+ },
+ "57": {
+  "cases": [
+   {
+    "input": [
+     "1",
+     "Rohan",
+     "78",
+     "85",
+     "92",
+     "71",
+     "75",
+     "3",
+     "6"
+    ],
+    "output": "1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nAdded Rohan\n1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nRohan       401   80.20%\n1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nGoodbye!",
+    "visible": true
+   },
+   {
+    "input": [
+     "6"
+    ],
+    "output": "1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nGoodbye!",
+    "visible": false
+   },
+   {
+    "input": [
+     "2",
+     "Ghost",
+     "6"
+    ],
+    "output": "1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nError: student not found\n1. Add  2. View  3. View all  4. Update  5. Delete  6. Exit\nGoodbye!",
+    "visible": false
+   }
+  ]
+ },
+ "58": {
+  "cases": [
+   {
+    "input": [
+     "1",
+     "Rohan",
+     "9876543210",
+     "rohan@x.com",
+     "Pune",
+     "2",
+     "ro",
+     "6"
+    ],
+    "output": "1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nAdded Rohan\n1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nRohan: 9876543210\n1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nSaved 1 contacts",
+    "visible": true
+   },
+   {
+    "input": [
+     "6"
+    ],
+    "output": "1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nSaved 0 contacts",
+    "visible": false
+   },
+   {
+    "input": [
+     "1",
+     "Amit",
+     "123",
+     "a@x.com",
+     "Delhi",
+     "6"
+    ],
+    "output": "1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nError: phone must be exactly 10 digits\n1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nInvalid choice\n1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nInvalid choice\n1. Add  2. Search  3. City  4. Update  5. Delete  6. Exit\nSaved 0 contacts",
+    "visible": false
+   }
+  ]
+ },
+ "59": {
+  "cases": [
+   {
+    "input": [],
+    "output": "python     ######################################## 5\ndata       ########################                 3\ncode       ################                         2\nlearn      ################                         2\nwrite      ########                                 1\nWords appearing once: 1\nAverage frequency: 2.6\n5: ['python']\n3: ['data']\n2: ['code', 'learn']\n1: ['write']",
+    "visible": true
+   }
+  ]
+ },
+ "60": {
+  "cases": [
+   {
+    "input": [
+     "1"
+    ],
+    "output": "Matrix A is 2x3, Matrix B is 2x3\n   8   10   12\n  14   16   18",
+    "visible": true
+   },
+   {
+    "input": [
+     "3"
+    ],
+    "output": "Matrix A is 2x3, Matrix B is 2x3\nCannot multiply: A has 3 columns but B has 2 rows.",
+    "visible": false
+   },
+   {
+    "input": [
+     "5"
+    ],
+    "output": "Matrix A is 2x3, Matrix B is 2x3\nDeterminant needs a square matrix.",
+    "visible": false
+   },
+   {
+    "input": [
+     "7"
+    ],
+    "output": "Matrix A is 2x3, Matrix B is 2x3\nSymmetry needs a square matrix.",
+    "visible": false
+   }
+  ]
+ }
+}

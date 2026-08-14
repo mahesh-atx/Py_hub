@@ -190,7 +190,7 @@ function solutionSections(
   const heading =
     kind === "A"
       ? /^##\s+(A\d+)\.[^\n]*(?:\n|$)|^##\s+(Capstone)\b[^\n]*(?:\n|$)/gim
-      : new RegExp(`^##\\s+(${kind}\\d+)\\.[^\\n]*(?:\\n|$)`, "gim");
+      : new RegExp(`^#{2,3}\\s+(${kind}\\d+)\\.[^\\n]*(?:\\n|$)`, "gim");
   const matches = [...markdown.matchAll(heading)];
 
   for (let index = 0; index < matches.length; index++) {
@@ -269,7 +269,7 @@ export function parsePracticeContent({
   const parts =
     kind === "A"
       ? markdown.split(/^##\s*📋\s*/m)
-      : markdown.split(new RegExp(`^##\\s*(?:${kind}\\d+\\.|(?:Question|Project)\\s+\\d+:)\\s*`, "im"));
+      : markdown.split(new RegExp(`^#{2,3}\\s*(?:${kind}\\d+\\.|(?:Question|Project)\\s+\\d+:)\\s*`, "im"));
   parts.shift();
 
   const challenges = parts

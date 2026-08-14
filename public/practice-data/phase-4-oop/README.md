@@ -15,9 +15,11 @@
 | 6 | [Module 18: Magic (Dunder) Methods](module-18-magic-dunder-methods.md) | `__str__`, `__repr__`, `__len__`, `__add__`, `__eq__`, `__lt__`, `__getitem__`, `__call__`, context managers |
 | 7 | [Module 19: OOP Projects](module-19-oop-projects-and-practice.md) | 6 complete runnable projects (Student, Bank, Library, Employee, Inventory, E-commerce Cart) + a capstone blueprint |
 | — | [Projects & Key Takeaways](projects-and-takeaways.md) | 10 practice projects and the phase summary |
-| — | [**60 Practice Questions**](questions.md) | Classes, encapsulation, inheritance, polymorphism and magic methods — ending in four complete system designs. Difficulty rises from Q1 to Q60. |
+| — | [**60 Practice Questions**](practice-questions.md) | Classes, encapsulation, inheritance, polymorphism and magic methods — ending in four complete system designs. Difficulty rises from Q1 to Q60. |
+| ✅ | [**Automated Judge**](tests/README.md) | Write your answer, run `python run_tests.py 4 --diff`, get PASS/FAIL. **192 checks across 56 questions.** |
+| 🔑 | [**Solutions**](solutions.md) | A worked solution for every graded question, each verified against the full suite. Write yours first. |
 | 📋 | [**6 Assignments**](assignments.md) | Class fundamentals, encapsulation, inheritance, magic methods, library system, capstone |
 
 ---
 
-[← Phase 3: Advanced Python](../phase-3-advanced-python/README.md) · [Next available: Phase 6 — Data Science →](../phase-6-data-science/README.md)
+[← Phase 3: Advanced Python](../phase-3-advanced-python/README.md) · [Phase 5: Mathematics & Statistics →](../phase-5-mathematics-statistics/README.md)

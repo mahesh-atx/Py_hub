@@ -23,15 +23,15 @@ Six graded assignments for **Modules 13–19**. Each takes 3–6 hours; the caps
 
 ### Tasks
 
-- [ ] 1. **Six classes**, each with `__init__`, at least two methods, and a docstring: `Book`, `Rectangle`, `Circle`, `BankAccount`, `Student`, `Point`.
+1. **Six classes**, each with `__init__`, at least two methods, and a docstring: `Book`, `Rectangle`, `Circle`, `BankAccount`, `Student`, `Point`.
 
-- [ ] 2. **Verified computations:**
+2. **Verified computations:**
    - `Book.reading_time()` for 320 pages at 300 words/page and 250 wpm = **6.4** hours
    - `Point(0,0).distance_to(Point(3,4))` = **5.0**
    - `Rectangle(5,5).is_square()` = `True`
    - `Circle(-3)` raises `ValueError` with a message naming the bad value
 
-- [ ] 3. **The shared mutable class attribute bug.** Define `Dog` with `tricks = []` at class level. Create two dogs, append a trick to one, and show **both** now have it. Then fix it by moving the list into `__init__`. Your output must show:
+3. **The shared mutable class attribute bug.** Define `Dog` with `tricks = []` at class level. Create two dogs, append a trick to one, and show **both** now have it. Then fix it by moving the list into `__init__`. Your output must show:
 
    ```
    BEFORE FIX:  buddy.tricks: ['roll over']   max.tricks: ['roll over']
@@ -40,17 +40,17 @@ Six graded assignments for **Modules 13–19**. Each takes 3–6 hours; the caps
 
    Explain the mechanism in a comment, and connect it to Phase 3's mutable default argument — they share a root cause.
 
-- [ ] 4. **Instance counter.** Add a class attribute to `Student` counting instances, incremented in `__init__`, with a `@classmethod` returning the count. Create five students and verify.
+4. **Instance counter.** Add a class attribute to `Student` counting instances, incremented in `__init__`, with a `@classmethod` returning the count. Create five students and verify.
 
-- [ ] 5. **All three method types in one class.** An instance method, a `@classmethod` and a `@staticmethod`, each printing what it received. Call all three from both an instance and the class, and record which calls work.
+5. **All three method types in one class.** An instance method, a `@classmethod` and a `@staticmethod`, each printing what it received. Call all three from both an instance and the class, and record which calls work.
 
-- [ ] 6. **Alternative constructors.** `Book.from_string("Dune|Frank Herbert|412")` as a `@classmethod`. Then add `Date.from_string`, `Date.from_tuple` and `Date.today()`.
+6. **Alternative constructors.** `Book.from_string("Dune|Frank Herbert|412")` as a `@classmethod`. Then add `Date.from_string`, `Date.from_tuple` and `Date.today()`.
 
-- [ ] 7. **Object identity.** Create two `Point` objects with identical coordinates. Show `==` is `False` and `is` is `False`. Explain why, and note that Assignment 18 fixes it.
+7. **Object identity.** Create two `Point` objects with identical coordinates. Show `==` is `False` and `is` is `False`. Explain why, and note that Assignment 18 fixes it.
 
-- [ ] 8. **Object inspection.** Demonstrate `type()`, `isinstance()`, `hasattr()`, `getattr()`, `setattr()` and `__dict__` on one object, printing each result.
+8. **Object inspection.** Demonstrate `type()`, `isinstance()`, `hasattr()`, `getattr()`, `setattr()` and `__dict__` on one object, printing each result.
 
-- [ ] 9. **Written answers (4–6 sentences each).** What is `self` actually? Why does a class attribute shared between instances surprise people? When would you use a `@staticmethod` rather than a module-level function?
+9. **Written answers (4–6 sentences each).** What is `self` actually? Why does a class attribute shared between instances surprise people? When would you use a `@staticmethod` rather than a module-level function?
 
 ### Marking guide
 
@@ -79,32 +79,32 @@ Create two `Student` objects and modify one's marks. If the other changes too, y
 
 ### Tasks
 
-- [ ] 1. **A `BankAccount` with a private `__balance`.** Show that `account.__balance` raises `AttributeError` and `account._BankAccount__balance` works. Explain name mangling in a comment.
+1. **A `BankAccount` with a private `__balance`.** Show that `account.__balance` raises `AttributeError` and `account._BankAccount__balance` works. Explain name mangling in a comment.
 
-- [ ] 2. **Three access levels** in one class: public, `_protected`, `__private`. Demonstrate access to each from outside and explain what each level actually communicates in Python — since none of them truly enforce anything.
+2. **Three access levels** in one class: public, `_protected`, `__private`. Demonstrate access to each from outside and explain what each level actually communicates in Python — since none of them truly enforce anything.
 
-- [ ] 3. **Getters and setters first.** `get_balance()` and `set_balance(amount)` with validation. Use them for a full deposit/withdraw cycle.
+3. **Getters and setters first.** `get_balance()` and `set_balance(amount)` with validation. Use them for a full deposit/withdraw cycle.
 
-- [ ] 4. **Then rewrite with `@property`.** `account.balance = -100` must raise `ValueError` while `account.balance` still reads like a plain attribute. Compare the call sites and state which reads better.
+4. **Then rewrite with `@property`.** `account.balance = -100` must raise `ValueError` while `account.balance` still reads like a plain attribute. Compare the call sites and state which reads better.
 
-- [ ] 5. **A read-only computed property.** `Circle.area` and `Circle.circumference` computed from radius. Setting `circle.area = 50` must raise `AttributeError`.
+5. **A read-only computed property.** `Circle.area` and `Circle.circumference` computed from radius. Setting `circle.area = 50` must raise `AttributeError`.
 
-- [ ] 6. **A two-way property.** `Temperature` stores Celsius internally but exposes `fahrenheit` with both a getter and a setter. Setting `temp.fahrenheit = 212` must make `temp.celsius` equal `100.0`.
+6. **A two-way property.** `Temperature` stores Celsius internally but exposes `fahrenheit` with both a getter and a setter. Setting `temp.fahrenheit = 212` must make `temp.celsius` equal `100.0`.
 
-- [ ] 7. **A validation chain.** `Person` where setting `age` validates type and range (0–150) and setting `email` validates it contains `@` and a `.` after it. Each raises `ValueError` with a message naming the bad value.
+7. **A validation chain.** `Person` where setting `age` validates type and range (0–150) and setting `email` validates it contains `@` and a `.` after it. Each raises `ValueError` with a message naming the bad value.
 
-- [ ] 8. **A read-only ID.** `Order.order_id` set once in `__init__`, exposed as a property with no setter.
+8. **A read-only ID.** `Order.order_id` set once in `__init__`, exposed as a property with no setter.
 
-- [ ] 9. **Abstract base class.** `Shape(ABC)` with abstract `area()` and `perimeter()`. Show that `Shape()` raises:
+9. **Abstract base class.** `Shape(ABC)` with abstract `area()` and `perimeter()`. Show that `Shape()` raises:
 
    ```
    TypeError: Can't instantiate abstract class Shape without an implementation
    for abstract methods 'area', 'perimeter'
    ```
 
-- [ ] 10. **Concrete implementations.** `Circle`, `Rectangle`, `Triangle` inheriting from `Shape`. Put all three in a list and print each area and perimeter in one loop — the payoff of the abstract base.
+10. **Concrete implementations.** `Circle`, `Rectangle`, `Triangle` inheriting from `Shape`. Put all three in a list and print each area and perimeter in one loop — the payoff of the abstract base.
 
-- [ ] 11. **A concrete method on the abstract class.** Add `describe()` to `Shape` that calls the abstract `area()`. Show subclasses inherit it without reimplementing.
+11. **A concrete method on the abstract class.** Add `describe()` to `Shape` that calls the abstract `area()`. Show subclasses inherit it without reimplementing.
 
 ### Marking guide
 
@@ -133,25 +133,25 @@ Try every route into an invalid state: the constructor, the property setter, and
 
 ### Tasks
 
-- [ ] 1. **Single inheritance.** `Animal` → `Dog`, overriding `speak()`. Show `Dog` inherits `name`.
+1. **Single inheritance.** `Animal` → `Dog`, overriding `speak()`. Show `Dog` inherits `name`.
 
-- [ ] 2. **`super()` in the constructor.** `Person(name, age)` → `Employee(name, age, salary)`. Then **deliberately omit** the `super().__init__()` call, show the `AttributeError` it causes, and restore it.
+2. **`super()` in the constructor.** `Person(name, age)` → `Employee(name, age, salary)`. Then **deliberately omit** the `super().__init__()` call, show the `AttributeError` it causes, and restore it.
 
-- [ ] 3. **Multilevel.** `Vehicle` → `Car` → `ElectricCar`, each adding attributes and overriding one method. Print `ElectricCar.__mro__` and explain each entry.
+3. **Multilevel.** `Vehicle` → `Car` → `ElectricCar`, each adding attributes and overriding one method. Print `ElectricCar.__mro__` and explain each entry.
 
-- [ ] 4. **Hierarchical.** One `Employee` base with `Manager`, `Developer` and `Designer`, each overriding `calculate_bonus()` differently. Store all three in a list and total the bonuses in one loop.
+4. **Hierarchical.** One `Employee` base with `Manager`, `Developer` and `Designer`, each overriding `calculate_bonus()` differently. Store all three in a list and total the bonuses in one loop.
 
-- [ ] 5. **Multiple inheritance and the MRO.** `Flyer` and `Swimmer` both with `move()`. `Duck(Flyer, Swimmer)`. Determine which `move()` runs *before* running it, then verify with `__mro__`.
+5. **Multiple inheritance and the MRO.** `Flyer` and `Swimmer` both with `move()`. `Duck(Flyer, Swimmer)`. Determine which `move()` runs *before* running it, then verify with `__mro__`.
 
-- [ ] 6. **The diamond problem.** `A` → `B`, `A` → `C`, `B, C` → `D`. Put a print in every `__init__` and use `super()` throughout. Trace the exact order the constructors run and explain why `A.__init__` runs only once.
+6. **The diamond problem.** `A` → `B`, `A` → `C`, `B, C` → `D`. Put a print in every `__init__` and use `super()` throughout. Trace the exact order the constructors run and explain why `A.__init__` runs only once.
 
-- [ ] 7. **Override vs extend.** In one subclass write one method that replaces the parent entirely and another that calls `super().method()` first then adds to it. Show both outputs.
+7. **Override vs extend.** In one subclass write one method that replaces the parent entirely and another that calls `super().method()` first then adds to it. Show both outputs.
 
-- [ ] 8. **`isinstance` vs `type`.** On the `ElectricCar` chain, compare `isinstance(tesla, Vehicle)` with `type(tesla) == Vehicle`. Explain why `isinstance` is almost always correct.
+8. **`isinstance` vs `type`.** On the `ElectricCar` chain, compare `isinstance(tesla, Vehicle)` with `type(tesla) == Vehicle`. Explain why `isinstance` is almost always correct.
 
-- [ ] 9. **Composition instead.** Model `Car` **has an** `Engine` rather than **is an** `Engine`. Then write three sentences on a case where composition is clearly better — and one where inheritance genuinely is.
+9. **Composition instead.** Model `Car` **has an** `Engine` rather than **is an** `Engine`. Then write three sentences on a case where composition is clearly better — and one where inheritance genuinely is.
 
-- [ ] 10. **Combine it all.** An abstract `Shape`, concrete `Rectangle`, then `Square(Rectangle)` enforcing equal sides through a property. Setting `square.side = 7` must update both dimensions. Note in a comment why `Square` inheriting from `Rectangle` is a classic design argument.
+10. **Combine it all.** An abstract `Shape`, concrete `Rectangle`, then `Square(Rectangle)` enforcing equal sides through a property. Setting `square.side = 7` must update both dimensions. Note in a comment why `Square` inheriting from `Rectangle` is a classic design argument.
 
 ### Marking guide
 
@@ -180,23 +180,23 @@ In your diamond, `A.__init__` must print exactly **once**. If it prints twice, y
 
 ### Tasks
 
-- [ ] 1. **Duck typing.** Three unrelated classes — `Duck`, `Robot`, `Person` — each with `speak()`. Loop over all three calling `speak()` with no shared base class. Explain why this works in Python and would not in Java.
+1. **Duck typing.** Three unrelated classes — `Duck`, `Robot`, `Person` — each with `speak()`. Loop over all three calling `speak()` with no shared base class. Explain why this works in Python and would not in Java.
 
-- [ ] 2. **A `Vector2D` class** with `__add__`, `__sub__`, `__mul__` (scalar) and `__truediv__`. Verify `Vector2D(2,3) + Vector2D(4,1)` gives `(6,4)` and `Vector2D(2,3) * 3` gives `(6,9)`.
+2. **A `Vector2D` class** with `__add__`, `__sub__`, `__mul__` (scalar) and `__truediv__`. Verify `Vector2D(2,3) + Vector2D(4,1)` gives `(6,4)` and `Vector2D(2,3) * 3` gives `(6,9)`.
 
-- [ ] 3. **`__str__` vs `__repr__`.** Add both to `Vector2D`. `str(v)` gives `(2, 3)`; `repr(v)` gives `Vector2D(x=2, y=3)`. Show what `print(v)`, `str(v)`, `repr(v)` and a bare `v` in the REPL each produce, and state the rule for which to implement first.
+3. **`__str__` vs `__repr__`.** Add both to `Vector2D`. `str(v)` gives `(2, 3)`; `repr(v)` gives `Vector2D(x=2, y=3)`. Show what `print(v)`, `str(v)`, `repr(v)` and a bare `v` in the REPL each produce, and state the rule for which to implement first.
 
-- [ ] 4. **Comparison dunders.** A `Money` class with `__eq__`, `__lt__`, `__le__`, `__gt__`, `__ge__`. Sort a list of `Money` objects. Then redo it with `functools.total_ordering` and only `__eq__` and `__lt__` — confirm identical behaviour with less code.
+4. **Comparison dunders.** A `Money` class with `__eq__`, `__lt__`, `__le__`, `__gt__`, `__ge__`. Sort a list of `Money` objects. Then redo it with `functools.total_ordering` and only `__eq__` and `__lt__` — confirm identical behaviour with less code.
 
-- [ ] 5. **Container behaviour.** A `Playlist` supporting `len(playlist)`, `playlist[0]`, slicing `playlist[1:3]`, iteration in a `for` loop, and `"Song" in playlist` case-insensitively via `__contains__`.
+5. **Container behaviour.** A `Playlist` supporting `len(playlist)`, `playlist[0]`, slicing `playlist[1:3]`, iteration in a `for` loop, and `"Song" in playlist` case-insensitively via `__contains__`.
 
-- [ ] 6. **`__call__`.** A `Multiplier` class whose instances are callable — `double(15)` returns `30`. Compare against the Phase 3 closure that did the same thing, and state when you would choose each.
+6. **`__call__`.** A `Multiplier` class whose instances are callable — `double(15)` returns `30`. Compare against the Phase 3 closure that did the same thing, and state when you would choose each.
 
-- [ ] 7. **A context manager.** `FileManager` with `__enter__` and `__exit__`, usable in a `with` block, guaranteeing closure even when an exception is raised inside. Print in both dunders to trace the flow, and demonstrate the exception case.
+7. **A context manager.** `FileManager` with `__enter__` and `__exit__`, usable in a `with` block, guaranteeing closure even when an exception is raised inside. Print in both dunders to trace the flow, and demonstrate the exception case.
 
-- [ ] 8. **`__hash__` and sets.** Make `Point` hashable by defining both `__eq__` and `__hash__`. Show two equal points collapsing to one entry in a set. Then remove `__hash__` and record the `TypeError`.
+8. **`__hash__` and sets.** Make `Point` hashable by defining both `__eq__` and `__hash__`. Show two equal points collapsing to one entry in a set. Then remove `__hash__` and record the `TypeError`.
 
-- [ ] 9. **A full-featured `Matrix`.** `__init__`, `__str__`, `__repr__`, `__add__`, `__sub__`, `__mul__` (matrix multiplication), `__eq__`, `__len__`, `__getitem__`. Every operation validates dimensions and raises `ValueError` with a message naming both shapes.
+9. **A full-featured `Matrix`.** `__init__`, `__str__`, `__repr__`, `__add__`, `__sub__`, `__mul__` (matrix multiplication), `__eq__`, `__len__`, `__getitem__`. Every operation validates dimensions and raises `ValueError` with a message naming both shapes.
 
    Verify: `Matrix([[1,2],[3,4]]) * Matrix([[5,6],[7,8]])` = `[[19, 22], [43, 50]]`.
 
@@ -228,27 +228,27 @@ Define `__eq__` on a class without `__hash__` and try to put it in a set. The `T
 
 ### Tasks
 
-- [ ] 1. **`Book`** — ISBN, title, author, `copies_total`, `copies_available`, with a read-only `is_available` property and `__str__`.
+1. **`Book`** — ISBN, title, author, `copies_total`, `copies_available`, with a read-only `is_available` property and `__str__`.
 
-- [ ] 2. **`Member(ABC)`** with abstract `borrow_limit` and `loan_period_days`. Then `StudentMember` (3 books, 14 days) and `FacultyMember` (10 books, 30 days).
+2. **`Member(ABC)`** with abstract `borrow_limit` and `loan_period_days`. Then `StudentMember` (3 books, 14 days) and `FacultyMember` (10 books, 30 days).
 
-- [ ] 3. **`Loan`** — book, member, issue date, due date, a computed `is_overdue` property, and a `fine()` method at ₹5 per day late. Use `datetime`.
+3. **`Loan`** — book, member, issue date, due date, a computed `is_overdue` property, and a `fine()` method at ₹5 per day late. Use `datetime`.
 
-- [ ] 4. **`Library`** managing all collections, with methods for: add/remove book (handling duplicate ISBNs), register member with an auto-generated ID, issue, return, and search.
+4. **`Library`** managing all collections, with methods for: add/remove book (handling duplicate ISBNs), register member with an auto-generated ID, issue, return, and search.
 
-- [ ] 5. **Issue rules.** Reject if no copies available, if the member is at their limit, or if the member has an unpaid fine above ₹100. Three distinct custom exceptions: `BookNotAvailableError`, `BorrowLimitExceededError`, `OutstandingFineError`.
+5. **Issue rules.** Reject if no copies available, if the member is at their limit, or if the member has an unpaid fine above ₹100. Three distinct custom exceptions: `BookNotAvailableError`, `BorrowLimitExceededError`, `OutstandingFineError`.
 
-- [ ] 6. **Return** computes the fine, updates availability, and closes the loan.
+6. **Return** computes the fine, updates availability, and closes the loan.
 
-- [ ] 7. **Search** by title, author or ISBN with partial, case-insensitive matching.
+7. **Search** by title, author or ISBN with partial, case-insensitive matching.
 
-- [ ] 8. **Six reports:** currently issued, overdue loans with fines, most borrowed book, total outstanding fines, members at their limit, and books never borrowed.
+8. **Six reports:** currently issued, overdue loans with fines, most borrowed book, total outstanding fines, members at their limit, and books never borrowed.
 
-- [ ] 9. **Magic methods used meaningfully.** `__str__` on every class, `__len__` on `Library` returning the book count, `__contains__` for ISBN lookup, `__iter__` over books.
+9. **Magic methods used meaningfully.** `__str__` on every class, `__len__` on `Library` returning the book count, `__contains__` for ISBN lookup, `__iter__` over books.
 
-- [ ] 10. **Persistence.** Save and load the whole library to JSON, including loans with dates. Verify a full round-trip: run, issue books, exit, restart, and confirm the loans are still there.
+10. **Persistence.** Save and load the whole library to JSON, including loans with dates. Verify a full round-trip: run, issue books, exit, restart, and confirm the loans are still there.
 
-- [ ] 11. **A menu-driven interface** that never crashes and catches every custom exception with a readable message.
+11. **A menu-driven interface** that never crashes and catches every custom exception with a readable message.
 
 ### Marking guide
 
@@ -279,28 +279,28 @@ Issue a book, exit, restart, and check the due date. If it has shifted or become
 
 **Phase A — design before code**
 
-- [ ] 1. **List every class**, its attributes and its methods, on paper.
-- [ ] 2. **Draw the inheritance relationships** and mark which classes are abstract.
-- [ ] 3. **Note the compositions** — which classes hold instances of which.
-- [ ] 4. **Write three operations** the system must support, and trace which objects collaborate for each.
+1. **List every class**, its attributes and its methods, on paper.
+2. **Draw the inheritance relationships** and mark which classes are abstract.
+3. **Note the compositions** — which classes hold instances of which.
+4. **Write three operations** the system must support, and trace which objects collaborate for each.
 
 **Phase B — build it**
 
-- [ ] 5. At least **six classes**.
-- [ ] 6. At least one **abstract base class** with two or more concrete implementations.
-- [ ] 7. At least one **inheritance chain three levels deep**.
-- [ ] 8. At least one genuine **composition** relationship.
-- [ ] 9. **Encapsulation throughout** — no public mutable attribute without a property guarding it.
-- [ ] 10. At least **five magic methods** across your classes, each chosen because it makes the class read better.
-- [ ] 11. At least **two custom exceptions**, raised and caught.
-- [ ] 12. **JSON persistence** with a verified round-trip.
-- [ ] 13. A **menu-driven interface** that never crashes.
+5. At least **six classes**.
+6. At least one **abstract base class** with two or more concrete implementations.
+7. At least one **inheritance chain three levels deep**.
+8. At least one genuine **composition** relationship.
+9. **Encapsulation throughout** — no public mutable attribute without a property guarding it.
+10. At least **five magic methods** across your classes, each chosen because it makes the class read better.
+11. At least **two custom exceptions**, raised and caught.
+12. **JSON persistence** with a verified round-trip.
+13. A **menu-driven interface** that never crashes.
 
 **Phase C — reflect**
 
-- [ ] 14. **Compare the code against your design document.** List every place the design changed during implementation, and why. This gap is the most educational part of the whole assignment.
-- [ ] 15. **Name one class you would remove** if you started again, and one you would split in two.
-- [ ] 16. **State one place you used inheritance** where composition would have been better, or explain why you are confident every inheritance relationship is a genuine "is-a".
+14. **Compare the code against your design document.** List every place the design changed during implementation, and why. This gap is the most educational part of the whole assignment.
+15. **Name one class you would remove** if you started again, and one you would split in two.
+16. **State one place you used inheritance** where composition would have been better, or explain why you are confident every inheritance relationship is a genuine "is-a".
 
 ### Marking guide
 
@@ -323,13 +323,13 @@ Hand your design document to someone and ask them to guess what the system does.
 
 ## Grading yourself
 
-- [ ] 1. **Instance independence is testable.** For every class, create two objects, modify one, and confirm the other is untouched. Assignment 15 exists because this fails more often than anyone expects.
-- [ ] 2. **Every `raise` needs a test.** All six assignments define custom exceptions — trigger each one at least once.
-- [ ] 3. **Persistence is binary.** Assignments 19 and the capstone either survive a restart with intact dates or they do not.
+1. **Instance independence is testable.** For every class, create two objects, modify one, and confirm the other is untouched. Assignment 15 exists because this fails more often than anyone expects.
+2. **Every `raise` needs a test.** All six assignments define custom exceptions — trigger each one at least once.
+3. **Persistence is binary.** Assignments 19 and the capstone either survive a restart with intact dates or they do not.
 
 > ⚠️ Two mistakes dominate this phase. **Mutable class attributes** — objects silently share state and the bug surfaces far from its cause. And **inheritance used for code reuse rather than a genuine "is-a" relationship**. A `Car` is not a kind of `Engine`, however convenient reusing the code feels. When the relationship feels forced, it is: use composition.
 >
 
 ---
 
-[← Phase 4 index](README.md) · [Practice Questions](questions.md)
+[← Phase 4 index](README.md) · [Practice Questions](practice-questions.md)

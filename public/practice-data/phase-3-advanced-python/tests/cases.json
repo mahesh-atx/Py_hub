@@ -1,0 +1,1313 @@
+{
+ "1": {
+  "checks": [
+   {
+    "expr": "greet(\"Priya\")",
+    "raises": false,
+    "expected": "Hello, Priya!"
+   },
+   {
+    "expr": "greet(\"A\")",
+    "raises": false,
+    "expected": "Hello, A!"
+   },
+   {
+    "expr": "greet(\"\")",
+    "raises": false,
+    "expected": "Hello, !"
+   }
+  ],
+  "fixtures": {}
+ },
+ "2": {
+  "checks": [
+   {
+    "expr": "area(5, 3)",
+    "raises": false,
+    "expected": 15
+   },
+   {
+    "expr": "area(7)",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "area(0, 9)",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "area(2.5, 4)",
+    "raises": false,
+    "expected": 10.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "3": {
+  "checks": [
+   {
+    "expr": "stats(10, 4)",
+    "raises": false,
+    "expected": [
+     14,
+     6,
+     40,
+     2.5
+    ]
+   },
+   {
+    "expr": "stats(10, 0)",
+    "raises": false,
+    "expected": [
+     10,
+     10,
+     0,
+     null
+    ]
+   },
+   {
+    "expr": "stats(-3, 3)",
+    "raises": false,
+    "expected": [
+     0,
+     -6,
+     -9,
+     -1.0
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "4": {
+  "checks": [
+   {
+    "expr": "only_evens([1, 2, 3, 4, 5, 6])",
+    "raises": false,
+    "expected": [
+     2,
+     4,
+     6
+    ]
+   },
+   {
+    "expr": "only_evens([])",
+    "raises": false,
+    "expected": []
+   },
+   {
+    "expr": "only_evens([1, 3, 5])",
+    "raises": false,
+    "expected": []
+   },
+   {
+    "expr": "_x = [1,2,3]; only_evens(_x); _x",
+    "raises": false,
+    "expected": [
+     1,
+     2,
+     3
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "5": {
+  "checks": [
+   {
+    "expr": "to_fahrenheit(37)",
+    "raises": false,
+    "expected": 98.6
+   },
+   {
+    "expr": "to_fahrenheit(-300)",
+    "raises": false,
+    "expected": null
+   },
+   {
+    "expr": "to_fahrenheit(0)",
+    "raises": false,
+    "expected": 32.0
+   },
+   {
+    "expr": "to_fahrenheit(-273.15)",
+    "raises": false,
+    "expected": -459.66999999999996
+   }
+  ],
+  "fixtures": {}
+ },
+ "6": {
+  "checks": [
+   {
+    "expr": "total(1, 2, 3)",
+    "raises": false,
+    "expected": 6
+   },
+   {
+    "expr": "total()",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "total(5)",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "total(-1, 1)",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "7": {
+  "checks": [
+   {
+    "expr": "_out(describe, name=\"Rohan\", age=25)",
+    "raises": false,
+    "expected": "Name: Rohan\nAge: 25"
+   },
+   {
+    "expr": "_out(describe)",
+    "raises": false,
+    "expected": ""
+   }
+  ],
+  "fixtures": {}
+ },
+ "8": {
+  "checks": [
+   {
+    "expr": "order(\"Pizza\", 2, \"extra cheese\", \"olives\", size=\"large\")",
+    "raises": false,
+    "expected": [
+     "Pizza",
+     2,
+     [
+      "extra cheese",
+      "olives"
+     ],
+     {
+      "size": "large"
+     }
+    ]
+   },
+   {
+    "expr": "order(\"Tea\")",
+    "raises": false,
+    "expected": [
+     "Tea",
+     1,
+     [],
+     {}
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "9": {
+  "checks": [
+   {
+    "expr": "without_global()",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "counter",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "with_global()",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "counter",
+    "raises": false,
+    "expected": 1
+   }
+  ],
+  "fixtures": {}
+ },
+ "10": {
+  "checks": [
+   {
+    "expr": "add_item_buggy(\"apple\"); add_item_buggy(\"banana\")",
+    "raises": false,
+    "expected": [
+     "apple",
+     "banana"
+    ]
+   },
+   {
+    "expr": "add_item(\"x\")",
+    "raises": false,
+    "expected": [
+     "x"
+    ]
+   },
+   {
+    "expr": "add_item(\"y\")",
+    "raises": false,
+    "expected": [
+     "y"
+    ]
+   },
+   {
+    "expr": "add_item(\"z\", [\"seed\"])",
+    "raises": false,
+    "expected": [
+     "seed",
+     "z"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "11": {
+  "checks": [
+   {
+    "expr": "square(6)",
+    "raises": false,
+    "expected": 36
+   },
+   {
+    "expr": "larger(3, 9)",
+    "raises": false,
+    "expected": 9
+   },
+   {
+    "expr": "divisible_by_three(9)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "divisible_by_three(10)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "sort_by_second([('a', 3), ('b', 1), ('c', 2)])",
+    "raises": false,
+    "expected": [
+     [
+      "b",
+      1
+     ],
+     [
+      "c",
+      2
+     ],
+     [
+      "a",
+      3
+     ]
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "12": {
+  "checks": [
+   {
+    "expr": "squares",
+    "raises": false,
+    "expected": [
+     1,
+     4,
+     9,
+     16,
+     25,
+     36,
+     49,
+     64,
+     81,
+     100
+    ]
+   },
+   {
+    "expr": "divisible",
+    "raises": false,
+    "expected": [
+     3,
+     6,
+     9
+    ]
+   },
+   {
+    "expr": "product",
+    "raises": false,
+    "expected": 3628800
+   }
+  ],
+  "fixtures": {}
+ },
+ "13": {
+  "checks": [
+   {
+    "expr": "factorial(6)",
+    "raises": false,
+    "expected": 720
+   },
+   {
+    "expr": "factorial(0)",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "factorial(1)",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "factorial(10)",
+    "raises": false,
+    "expected": 3628800
+   },
+   {
+    "expr": "factorial(-1)",
+    "raises": true,
+    "expected": "ValueError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "14": {
+  "checks": [
+   {
+    "expr": "fib(10)",
+    "raises": false,
+    "expected": 55
+   },
+   {
+    "expr": "fib(0)",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "fib(1)",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "fib_iterative(30)",
+    "raises": false,
+    "expected": 832040
+   },
+   {
+    "expr": "fib_iterative(0)",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "15": {
+  "checks": [
+   {
+    "expr": "fib_memo(35)",
+    "raises": false,
+    "expected": 9227465
+   },
+   {
+    "expr": "fib_cached(35)",
+    "raises": false,
+    "expected": 9227465
+   },
+   {
+    "expr": "fib_memo(0)",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "fib_cached(1)",
+    "raises": false,
+    "expected": 1
+   }
+  ],
+  "fixtures": {}
+ },
+ "16": {
+  "checks": [
+   {
+    "expr": "digit_sum(9875)",
+    "raises": false,
+    "expected": 2
+   },
+   {
+    "expr": "digit_sum(5)",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "digit_sum(99)",
+    "raises": false,
+    "expected": 9
+   },
+   {
+    "expr": "digit_sum(0)",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "17": {
+  "checks": [
+   {
+    "expr": "power(2, 10)",
+    "raises": false,
+    "expected": 1024
+   },
+   {
+    "expr": "power(2, -2)",
+    "raises": false,
+    "expected": 0.25
+   },
+   {
+    "expr": "power(5, 0)",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "power(3, 3)",
+    "raises": false,
+    "expected": 27
+   }
+  ],
+  "fixtures": {}
+ },
+ "18": {
+  "checks": [
+   {
+    "expr": "hanoi(3)",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "hanoi(1)",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "hanoi(5)",
+    "raises": false,
+    "expected": 31
+   },
+   {
+    "expr": "hanoi(0)",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "19": {
+  "checks": [
+   {
+    "expr": "binary_search([2, 5, 8, 12, 16, 23, 38, 56, 72, 91], 23)",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "binary_search([2, 5, 8], 100)",
+    "raises": false,
+    "expected": -1
+   },
+   {
+    "expr": "binary_search([], 1)",
+    "raises": false,
+    "expected": -1
+   },
+   {
+    "expr": "binary_search([7], 7)",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "20": {
+  "checks": [
+   {
+    "expr": "flatten([1, [2, 3, [4, [5, 6]], 7], 8])",
+    "raises": false,
+    "expected": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "expr": "flatten([])",
+    "raises": false,
+    "expected": []
+   },
+   {
+    "expr": "flatten([[[[1]]]])",
+    "raises": false,
+    "expected": [
+     1
+    ]
+   },
+   {
+    "expr": "flatten([1, 2, 3])",
+    "raises": false,
+    "expected": [
+     1,
+     2,
+     3
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "21": {
+  "checks": [
+   {
+    "expr": "is_palindrome(\"racecar\")",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "is_palindrome(\"python\")",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "is_palindrome(\"\")",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "is_palindrome(\"aa\")",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "22": {
+  "checks": [
+   {
+    "expr": "multiplier(2)(15)",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "multiplier(3)(7)",
+    "raises": false,
+    "expected": 21
+   },
+   {
+    "expr": "double = multiplier(2); double(4)",
+    "raises": false,
+    "expected": 8
+   }
+  ],
+  "fixtures": {}
+ },
+ "23": {
+  "checks": [
+   {
+    "expr": "apply_twice(lambda x: x * 3, 5)",
+    "raises": false,
+    "expected": 45
+   },
+   {
+    "expr": "apply_twice(lambda s: s + '!', 'hi')",
+    "raises": false,
+    "expected": "hi!!"
+   },
+   {
+    "expr": "apply_twice(abs, -4)",
+    "raises": false,
+    "expected": 4
+   }
+  ],
+  "fixtures": {}
+ },
+ "24": {
+  "checks": [
+   {
+    "expr": "time_it(sum, [1, 2, 3])[0]",
+    "raises": false,
+    "expected": 6
+   },
+   {
+    "expr": "time_it(len, 'abcd')[0]",
+    "raises": false,
+    "expected": 4
+   },
+   {
+    "expr": "isinstance(time_it(sum, [1])[1], float)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "time_it(sum, [1])[1] >= 0",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "25": {
+  "manual": "This question asks you to create a separate `mymath.py` file and import it, which the grader cannot check from a single answer file. Build it and confirm every function works."
+ },
+ "26": {
+  "manual": "This needs you to run the same file two different ways - directly and via an import - and compare. Do it at the command line."
+ },
+ "27": {
+  "checks": [
+   {
+    "expr": "results[\"sqrt\"]",
+    "raises": false,
+    "expected": 12.0
+   },
+   {
+    "expr": "results[\"ceil\"]",
+    "raises": false,
+    "expected": 8
+   },
+   {
+    "expr": "results[\"floor\"]",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "results[\"factorial\"]",
+    "raises": false,
+    "expected": 40320
+   },
+   {
+    "expr": "results[\"gcd\"]",
+    "raises": false,
+    "expected": 12
+   },
+   {
+    "expr": "results[\"pi\"]",
+    "raises": false,
+    "expected": 3.1416
+   },
+   {
+    "expr": "results[\"log10\"]",
+    "raises": false,
+    "expected": 3.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "28": {
+  "checks": [
+   {
+    "expr": "sum(roll_two_dice().values())",
+    "raises": false,
+    "expected": 10000
+   },
+   {
+    "expr": "sorted(roll_two_dice().keys())",
+    "raises": false,
+    "expected": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   {
+    "expr": "max(roll_two_dice(), key=roll_two_dice().get)",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "roll_two_dice(1000, 1) == roll_two_dice(1000, 1)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "29": {
+  "checks": [
+   {
+    "expr": "len(generate_password(12, seed=1))",
+    "raises": false,
+    "expected": 12
+   },
+   {
+    "expr": "any(c.isupper() for c in generate_password(12, seed=2))",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "any(c.isdigit() for c in generate_password(12, seed=3))",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "any(not c.isalnum() for c in generate_password(12, seed=4))",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "generate_password(20, seed=5) == generate_password(20, seed=5)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "30": {
+  "manual": "The answers depend on today's date, so there is no fixed expected value. Run it and sanity-check each line by hand."
+ },
+ "31": {
+  "checks": [
+   {
+    "expr": "calculate_age(__import__('datetime').date(1998, 7, 15), __import__('datetime').date(2025, 7, 27))",
+    "raises": false,
+    "expected": [
+     27,
+     0,
+     12
+    ]
+   },
+   {
+    "expr": "calculate_age(__import__('datetime').date(2000, 1, 1), __import__('datetime').date(2020, 1, 1))",
+    "raises": false,
+    "expected": [
+     20,
+     0,
+     0
+    ]
+   },
+   {
+    "expr": "calculate_age(__import__('datetime').date(2000, 3, 15), __import__('datetime').date(2020, 3, 14))",
+    "raises": false,
+    "expected": [
+     19,
+     11,
+     28
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "32": {
+  "manual": "This inspects your real filesystem, so the results differ on every machine. Run it and read the output."
+ },
+ "33": {
+  "manual": "This needs real command-line arguments. Run it from a terminal:  `python sum_args.py 10 20 30`"
+ },
+ "34": {
+  "manual": "Open-ended exploration - there is no single right answer. Pick a function from each module and explain what it does."
+ },
+ "35": {
+  "checks": [
+   {
+    "expr": "write_notes()",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "read_notes().count(chr(10))",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "read_notes().startswith('First line')",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "36": {
+  "checks": [
+   {
+    "expr": "numbered_lines()",
+    "raises": false,
+    "expected": [
+     "1: First line",
+     "2: Second line",
+     "3: Third line"
+    ]
+   },
+   {
+    "expr": "len(numbered_lines())",
+    "raises": false,
+    "expected": 3
+   }
+  ],
+  "fixtures": {
+   "notes.txt": "First line\nSecond line\nThird line\n"
+  }
+ },
+ "37": {
+  "checks": [
+   {
+    "expr": "demo_write_modes()",
+    "raises": false,
+    "expected": [
+     [
+      "second write"
+     ],
+     [
+      "first",
+      "second"
+     ]
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "38": {
+  "checks": [
+   {
+    "expr": "file_stats(\"notes.txt\")",
+    "raises": false,
+    "expected": {
+     "lines": 3,
+     "words": 6,
+     "characters": 34
+    }
+   }
+  ],
+  "fixtures": {
+   "notes.txt": "First line\nSecond line\nThird line\n"
+  }
+ },
+ "39": {
+  "checks": [
+   {
+    "expr": "copy_file(\"notes.txt\", \"copy.txt\")",
+    "raises": false,
+    "expected": 3
+   },
+   {
+    "expr": "open(\"copy.txt\").read() == open(\"notes.txt\").read()",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {
+   "notes.txt": "First line\nSecond line\nThird line\n"
+  }
+ },
+ "40": {
+  "checks": [
+   {
+    "expr": "find_in_file(\"notes.txt\", \"line\")",
+    "raises": false,
+    "expected": [
+     [
+      1,
+      "First line"
+     ],
+     [
+      2,
+      "Second line"
+     ],
+     [
+      3,
+      "Third line"
+     ]
+    ]
+   },
+   {
+    "expr": "find_in_file(\"notes.txt\", \"ZZZ\")",
+    "raises": false,
+    "expected": []
+   },
+   {
+    "expr": "find_in_file(\"notes.txt\", \"FIRST\")",
+    "raises": false,
+    "expected": [
+     [
+      1,
+      "First line"
+     ]
+    ]
+   }
+  ],
+  "fixtures": {
+   "notes.txt": "First line\nSecond line\nThird line\n"
+  }
+ },
+ "41": {
+  "checks": [
+   {
+    "expr": "word_frequency(\"words.txt\")[\"the\"]",
+    "raises": false,
+    "expected": 3
+   },
+   {
+    "expr": "top_words(word_frequency(\"words.txt\"), 2)",
+    "raises": false,
+    "expected": [
+     [
+      "the",
+      3
+     ],
+     [
+      "cat",
+      2
+     ]
+    ]
+   }
+  ],
+  "fixtures": {
+   "words.txt": "the cat the dog the bird cat\n"
+  }
+ },
+ "42": {
+  "checks": [
+   {
+    "expr": "write_students()",
+    "raises": false,
+    "expected": 2
+   },
+   {
+    "expr": "class_average()",
+    "raises": false,
+    "expected": 85.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "43": {
+  "checks": [
+   {
+    "expr": "filter_toppers()",
+    "raises": false,
+    "expected": [
+     1,
+     2
+    ]
+   }
+  ],
+  "fixtures": {
+   "students.csv": "name,math,science,english\nRohan,78,85,72\nPriya,92,88,95\n"
+  }
+ },
+ "44": {
+  "checks": [
+   {
+    "expr": "_c = {\"app\": {\"name\": \"demo\", \"debug\": False}, \"retries\": 3}; save_config(_c); load_config() == _c",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "load_config()[\"app\"][\"name\"]",
+    "raises": false,
+    "expected": "demo"
+   }
+  ],
+  "fixtures": {}
+ },
+ "45": {
+  "checks": [
+   {
+    "expr": "update_config()[1][\"app\"][\"debug\"]",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "\"retries\" in update_config()[1]",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "update_config()[1][\"version\"]",
+    "raises": false,
+    "expected": "1.0"
+   }
+  ],
+  "fixtures": {
+   "config.json": "{\"app\": {\"name\": \"demo\", \"debug\": false}, \"retries\": 3}"
+  }
+ },
+ "46": {
+  "checks": [
+   {
+    "expr": "analyse_log(\"app.log\")[\"total\"]",
+    "raises": false,
+    "expected": 4
+   },
+   {
+    "expr": "analyse_log(\"app.log\")[\"levels\"]",
+    "raises": false,
+    "expected": {
+     "ERROR": 1,
+     "INFO": 2,
+     "WARNING": 1
+    }
+   },
+   {
+    "expr": "analyse_log(\"app.log\")[\"errors\"]",
+    "raises": false,
+    "expected": [
+     "Database connection failed"
+    ]
+   },
+   {
+    "expr": "analyse_log(\"app.log\")[\"busiest_hour\"]",
+    "raises": false,
+    "expected": "10"
+   }
+  ],
+  "fixtures": {
+   "app.log": "2025-03-15 10:23:45 ERROR Database connection failed\n2025-03-15 10:24:01 INFO Retrying\n2025-03-15 11:00:00 WARNING Slow query\n2025-03-15 10:30:00 INFO Connected\n"
+  }
+ },
+ "47": {
+  "checks": [
+   {
+    "expr": "safe_divide(10, 2)",
+    "raises": false,
+    "expected": 5.0
+   },
+   {
+    "expr": "safe_divide(10, 0)",
+    "raises": false,
+    "expected": null
+   },
+   {
+    "expr": "_out(safe_divide, 1, 0)",
+    "raises": false,
+    "expected": "Cannot divide by zero"
+   }
+  ],
+  "fixtures": {}
+ },
+ "48": {
+  "checks": [
+   {
+    "expr": "_feed([\"abc\", \"12\"], get_int)",
+    "raises": false,
+    "expected": 12
+   },
+   {
+    "expr": "_feed([\"7\"], get_int)",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "_feed([\"x\", \"y\", \"-3\"], get_int)",
+    "raises": false,
+    "expected": -3
+   }
+  ],
+  "fixtures": {}
+ },
+ "49": {
+  "checks": [
+   {
+    "expr": "read_first_int(\"number.txt\")",
+    "raises": false,
+    "expected": 42
+   },
+   {
+    "expr": "read_first_int(\"missing.txt\")",
+    "raises": false,
+    "expected": "FileNotFoundError: no such file: missing.txt"
+   },
+   {
+    "expr": "read_first_int(\"letters.txt\")",
+    "raises": false,
+    "expected": "ValueError: first line is not an integer"
+   }
+  ],
+  "fixtures": {
+   "number.txt": "42\n",
+   "letters.txt": "abc\n"
+  }
+ },
+ "50": {
+  "checks": [
+   {
+    "expr": "demo(2)",
+    "raises": false,
+    "expected": [
+     "try",
+     "else",
+     "finally"
+    ]
+   },
+   {
+    "expr": "demo(0)",
+    "raises": false,
+    "expected": [
+     "try",
+     "except",
+     "finally"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "51": {
+  "checks": [
+   {
+    "expr": "set_age(30)",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "set_age(0)",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "set_age(-5)",
+    "raises": true,
+    "expected": "ValueError"
+   },
+   {
+    "expr": "set_age(\"ten\")",
+    "raises": true,
+    "expected": "TypeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "52": {
+  "checks": [
+   {
+    "expr": "withdraw(5000, 1000)",
+    "raises": false,
+    "expected": 4000
+   },
+   {
+    "expr": "withdraw(3200, 5000)",
+    "raises": true,
+    "expected": "InsufficientFundsError"
+   },
+   {
+    "expr": "_shortfall()",
+    "raises": false,
+    "expected": 1800
+   }
+  ],
+  "fixtures": {}
+ },
+ "53": {
+  "checks": [
+   {
+    "expr": "average([1, 2, 3])",
+    "raises": false,
+    "expected": 2.0
+   },
+   {
+    "expr": "average([])",
+    "raises": true,
+    "expected": "AssertionError"
+   },
+   {
+    "expr": "average([10])",
+    "raises": false,
+    "expected": 10.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "54": {
+  "checks": [
+   {
+    "expr": "retry(lambda: 42)",
+    "raises": false,
+    "expected": 42
+   },
+   {
+    "expr": "_flaky_ok()",
+    "raises": false,
+    "expected": "ok"
+   },
+   {
+    "expr": "_always_fails()",
+    "raises": true,
+    "expected": "ConnectionError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "55": {
+  "checks": [
+   {
+    "expr": "parse_port(\"8080\")",
+    "raises": false,
+    "expected": 8080
+   },
+   {
+    "expr": "parse_port(\"abc\")",
+    "raises": true,
+    "expected": "ConfigurationError"
+   },
+   {
+    "expr": "_cause_is_valueerror()",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "56": {
+  "checks": [
+   {
+    "expr": "process_file(\"missing.txt\")",
+    "raises": false,
+    "expected": {
+     "success": false,
+     "error": "File not found: missing.txt",
+     "data": null
+    }
+   },
+   {
+    "expr": "process_file(\"good.txt\")[\"success\"]",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "process_file(\"empty.txt\")[\"success\"]",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "process_file(\"good.txt\")[\"data\"]",
+    "raises": false,
+    "expected": "hello\n"
+   }
+  ],
+  "fixtures": {
+   "good.txt": "hello\n",
+   "empty.txt": "   \n"
+  }
+ },
+ "57": {
+  "manual": "A full project. Graded by whether your data survives a restart, which the automatic grader cannot judge. Run it, add contacts, exit, restart."
+ },
+ "58": {
+  "manual": "A full pipeline built from several functions of your own design. Check each function separately as you write it."
+ },
+ "59": {
+  "manual": "An interactive game. Play it, and verify the high-score file grows."
+ },
+ "60": {
+  "manual": "A complete application. Test each function as you build it, then run the menu end to end."
+ }
+}

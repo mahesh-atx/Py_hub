@@ -1,0 +1,1319 @@
+{
+ "1": {
+  "checks": [
+   {
+    "expr": "Person(\"Priya\", 30).name",
+    "raises": false,
+    "expected": "Priya"
+   },
+   {
+    "expr": "Person(\"Priya\", 30).age",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "isinstance(Person(\"A\", 1), Person)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "2": {
+  "checks": [
+   {
+    "expr": "Person(\"Priya\", 30).introduce()",
+    "raises": false,
+    "expected": "Hi, I am Priya and I am 30 years old."
+   },
+   {
+    "expr": "Person(\"Kid\", 10).is_adult()",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "Person(\"Adult\", 18).is_adult()",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "3": {
+  "checks": [
+   {
+    "expr": "Rectangle(5, 5).area()",
+    "raises": false,
+    "expected": 25
+   },
+   {
+    "expr": "Rectangle(5, 5).is_square()",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "Rectangle(4, 6).perimeter()",
+    "raises": false,
+    "expected": 20
+   },
+   {
+    "expr": "Rectangle(4, 6).is_square()",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "_r = Rectangle(2, 3); _r.length = 10; _r.area()",
+    "raises": false,
+    "expected": 30
+   }
+  ],
+  "fixtures": {}
+ },
+ "4": {
+  "checks": [
+   {
+    "expr": "round(Circle(7).area(), 2)",
+    "raises": false,
+    "expected": 153.94
+   },
+   {
+    "expr": "round(Circle(7).circumference(), 2)",
+    "raises": false,
+    "expected": 43.98
+   },
+   {
+    "expr": "Circle(-1)",
+    "raises": true,
+    "expected": "ValueError"
+   },
+   {
+    "expr": "Circle(\"5\")",
+    "raises": true,
+    "expected": "TypeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "5": {
+  "checks": [
+   {
+    "expr": "_c = Counter(); _c.increment(); _c.increment(); _c.count",
+    "raises": false,
+    "expected": 2
+   },
+   {
+    "expr": "_a = Counter(); _b = Counter(); _a.increment(); _b.count",
+    "raises": false,
+    "expected": 0
+   },
+   {
+    "expr": "_c = Counter(5); _c.reset()",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "6": {
+  "checks": [
+   {
+    "expr": "_a = BankAccount('R', 1000); _a.deposit(500); _a.balance",
+    "raises": false,
+    "expected": 1500
+   },
+   {
+    "expr": "_a = BankAccount('R', 1000); _a.withdraw(2000)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "_a = BankAccount('R', 1000); _a.withdraw(2000); _a.balance",
+    "raises": false,
+    "expected": 1000
+   },
+   {
+    "expr": "BankAccount('R').deposit(-5)",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "7": {
+  "checks": [
+   {
+    "expr": "sorted(vars(Book(\"Dune\", \"Herbert\")).keys())",
+    "raises": false,
+    "expected": [
+     "author",
+     "title"
+    ]
+   },
+   {
+    "expr": "type(Book(\"Dune\", \"Herbert\")).__name__",
+    "raises": false,
+    "expected": "Book"
+   },
+   {
+    "expr": "\"summary\" in dir(Book(\"Dune\", \"Herbert\"))",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "8": {
+  "checks": [
+   {
+    "expr": "Temperature(37).to_fahrenheit()",
+    "raises": false,
+    "expected": 98.6
+   },
+   {
+    "expr": "Temperature(0).to_kelvin()",
+    "raises": false,
+    "expected": 273.15
+   },
+   {
+    "expr": "_t = Temperature(0); _t.celsius = 100; _t.to_fahrenheit()",
+    "raises": false,
+    "expected": 212.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "9": {
+  "checks": [
+   {
+    "expr": "Student('R', [78, 85, 92, 71, 75]).total()",
+    "raises": false,
+    "expected": 401
+   },
+   {
+    "expr": "round(Student('R', [78, 85, 92, 71, 75]).average(), 2)",
+    "raises": false,
+    "expected": 80.2
+   },
+   {
+    "expr": "Student('R', [78, 85, 92, 71, 75]).grade()",
+    "raises": false,
+    "expected": "A"
+   },
+   {
+    "expr": "Student('X', [30, 30, 30]).grade()",
+    "raises": false,
+    "expected": "Fail"
+   }
+  ],
+  "fixtures": {}
+ },
+ "10": {
+  "checks": [
+   {
+    "expr": "Timer().stop()",
+    "raises": false,
+    "expected": 0.0
+   },
+   {
+    "expr": "_t = Timer(); _t.start(); _t.stop() >= 0",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "isinstance(Timer().elapsed, float)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "11": {
+  "checks": [
+   {
+    "expr": "_p = Playlist('Mix'); _p.add('A'); _p.add('B'); _p.total()",
+    "raises": false,
+    "expected": 2
+   },
+   {
+    "expr": "_p = Playlist('Mix'); _p.add('A'); _p.remove('Ghost')",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "_p = Playlist('Mix'); _p.add('A'); _p.remove('A'); _p.songs",
+    "raises": false,
+    "expected": []
+   }
+  ],
+  "fixtures": {}
+ },
+ "12": {
+  "checks": [
+   {
+    "expr": "Point(0, 0).distance_to(Point(3, 4))",
+    "raises": false,
+    "expected": 5.0
+   },
+   {
+    "expr": "Point(1, 1).distance_to(Point(1, 1))",
+    "raises": false,
+    "expected": 0.0
+   },
+   {
+    "expr": "round(Point(0, 0).distance_to(Point(1, 1)), 4)",
+    "raises": false,
+    "expected": 1.4142
+   }
+  ],
+  "fixtures": {}
+ },
+ "13": {
+  "checks": [
+   {
+    "expr": "Dog(\"Buddy\").species",
+    "raises": false,
+    "expected": "Canis familiaris"
+   },
+   {
+    "expr": "_a = Dog(\"Buddy\"); Dog.species = \"Canis lupus\"; _a.species",
+    "raises": false,
+    "expected": "Canis lupus"
+   },
+   {
+    "expr": "Dog(\"Buddy\").name",
+    "raises": false,
+    "expected": "Buddy"
+   }
+  ],
+  "fixtures": {}
+ },
+ "14": {
+  "checks": [
+   {
+    "expr": "_a = DogBuggy(\"buddy\"); _b = DogBuggy(\"max\"); _a.tricks.append(\"roll over\"); _b.tricks",
+    "raises": false,
+    "expected": [
+     "roll over"
+    ]
+   },
+   {
+    "expr": "_a = DogBuggy(\"x\"); _b = DogBuggy(\"y\"); _a.tricks is _b.tricks",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "_a = Dog(\"buddy\"); _b = Dog(\"max\"); _a.tricks.append(\"roll over\"); _b.tricks",
+    "raises": false,
+    "expected": []
+   },
+   {
+    "expr": "Dog(\"x\").tricks is Dog(\"y\").tricks",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "15": {
+  "checks": [
+   {
+    "expr": "Student.total_created = 0; [Student(n, 'R') for n in 'ABCDE']; Student.count()",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "Student.total_created = 0; Student.count()",
+    "raises": false,
+    "expected": 0
+   }
+  ],
+  "fixtures": {}
+ },
+ "16": {
+  "checks": [
+   {
+    "expr": "Book.from_string(\"Dune|Frank Herbert|412\").title",
+    "raises": false,
+    "expected": "Dune"
+   },
+   {
+    "expr": "Book.from_string(\"Dune|Frank Herbert|412\").pages",
+    "raises": false,
+    "expected": 412
+   },
+   {
+    "expr": "type(Book.from_string(\"A|B|1\")).__name__",
+    "raises": false,
+    "expected": "Book"
+   }
+  ],
+  "fixtures": {}
+ },
+ "17": {
+  "checks": [
+   {
+    "expr": "Date.from_string(\"2025-03-15\").year",
+    "raises": false,
+    "expected": 2025
+   },
+   {
+    "expr": "Date.from_tuple((2025, 3, 15)).month",
+    "raises": false,
+    "expected": 3
+   },
+   {
+    "expr": "Date.from_string(\"2025-03-15\").day",
+    "raises": false,
+    "expected": 15
+   },
+   {
+    "expr": "isinstance(Date.today().year, int)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "18": {
+  "checks": [
+   {
+    "expr": "MathHelper.is_prime(97)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "MathHelper.is_prime(1)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "MathHelper.gcd(48, 60)",
+    "raises": false,
+    "expected": 12
+   },
+   {
+    "expr": "MathHelper.is_leap_year(1900)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "MathHelper.is_leap_year(2000)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "19": {
+  "checks": [
+   {
+    "expr": "Demo().instance_method()",
+    "raises": false,
+    "expected": "instance, self is Demo"
+   },
+   {
+    "expr": "Demo.class_method()",
+    "raises": false,
+    "expected": "class, cls is Demo"
+   },
+   {
+    "expr": "Demo.static_method()",
+    "raises": false,
+    "expected": "static, no automatic argument"
+   },
+   {
+    "expr": "Demo().class_method()",
+    "raises": false,
+    "expected": "class, cls is Demo"
+   },
+   {
+    "expr": "Demo.instance_method()",
+    "raises": true,
+    "expected": "TypeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "20": {
+  "checks": [
+   {
+    "expr": "Employee.reset_counter(); Employee('Priya').emp_id",
+    "raises": false,
+    "expected": "EMP001"
+   },
+   {
+    "expr": "Employee.reset_counter(); Employee('A'); Employee('B').emp_id",
+    "raises": false,
+    "expected": "EMP002"
+   },
+   {
+    "expr": "Employee.reset_counter(); [Employee(c) for c in 'ABC']; Employee.reset_counter(); Employee('New').emp_id",
+    "raises": false,
+    "expected": "EMP001"
+   }
+  ],
+  "fixtures": {}
+ },
+ "21": {
+  "checks": [
+   {
+    "expr": "Config._settings = {}; Config.set('debug', True); Config.get('debug')",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "Config.get('missing', 'n/a')",
+    "raises": false,
+    "expected": "n/a"
+   },
+   {
+    "expr": "Config._settings = {}; Config.set('a', 1); Config.set('b', 2); Config.all()",
+    "raises": false,
+    "expected": {
+     "a": 1,
+     "b": 2
+    }
+   }
+  ],
+  "fixtures": {}
+ },
+ "22": {
+  "checks": [
+   {
+    "expr": "Rectangle(5, 3).length",
+    "raises": false,
+    "expected": 5
+   },
+   {
+    "expr": "Rectangle(\"5\", 3)",
+    "raises": true,
+    "expected": "TypeError"
+   },
+   {
+    "expr": "Rectangle(-5, 3)",
+    "raises": true,
+    "expected": "ValueError"
+   },
+   {
+    "expr": "Rectangle(0, 3)",
+    "raises": true,
+    "expected": "ValueError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "23": {
+  "checks": [
+   {
+    "expr": "Point(1, 2) == Point(1, 2)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "Point(1, 2) is Point(1, 2)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "_p = Point(1, 2); _p == _p",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "24": {
+  "checks": [
+   {
+    "expr": "Resource('db').name",
+    "raises": false,
+    "expected": "db"
+   },
+   {
+    "expr": "_r = Resource('x'); _r2 = _r; del _r; 'still alive'",
+    "raises": false,
+    "expected": "still alive"
+   }
+  ],
+  "fixtures": {}
+ },
+ "25": {
+  "checks": [
+   {
+    "expr": "Account(100).get_balance()",
+    "raises": false,
+    "expected": 100
+   },
+   {
+    "expr": "Account(100)._balance",
+    "raises": false,
+    "expected": 100
+   },
+   {
+    "expr": "_a = Account(100); _a._balance = 999; _a.get_balance()",
+    "raises": false,
+    "expected": 999
+   }
+  ],
+  "fixtures": {}
+ },
+ "26": {
+  "checks": [
+   {
+    "expr": "Secret().reveal()",
+    "raises": false,
+    "expected": 42
+   },
+   {
+    "expr": "Secret()._Secret__value",
+    "raises": false,
+    "expected": 42
+   },
+   {
+    "expr": "Secret().__value",
+    "raises": true,
+    "expected": "AttributeError"
+   },
+   {
+    "expr": "list(vars(Secret()).keys())",
+    "raises": false,
+    "expected": [
+     "_Secret__value"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "27": {
+  "checks": [
+   {
+    "expr": "Person(30).get_age()",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "_p = Person(30); _p.set_age(31); _p.get_age()",
+    "raises": false,
+    "expected": 31
+   },
+   {
+    "expr": "Person(30).set_age(-1)",
+    "raises": true,
+    "expected": "ValueError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "28": {
+  "checks": [
+   {
+    "expr": "Rectangle(5, 3).area",
+    "raises": false,
+    "expected": 15
+   },
+   {
+    "expr": "_r = Rectangle(5, 3); _r.length = 10; _r.area",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "callable(Rectangle(1, 1).area)",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "29": {
+  "checks": [
+   {
+    "expr": "Order(100, 3).total",
+    "raises": false,
+    "expected": 300
+   },
+   {
+    "expr": "_o = Order(100, 3); _o.quantity = 5; _o.total",
+    "raises": false,
+    "expected": 500
+   },
+   {
+    "expr": "_o = Order(10, 1); _o.total = 99",
+    "raises": true,
+    "expected": "SyntaxError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "30": {
+  "checks": [
+   {
+    "expr": "Person(30).age",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "Person(-1)",
+    "raises": true,
+    "expected": "ValueError"
+   },
+   {
+    "expr": "_p = Person(30); _p.age = 200",
+    "raises": true,
+    "expected": "SyntaxError"
+   },
+   {
+    "expr": "Person(\"x\")",
+    "raises": true,
+    "expected": "TypeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "31": {
+  "checks": [
+   {
+    "expr": "Temperature(37).fahrenheit",
+    "raises": false,
+    "expected": 98.6
+   },
+   {
+    "expr": "_t = Temperature(); _t.fahrenheit = 212; _t.celsius",
+    "raises": false,
+    "expected": 100.0
+   },
+   {
+    "expr": "_t = Temperature(); _t.fahrenheit = 32; _t.celsius",
+    "raises": false,
+    "expected": 0.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "32": {
+  "checks": [
+   {
+    "expr": "User(7, 'R').user_id",
+    "raises": false,
+    "expected": 7
+   },
+   {
+    "expr": "_u = User(7, 'R'); _u.user_id = 9",
+    "raises": true,
+    "expected": "SyntaxError"
+   },
+   {
+    "expr": "_u = User(7, 'R'); _u.name = 'X'; _u.name",
+    "raises": false,
+    "expected": "X"
+   }
+  ],
+  "fixtures": {}
+ },
+ "33": {
+  "checks": [
+   {
+    "expr": "Shape()",
+    "raises": true,
+    "expected": "TypeError"
+   },
+   {
+    "expr": "hasattr(Shape, 'area')",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "len(Shape.__abstractmethods__)",
+    "raises": false,
+    "expected": 2
+   }
+  ],
+  "fixtures": {}
+ },
+ "34": {
+  "checks": [
+   {
+    "expr": "Rectangle(5, 3).area()",
+    "raises": false,
+    "expected": 15
+   },
+   {
+    "expr": "Rectangle(5, 3).perimeter()",
+    "raises": false,
+    "expected": 16
+   },
+   {
+    "expr": "Incomplete()",
+    "raises": true,
+    "expected": "TypeError"
+   },
+   {
+    "expr": "isinstance(Rectangle(1, 1), Shape)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "35": {
+  "checks": [
+   {
+    "expr": "Square(4).area()",
+    "raises": false,
+    "expected": 16
+   },
+   {
+    "expr": "Square(4).describe()",
+    "raises": false,
+    "expected": "Square with area 16"
+   },
+   {
+    "expr": "isinstance(Square(1), Shape)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "36": {
+  "checks": [
+   {
+    "expr": "CardProcessor().pay(500)",
+    "raises": false,
+    "expected": "Charged 500 to card"
+   },
+   {
+    "expr": "UpiProcessor().pay(500)",
+    "raises": false,
+    "expected": "Collected 500 via UPI"
+   },
+   {
+    "expr": "[p().pay(10) for p in (CardProcessor, UpiProcessor)]",
+    "raises": false,
+    "expected": [
+     "Charged 10 to card",
+     "Collected 10 via UPI"
+    ]
+   },
+   {
+    "expr": "PaymentProcessor()",
+    "raises": true,
+    "expected": "TypeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "37": {
+  "checks": [
+   {
+    "expr": "Dog(\"Buddy\").name",
+    "raises": false,
+    "expected": "Buddy"
+   },
+   {
+    "expr": "Dog(\"Buddy\").speak()",
+    "raises": false,
+    "expected": "Woof!"
+   },
+   {
+    "expr": "Animal(\"Generic\").speak()",
+    "raises": false,
+    "expected": "Some sound"
+   },
+   {
+    "expr": "isinstance(Dog(\"B\"), Animal)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "38": {
+  "checks": [
+   {
+    "expr": "Employee(\"Priya\", 30, 75000).name",
+    "raises": false,
+    "expected": "Priya"
+   },
+   {
+    "expr": "Employee(\"Priya\", 30, 75000).salary",
+    "raises": false,
+    "expected": 75000
+   },
+   {
+    "expr": "BrokenEmployee(\"Priya\", 30, 75000).salary",
+    "raises": false,
+    "expected": 75000
+   },
+   {
+    "expr": "BrokenEmployee(\"Priya\", 30, 75000).name",
+    "raises": true,
+    "expected": "AttributeError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "39": {
+  "checks": [
+   {
+    "expr": "[c.__name__ for c in ElectricCar.__mro__]",
+    "raises": false,
+    "expected": [
+     "ElectricCar",
+     "Car",
+     "Vehicle",
+     "object"
+    ]
+   },
+   {
+    "expr": "ElectricCar(\"Tesla\", 4, 500).brand",
+    "raises": false,
+    "expected": "Tesla"
+   },
+   {
+    "expr": "ElectricCar(\"Tesla\", 4, 500).describe()",
+    "raises": false,
+    "expected": "ElectricCar: Tesla, 500km range"
+   }
+  ],
+  "fixtures": {}
+ },
+ "40": {
+  "checks": [
+   {
+    "expr": "Manager(\"A\", 100000).calculate_bonus()",
+    "raises": false,
+    "expected": 20000.0
+   },
+   {
+    "expr": "Developer(\"B\", 80000).calculate_bonus()",
+    "raises": false,
+    "expected": 12000.0
+   },
+   {
+    "expr": "Designer(\"C\", 70000).calculate_bonus()",
+    "raises": false,
+    "expected": 7000.0
+   },
+   {
+    "expr": "sum(s.calculate_bonus() for s in [Manager(\"A\", 100000), Developer(\"B\", 80000), Designer(\"C\", 70000)])",
+    "raises": false,
+    "expected": 39000.0
+   }
+  ],
+  "fixtures": {}
+ },
+ "41": {
+  "checks": [
+   {
+    "expr": "Duck().move()",
+    "raises": false,
+    "expected": "Flying"
+   },
+   {
+    "expr": "[c.__name__ for c in Duck.__mro__]",
+    "raises": false,
+    "expected": [
+     "Duck",
+     "Flyer",
+     "Swimmer",
+     "object"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "42": {
+  "checks": [
+   {
+    "expr": "order.clear(); D(); order",
+    "raises": false,
+    "expected": [
+     "D",
+     "B",
+     "C",
+     "A"
+    ]
+   },
+   {
+    "expr": "order.clear(); D(); order.count('A')",
+    "raises": false,
+    "expected": 1
+   },
+   {
+    "expr": "[c.__name__ for c in D.__mro__]",
+    "raises": false,
+    "expected": [
+     "D",
+     "B",
+     "C",
+     "A",
+     "object"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "43": {
+  "checks": [
+   {
+    "expr": "Child().replaced()",
+    "raises": false,
+    "expected": "Child only"
+   },
+   {
+    "expr": "Child().extended()",
+    "raises": false,
+    "expected": "Parent version then Child addition"
+   },
+   {
+    "expr": "Parent().replaced()",
+    "raises": false,
+    "expected": "Parent version"
+   }
+  ],
+  "fixtures": {}
+ },
+ "44": {
+  "checks": [
+   {
+    "expr": "isinstance(ElectricCar(), Vehicle)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "isinstance(ElectricCar(), ElectricCar)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "type(ElectricCar()) == Vehicle",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "type(ElectricCar()) == ElectricCar",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "45": {
+  "checks": [
+   {
+    "expr": "Car('Tesla', Engine(150)).engine.horsepower",
+    "raises": false,
+    "expected": 150
+   },
+   {
+    "expr": "Car('Tesla', Engine(150)).start()",
+    "raises": false,
+    "expected": "Engine with 150hp started"
+   },
+   {
+    "expr": "isinstance(Car('Tesla', Engine(150)), Engine)",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "46": {
+  "checks": [
+   {
+    "expr": "Square(5).area()",
+    "raises": false,
+    "expected": 25
+   },
+   {
+    "expr": "_s = Square(5); _s.side = 7; (_s.length, _s.width)",
+    "raises": false,
+    "expected": [
+     7,
+     7
+    ]
+   },
+   {
+    "expr": "_s = Square(5); _s.side = 7; _s.area()",
+    "raises": false,
+    "expected": 49
+   },
+   {
+    "expr": "isinstance(Square(1), Shape)",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "47": {
+  "checks": [
+   {
+    "expr": "[t.speak() for t in [Duck(), Robot(), Person(\"Rohan\")]]",
+    "raises": false,
+    "expected": [
+     "Quack!",
+     "BEEP BOOP",
+     "Hello, I am Rohan"
+    ]
+   },
+   {
+    "expr": "issubclass(Robot, Duck)",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "48": {
+  "checks": [
+   {
+    "expr": "(Vector2D(2, 3) + Vector2D(4, 1)).x",
+    "raises": false,
+    "expected": 6
+   },
+   {
+    "expr": "(Vector2D(2, 3) + Vector2D(4, 1)).y",
+    "raises": false,
+    "expected": 4
+   },
+   {
+    "expr": "(Vector2D(2, 3) * 3).x",
+    "raises": false,
+    "expected": 6
+   },
+   {
+    "expr": "(Vector2D(5, 5) - Vector2D(1, 2)).y",
+    "raises": false,
+    "expected": 3
+   }
+  ],
+  "fixtures": {}
+ },
+ "49": {
+  "checks": [
+   {
+    "expr": "str(Vector2D(2, 3))",
+    "raises": false,
+    "expected": "(2, 3)"
+   },
+   {
+    "expr": "repr(Vector2D(2, 3))",
+    "raises": false,
+    "expected": "Vector2D(x=2, y=3)"
+   },
+   {
+    "expr": "f'{Vector2D(2, 3)}'",
+    "raises": false,
+    "expected": "(2, 3)"
+   }
+  ],
+  "fixtures": {}
+ },
+ "50": {
+  "checks": [
+   {
+    "expr": "Money(10) < Money(20)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "Money(30) >= Money(30)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "Money(10) > Money(20)",
+    "raises": false,
+    "expected": false
+   },
+   {
+    "expr": "[m.amount for m in sorted([Money(30), Money(10), Money(20)])]",
+    "raises": false,
+    "expected": [
+     10,
+     20,
+     30
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "51": {
+  "checks": [
+   {
+    "expr": "len(Playlist(['A', 'B', 'C', 'D']))",
+    "raises": false,
+    "expected": 4
+   },
+   {
+    "expr": "Playlist(['A', 'B', 'C', 'D'])[0]",
+    "raises": false,
+    "expected": "A"
+   },
+   {
+    "expr": "Playlist(['A', 'B', 'C', 'D'])[-1]",
+    "raises": false,
+    "expected": "D"
+   },
+   {
+    "expr": "Playlist(['A', 'B', 'C', 'D'])[1:3]",
+    "raises": false,
+    "expected": [
+     "B",
+     "C"
+    ]
+   },
+   {
+    "expr": "[s for s in Playlist(['A', 'B'])]",
+    "raises": false,
+    "expected": [
+     "A",
+     "B"
+    ]
+   }
+  ],
+  "fixtures": {}
+ },
+ "52": {
+  "checks": [
+   {
+    "expr": "'song a' in Playlist(['Song A', 'Song B'])",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "'SONG A' in Playlist(['Song A', 'Song B'])",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "'Ghost' in Playlist(['Song A', 'Song B'])",
+    "raises": false,
+    "expected": false
+   }
+  ],
+  "fixtures": {}
+ },
+ "53": {
+  "checks": [
+   {
+    "expr": "Multiplier(2)(15)",
+    "raises": false,
+    "expected": 30
+   },
+   {
+    "expr": "_d = Multiplier(3); _d(7)",
+    "raises": false,
+    "expected": 21
+   },
+   {
+    "expr": "callable(Multiplier(2))",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "54": {
+  "checks": [
+   {
+    "expr": "_w()",
+    "raises": false,
+    "expected": "hello"
+   },
+   {
+    "expr": "_closed()",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "_exit_runs_on_error()",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "55": {
+  "checks": [
+   {
+    "expr": "len({Point(1, 2), Point(1, 2), Point(3, 4)})",
+    "raises": false,
+    "expected": 2
+   },
+   {
+    "expr": "Point(1, 2) == Point(1, 2)",
+    "raises": false,
+    "expected": true
+   },
+   {
+    "expr": "{Unhashable(1)}",
+    "raises": true,
+    "expected": "TypeError"
+   },
+   {
+    "expr": "Unhashable.__hash__ is None",
+    "raises": false,
+    "expected": true
+   }
+  ],
+  "fixtures": {}
+ },
+ "56": {
+  "checks": [
+   {
+    "expr": "(Matrix([[1, 2], [3, 4]]) * Matrix([[5, 6], [7, 8]])).rows",
+    "raises": false,
+    "expected": [
+     [
+      19,
+      22
+     ],
+     [
+      43,
+      50
+     ]
+    ]
+   },
+   {
+    "expr": "(Matrix([[1, 2]]) + Matrix([[3, 4]])).rows",
+    "raises": false,
+    "expected": [
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   {
+    "expr": "str(Matrix([[1, 2], [3, 4]]))",
+    "raises": false,
+    "expected": "1 2\n3 4"
+   },
+   {
+    "expr": "len(Matrix([[1], [2], [3]]))",
+    "raises": false,
+    "expected": 3
+   },
+   {
+    "expr": "Matrix([[1]]) * Matrix([[1, 2], [3, 4]])",
+    "raises": true,
+    "expected": "ValueError"
+   }
+  ],
+  "fixtures": {}
+ },
+ "57": {
+  "manual": "A full system with several interacting classes. Build it class by class and test each one as you go - the grader cannot judge a whole design."
+ },
+ "58": {
+  "manual": "A complete order system. Let each OrderItem compute its own line total and have Order simply sum them."
+ },
+ "59": {
+  "manual": "A payroll hierarchy. Make the base `calculate_pay()` abstract so a new employee type cannot be added without implementing it."
+ },
+ "60": {
+  "manual": "Your own design. Write the class names and one sentence each BEFORE any code; if a class needs more than one sentence, split it."
+ }
+}

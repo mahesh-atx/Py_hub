@@ -14,8 +14,10 @@ export interface PlotExpectation {
 
 export interface OutputTestCase {
   type?: "output";
-  input?: string;
+  input?: string | string[];
+  output?: string;
   expected_output?: string;
+  visible?: boolean;
   match?: "contains";
   contains?: string[];
   plot?: PlotExpectation;
