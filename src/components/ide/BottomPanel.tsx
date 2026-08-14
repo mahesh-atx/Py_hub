@@ -100,7 +100,7 @@ export function BottomPanel({
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: isDesktop ? height : "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
+          transition={{ duration: typeof document !== 'undefined' && document.body.classList.contains('is-dragging') ? 0 : 0.25, ease: "easeInOut" }}
           className="flex flex-col w-full z-20"
         >
           {isDesktop && (
@@ -114,7 +114,7 @@ export function BottomPanel({
           )}
           <section
             aria-label="Output panel"
-            className="flex min-h-0 flex-1 flex-col bg-[#050505] lg:flex-none relative shadow-[0_-8px_20px_rgba(0,0,0,0.4)] z-20"
+            className="flex min-h-0 flex-1 flex-col bg-[var(--vscode-bg)] lg:flex-none relative shadow-[0_-8px_20px_rgba(0,0,0,0.4)] z-20"
         style={{ height: isDesktop ? height : undefined }}
       >
         <div className="flex min-h-10 items-center gap-5 px-3 text-[11px] font-medium uppercase tracking-wider text-[var(--vscode-text)]">
@@ -156,7 +156,7 @@ export function BottomPanel({
           {tab === "terminal" ? (
             <Terminal onInput={onInput} onClear={onClear} onInterrupt={onInterrupt} editorFont={editorFont} />
           ) : tab === "plots" ? (
-            <div className="flex h-full items-center gap-4 overflow-x-auto bg-[#050505] p-4">
+            <div className="flex h-full items-center gap-4 overflow-x-auto bg-[var(--vscode-bg)] p-4">
               {plots.length ? (
                 plots.map((src, index) => (
                   // Runtime plots are ephemeral data URLs and cannot use Next image optimization.

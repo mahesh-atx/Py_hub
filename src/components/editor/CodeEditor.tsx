@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 import type * as monaco from "monaco-editor";
 import type { PyNode } from "@/types/filesystem";
@@ -29,7 +29,7 @@ interface CodeEditorProps {
   editorFont?: string;
 }
 
-export function CodeEditor(props: CodeEditorProps) {
+export const CodeEditor = memo(function CodeEditor(props: CodeEditorProps) {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const handlers = useRef(props);
 
@@ -138,4 +138,14 @@ export function CodeEditor(props: CodeEditorProps) {
       }}
     />
   );
-}
+}, (prev, next) => {
+  return prev.file?.id === next.file?.id &&
+         prev.theme === next.theme &&
+         prev.fontSize === next.fontSize &&
+         prev.tabSize === next.tabSize &&
+         prev.minimap === next.minimap &&
+         prev.wordWrap === next.wordWrap &&
+         prev.readOnly === next.readOnly &&
+         prev.editorFont === next.editorFont &&
+         prev.paneId === next.paneId;
+});

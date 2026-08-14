@@ -321,11 +321,17 @@ body {
   display: none !important;
 }
 
+body.is-dragging * {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
 input[type="range"] {
   accent-color: var(--vscode-accent);
 }
 
-.xterm-viewport {
+.xterm-viewport,
+.xterm-scrollable-element {
   background-color: transparent !important;
 }
 

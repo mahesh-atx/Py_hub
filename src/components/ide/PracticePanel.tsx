@@ -951,9 +951,9 @@ export function PracticeSidebar({
                         <div className="p-1.5 rounded hover:bg-[var(--vscode-hover)] cursor-help transition-colors border border-transparent hover:border-sky-900/30">
                           <Target className="h-4 w-4 text-[var(--vscode-text-muted)]" />
                         </div>
-                        <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="absolute right-0 top-full mt-1 w-72 p-3.5 bg-[var(--vscode-sidebar-bg)] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
                           <h4 className="text-[12px] text-sky-400 font-bold mb-2 flex items-center gap-1.5"><Target className="h-4 w-4" /> Learning Objective</h4>
-                          <p className="text-[12.5px] bg-black/40 border border-sky-900/30 p-3 rounded text-slate-300 leading-relaxed">{activeChallenge.objective}</p>
+                          <p className="text-[12.5px] bg-[var(--vscode-input)] border border-sky-900/30 p-3 rounded text-[var(--vscode-text)] leading-relaxed">{activeChallenge.objective}</p>
                         </div>
                       </div>
                     )}
@@ -977,8 +977,8 @@ export function PracticeSidebar({
                         </button>
 
                         {hintOpen && (
-                          <div className="absolute right-0 top-full mt-1 w-80 max-w-[calc(100vw-2rem)] bg-[#252526] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b border-[var(--vscode-border)] bg-black/20">
+                          <div className="absolute right-0 top-full mt-1 w-80 max-w-[calc(100vw-2rem)] bg-[var(--vscode-sidebar-bg)] border border-[var(--vscode-border)] rounded-md shadow-xl z-50 overflow-hidden">
+                            <div className="flex items-center justify-between px-3 py-2 border-b border-[var(--vscode-border)] bg-[var(--vscode-hover)]">
                               <h4 className="text-[11px] text-amber-400 font-bold flex items-center gap-1.5">
                                 <Lightbulb className="h-3.5 w-3.5" /> Progressive Hints
                               </h4>
@@ -1010,7 +1010,7 @@ export function PracticeSidebar({
                               })}
                             </div>
 
-                            <div className="m-3 p-2.5 bg-black/40 border border-[var(--vscode-border)] rounded max-h-56 overflow-y-auto">
+                            <div className="m-3 p-2.5 bg-[var(--vscode-input)] border border-[var(--vscode-border)] rounded max-h-56 overflow-y-auto">
                               <pre className="whitespace-pre-wrap text-[12px] leading-relaxed font-mono text-emerald-200/90 break-words">{hintContent(hintView)}</pre>
                             </div>
 
@@ -1049,7 +1049,7 @@ export function PracticeSidebar({
                 </div>
 
                 {!hasStarted(activeChallenge) && (
-                  <div className="mb-4 rounded-md border border-[var(--vscode-border)] bg-black/20 p-5 flex flex-col items-center justify-center gap-3">
+                  <div className="mb-4 rounded-md border border-[var(--vscode-border)] bg-[var(--vscode-input)] p-5 flex flex-col items-center justify-center gap-3">
                     <p className="text-[12px] text-[var(--vscode-text-muted)] text-center max-w-xs">
                       You haven't started this challenge yet. Ready to write some code?
                     </p>

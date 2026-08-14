@@ -472,6 +472,7 @@ export function IDE({
     const onUp = () => {
       dragging.current = false;
       document.body.style.cursor = "";
+      document.body.classList.remove("is-dragging");
     };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
@@ -495,6 +496,7 @@ export function IDE({
     const onUp = () => {
       splitDragging.current = false;
       document.body.style.cursor = "";
+      document.body.classList.remove("is-dragging");
     };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
@@ -515,6 +517,7 @@ export function IDE({
     const onUp = () => {
       sidebarDragging.current = false;
       document.body.style.cursor = "";
+      document.body.classList.remove("is-dragging");
     };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
@@ -613,7 +616,7 @@ export function IDE({
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: isDesktop ? sidebarWidth : "100%", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
+              transition={{ duration: sidebarDragging.current ? 0 : 0.25, ease: "easeInOut" }}
               className="shrink-0 flex flex-col border-r border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] relative shadow-[8px_0_20px_rgba(0,0,0,0.4)] z-20 overflow-hidden"
             >
             {/* Resizer Handle */}
@@ -621,6 +624,7 @@ export function IDE({
               onMouseDown={() => {
                 sidebarDragging.current = true;
                 document.body.style.cursor = "col-resize";
+                document.body.classList.add("is-dragging");
               }}
               className="absolute right-[-2px] top-0 bottom-0 w-[4px] cursor-col-resize hover:bg-[var(--vscode-accent)] z-20 transition-colors"
             />}
@@ -873,6 +877,7 @@ export function IDE({
                   onMouseDown={() => {
                     splitDragging.current = true;
                     document.body.style.cursor = "col-resize";
+                    document.body.classList.add("is-dragging");
                   }}
                   className="w-1 cursor-col-resize hover:bg-[var(--vscode-accent)] z-10 transition-colors"
                 />
@@ -1083,6 +1088,7 @@ export function IDE({
             onResizeStart={() => {
               dragging.current = true;
               document.body.style.cursor = "row-resize";
+              document.body.classList.add("is-dragging");
             }}
             onRestart={runtime.restart}
             onCopy={handleCopyTerminal}

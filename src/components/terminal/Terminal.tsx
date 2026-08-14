@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { memo, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { terminalStore } from "@/lib/terminal/store";
 import type { SegmentKind } from "@/lib/terminal/types";
 import { Terminal as XTerm } from "@xterm/xterm";
@@ -26,7 +26,37 @@ const ANSI_KIND: Record<SegmentKind, string> = {
   result: "\x1b[36m", // Cyan -> Sky 500
 };
 
-export function Terminal({ onInput, onClear, onInterrupt, editorFont }: TerminalProps) {
+function getTerminalTheme() {
+  if (typeof document === "undefined") return { background: "transparent" };
+  const style = window.getComputedStyle(document.documentElement);
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+
+  return {
+    background: "transparent", // Keep transparent so it inherits the container's background
+    foreground: style.getPropertyValue("--vscode-text").trim() || (isLight ? "#333333" : "#cccccc"),
+    cursor: style.getPropertyValue("--vscode-text").trim() || (isLight ? "#333333" : "#cccccc"),
+    cursorAccent: style.getPropertyValue("--vscode-bg").trim() || (isLight ? "#ffffff" : "#1e1e1e"),
+    selectionBackground: isLight ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.3)",
+    black: isLight ? "#000000" : "#000000",
+    red: isLight ? "#cd3131" : "#cd3131",
+    green: isLight ? "#008000" : "#0dbc79",
+    yellow: isLight ? "#949800" : "#e5e510",
+    blue: isLight ? "#0451a5" : "#2472c8",
+    magenta: isLight ? "#bc05bc" : "#bc3fbc",
+    cyan: isLight ? "#0598bc" : "#11a8cd",
+    white: isLight ? "#555555" : "#e5e5e5",
+    brightBlack: isLight ? "#666666" : "#a6a6a6",
+    brightRed: isLight ? "#cd3131" : "#ff7b72",
+    brightGreen: isLight ? "#14ce14" : "#56d4a0",
+    brightYellow: isLight ? "#b5ba00" : "#f2e96b",
+    brightBlue: isLight ? "#0451a5" : "#79b8ff",
+    brightMagenta: isLight ? "#bc05bc" : "#d98bd9",
+    brightCyan: isLight ? "#0598bc" : "#70d7eb",
+    brightWhite: isLight ? "#a5a5a5" : "#ffffff",
+  };
+}
+
+export const Terminal = memo(function Terminal({ onInput, onClear, onInterrupt, editorFont }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<XTerm | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -56,34 +86,17 @@ export function Terminal({ onInput, onClear, onInterrupt, editorFont }: Terminal
       fontWeight: 400,
       lineHeight: 1.2,
       letterSpacing: 0,
-      theme: {
-        background: "transparent",
-        foreground: "#cccccc", // classic terminal foreground
-        cursor: "#cccccc",     // classic block cursor
-        cursorAccent: "#000000",
-        selectionBackground: "rgba(255, 255, 255, 0.3)",
-        black: "#000000",
-        red: "#cd3131",
-        green: "#0dbc79",
-        yellow: "#e5e510",
-        blue: "#2472c8",
-        magenta: "#bc3fbc",
-        cyan: "#11a8cd",
-        white: "#e5e5e5",
-        brightBlack: "#a6a6a6",
-        brightRed: "#ff7b72",
-        brightGreen: "#56d4a0",
-        brightYellow: "#f2e96b",
-        brightBlue: "#79b8ff",
-        brightMagenta: "#d98bd9",
-        brightCyan: "#70d7eb",
-        brightWhite: "#ffffff",
-      },
+      theme: getTerminalTheme(),
       cursorBlink: true,
       cursorStyle: "block",
       convertEol: true,
       allowTransparency: true,
     });
+
+    const themeObserver = new MutationObserver(() => {
+      xterm.options.theme = getTerminalTheme();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const fitAddon = new FitAddon();
     const searchAddon = new SearchAddon();
@@ -325,4 +338,4 @@ export function Terminal({ onInput, onClear, onInterrupt, editorFont }: Terminal
       <div ref={containerRef} className="h-full w-full" />
     </div>
   );
-}
+}, (prev, next) => prev.editorFont === next.editorFont);

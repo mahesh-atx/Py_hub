@@ -78,8 +78,8 @@ export default function DiffView({ expected, actual }: { expected: string; actua
   }, [expected, actual]);
 
   return (
-    <div className="rounded bg-black/30 border border-[var(--vscode-border)] overflow-hidden">
-      <div className="flex items-center gap-3 px-2 py-1.5 bg-black/20 border-b border-[var(--vscode-border)] text-[10px] font-semibold uppercase tracking-wider text-[var(--vscode-text-muted)]">
+    <div className="rounded bg-[var(--vscode-input)] border border-[var(--vscode-border)] overflow-hidden">
+      <div className="flex items-center gap-3 px-2 py-1.5 bg-[var(--vscode-sidebar-bg)] border-b border-[var(--vscode-border)] text-[10px] font-semibold uppercase tracking-wider text-[var(--vscode-text-muted)]">
         <span className="text-rose-400">− Expected: {expectedCount} line{expectedCount === 1 ? "" : "s"}</span>
         <span className="text-emerald-400">+ Your output: {actualCount} line{actualCount === 1 ? "" : "s"}</span>
       </div>
