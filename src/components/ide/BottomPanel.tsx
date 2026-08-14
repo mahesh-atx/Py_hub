@@ -9,6 +9,7 @@ import {
   Copy,
   Download,
   RotateCcw,
+  SquareTerminal,
   Trash2,
   X,
 } from "lucide-react";
@@ -50,10 +51,12 @@ const toolbarButton =
 
 function PanelTab({
   label,
+  icon,
   active,
   onClick,
 }: {
   label: string;
+  icon?: React.ReactNode;
   active: boolean;
   onClick: () => void;
 }) {
@@ -62,12 +65,13 @@ function PanelTab({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`flex min-h-9 items-center border-b px-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--vscode-accent)] ${
+      className={`flex min-h-9 items-center gap-1.5 border-b px-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--vscode-accent)] ${
         active
           ? "border-sky-500 text-[var(--vscode-text)]"
           : "border-transparent text-[var(--vscode-text-muted)] hover:text-[var(--vscode-text)]"
       }`}
     >
+      {icon}
       {label}
     </button>
   );
@@ -118,7 +122,12 @@ export function BottomPanel({
         style={{ height: isDesktop ? height : undefined }}
       >
         <div className="flex min-h-10 items-center gap-5 px-3 text-[11px] font-medium uppercase tracking-wider text-[var(--vscode-text)]">
-          <PanelTab label="TERMINAL" active={tab === "terminal"} onClick={() => onTab("terminal")} />
+          <PanelTab
+            label="TERMINAL"
+            icon={<SquareTerminal className="h-3.5 w-3.5" aria-hidden="true" />}
+            active={tab === "terminal"}
+            onClick={() => onTab("terminal")}
+          />
           <PanelTab label="PLOTS" active={tab === "plots"} onClick={() => onTab("plots")} />
           {practiceActive && (
             <PanelTab label="TESTS" active={tab === "tests"} onClick={() => onTab("tests")} />

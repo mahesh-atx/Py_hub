@@ -284,57 +284,57 @@ export const Terminal = memo(function Terminal({ onInput, onClear, onInterrupt, 
   return (
     <div className="relative h-full w-full overflow-hidden bg-transparent pl-4 pr-2 py-3">
       {searchOpen && (
-        <div className="absolute right-3 top-2 z-20 flex items-center gap-1 rounded border border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] p-1 shadow-xl">
-          <Search className="ml-1 h-3.5 w-3.5 text-[var(--vscode-text-muted)]" />
-          <input
-            autoFocus
-            value={searchQuery}
-            onChange={(event) => {
-              const value = event.target.value;
-              setSearchQuery(value);
-              if (value) searchAddonRef.current?.findNext(value);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && searchQuery) {
-                event.shiftKey
-                  ? searchAddonRef.current?.findPrevious(searchQuery)
-                  : searchAddonRef.current?.findNext(searchQuery);
-              } else if (event.key === "Escape") {
+          <div className="absolute right-3 top-2 z-20 flex items-center gap-1 rounded border border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] p-1 shadow-xl">
+            <Search className="ml-1 h-3.5 w-3.5 text-[var(--vscode-text-muted)]" />
+            <input
+              autoFocus
+              value={searchQuery}
+              onChange={(event) => {
+                const value = event.target.value;
+                setSearchQuery(value);
+                if (value) searchAddonRef.current?.findNext(value);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && searchQuery) {
+                  event.shiftKey
+                    ? searchAddonRef.current?.findPrevious(searchQuery)
+                    : searchAddonRef.current?.findNext(searchQuery);
+                } else if (event.key === "Escape") {
+                  setSearchOpen(false);
+                  xtermRef.current?.focus();
+                }
+              }}
+              placeholder="Find in terminal"
+              aria-label="Find in terminal"
+              className="w-44 bg-[var(--vscode-input)] px-2 py-1 text-xs text-[var(--vscode-text)] outline-none"
+            />
+            <button
+              onClick={() => searchQuery && searchAddonRef.current?.findPrevious(searchQuery)}
+              aria-label="Previous terminal match"
+              className="p-1 hover:bg-[var(--vscode-hover)]"
+            >
+              <ChevronUp className="h-3.5 w-3.5" />
+            </button>
+            <button
+              onClick={() => searchQuery && searchAddonRef.current?.findNext(searchQuery)}
+              aria-label="Next terminal match"
+              className="p-1 hover:bg-[var(--vscode-hover)]"
+            >
+              <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            <button
+              onClick={() => {
                 setSearchOpen(false);
+                setSearchQuery("");
                 xtermRef.current?.focus();
-              }
-            }}
-            placeholder="Find in terminal"
-            aria-label="Find in terminal"
-            className="w-44 bg-[var(--vscode-input)] px-2 py-1 text-xs text-[var(--vscode-text)] outline-none"
-          />
-          <button
-            onClick={() => searchQuery && searchAddonRef.current?.findPrevious(searchQuery)}
-            aria-label="Previous terminal match"
-            className="p-1 hover:bg-[var(--vscode-hover)]"
-          >
-            <ChevronUp className="h-3.5 w-3.5" />
-          </button>
-          <button
-            onClick={() => searchQuery && searchAddonRef.current?.findNext(searchQuery)}
-            aria-label="Next terminal match"
-            className="p-1 hover:bg-[var(--vscode-hover)]"
-          >
-            <ChevronDown className="h-3.5 w-3.5" />
-          </button>
-          <button
-            onClick={() => {
-              setSearchOpen(false);
-              setSearchQuery("");
-              xtermRef.current?.focus();
-            }}
-            aria-label="Close terminal search"
-            className="p-1 hover:bg-[var(--vscode-hover)]"
-          >
-            <X className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      )}
+              }}
+              aria-label="Close terminal search"
+              className="p-1 hover:bg-[var(--vscode-hover)]"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
       <div ref={containerRef} className="h-full w-full" />
     </div>
   );

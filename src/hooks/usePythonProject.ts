@@ -183,6 +183,8 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
         terminalStore.clear();
       }
       terminalStore.system(`\u25b6 Running ${filename}\u2026`);
+      // Prefix the first line of this run's output with a shell-style prompt.
+      terminalStore.markRunStart();
       clientRef.current?.run(
         code,
         filename,

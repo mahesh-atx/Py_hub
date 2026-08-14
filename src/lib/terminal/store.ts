@@ -41,6 +41,7 @@ export class TerminalStore {
     truncated: false,
   };
   private flushScheduled = false;
+  private arrowPending = false;
 
   subscribe = (cb: () => void): (() => void) => {
     this.listeners.add(cb);
@@ -81,6 +82,10 @@ export class TerminalStore {
   /** Append streamed output, honouring exact newlines (preserves prompts). */
   write(kind: SegmentKind, text: string): void {
     if (!text) return;
+    if (this.arrowPending && (kind === "stdout" || kind === "stderr") && this.cur.length === 0) {
+      this.cur.push({ kind: "prompt", text: "> " });
+      this.arrowPending = false;
+    }
     if (this.charCount >= MAX_CHARS) {
       if (!this.truncated) {
         this.truncated = true;
@@ -138,9 +143,13 @@ export class TerminalStore {
   }
 
   requestInput(): void {
-    this.write("prompt", "> ");
     this.awaitingInput = true;
     this.commit();
+  }
+
+  /** Queue a shell-style prompt that prefixes the first line of the next run's output. */
+  markRunStart(): void {
+    this.arrowPending = true;
   }
 
   /** Echo a submitted input line onto the open prompt line, then finalize it. */
@@ -163,6 +172,7 @@ export class TerminalStore {
     this.charCount = 0;
     this.truncated = false;
     this.awaitingInput = false;
+    this.arrowPending = false;
     this.commit();
   }
 

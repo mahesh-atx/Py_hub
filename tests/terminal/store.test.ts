@@ -65,7 +65,6 @@ describe("terminal store", () => {
     expect(store.getSnapshot().awaitingInput).toBe(true);
     expect(store.getSnapshot().pending).toEqual([
       { kind: "stdout", text: "Name: " },
-      { kind: "prompt", text: "> " },
     ]);
 
     store.echoInput("Mahesh");
@@ -78,10 +77,13 @@ describe("terminal store", () => {
 
   it("cancels input without discarding terminal content", () => {
     const store = new TerminalStore();
+    store.stdout("Name: ");
     store.requestInput();
     store.cancelInput();
     expect(store.getSnapshot().awaitingInput).toBe(false);
-    expect(store.getSnapshot().pending).toHaveLength(1);
+    expect(store.getSnapshot().pending).toEqual([
+      { kind: "stdout", text: "Name: " },
+    ]);
   });
 
   it("notifies subscribers on committed updates", () => {
