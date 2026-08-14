@@ -25,7 +25,7 @@ export function StatusBar({
   onToggleActivityBar,
 }: StatusBarProps) {
   return (
-    <div className="flex h-[22px] items-center justify-between bg-[var(--vscode-accent)] px-2 text-[12px] text-white select-none relative z-50">
+    <div className="flex h-[22px] items-center justify-between bg-[var(--vscode-statusbar-bg,var(--vscode-accent))] px-2 text-[12px] text-[var(--vscode-statusbar-fg,#ffffff)] select-none relative z-50">
       <div className="flex items-center h-full">
         {/* Remote Window Icon */}
         <div className="flex items-center justify-center bg-[#16825d] px-2 h-full hover:bg-[#16825d]/80 cursor-pointer">

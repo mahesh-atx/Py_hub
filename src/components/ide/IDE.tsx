@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -26,6 +26,7 @@ import {
   type IdeSettings,
 } from "@/lib/settings";
 import { getKV, setKV } from "@/lib/storage/idb";
+import { getThemeCssVariables } from "@/lib/editor/themes";
 import type { PyNode } from "@/types/filesystem";
 
 import { CodeEditor, type CursorPosition } from "@/components/editor/CodeEditor";
@@ -576,9 +577,21 @@ export function IDE({
 
   const showBottomPanel = isDesktop ? panelOpen : mobileView === "terminal";
   const splitVisible = isSplit && isDesktop;
+  const themeUiVars = useMemo(
+    () => getThemeCssVariables(settings.theme),
+    [settings.theme],
+  );
+  const themeUiStyle = useMemo(
+    () =>
+      ({
+        ...(themeUiVars ?? {}),
+        colorScheme: themeUiVars ? "dark" : undefined,
+      }) as React.CSSProperties,
+    [themeUiVars],
+  );
 
   return (
-    <div data-theme={settings.theme} data-ui-font={settings.uiFont || "system"} data-editor-font={settings.editorFont || "system"} className="flex h-full flex-col overflow-hidden bg-[var(--vscode-bg)] text-[var(--vscode-text)] font-sans">
+    <div data-theme={settings.theme} data-ui-font={settings.uiFont || "system"} data-editor-font={settings.editorFont || "system"} style={themeUiStyle} className="flex h-full flex-col overflow-hidden bg-[var(--vscode-bg)] text-[var(--vscode-text)] font-sans">
       {!isDesktop && (
         <MobileNavigation
           view={mobileView}

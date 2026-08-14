@@ -100,7 +100,9 @@ describe("reference solution validation", () => {
         const code = challenge.solution ?? "";
         for (const test of challenge.tests) {
           if (test.type === "ast" || test.type === "quality") continue;
-          const result = execute(code, test.input ?? "");
+          const rawInput = test.input ?? "";
+          const stdin = Array.isArray(rawInput) ? rawInput.join("\n") : rawInput;
+          const result = execute(code, stdin);
           expect(result.status, `${batch}/${challenge.id}\n${result.error}`).toBe(0);
           expect(
             compareOutputs(result.stdout, test.expected_output, test),
