@@ -58,7 +58,7 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
       whileInView={isCompact ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -50px 0px" }}
       transition={{ duration: isCompact ? 0 : 0.5 }}
-      style={{ position: 'relative', margin: isCompact ? '0.5em 0' : '1.5em 0', width: '60%', maxWidth: '100%' }}
+      style={{ position: 'relative', margin: isCompact ? '0.5em 0' : '1.5em 0', width: '100%', maxWidth: '100%' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -501,7 +501,7 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
     let replaced = content.replace(/\*\*How to solve:\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/g, (match, p1) => {
       return `\n\n\`\`\`how-to-solve-block\n${p1.trim()}\n\`\`\`\n\n`;
     });
-    replaced = replaced.replace(/\*\*(?:Logic|Explanation):\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/gi, (match, p1) => {
+    replaced = replaced.replace(/\*\*Logic:\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/gi, (match, p1) => {
       return `\n\n\`\`\`logic-block\n${p1.trim()}\n\`\`\`\n\n`;
     });
     return replaced;
