@@ -509,6 +509,7 @@ export function IDE({
 
   // sidebar resize drag
   const sidebarDragging = useRef(false);
+  const [isSidebarDragging, setIsSidebarDragging] = useState(false);
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!sidebarDragging.current) return;
@@ -517,6 +518,7 @@ export function IDE({
     };
     const onUp = () => {
       sidebarDragging.current = false;
+      setIsSidebarDragging(false);
       document.body.style.cursor = "";
       document.body.classList.remove("is-dragging");
     };
@@ -629,13 +631,14 @@ export function IDE({
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: isDesktop ? sidebarWidth : "100%", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
-              transition={{ duration: sidebarDragging.current ? 0 : 0.25, ease: "easeInOut" }}
+              transition={{ duration: isSidebarDragging ? 0 : 0.25, ease: "easeInOut" }}
               className="shrink-0 flex flex-col border-r border-[var(--vscode-border)] bg-[var(--vscode-sidebar-bg)] relative shadow-[8px_0_20px_rgba(0,0,0,0.4)] z-20 overflow-hidden"
             >
             {/* Resizer Handle */}
             {isDesktop && <div
               onMouseDown={() => {
                 sidebarDragging.current = true;
+                setIsSidebarDragging(true);
                 document.body.style.cursor = "col-resize";
                 document.body.classList.add("is-dragging");
               }}

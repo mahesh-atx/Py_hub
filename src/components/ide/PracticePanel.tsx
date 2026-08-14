@@ -1051,7 +1051,7 @@ export function PracticeSidebar({
                 {!hasStarted(activeChallenge) && (
                   <div className="mb-4 rounded-md border border-[var(--vscode-border)] bg-[var(--vscode-input)] p-5 flex flex-col items-center justify-center gap-3">
                     <p className="text-[12px] text-[var(--vscode-text-muted)] text-center max-w-xs">
-                      You haven't started this challenge yet. Ready to write some code?
+                      You haven&apos;t started this challenge yet. Ready to write some code?
                     </p>
                     <button
                       onClick={() => selectChallenge(activeChallenge, activeCategory, questionKind, true)}
