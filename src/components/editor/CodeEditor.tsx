@@ -63,9 +63,9 @@ export function CodeEditor(props: CodeEditorProps) {
       monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyP,
       () => handlers.current.onQuickOpen(),
     );
-    // Ctrl/Cmd + A -> close file
+    // Ctrl/Cmd + X -> close file
     editor.addCommand(
-      monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyA,
+      monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyX,
       () => handlers.current.onCloseFile(),
     );
 

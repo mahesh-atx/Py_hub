@@ -530,7 +530,7 @@ export function IDE({
       const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
 
       if (cmdOrCtrl && !e.shiftKey && !e.altKey) {
-        if (e.key.toLowerCase() === 'a') {
+        if (e.key.toLowerCase() === 'x') {
           e.preventDefault();
           if (focusedPane === 'left' && effectiveActiveId) {
             handleCloseTab(effectiveActiveId);
