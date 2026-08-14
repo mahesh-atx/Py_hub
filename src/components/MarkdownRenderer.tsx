@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { AnimatePresence, motion } from 'framer-motion';
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { Copy, Check, Play, Loader2, TerminalSquare, X, Info, Lightbulb, AlertTriangle } from 'lucide-react';
+import { Copy, Check, Play, Loader2, TerminalSquare, X, Info, Lightbulb, AlertTriangle, Brain } from 'lucide-react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Tooltip from '@/components/Tooltip';
@@ -58,7 +58,7 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
       whileInView={isCompact ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -50px 0px" }}
       transition={{ duration: isCompact ? 0 : 0.5 }}
-      style={{ position: 'relative', margin: isCompact ? '0.5em 0' : '1.5em 0' }}
+      style={{ position: 'relative', margin: isCompact ? '0.5em 0' : '1.5em 0', width: '60%', maxWidth: '100%' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -106,7 +106,7 @@ function AnimatedCodeBlock({ code, language }: { code: string, language: string 
         style={dracula as any}
         customStyle={{ 
           borderRadius: isCompact ? '2px' : '8px',
-          padding: isCompact ? '8px 10px' : '16px',
+          padding: isCompact ? '1em 0' : '1em 0',
           margin: 0,
           backgroundColor: isCompact ? 'var(--vscode-bg)' : '#252627',
           fontSize: isCompact ? '11px' : '0.9em'
@@ -270,6 +270,61 @@ function HowToSolveHoverBlock({ content }: { content: string }) {
   );
 }
 
+function LogicHoverBlock({ content }: { content: string }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const { isCompact } = React.useContext(MarkdownContext);
+  
+  return (
+    <div 
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+          margin: isCompact ? '0.75em 0' : '1.5em 0',
+          borderRadius: '8px',
+          border: '1px solid rgba(52, 211, 153, 0.3)',
+          backgroundColor: isHovered ? 'rgba(52, 211, 153, 0.05)' : 'transparent',
+          cursor: isHovered ? 'default' : 'help',
+          transition: 'all 0.3s ease',
+          overflow: 'hidden'
+      }}
+    >
+      {!isHovered ? (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: isCompact ? '10px 14px' : '14px 20px',
+            color: '#34d399',
+            fontWeight: 500,
+            opacity: 0.9
+          }}>
+            <Brain size={isCompact ? 16 : 18} color="#34d399" />
+            <span>Hover to reveal logic breakdown</span>
+          </div>
+      ) : (
+          <motion.div 
+            initial={{ opacity: 0, y: -5 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.2 }}
+            style={{
+              padding: isCompact ? '12px 14px' : '16px 20px',
+            }}
+          >
+            <div style={{ fontWeight: '600', marginBottom: '12px', color: '#34d399', display: 'flex', alignItems: 'center', gap: '8px' }}>
+               <Brain size={isCompact ? 16 : 20} color="#34d399" />
+               Logic:
+            </div>
+            <div style={{ color: 'var(--text-color)' }} className="how-to-solve-inner">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                {content}
+              </ReactMarkdown>
+            </div>
+          </motion.div>
+      )}
+    </div>
+  );
+}
+
 const markdownComponents: any = {
   pre: ({ children }: any) => <>{children}</>,
   input: MarkdownInput,
@@ -280,6 +335,9 @@ const markdownComponents: any = {
     
     if (match && match[1] === 'how-to-solve-block') {
        return <HowToSolveHoverBlock content={String(children).replace(/\n$/, '')} />;
+    }
+    if (match && match[1] === 'logic-block') {
+       return <LogicHoverBlock content={String(children).replace(/\n$/, '')} />;
     }
 
     const isBlock = match || String(children).includes('\n');
@@ -440,9 +498,13 @@ const MarkdownRenderer = React.memo(function MarkdownRenderer({ content, fileId,
 
   const processedContent = React.useMemo(() => {
     if (!content) return '';
-    return content.replace(/\*\*How to solve:\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/g, (match, p1) => {
+    let replaced = content.replace(/\*\*How to solve:\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/g, (match, p1) => {
       return `\n\n\`\`\`how-to-solve-block\n${p1.trim()}\n\`\`\`\n\n`;
     });
+    replaced = replaced.replace(/\*\*(?:Logic|Explanation):\*\*([\s\S]*?)(?=\r?\n\r?\n\*\*|\r?\n\r?\n##|$)/gi, (match, p1) => {
+      return `\n\n\`\`\`logic-block\n${p1.trim()}\n\`\`\`\n\n`;
+    });
+    return replaced;
   }, [content]);
 
   return (

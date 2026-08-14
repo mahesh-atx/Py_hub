@@ -315,7 +315,6 @@ export function parsePracticeContent({
         .replace(/\*\*Difficulty:\*\*\s*(.+)\n?/i, "")
         .replace(/\*\*Learning Objective:\*\*\s*(.+)\n?/i, "")
         .replace(/\*\*Solution:\*\*\s*\n*```(?:python)?\r?\n([\s\S]*?)\r?\n```/im, "")
-        .replace(/^\*\*(?:Explanation|Logic):\*\*\s*(.+)$/im, "")
         .replace(/\n{3,}/g, "\n\n")
         .trim();
 

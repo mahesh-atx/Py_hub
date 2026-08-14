@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import { Loader2, CircleCheck, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, BookOpen, TerminalSquare, PlayCircle, Lightbulb, Target, Lock, LayoutDashboard, X } from "lucide-react";
+import { Loader2, CircleCheck, ChevronDown, ChevronRight, ChevronLeft, ArrowRight, BookOpen, TerminalSquare, PlayCircle, Lightbulb, Target, Lock, LayoutDashboard, X, Brain } from "lucide-react";
 import { toast } from "@/components/ide/ToastContainer";
 import { getKV, setKV } from "@/lib/storage/idb";
 import confetti from "canvas-confetti";
@@ -277,7 +277,9 @@ export function PracticeSidebar({
 
   const loadMarkdown = async (batchId: string, fileId: string) => {
     try {
-      const response = await fetch(`/practice-data/${batchId}/${fileId}`);
+      const batch = manifest?.batches.find(b => b.id === batchId);
+      const basePath = batch?.path || `/practice-data/${batchId}`;
+      const response = await fetch(`${basePath}/${fileId}`);
       if (!response.ok) {
         toast.error(`Course page not found: ${fileId}`);
         return;
@@ -321,7 +323,11 @@ export function PracticeSidebar({
     const isProjects = fileId === "projects.md";
     const isAssignments = fileId === "assignments.md";
     try {
-      const mdRes = await fetch(`/practice-data/${id}/${fileId}`);
+      // Find custom path from manifest if defined
+      const batch = manifest?.batches.find(b => b.id === id);
+      const basePath = batch?.path || `/practice-data/${id}`;
+      
+      const mdRes = await fetch(`${basePath}/${fileId}`);
       const mdText = await mdRes.text();
 
       let testsData: PracticeTestsDocument = { questions: [] };
@@ -339,9 +345,9 @@ export function PracticeSidebar({
             : "solutions.md";
         const [testsRes, solutionsRes] = await Promise.all([
           testsFile
-            ? fetch(`/practice-data/${id}/${testsFile}`)
+            ? fetch(`${basePath}/${testsFile}`)
             : Promise.resolve(null),
-          fetch(`/practice-data/${id}/${solutionsFile}`),
+          fetch(`${basePath}/${solutionsFile}`),
         ]);
         if (testsRes?.ok) testsData = await testsRes.json();
         if (solutionsRes.ok) solutionsMarkdown = await solutionsRes.text();
@@ -1023,7 +1029,7 @@ export function PracticeSidebar({
                     content={activeChallenge.markdown}
                     isCompact={true}
                     fileId={activeCategory ? `${activeCategory.id}__${activeChallenge.id}` : activeChallenge.id}
-                    dirPath={activeCategory ? `/practice-data/${activeCategory.id}` : ""}
+                    dirPath={activeCategory ? (manifest?.batches.find(b => b.id === activeCategory.id)?.path || `/practice-data/${activeCategory.id}`) : ""}
                   />
                 </div>
 
