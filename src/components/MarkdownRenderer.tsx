@@ -433,8 +433,10 @@ const markdownComponents: any = {
     return (
       <ScrollReveal as="blockquote" style={{ 
         backgroundColor: isCompact ? 'transparent' : style.bg,
-        border: isCompact ? 'none' : style.border,
-        borderLeft: isCompact ? `2px solid ${style.color}` : undefined,
+        borderTop: isCompact ? 'none' : style.border,
+        borderRight: isCompact ? 'none' : style.border,
+        borderBottom: isCompact ? 'none' : style.border,
+        borderLeft: isCompact ? `2px solid ${style.color}` : style.border,
         color: isCompact ? 'var(--vscode-text)' : style.color,
         padding: isCompact ? '6px 8px' : '16px 20px',
         borderRadius: isCompact ? 0 : '12px',
