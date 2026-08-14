@@ -212,16 +212,23 @@ export const Terminal = memo(function Terminal({ onInput, onClear, onInterrupt, 
   // We use a ref to track what we've already written
   const lastLineCount = useRef(snap.lines.length);
   const pendingWritten = useRef(false);
+  // Whether any content has been rendered live (after mount). Input echoes are
+  // already typed into xterm locally, so lines ending in an input segment must
+  // be skipped whenever the terminal is live - the first commit after mount
+  // included, when lastLineCount is still 0.
+  const liveRendered = useRef(false);
 
   useEffect(() => {
     if (!xtermRef.current) return;
     const xterm = xtermRef.current;
+    liveRendered.current = true;
 
     // If terminalStore cleared, clear xterm
     if (snap.lines.length === 0 && lastLineCount.current > 0) {
       xterm.clear();
       lastLineCount.current = 0;
       pendingWritten.current = false;
+      liveRendered.current = false;
       return;
     }
 
@@ -235,11 +242,10 @@ export const Terminal = memo(function Terminal({ onInput, onClear, onInterrupt, 
     // Write new full lines
     for (let i = lastLineCount.current; i < snap.lines.length; i++) {
       const line = snap.lines[i];
-      
-      // If the last segment is an input segment, we skip writing it because 
+
+      // If the last segment is an input segment, we skip writing it because
       // our local echo already printed it to the screen.
-      // But if we are mounting (lastLineCount was 0 and we're catching up), we DO write it.
-      if (lastLineCount.current > 0 && line.segments.length > 0 && line.segments[line.segments.length - 1].kind === "input") {
+      if (liveRendered.current && line.segments.length > 0 && line.segments[line.segments.length - 1].kind === "input") {
         // Skip writing the input echo to xterm to avoid duplicate
         continue;
       }

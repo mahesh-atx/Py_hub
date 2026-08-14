@@ -9,6 +9,7 @@ interface StatusBarProps {
   status: RuntimeStatus;
   runtime: RuntimeInfo | null;
   lastDuration: number | null;
+  activity?: string | null;
   cursor: CursorPosition;
   tabSize: number;
   activityBarVisible: boolean;
@@ -19,6 +20,7 @@ export function StatusBar({
   status,
   runtime,
   lastDuration,
+  activity,
   cursor,
   tabSize,
   activityBarVisible,
@@ -61,13 +63,14 @@ export function StatusBar({
         
         {/* Status */}
         <StatusBarItem>
-          {status === "running" 
-            ? "Running..." 
-            : status === "waiting-input"
-            ? "Waiting for input..."
-            : lastDuration != null
-            ? `Finished in ${(lastDuration / 1000).toFixed(2)}s`
-            : "Ready"}
+          {activity ??
+            (status === "running"
+              ? "Running..."
+              : status === "waiting-input"
+                ? "Waiting for input..."
+                : lastDuration != null
+                  ? `Finished in ${(lastDuration / 1000).toFixed(2)}s`
+                  : "Ready")}
         </StatusBarItem>
       </div>
 

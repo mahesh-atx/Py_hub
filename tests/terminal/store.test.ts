@@ -125,6 +125,24 @@ describe("terminal store", () => {
     });
   });
 
+  it("prefixes the first line of a run with a prompt and indents the rest", () => {
+    const store = new TerminalStore();
+    store.markRunStart();
+    store.stdout("Enter your name: ");
+    store.requestInput();
+    store.echoInput("mahesh");
+    store.stdout("Enter your age: ");
+    store.requestInput();
+    store.echoInput("56");
+    store.stdout("Hello mahesh!\nYou are 56 years old.\n");
+    store.flush();
+
+    const text = terminalSnapshotText(store.getSnapshot());
+    expect(text).toBe(
+      "> Enter your name: mahesh\n  Enter your age: 56\n  Hello mahesh!\n  You are 56 years old.",
+    );
+  });
+
   it("limits excessive output", () => {
     const store = new TerminalStore();
     store.stdout("x".repeat(500_000));

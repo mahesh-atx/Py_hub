@@ -847,7 +847,8 @@ export function IDE({
                         theme={settings.theme}
                         onChange={(content) => project.updateContent(effectiveActiveFile.id, content)}
                         onRunCell={async (code, index) => {
-                          terminalStore.system(`▶ Running cell ${index + 1}...`);
+                          terminalStore.clear();
+                          terminalStore.markRunStart();
                           return await runtime.runTest(code, "", 15000, false);
                         }}
                       />
@@ -1032,7 +1033,8 @@ export function IDE({
                             theme={settings.theme}
                             onChange={(content) => project.updateContent(sf.id, content)}
                             onRunCell={async (code, index) => {
-                              terminalStore.system(`▶ Running cell ${index + 1}...`);
+                              terminalStore.clear();
+                              terminalStore.markRunStart();
                               return await runtime.runTest(code, "", 15000, false);
                             }}
                           />
@@ -1121,6 +1123,7 @@ export function IDE({
         status={runtime.status}
         runtime={runtime.runtime}
         lastDuration={runtime.lastDuration}
+        activity={runtime.activity}
         cursor={focusedPane === "right" ? rightCursor : leftCursor}
         tabSize={settings.tabSize}
         activityBarVisible={activityBarVisible}

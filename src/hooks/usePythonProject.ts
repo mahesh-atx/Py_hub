@@ -54,6 +54,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
     undefined,
   );
   const [lastDuration, setLastDuration] = useState<number | null>(null);
+  const [activity, setActivity] = useState<string | null>(null);
   const [plots, setPlots] = useState<string[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [fatalError, setFatalError] = useState<string | null>(null);
@@ -92,7 +93,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
       },
       onReady: (info) => {
         setRuntime(info);
-        terminalStore.system(`Python ${info.pythonVersion} \u2022 Ready`);
+        setActivity(null);
         // Auto-reinstall packages from previous session
         getKV<string[]>("installedPackages").then((savedPackages) => {
           if (savedPackages && savedPackages.length > 0) {
@@ -111,9 +112,9 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
       onStdinRequest: () => terminalStore.requestInput(),
       onFinished: ({ durationMs, hadError, fsChanges }) => {
         setLastDuration(durationMs);
+        setActivity(null);
         if (fsChanges) optsRef.current.onFilesystemChanges?.(fsChanges);
         if (!hadError) {
-          terminalStore.system(`Finished in ${(durationMs / 1000).toFixed(2)}s`);
           if (optsRef.current.onRunSuccess) {
             optsRef.current.onRunSuccess(interactiveStdoutRef.current);
           }
@@ -130,7 +131,8 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
         setLastDuration(durationMs);
         if (fsChanges) optsRef.current.onFilesystemChanges?.(fsChanges);
         terminalStore.cancelInput();
-        terminalStore.system(reason);
+        setActivity(reason);
+        setTimeout(() => setActivity(null), 6000);
         addHistory("stopped", durationMs);
       },
       onPlot: (data) =>
@@ -182,9 +184,9 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
       if (optsRef.current.clearOnRun !== false) {
         terminalStore.clear();
       }
-      terminalStore.system(`\u25b6 Running ${filename}\u2026`);
-      // Prefix the first line of this run's output with a shell-style prompt.
+      // Shell-style prompt that prefixes the first line of this run's output.
       terminalStore.markRunStart();
+      setActivity(`Running ${filename}\u2026`);
       clientRef.current?.run(
         code,
         filename,
@@ -201,7 +203,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
     setPlots([]);
     setLastDuration(null);
     terminalStore.cancelInput();
-    terminalStore.system("Restarting Python runtime\u2026");
+    setActivity("Restarting Python runtime\u2026");
     clientRef.current?.restart();
   }, []);
   const install = useCallback((packages: string[]) => {
@@ -242,6 +244,7 @@ export function usePythonRuntime(opts: RuntimeOptions = {}) {
     loadingMsg,
     loadingProgress,
     lastDuration,
+    activity,
     plots,
     history,
     fatalError,

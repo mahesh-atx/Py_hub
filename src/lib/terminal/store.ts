@@ -42,6 +42,7 @@ export class TerminalStore {
   };
   private flushScheduled = false;
   private arrowPending = false;
+  private indentPending = false;
 
   subscribe = (cb: () => void): (() => void) => {
     this.listeners.add(cb);
@@ -85,6 +86,7 @@ export class TerminalStore {
     if (this.arrowPending && (kind === "stdout" || kind === "stderr") && this.cur.length === 0) {
       this.cur.push({ kind: "prompt", text: "> " });
       this.arrowPending = false;
+      this.indentPending = true;
     }
     if (this.charCount >= MAX_CHARS) {
       if (!this.truncated) {
@@ -110,8 +112,13 @@ export class TerminalStore {
       if (chunk) {
         this.charCount += chunk.length;
         const last = this.cur[this.cur.length - 1];
-        if (last && last.kind === kind) last.text += chunk;
-        else this.cur.push({ kind, text: chunk });
+        if (this.cur.length === 0 && this.indentPending) {
+          this.cur.push({ kind, text: `  ${chunk}` });
+        } else if (last && last.kind === kind) {
+          last.text += chunk;
+        } else {
+          this.cur.push({ kind, text: chunk });
+        }
       }
       if (nl === -1) break;
       this.lines.push({ id: this.nextId++, segments: this.cur });
@@ -173,6 +180,7 @@ export class TerminalStore {
     this.truncated = false;
     this.awaitingInput = false;
     this.arrowPending = false;
+    this.indentPending = false;
     this.commit();
   }
 
