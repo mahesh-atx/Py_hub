@@ -118,7 +118,9 @@ print(sum(map(int, input().split())))
       explanation: "stdout is captured.",
       solution: 'print("hello")',
     });
-    expect(parsed.challenges[0].markdown).toBe("Write a greeting.");
+    expect(parsed.challenges[0].markdown).toBe(
+      "**Hint:** Use print.\n\n**Explanation:** stdout is captured.\n\nWrite a greeting.",
+    );
     expect(parsed.challenges[1].tests[0]).toMatchObject({ input: "2\n3" });
   });
 

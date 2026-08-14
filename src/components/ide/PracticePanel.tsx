@@ -622,18 +622,16 @@ export function PracticeSidebar({
     const solLines = activeChallenge?.solution ? activeChallenge.solution.split("\n") : [];
     const fence = (lines: string[]) => ["```python", ...lines, "```"].join("\n");
     if (level === 1) {
-      if (activeChallenge?.hintText) return activeChallenge.hintText;
       if (activeChallenge?.solution) return "A peek at the shape of the solution:\n\n" + fence(solLines.slice(0, 3));
+      if (activeChallenge?.hintText) return activeChallenge.hintText;
       return "No hint is provided for this challenge — reread the task and check the self-check list.";
     }
     if (level === 2) {
-      const parts: string[] = [];
-      if (activeChallenge?.explanation) parts.push(`💡 ${activeChallenge.explanation}`);
       if (activeChallenge?.solution) {
         const half = Math.max(2, Math.ceil(solLines.length / 2));
-        parts.push("Roughly half the solution:\n\n" + fence(solLines.slice(0, half)));
+        return "Roughly half the solution:\n\n" + fence(solLines.slice(0, half));
       }
-      return parts.join("\n\n") || "No deeper hint available for this challenge.";
+      return "No deeper hint available for this challenge.";
     }
     if (activeChallenge?.solution) return fence(solLines);
     return "No full solution is published for this challenge.";
